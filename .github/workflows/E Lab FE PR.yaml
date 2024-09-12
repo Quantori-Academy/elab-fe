@@ -1,0 +1,35 @@
+name: E Lab FE PR
+
+on:
+  push:
+    branches:    
+      - '*/*'       # matches every branch containing a single '/'
+      - '!main'   # excludes master
+
+env:
+  HUSKY: 0
+
+jobs:
+    install-and-validate:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: '20' # Specify the Node.js version you want to use
+      
+            - name: Install dependencies
+              run: npm install
+      
+            - name: Run lint
+              run: npm run lint
+      
+            # - name: Run tests
+            #   run: npm run test
+      
+            - name: Run build
+              run: npm run build
