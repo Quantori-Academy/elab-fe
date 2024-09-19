@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Requirements
 
-- NodeJS 18+ ([link](https://nodejs.org))
+- [NodeJS 18+](https://nodejs.org)
+- [Angular CLI](https://github.com/angular/angular-cli)
 
 ## Preparations
 
