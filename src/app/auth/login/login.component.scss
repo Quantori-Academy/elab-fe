@@ -1,0 +1,34 @@
+.form-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    max-width: 360px;
+    max-height: 400px;
+    padding: 20px;
+    border: 2px solid #015cbb;
+    border-radius: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.5);
+    gap: 8px;
+}
+
+mat-form-field {
+    width: 90%;
+}
+
+h2 {
+    color: #015cbb;
+    font-size: 28px;
+    padding: 4px;
+}
+
+button {
+    margin: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

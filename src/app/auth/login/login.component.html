@@ -1,0 +1,36 @@
+<div class="form-container">
+  <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Login</h2>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        mat-error
+        id="email"
+        type="email"
+        formControlName="email"
+        matInput
+      />
+      @if(emailIsInvalid) {
+      <mat-error>Please enter a valid email address</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        matInput
+      />
+      @if (passwordIsInvalid) {
+      <mat-error>
+        Please enter a valid password (must be at least 10 characters long)
+      </mat-error>
+      }
+    </mat-form-field>
+    <span>
+      <button mat-stroked-button>Forgot Password?</button>
+      <button type="submit" mat-stroked-button color="primary">Login</button>
+    </span>
+  </form>
+</div>
