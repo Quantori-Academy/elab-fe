@@ -32,7 +32,7 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    const LoginURL = 'https://dummyjson.com/auth/login';
+    const LoginURL = 'https://dummyjson.com/auth/login'; //MockAPI URL
     const subscription = this.httpClient
       .post<LoginResponse>(LoginURL, body, {
         headers,
