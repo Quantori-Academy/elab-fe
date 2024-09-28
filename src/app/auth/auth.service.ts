@@ -62,11 +62,25 @@ export class AuthService {
         },
         complete: () => {
           this.isFetching.set(false);
+          this.onAuthUser();
         },
       });
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
     });
+  }
+
+  onAuthUser(): boolean {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      return true;
+    }
+    return false;
+  }
+
+  onLogoutUser(): void {
+    localStorage.removeItem('accesToken');
+    localStorage.removeItem('refreshToken');
   }
 }

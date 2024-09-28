@@ -15,10 +15,11 @@ import {
   throwError,
 } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   private isRefreshing = false;
 
   intercept(
@@ -28,7 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('accessToken');
     if (token) {
       req = req.clone({
-        headers: req.headers.set('Authorization', '`Bearer ${token}`'),
+        headers: req.headers.set('Authorization', `Bearer ${token}`),
       });
     }
 
@@ -38,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
           console.log('I am here');
           return this.refresh(req, handler);
         }
-        this.router.navigate(['/login']);
+        this.authService.onAuthUser();
         console.log('No, there');
         return throwError(error);
       })
@@ -76,7 +77,7 @@ export class TokenInterceptor implements HttpInterceptor {
         this.isRefreshing = false;
 
         if (error.status === 403) {
-          this.router.navigate(['/login']);
+          this.authService.onAuthUser();
         }
         return throwError(() => error);
       }),
