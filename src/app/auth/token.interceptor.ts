@@ -36,11 +36,9 @@ export class TokenInterceptor implements HttpInterceptor {
     return handler.handle(req).pipe(
       catchError((error) => {
         if (error.status === 401) {
-          console.log('I am here');
           return this.refresh(req, handler);
         }
         this.authService.onAuthUser();
-        console.log('No, there');
         return throwError(error);
       })
     );

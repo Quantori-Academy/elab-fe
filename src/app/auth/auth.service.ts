@@ -16,10 +16,10 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  accessToken = signal<string | undefined>(undefined);
-  refreshToken = signal<string | undefined>(undefined);
-  error = signal('');
-  isFetching = signal(false);
+  private accessToken = signal<string | undefined>(undefined);
+  private refreshToken = signal<string | undefined>(undefined);
+  private error = signal('');
+  private isFetching = signal(false);
   private destroyRef = inject(DestroyRef);
   private httpClient = inject(HttpClient);
 
@@ -56,13 +56,16 @@ export class AuthService {
         next: ({ accessToken, refreshToken }) => {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
+
+          this.accessToken.set(accessToken);
+          this.refreshToken.set(refreshToken);
         },
         error: (error: Error) => {
           this.error.set(error.message);
         },
         complete: () => {
           this.isFetching.set(false);
-          this.onAuthUser();
+          this.isAuthenticated();
         },
       });
 
@@ -71,7 +74,7 @@ export class AuthService {
     });
   }
 
-  onAuthUser(): boolean {
+  isAuthenticated(): boolean {
     const token = localStorage.getItem('accessToken');
     if (token) {
       return true;

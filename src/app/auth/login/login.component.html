@@ -1,7 +1,7 @@
 <div class="form-container">
   <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2>Login</h2>
-    <mat-form-field>
+    <h2 id="login-h2">Login</h2>
+    <mat-form-field id="login-form-field">
       <mat-label>Email</mat-label>
       <input
         mat-error
@@ -29,7 +29,9 @@
       }
     </mat-form-field>
     <span>
-      <button mat-stroked-button type="button">Forgot Password?</button>
+      <button mat-stroked-button type="button" id="login-form-button">
+        Forgot Password?
+      </button>
       <button type="submit" mat-stroked-button color="primary">Login</button>
     </span>
   </form>

@@ -1,3 +1,7 @@
+:root {
+    --primary-color: #015cbb;
+}
+
 .form-container {
     height: 100vh;
     display: flex;
@@ -9,7 +13,7 @@
     max-width: 360px;
     max-height: 400px;
     padding: 20px;
-    border: 2px solid #015cbb;
+    border: 2px solid var(--primary-color);
     border-radius: 44px;
     display: flex;
     flex-direction: column;
@@ -18,17 +22,17 @@
     gap: 8px;
 }
 
-mat-form-field {
+#login-form-field {
     width: 90%;
 }
 
-h2 {
-    color: #015cbb;
+#login-h2 {
+    color: var(--primary-color);
     font-size: 28px;
     padding: 4px;
 }
 
-button {
+#login-form-button {
     margin: 12px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
