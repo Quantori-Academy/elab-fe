@@ -69,7 +69,7 @@ export class ProfilePageComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     },
     {
-      validators: [this.passwordMatch(), this.currentPasswordMatching()], 
+      validators: [this.passwordMatch(), this.currentPasswordMatching()],
     }
   );
 
@@ -77,10 +77,10 @@ export class ProfilePageComponent implements OnInit {
     return this.changePasswordForm.controls;
   }
 
-  // enums had numeric values as default
   get userRole(): string {
     return UserRoles[this.role];
   }
+
   passwordMatch() {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const newPasswordControl = formGroup.get('newPassword');
@@ -96,42 +96,49 @@ export class ProfilePageComponent implements OnInit {
       if (newPassword !== confirmPassword) {
         confirmPasswordControl.setErrors({ passwordsMatching: true });
       } else {
-        confirmPasswordControl.setErrors(null);
+        if (confirmPasswordControl.hasError('passwordsMatching')) {
+          confirmPasswordControl.setErrors(null);
+        }
       }
 
       return null;
     };
   }
+
   currentPasswordMatching() {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const currentPasswordControl = formGroup.get('currentPassword');
-  
 
       if (!currentPasswordControl || !this.user) {
-        return null;  // Ensure that user is loaded
+        return null;
       }
-  
+
+      if (currentPasswordControl.hasError('required')) {
+        return null;
+      }
       const currentPassword = currentPasswordControl.value;
-  
-      // Compare the entered current password with the actual user password
+
+      // Comparing the entered current password with the actual user password
       if (currentPassword !== this.user.password) {
         currentPasswordControl.setErrors({ currentPasswordMismatch: true });
       } else {
-        currentPasswordControl.setErrors(null);
+        if (currentPasswordControl.hasError('currentPasswordMismatch')) {
+          currentPasswordControl.setErrors(null);
+        }
       }
-  
+
       return null;
     };
   }
-  
+
   onPasswordChange(newPassword: string): void {
     this.mockProfileService.updatePassword(newPassword).subscribe((success) => {
       if (success) {
-        console.log(`password changed to ${newPassword}`);
+        console.log(`Password changed to ${newPassword}`);
       }
     });
   }
-  // will change after login and auhentication will be setteled
+
   onSubmit() {
     if (this.changePasswordForm.valid) {
       const newPassword = this.controls['newPassword'].value;
@@ -140,12 +147,5 @@ export class ProfilePageComponent implements OnInit {
       console.log('Form Invalid');
     }
     return this.togglePasswordChange();
-  }
-
-  logout() {
-    localStorage.removeItem('authToken');
-    sessionStorage.clear();
-    // not sure if this is how login page is called in denis's code
-    this.router.navigate(['/login']);
   }
 }

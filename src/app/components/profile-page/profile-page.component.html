@@ -27,7 +27,7 @@
             formControlName="currentPassword"
           />
 
-          @if(controls.currentPassword.hasError('required')){
+          @if (controls.currentPassword.hasError('required')) {
           <mat-error> Current password is required. </mat-error>
           } @if (controls.currentPassword.hasError('currentPasswordMismatch')) {
           <mat-error> Password is not correct. </mat-error>
@@ -41,7 +41,7 @@
             type="password"
             formControlName="newPassword"
           />
-          @if(controls['newPassword'].dirty){
+          @if(controls.newPassword.hasError('required')){
           <mat-error> New password is required. </mat-error>
           } @if(controls['newPassword'].errors?.['pattern']){
           <mat-error>
@@ -57,10 +57,11 @@
             type="password"
             formControlName="confirmPassword"
           />
-          @if (controls['confirmPassword'].hasError('required')) {
+          @if (controls.confirmPassword.hasError('required')) {
           <mat-error> Confirm password is required. </mat-error>
-          } @if (controls['confirmPassword'].hasError('passwordsMatching')) {
-          <mat-error> Passwords do not match! </mat-error> }
+          } @if (controls.confirmPassword.hasError('passwordsMatching')) {
+          <mat-error> Passwords do not match! </mat-error>
+          }
         </mat-form-field>
         <div class="submit-buttons">
           <button
@@ -81,6 +82,5 @@
       </form>
       }
     </div>
-    <button mat-stroked-button type="button" (click)="logout()">Log Out</button>
   </div>
 </div>
