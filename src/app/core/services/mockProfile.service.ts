@@ -11,7 +11,7 @@ export class MockProfileService {
     email: 'johndoe@example.com',
     password: 'John123!',
     role: UserRoles.Researcher,
-    firsName: 'John',
+    firstName: 'John',
     lastName: 'Doe',
   };
   getUserProfile(): Observable<IUser> {
