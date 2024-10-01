@@ -30,12 +30,13 @@ import { MockProfileService } from '../../core/services/mockProfile.service';
   styleUrl: './profile-page.component.scss',
 })
 export class ProfilePageComponent implements OnInit {
-  private mockProfileService = inject(MockProfileService);
-  // had to remove types because eslint deemed them as errors
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  firstName = 'Firstname';
-  lastName = 'Lastname';
+  private mockProfileService:MockProfileService = inject(MockProfileService);
+  private fb:FormBuilder = inject(FormBuilder);
+  private router:Router = inject(Router);
+
+    // had to remove types because eslint deemed them as errors
+  firstName = '';
+  lastName = '';
   role = UserRoles.Researcher;
   readonly email = '';
   user!: IUser;
