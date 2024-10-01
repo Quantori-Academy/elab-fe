@@ -4,7 +4,7 @@
   </div>
   <div class="profile-details">
     <div>
-      <h3>{{ user.firsName }} {{ user.lastName }}</h3>
+      <h3>{{ user.firstName }} {{ user.lastName }}</h3>
       <h4>Occupation: {{ userRole }}</h4>
       <p>Email: {{ user.email }}</p>
       <button
@@ -22,7 +22,7 @@
           <mat-label>Current Password</mat-label>
           <input
             matInput
-            placeholder="Placeholder"
+            placeholder="Current Password"
             type="password"
             formControlName="currentPassword"
           />
@@ -37,7 +37,7 @@
           <mat-label>New Password</mat-label>
           <input
             matInput
-            placeholder="Placeholder"
+            placeholder="New Password"
             type="password"
             formControlName="newPassword"
           />
@@ -53,7 +53,7 @@
           <mat-label>Confirm Password</mat-label>
           <input
             matInput
-            placeholder="Placeholder"
+            placeholder="Confirm Password"
             type="password"
             formControlName="confirmPassword"
           />
