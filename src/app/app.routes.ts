@@ -5,7 +5,7 @@ export const routes: Routes = [
     path: 'profile-page',
     pathMatch: 'full',
     loadComponent: () =>
-      import('./components/profile-page/profile-page.component').then(
+      import('./shared/components/profile-management/profile-management.component').then(
         (m) => m.ProfilePageComponent
       ),
   },
