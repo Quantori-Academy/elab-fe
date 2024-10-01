@@ -1,0 +1,86 @@
+<div class="profile">
+  <div>
+    <img src="https://placehold.co/100" alt="" />
+  </div>
+  <div class="profile-details">
+    <div>
+      <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+      <h4>Occupation: {{ userRole }}</h4>
+      <p>Email: {{ user.email }}</p>
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="togglePasswordChange()"
+        tabindex="0"
+        (keydown.enter)="togglePasswordChange()"
+      >
+        Change Password <i class="bi bi-pencil-fill"></i>
+      </button>
+      @if (changePassword===true) {
+      <form action="" [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+          <mat-label>Current Password</mat-label>
+          <input
+            matInput
+            placeholder="Current Password"
+            type="password"
+            formControlName="currentPassword"
+          />
+
+          @if (controls.currentPassword.hasError('required')) {
+          <mat-error> Current password is required. </mat-error>
+          } @if (controls.currentPassword.hasError('currentPasswordMismatch')) {
+          <mat-error> Password is not correct. </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+          <mat-label>New Password</mat-label>
+          <input
+            matInput
+            placeholder="New Password"
+            type="password"
+            formControlName="newPassword"
+          />
+          @if(controls.newPassword.hasError('required')){
+          <mat-error> New password is required. </mat-error>
+          } @if(controls['newPassword'].errors?.['pattern']){
+          <mat-error>
+            Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*
+          </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+          <mat-label>Confirm Password</mat-label>
+          <input
+            matInput
+            placeholder="Confirm Password"
+            type="password"
+            formControlName="confirmPassword"
+          />
+          @if (controls.confirmPassword.hasError('required')) {
+          <mat-error> Confirm password is required. </mat-error>
+          } @if (controls.confirmPassword.hasError('passwordsMatching')) {
+          <mat-error> Passwords do not match! </mat-error>
+          }
+        </mat-form-field>
+        <div class="submit-buttons">
+          <button
+            mat-stroked-button
+            [disabled]="changePasswordForm.invalid"
+            type="submit"
+          >
+            Change
+          </button>
+          <button
+            mat-stroked-button
+            (click)="togglePasswordChange()"
+            type="button"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+      }
+    </div>
+  </div>
+</div>
