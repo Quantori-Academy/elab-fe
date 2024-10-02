@@ -5,3 +5,4 @@ import { Subject } from 'rxjs';
 export class AuthStateService {
   logoutEvent = new Subject<void>();
 }
+// state of service
