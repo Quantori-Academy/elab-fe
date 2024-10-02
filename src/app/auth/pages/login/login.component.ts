@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../material.module';
 import {
   FormControl,
   FormGroup,
@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/authentication/auth.service';
 
 let initialEmailValue = '';
 const savedForm = window.localStorage.getItem('login-email');

@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { AuthStateService } from './authstate.service';
-import LoginResponse from './auth.interface';
+import LoginResponse from '../../auth.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

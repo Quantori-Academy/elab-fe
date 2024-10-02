@@ -16,8 +16,8 @@ import {
   switchMap,
   throwError,
 } from 'rxjs';
-import { AuthService } from './auth.service';
-import { environment } from '../../environments/environment';
+import { AuthService } from '../services/authentication/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
