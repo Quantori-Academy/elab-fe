@@ -1,23 +1,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
-
-interface LoginResponse {
-  id: number;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  image: string;
-  accessToken: string;
-  refreshToken: string;
-}
+import { environment } from '../../environments/environment';
+import { AuthStateService } from './authstate.service';
+import LoginResponse from './auth.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private accessToken = signal<string | undefined>(undefined);
-  private refreshToken = signal<string | undefined>(undefined);
+  constructor(private authStateService: AuthStateService) {
+    this.authStateService.logoutEvent.subscribe(() => {
+      this.clearState();
+    });
+  }
+
+  private authUrl = environment.apiUrl + '/api/v1/auth/login';
+  private access_token = signal<string | undefined>(undefined);
   private error = signal('');
   private isFetching = signal(false);
   private destroyRef = inject(DestroyRef);
@@ -25,24 +22,22 @@ export class AuthService {
 
   onLoginUser(email: string, password: string) {
     const body = JSON.stringify({
-      username: email,
-      password: password,
-      expiresInMins: 1,
+      email,
+      password,
     });
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Login-Request': 'true',
     });
-    const LoginURL = 'https://dummyjson.com/auth/login'; //MockAPI URL
     const subscription = this.httpClient
-      .post<LoginResponse>(LoginURL, body, {
+      .post<LoginResponse>(this.authUrl, body, {
         headers,
-        // withCredentials: true,
+        withCredentials: true,
       })
       .pipe(
         map((resData) => {
           return {
-            accessToken: resData.accessToken,
-            refreshToken: resData.refreshToken,
+            access_token: resData.access_token,
           };
         }),
         catchError((error) => {
@@ -53,12 +48,9 @@ export class AuthService {
         })
       )
       .subscribe({
-        next: ({ accessToken, refreshToken }) => {
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-
-          this.accessToken.set(accessToken);
-          this.refreshToken.set(refreshToken);
+        next: ({ access_token }) => {
+          localStorage.setItem('access_token', access_token);
+          this.access_token.set(access_token);
         },
         error: (error: Error) => {
           this.error.set(error.message);
@@ -75,15 +67,15 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem('access_token');
     if (token) {
       return true;
     }
     return false;
   }
 
-  onLogoutUser(): void {
-    localStorage.removeItem('accesToken');
-    localStorage.removeItem('refreshToken');
+  clearState() {
+    this.access_token.set(undefined);
+    this.error.set('');
   }
 }

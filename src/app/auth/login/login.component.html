@@ -1,6 +1,6 @@
 <div class="form-container">
   <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h2 id="login-h2">Login</h2>
+    <h2 id="login-h2" id="login-h2">Login</h2>
     <mat-form-field id="login-form-field">
       <mat-label>Email</mat-label>
       <input
@@ -14,7 +14,7 @@
       <mat-error>Please enter a valid email address</mat-error>
       }
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field id="login-form-field">
       <mat-label>Password</mat-label>
       <input
         id="password"
@@ -29,10 +29,22 @@
       }
     </mat-form-field>
     <span>
-      <button mat-stroked-button type="button" id="login-form-button">
+      <button
+        mat-stroked-button
+        type="button"
+        id="login-form-button"
+        id="login-form-button-fp"
+      >
         Forgot Password?
       </button>
-      <button type="submit" mat-stroked-button color="primary">Login</button>
+      <button
+        type="submit"
+        mat-stroked-button
+        color="primary"
+        id="login-form-button-submit"
+      >
+        Login
+      </button>
     </span>
   </form>
 </div>

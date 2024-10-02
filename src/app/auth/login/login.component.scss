@@ -1,19 +1,18 @@
-:root {
-    --primary-color: #015cbb;
-}
+$primary-color: #015cbb;
 
 .form-container {
-    height: 100vh;
     display: flex;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
+    height: calc(100vh - 200px);
 }
 
 .login-form {
     max-width: 360px;
     max-height: 400px;
     padding: 20px;
-    border: 2px solid var(--primary-color);
+    border: 2px solid $primary-color;
     border-radius: 44px;
     display: flex;
     flex-direction: column;
@@ -27,12 +26,17 @@
 }
 
 #login-h2 {
-    color: var(--primary-color);
+    color: $primary-color;
     font-size: 28px;
     padding: 4px;
 }
 
-#login-form-button {
+#login-form-button-fp {
+    margin: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#login-form-button-submit {
     margin: 12px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
