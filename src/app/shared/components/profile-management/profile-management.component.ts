@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { trigger, style, transition, animate, query, stagger } from '@angular/animations';
 import { IUser, UserRoles } from '../../types/IUser';
 import { Router } from '@angular/router';
 import { MockProfileService } from '../../../core/services/mockProfile.service';
@@ -28,6 +29,24 @@ import { MockProfileService } from '../../../core/services/mockProfile.service';
   ],
   templateUrl: './profile-management.component.html',
   styleUrl: './profile-management.component.scss',
+  animations: [
+    trigger('formSlideUp', [
+      transition(':enter', [
+        query('mat-form-field', [
+          style({ transform: 'translateY(20px)', opacity: 0 }),
+          stagger(150, [
+            animate('600ms ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+          ])
+        ])
+      ]), transition(':leave', [
+        query('mat-form-field', [
+          stagger(100, [
+            animate('500ms ease-in', style({ transform: 'translateY(20px)', opacity: 0 }))
+          ])
+        ])
+      ])
+    ])
+  ]
 })
 export class ProfilePageComponent implements OnInit {
   private mockProfileService:MockProfileService = inject(MockProfileService);
@@ -47,6 +66,7 @@ export class ProfilePageComponent implements OnInit {
   togglePasswordChange() {
     this.changePassword = !this.changePassword;
     this.changePasswordForm.reset();
+  
   }
 
   ngOnInit(): void {

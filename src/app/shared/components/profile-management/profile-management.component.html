@@ -17,8 +17,8 @@
         Change Password <i class="bi bi-pencil-fill"></i>
       </button>
       @if (changePassword===true) {
-      <form action="" [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+      <form action="" [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()"    @formSlideUp>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="primary-outline-box-shadow">
           <mat-label>Current Password</mat-label>
           <input
             matInput
@@ -33,7 +33,7 @@
           <mat-error> Password is not correct. </mat-error>
           }
         </mat-form-field>
-        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="primary-outline-box-shadow">
           <mat-label>New Password</mat-label>
           <input
             matInput
@@ -49,7 +49,7 @@
           </mat-error>
           }
         </mat-form-field>
-        <mat-form-field appearance="outline" class="primary-outline-box-shadow">
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="primary-outline-box-shadow">
           <mat-label>Confirm Password</mat-label>
           <input
             matInput

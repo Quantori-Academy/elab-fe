@@ -7,7 +7,9 @@
   border-radius: 1rem;
   width: fit-content;
   margin: 2rem auto;
-  border: 2px solid #005cbb;
+  border: 2px solid var(--primary-color);
+  border-radius: 20px;
+  box-shadow: 0 0 5px var(--primary-color);
   img {
     border-radius: 50%;
     max-width: 100%;
@@ -31,7 +33,7 @@
     form {
       margin: 1rem 0;
       display: grid;
-      gap: 1rem;
+      gap: 1.6rem;
       .submit-buttons {
         display: flex;
         gap: 1rem;
