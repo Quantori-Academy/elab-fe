@@ -7,7 +7,7 @@ export const routes: Routes = [
       import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
     pathMatch: 'full',
   }, {
-    path: 'profile-page',
+    path: 'profile-management',
     pathMatch: 'full',
     loadComponent: () =>
       import('./shared/components/profile-management/profile-management.component').then(
