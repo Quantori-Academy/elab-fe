@@ -88,6 +88,11 @@ export class UserManagementFormComponent implements OnInit {
     if (!this.showPasswordField) this.userForm.patchValue({ password: '' });
   }
 
+  onDeleteUser(): void {
+    console.log('User deletion triggered');
+    // TODO: API CALL
+  }
+
   // Handle form submission
   onSubmit(): void {
     // TODO : API CALL
