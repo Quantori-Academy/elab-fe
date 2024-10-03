@@ -1,0 +1,21 @@
+@if (notificationData) {
+<mat-card class="card" [ngClass]="notificationData.type">
+  <div class="card__content">
+    <mat-icon class="card__icon">{{
+      notificationData.type === "success"
+        ? "check_circle"
+        : notificationData.type
+    }}</mat-icon>
+    <div class="card__data">
+      <strong class="card__title">{{ notificationData.title }}</strong>
+      <p class="card__message">{{ notificationData.message }}</p>
+    </div>
+  </div>
+  <mat-progress-bar
+    class="card__progress"
+    mode="determinate"
+    [value]="progressValue"
+    color="primary"
+  ></mat-progress-bar>
+</mat-card>
+}

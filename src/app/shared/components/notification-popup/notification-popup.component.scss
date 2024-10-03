@@ -1,0 +1,76 @@
+//COLORS FOR POPUP
+.card.success {
+  --light-color: #d4edda;
+  --dark-color: #008a20;
+  --progress-bg-color: #77b285;
+}
+
+.card.error {
+  --light-color: #f8d7da;
+  --dark-color: #c00010;
+  --progress-bg-color: #e5a1a1;
+}
+
+.card.warning {
+  --light-color: #fff3cd;
+  --dark-color: #f7c948;
+  --progress-bg-color: #fce588;
+}
+
+.card.info {
+  --light-color: #cce5ff;
+  --dark-color: #146bc1;
+  --progress-bg-color: #82bfd3;
+}
+
+.card {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+
+  width: 300px;
+  height: 70px;
+  border-radius: 0;
+  box-sizing: border-box;
+  background-color: var(--light-color);
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px 0;
+  }
+
+  &__icon {
+    width: 42px;
+    height: 42px;
+    font-size: 42px;
+    color: var(--dark-color);
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--dark-color);
+
+    .card__message {
+      margin: 0;
+      font-size: 12px;
+    }
+  }
+
+  &__progress {
+    margin-top: auto;
+  }
+  .mat-mdc-progress-bar.mat-primary {
+    --mdc-linear-progress-active-indicator-color: var(--dark-color);
+    --mdc-linear-progress-active-indicator-height: 7px !important;
+    --mdc-linear-progress-track-height: 7px !important;
+  }
+
+  ::ng-deep .mat-mdc-progress-bar.mat-primary .mdc-linear-progress__buffer-bar {
+    background: var(--progress-bg-color);
+  }
+}
