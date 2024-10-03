@@ -1,5 +1,3 @@
-$primary-color: #015cbb;
-
 .form-container {
     display: flex;
     flex-grow: 1;
@@ -12,8 +10,8 @@ $primary-color: #015cbb;
     max-width: 360px;
     max-height: 400px;
     padding: 20px;
-    border: 2px solid $primary-color;
-    border-radius: 44px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,11 +20,11 @@ $primary-color: #015cbb;
 }
 
 #login-form-field {
-    width: 90%;
+    width: 100%;
 }
 
 #login-h2 {
-    color: $primary-color;
+    color: var(--primary-color);
     font-size: 28px;
     padding: 4px;
 }

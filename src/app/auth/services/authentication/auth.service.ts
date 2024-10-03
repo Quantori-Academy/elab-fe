@@ -3,6 +3,7 @@ import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AuthStateService } from './authstate.service';
+import { Router } from '@angular/router';
 import LoginResponse from '../../auth.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +20,7 @@ export class AuthService {
   private isFetching = signal(false);
   private destroyRef = inject(DestroyRef);
   private httpClient = inject(HttpClient);
+  private router = inject(Router);
 
   onLoginUser(email: string, password: string) {
     const body = JSON.stringify({
@@ -51,6 +53,7 @@ export class AuthService {
         next: ({ access_token }) => {
           localStorage.setItem('access_token', access_token);
           this.access_token.set(access_token);
+          this.router.navigate(['dashboard']);
         },
         error: (error: Error) => {
           this.error.set(error.message);

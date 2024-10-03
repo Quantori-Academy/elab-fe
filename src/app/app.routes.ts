@@ -7,10 +7,10 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
-    pathMatch: 'full',
+    pathMatch: 'prefix',
   },
   {
-    path: 'login',
+    path: 'dashboard',
     component: LoginComponent,
     canActivate: [authGuard],
   },

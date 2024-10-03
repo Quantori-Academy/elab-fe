@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/authentication/auth.service';
+import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 let initialEmailValue = '';
 const savedForm = window.localStorage.getItem('login-email');
@@ -20,12 +22,17 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, MatIcon],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
+  public hide = {
+    newPassword: true,
+    confirmPassword: true,
+  };
 
   constructor(private authLogin: AuthService) {}
 
@@ -34,7 +41,7 @@ export class LoginComponent implements OnInit {
       validators: [Validators.email, Validators.required],
     }),
     password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(5)],
+      validators: [Validators.required, Validators.minLength(8)],
     }),
   });
 
@@ -46,12 +53,20 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  get emailTouched() {
+    return this.form.controls.email.touched;
+  }
+
   get passwordIsInvalid() {
     return (
       this.form.controls.password.touched &&
       this.form.controls.password.dirty &&
       this.form.controls.password.invalid
     );
+  }
+
+  get passwordTouched() {
+    return this.form.controls.password.touched;
   }
 
   ngOnInit() {
@@ -90,5 +105,9 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('error');
     }
+  }
+
+  navigateToForgotPassword() {
+    return this.router.navigate(['forgot-password']);
   }
 }
