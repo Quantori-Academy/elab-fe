@@ -1,11 +1,11 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { NotificationData } from '../../models/notification-popup.model';
 import { NotificationPopupService } from '../../services/notification-popup/notification-popup.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgClass } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-notification-popup',
@@ -14,11 +14,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './notification-popup.component.html',
   styleUrl: './notification-popup.component.scss',
 })
-export class NotificationPopupComponent implements OnInit {
+export class NotificationPopupComponent implements OnInit, OnDestroy {
   private PROGRESS_MAX_VALUE = 100;
-  private timeoutId?: number;
-  private intervalId?: number;
-  private destroyRef = inject(DestroyRef);
+  private animationId?: number;
+  private destroy$ = new Subject<void>();
   public notificationData!: NotificationData | null;
   public progressValue = 0;
 
@@ -26,43 +25,44 @@ export class NotificationPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.notificationPopupService.notificationData
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((value) => {
         this.notificationData = value;
         if (value && value.duration) {
-          this.resetProgressBar(value.duration);
-          this.resetTimer(value.duration);
+          this.animateProgress(value.duration);
         }
       });
   }
 
-  private resetTimer(duration: number): void {
-    if (this.timeoutId) {
-      window.clearTimeout(this.timeoutId);
-    }
-    this.timeoutId = window.setTimeout(() => {
-      this.notificationData = null;
-      this.progressValue = 0;
-      if (this.intervalId) {
-        window.clearInterval(this.intervalId);
+  animateProgress(duration: number) {
+    this.progressValue = 0;
+
+    const startTime = performance.now();
+
+    const animate = (time: number) => {
+      const elapsed = time - startTime;
+      this.progressValue = Math.min(
+        (elapsed / duration) * this.PROGRESS_MAX_VALUE,
+        this.PROGRESS_MAX_VALUE
+      );
+
+      if (this.progressValue < this.PROGRESS_MAX_VALUE) {
+        this.animationId = requestAnimationFrame(animate);
+      } else {
+        this.notificationData = null;
+        cancelAnimationFrame(this.animationId!);
       }
-    }, duration);
+    };
+
+    this.animationId = requestAnimationFrame(animate);
   }
 
-  private resetProgressBar(duration: number): void {
-    if (this.intervalId) {
-      window.clearInterval(this.intervalId);
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
-    this.progressValue = 0;
-    const step = (this.PROGRESS_MAX_VALUE / duration) * this.PROGRESS_MAX_VALUE;
-
-    this.intervalId = window.setInterval(() => {
-      if (this.progressValue < this.PROGRESS_MAX_VALUE) {
-        this.progressValue += step;
-      } else {
-        window.clearInterval(this.intervalId);
-      }
-    }, this.PROGRESS_MAX_VALUE);
+  onClose(): void {
+    this.notificationData = null;
   }
 }

@@ -9,13 +9,11 @@
     <div class="card__data">
       <strong class="card__title">{{ notificationData.title }}</strong>
       <p class="card__message">{{ notificationData.message }}</p>
+      <mat-icon class="close-btn" (click)="onClose()">close</mat-icon>
     </div>
   </div>
-  <mat-progress-bar
-    class="card__progress"
-    mode="determinate"
-    [value]="progressValue"
-    color="primary"
-  ></mat-progress-bar>
+  <div class="progress">
+    <span class="progress-bar" [style.width.%]="progressValue"></span>
+  </div>
 </mat-card>
 }

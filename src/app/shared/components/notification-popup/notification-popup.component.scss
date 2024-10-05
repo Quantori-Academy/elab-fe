@@ -50,27 +50,38 @@
   }
 
   &__data {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: var(--dark-color);
+    position: relative;
 
     .card__message {
       margin: 0;
       font-size: 12px;
     }
+    .close-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
 
-  &__progress {
+  .progress {
     margin-top: auto;
-  }
-  .mat-mdc-progress-bar.mat-primary {
-    --mdc-linear-progress-active-indicator-color: var(--dark-color);
-    --mdc-linear-progress-active-indicator-height: 7px !important;
-    --mdc-linear-progress-track-height: 7px !important;
-  }
-
-  ::ng-deep .mat-mdc-progress-bar.mat-primary .mdc-linear-progress__buffer-bar {
+    display: flex;
     background: var(--progress-bg-color);
+
+    .progress-bar {
+      height: 10px;
+      background: var(--dark-color);
+    }
   }
 }
