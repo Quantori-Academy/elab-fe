@@ -1,0 +1,48 @@
+.header {
+  border-bottom: 1px solid grey;
+  color: grey;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  width: 100px;
+}
+
+.user-section {
+  display: flex;
+  cursor: pointer;
+  button {
+    background-color: grey;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+
+    &:hover {
+      background-color: #ff0000;
+    }
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.username {
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: grey;
+}
+
