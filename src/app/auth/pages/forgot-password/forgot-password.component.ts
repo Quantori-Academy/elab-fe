@@ -17,7 +17,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ForgotPasswordService } from '../../services/forgot-password/forgot-password.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
@@ -41,7 +41,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIcon,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    NgIf,
     NgClass,
   ],
   providers: [ForgotPasswordService],

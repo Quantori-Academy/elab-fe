@@ -21,7 +21,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { NgIf } from '@angular/common';
 import { finalize, Subject, take, takeUntil } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -37,7 +36,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatIcon,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
-    NgIf,
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
