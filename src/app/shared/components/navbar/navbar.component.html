@@ -1,0 +1,11 @@
+<nav>
+  <ul>
+    @for (link of menuLinks; track link.label){
+    @if (isLinkVisible(link)) {
+    <li class="menu-link" [routerLink]="link.link">
+      <a>{{ link.label }}</a>
+    </li>
+    }
+    }
+  </ul>
+</nav>

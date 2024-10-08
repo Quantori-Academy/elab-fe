@@ -1,18 +1,32 @@
 import { Routes } from '@angular/router';
 
+// Uncomment to use
+
+// import { LoginComponent } from './auth/pages/login/login.component';
+// import { authGuard } from './auth/auth.guard';
+// import { roleGuard } from './auth/role.guard';
+// import { AdminComponent } from './admin-test/admin-test.component';
+
 export const routes: Routes = [
   {
-    path: 'forgot-password',
-    loadComponent: () =>
-      import('./auth/pages/forgot-password/forgot-password.component').then(
-        (comp) => comp.ForgotPasswordComponent
-      ),
+    path: '',
+    loadChildren: () =>
+      import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
+    pathMatch: 'prefix',
   },
-  {
-    path: 'reset-password',
-    loadComponent: () =>
-      import('./auth/pages/reset-password/reset-password.component').then(
-        (comp) => comp.ResetPasswordComponent
-      ),
-  },
+
+  // Uncomment to use
+
+  // {
+  //   path: 'dashboard',
+  //   component: LoginComponent,
+  //   canActivate: [authGuard],
+  // },
+  // You can use guard like this
+  // {
+  //   path: 'admin',
+  //   component: AdminComponent,
+  //   canActivate: [authGuard, roleGuard],
+  //   data: { role: 'Admin' },
+  // },
 ];

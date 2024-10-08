@@ -1,0 +1,10 @@
+services:
+  app:
+    container_name: lims_fe_non_prod_app
+    build:
+      context: .
+      target: development
+    ports:
+      - "8080:80"
+    environment:
+      NODE_ENV: development
