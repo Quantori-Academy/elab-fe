@@ -2,9 +2,13 @@
   <img src="assets/icons/logo_quantory.svg" alt="Logo" class="logo">
   <div class="user-section">
     <div class="user-info">
-      <span class="username" (click)="navigateToProfile()">{{ currentUser.name }}</span>
-      <div class="avatar" (click)="navigateToProfile()">
-        <!-- <img [src]="currentUser.avatarUrl" alt="User Avatar" (click)="navigateToProfile()"> -->
+      <span class="username" (click)="navigateToProfile()" tabindex="0"
+        (keyup)="($event.key === 'Enter') && navigateToProfile()">
+        {{ currentUser.name }}
+      </span>
+      <div class="avatar" (click)="navigateToProfile()" tabindex="0"
+        (keyup)="($event.key === 'Enter') && navigateToProfile()">
+        <!-- <img [src]="currentUser.avatarUrl" alt="User Avatar"> -->
       </div>
     </div>
     <button mat-button (click)="logout()">Logout</button>

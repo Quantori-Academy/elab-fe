@@ -1,4 +1,4 @@
-name: E Lab BE Prod
+name: E Lab BE Non Prod
 
 on: workflow_dispatch
 
@@ -14,23 +14,23 @@ jobs:
               uses: actions/setup-node@v3
               with:
                 node-version: '20' # Specify the Node.js version you want to use
-      
+
             - name: Install dependencies
               run: npm install
-      
+
             - name: Run lint
               run: npm run lint
-      
+
             # - name: Run tests
             #   run: npm run test
-      
+
             - name: Run build
               run: npm run build
-                
+
     deploy:
       runs-on: ubuntu-latest
       needs: install-and-validate
-      # env: 
+      # env:
       #   API_URL: ${{ secrets.API_URL }}
 
       steps:
@@ -63,7 +63,7 @@ jobs:
             echo "${SSH_KEY}" >> /tmp/ssh_key
             chmod 400 /tmp/ssh_key
             scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./elab-fe ${SSH_USER}@$VM_IP:~
-            
+
         - name: Run latest version
           uses: appleboy/ssh-action@v1.0.3
           with:
