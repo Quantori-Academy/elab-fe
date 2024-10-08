@@ -63,7 +63,6 @@ jobs:
             echo "${SSH_KEY}" >> /tmp/ssh_key
             chmod 400 /tmp/ssh_key
             scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./elab-fe ${SSH_USER}@$VM_IP:~
-
         - name: Run latest version
           uses: appleboy/ssh-action@v1.0.3
           with:
