@@ -20,7 +20,7 @@ export class LogoutService {
       'Content-Type': 'application/json',
     });
     this.httpClient
-      .delete(this.logOutUrl, { headers })
+      .delete(this.logOutUrl, { headers, withCredentials: true })
       .pipe(
         catchError(() => {
           return throwError(() => new Error());
@@ -28,9 +28,9 @@ export class LogoutService {
       )
       .subscribe({
         next: () => {
+          this.router.createUrlTree(['/login']);
           localStorage.removeItem('access_token');
           this.authStateService.logoutEvent.next();
-          this.router.createUrlTree(['/login']);
         },
         error: (error) => {
           console.error('Logout Failed: ', error);

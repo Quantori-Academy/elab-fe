@@ -10,6 +10,7 @@ import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { LogoutService } from '../../services/logout/logout.service';
 
 let initialEmailValue = '';
 const savedForm = window.localStorage.getItem('login-email');
@@ -34,7 +35,10 @@ export class LoginComponent implements OnInit {
     confirmPassword: true,
   };
 
-  constructor(private authLogin: AuthService) {}
+  constructor(
+    private authLogin: AuthService,
+    private logoutService: LogoutService
+  ) {}
 
   form = new FormGroup({
     email: new FormControl(initialEmailValue, {
@@ -109,5 +113,10 @@ export class LoginComponent implements OnInit {
 
   navigateToForgotPassword() {
     return this.router.navigate(['forgot-password']);
+  }
+
+  onTemporaryLogout() {
+    this.router.createUrlTree(['/login']);
+    this.logoutService.onLogoutUser();
   }
 }

@@ -5,12 +5,4 @@
   <p>Hello, {{ title }}!</p>
 </main>
 
-@if (authenticatedUser?.role === 'Admin') {
-<div>Admin works</div>
-} @if (authenticatedUser?.role === 'Researcher') {
-<div>Researcher works</div>
-} @if (authenticatedUser?.role === 'ProcurementOfficer') {
-<div>Procurement Officer works</div>
-}
-
 <router-outlet />
