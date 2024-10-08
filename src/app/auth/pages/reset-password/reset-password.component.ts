@@ -22,7 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { finalize, Subject, take, takeUntil } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
@@ -103,7 +103,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         .subscribe({
           next: () => this.redirectTo('login'),
           error: (error: HttpErrorResponse) => {
-            if (error.status == 400) {
+            if (error.status == HttpStatusCode.BadRequest) {
               this.confirmPassword.setErrors({ passwordNoMatch: true });
             }
           },

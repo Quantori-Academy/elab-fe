@@ -25,7 +25,7 @@ import {
   EmailSendResponse,
   EmailSendSuccess,
 } from '../../models/forgot-password.interface';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { fadeInOutEmailSuccess } from '../../../shared/animations/fadeInOut/fadeInOut.animation';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
@@ -98,7 +98,7 @@ export class ForgotPasswordComponent implements OnDestroy {
             });
           },
           error: (error: HttpErrorResponse) => {
-            if (error.statusText === `Email doesn't exists`) {
+            if (error.status === HttpStatusCode.NotFound) {
               this.email.setErrors({ emailNotExist: true });
             }
           },
