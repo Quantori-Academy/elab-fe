@@ -13,7 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../services/logout/logout.service';
 
 let initialEmailValue = '';
-const savedForm = window.localStorage.getItem('login-email');
+const savedForm = localStorage.getItem('login-email');
 
 if (savedForm) {
   const loadedForm = JSON.parse(savedForm);
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
       .pipe(debounceTime(500))
       .subscribe({
         next: (value) => {
-          window.localStorage.setItem(
+          localStorage.setItem(
             'login-email',
             JSON.stringify({ email: value.email })
           );
@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
       email: '',
       password: '',
     });
-    window.localStorage.removeItem('login-email');
+    localStorage.removeItem('login-email');
   }
 
   onSubmit() {
