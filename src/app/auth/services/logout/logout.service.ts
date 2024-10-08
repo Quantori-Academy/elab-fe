@@ -20,7 +20,7 @@ export class LogoutService {
       'Content-Type': 'application/json',
     });
     this.httpClient
-      .delete(this.logOutUrl, { headers, withCredentials: true })
+      .delete(this.logOutUrl, { headers })
       .pipe(
         catchError(() => {
           return throwError(() => new Error());

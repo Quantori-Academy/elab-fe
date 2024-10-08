@@ -35,7 +35,6 @@ export class AuthService {
     const subscription = this.httpClient
       .post<LoginResponse>(this.authUrl, body, {
         headers,
-        withCredentials: true,
       })
       .pipe(
         map((resData) => resData.access_token),
