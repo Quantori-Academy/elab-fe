@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   healthStatus: ServerHealthStatus | null = null;
   errorMessage: string | null = null;
 
-  constructor(private healthCheckService: MockHealthCheckService) {} //CHANGE TYPE TO HealthCheckService
+  constructor(private healthCheckService: MockHealthCheckService) {} // CHANGE TYPE TO HealthCheckService
 
   ngOnInit(): void {
     this.checkHealth();
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   checkHealth(): void {
     this.healthCheckService.checkHealth().subscribe({
       next: (response) => {
-        console.log('Mock data:', response); //FOR CHECK MOCK DATA
+        console.log('Mock data:', response); // FOR CHECK MOCK DATA
         this.healthStatus = response;
       },
       error: (err) => {

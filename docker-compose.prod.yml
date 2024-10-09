@@ -3,6 +3,7 @@ services:
     container_name: lims_fe_prod_app
     build:
       context: .
+      target: production
     ports:
       - "80:80"
     environment:

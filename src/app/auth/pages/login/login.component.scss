@@ -1,0 +1,40 @@
+.form-container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    max-width: 360px;
+    max-height: 400px;
+    padding: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.5);
+    gap: 8px;
+}
+
+#login-form-field {
+    width: 100%;
+}
+
+#login-h2 {
+    color: var(--primary-color);
+    font-size: 28px;
+    padding: 4px;
+}
+
+#login-form-button-fp {
+    margin: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#login-form-button-submit {
+    margin: 12px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

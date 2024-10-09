@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,12 +17,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { confirmPasswordValidator } from '../../../shared/validators/confirm-password.validator';
-import { NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { ForgotPasswordService } from '../../services/forgot-password/forgot-password.service';
-import { NewPassword } from '../../models/forgot-password.interface';
-import { take } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
+import {
+  EmailSendResponse,
+  EmailSendSuccess,
+} from '../../models/forgot-password.interface';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { fadeInOutEmailSuccess } from '../../../shared/animations/fadeInOut/fadeInOut.animation';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-forgot-password',
@@ -28,74 +39,75 @@ import { MatIcon } from '@angular/material/icon';
     MatInputModule,
     MatButtonModule,
     MatIcon,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
-    NgIf,
+    NgClass,
   ],
   providers: [ForgotPasswordService],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
+  animations: [fadeInOutEmailSuccess],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ForgotPasswordComponent {
-  public newPasswordForm!: FormGroup;
-  public MIN_LENGTH = 8;
-  public hide = {
-    newPassword: true,
-    confirmPassword: true,
-  };
+export class ForgotPasswordComponent implements OnDestroy {
+  public forgotPasswordForm!: FormGroup;
+  public isLoading = signal(false);
+  public sendEmailSuccess = signal<EmailSendSuccess>({
+    isSuccess: false,
+    message: '',
+  });
 
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private forgotPasswordService = inject(ForgotPasswordService);
+  private destroy$ = new Subject<void>();
 
   constructor() {
-    this.newPasswordForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        newPassword: [
-          '',
-          [Validators.required, Validators.minLength(this.MIN_LENGTH)],
-        ],
-        confirmPassword: ['', [Validators.required]],
-      },
-      { validators: confirmPasswordValidator.bind(this) }
-    );
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
   }
 
   public get email(): AbstractControl {
-    return this.newPasswordForm.get('email')!;
-  }
-
-  public get newPassword(): AbstractControl {
-    return this.newPasswordForm.get('newPassword')!;
-  }
-
-  public get confirmPassword(): AbstractControl {
-    return this.newPasswordForm.get('confirmPassword')!;
+    return this.forgotPasswordForm.get('email')!;
   }
 
   hasError(label: string, error: string): boolean | undefined {
-    return this.newPasswordForm.get(label)?.hasError(error);
+    return this.forgotPasswordForm.get(label)?.hasError(error);
   }
 
-  onCancel(): void {
-    this.router.navigate(['login']);
+  redirectTo(path: string): void {
+    this.router.navigate([path]);
   }
 
   onSubmit(): void {
-    if (this.newPasswordForm.valid) {
-      const { email, newPassword } = this.newPasswordForm.value;
-      const newPasswordObj: NewPassword = { email, newPassword };
-      const isPasswordChanged =
-        this.forgotPasswordService.changePassword(newPasswordObj);
-
-      isPasswordChanged.pipe(take(1)).subscribe((value) => {
-        if (value) {
-          this.router.navigate(['login']);
-        } else {
-          this.email.setErrors({ emailNotExist: true });
-        }
-      });
+    if (this.forgotPasswordForm.valid) {
+      this.isLoading.set(true);
+      const { email } = this.forgotPasswordForm.value;
+      this.forgotPasswordService
+        .sendEmail(email)
+        .pipe(
+          takeUntil(this.destroy$),
+          finalize(() => this.isLoading.set(false))
+        )
+        .subscribe({
+          next: (res: EmailSendResponse) => {
+            this.sendEmailSuccess.set({
+              isSuccess: true,
+              message: res.message,
+            });
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status === HttpStatusCode.NotFound) {
+              this.email.setErrors({ emailNotExist: true });
+            }
+          },
+        });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

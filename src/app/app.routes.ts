@@ -5,6 +5,6 @@ export const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
-    pathMatch: 'full',
+    pathMatch: 'prefix',
   },
 ];
