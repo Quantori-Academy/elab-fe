@@ -32,7 +32,7 @@
       </mat-error>
     </mat-form-field>
 
-    <span *ngIf="userData?.email">
+    <!-- <span *ngIf="userData?.email">
       <button
         mat-stroked-button
         style="white-space: nowrap"
@@ -41,7 +41,7 @@
       >
         {{ emailEditable ? "Lock Email" : "Edit Email" }}
       </button>
-    </span>
+    </span> -->
   </div>
 
   <!-- Role Field -->
@@ -58,7 +58,7 @@
   </mat-form-field>
 
   <!-- Change Password Button -->
-  <div>
+  <!-- <div>
     <button
       type="button"
       mat-button
@@ -67,14 +67,14 @@
     >
       {{ showPasswordField ? "Hide Password Field" : "Configure Password" }}
     </button>
-  </div>
+  </div> -->
 
   <!-- Password Fields (Conditionally Rendered) -->
 
-  <mat-form-field appearance="outline" *ngIf="showPasswordField">
+  <!-- <mat-form-field appearance="outline" *ngIf="showPasswordField">
     <mat-label>New Password</mat-label>
     <input matInput type="password" formControlName="password" />
-  </mat-form-field>
+  </mat-form-field> -->
 
   <div class="form-actions">
     <!-- Submit Button (Always Enabled) -->
@@ -82,7 +82,7 @@
 
     <!-- Delete User button (Enabled only in modification mode, when userData is provided) -->
     <button
-      *ngIf="userData"
+      *ngIf="!userCreation"
       mat-flat-button
       type="button"
       color="warn"

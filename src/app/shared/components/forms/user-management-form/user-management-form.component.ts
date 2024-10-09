@@ -12,7 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatOptionModule } from '@angular/material/core';
-import { IUser, UserRoles } from '../../../models/user-models';
+import { IUserInfo, UserRoles } from '../../../models/user-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-management-form',
@@ -32,22 +33,31 @@ import { IUser, UserRoles } from '../../../models/user-models';
 })
 export class UserManagementFormComponent implements OnInit {
   @Input() formTitle = 'Create New User'; // Form title
-  @Input() userData: IUser = this.generateInitialUser(); // Generate initial user
+  @Input() userData: IUserInfo = this.generateInitialUser(); // Generate initial user
 
   userForm!: FormGroup; // Form data obj
-  emailEditable = true; // Email is editable by default in user creation mode
-  showPasswordField = false; // Password fields toggle
   roles = Object.values(UserRoles); // user roles for select-options
+  userCreation!: boolean; // flag to determine user modification/creation modes
+  emailEditable = true; // Email is editable by default in user creation mode
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
-    this.emailEditable = this.userData.email === ''; // Email is editable if it's empty (user creation mode)
+    this.emailEditable = this.userCreation = this.userData.email === ''; // Email is editable if it's empty (user creation mode)
 
     // Initialize the form data obj
     this.userForm = this.fb.group({
-      name: [this.userData.name, Validators.required],
-      lastName: [this.userData.lastName, Validators.required],
+      name: [
+        { value: this.userData.name, disabled: !this.userCreation },
+        [Validators.required],
+      ],
+      lastName: [
+        {
+          value: this.userData.lastName,
+          disabled: !this.userCreation,
+        },
+        [Validators.required],
+      ],
       email: [
         { value: this.userData.email, disabled: !this.emailEditable },
         [Validators.required, Validators.email],
@@ -56,41 +66,39 @@ export class UserManagementFormComponent implements OnInit {
         this.userData.email !== '' ? this.userData.role : null,
         Validators.required,
       ],
-      password: [''],
     });
   }
 
   // Method to generate initial empty user with random ID
-  private generateInitialUser(): IUser {
+  private generateInitialUser(): IUserInfo {
     return {
-      id: Math.floor(Math.random() * 10000), // TODO: change ID init
+      id: -1, // placeholder -> id will not be sent as Data
       name: '',
       lastName: '',
       email: '',
-      role: UserRoles.researcher, // TODO: default value ??
-      password: '',
+      role: UserRoles.researcher,
     };
   }
 
   // Toggle email edit option
-  toggleEmailEdit(): void {
-    this.emailEditable = !this.emailEditable;
-    if (this.emailEditable) {
-      this.userForm.get('email')?.enable();
-    } else {
-      this.userForm.get('email')?.disable();
-    }
-  }
+  // toggleEmailEdit(): void {
+  //   if (this.emailEditable && !this.userForm.get('email')?.valid) return;
+  //   this.emailEditable = !this.emailEditable;
+  //   if (this.emailEditable) {
+  //     this.userForm.get('email')?.enable();
+  //   } else {
+  //     this.userForm.get('email')?.disable();
+  //   }
+  // }
 
   // Toggle password fields
-  togglePasswordField(): void {
-    this.showPasswordField = !this.showPasswordField;
-    if (!this.showPasswordField) this.userForm.patchValue({ password: '' });
-  }
+  // togglePasswordField(): void {
+  //   this.showPasswordField = !this.showPasswordField;
+  //   if (!this.showPasswordField) this.userForm.patchValue({ password: '' });
+  // }
 
   onDeleteUser(): void {
     console.log('User deletion triggered');
-    // TODO: API CALL
   }
 
   // Handle form submission
@@ -100,9 +108,9 @@ export class UserManagementFormComponent implements OnInit {
     if (this.userForm.valid) {
       console.log('Form Data:', this.userForm.value);
       console.log('OK!');
-      if (this.showPasswordField) {
-        // TODO : RESET PASSWORD
-      }
+      // if (this.showPasswordField) {
+      //   // TODO : RESET PASSWORD
+      // }
     } else {
       // TODO : ERR Handling
     }

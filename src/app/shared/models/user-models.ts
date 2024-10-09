@@ -1,14 +1,14 @@
-export interface IUser {
-  id: number; // TODO: Change type for security
+export interface IUserInfo {
+  id: number;
   name: string;
   lastName: string;
   email: string; // Email / Username
   role: UserRoles;
-  password: string;
+  password?: string;
 }
 
 export enum UserRoles {
-  admin = 'admin',
-  procurementOfficer = 'procurementOfficer',
-  researcher = 'researcher',
+  admin = 'Admin',
+  procurementOfficer = 'ProcurementOfficer',
+  researcher = 'Researcher',
 }
