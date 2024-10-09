@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -13,9 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatOptionModule } from '@angular/material/core';
 import { IUserInfo, UserRoles } from '../../../models/user-models';
-import { AuthService } from '../../../../auth/services/authentication/auth.service';
 import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
-import { HttpHeaders } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-management-form',
@@ -33,10 +32,11 @@ import { HttpHeaders } from '@angular/common/http';
   templateUrl: './user-management-form.component.html',
   styleUrl: './user-management-form.component.scss',
 })
-export class UserManagementFormComponent implements OnInit {
+export class UserManagementFormComponent implements OnInit, OnDestroy {
   @Input() formTitle = 'Create New User'; // Form title
   @Input() userData: IUserInfo = this.generateInitialUser(); // Generate initial user
 
+  private subscriptions = new Subscription(); // Observable subscriptions collections
   userForm!: FormGroup; // Form data obj
   roles = Object.values(UserRoles); // user roles for select-options
   userCreation!: boolean; // flag to determine user modification/creation modes
@@ -45,7 +45,6 @@ export class UserManagementFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private userManagementService: UserManagementService
   ) {}
 
@@ -106,48 +105,59 @@ export class UserManagementFormComponent implements OnInit {
 
   onDeleteUser(): void {
     if (!confirm('Confirm action -> Delete user:')) return;
-    const token = this.authService.getAccessToken();
-    const headers = token
-      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
-      : undefined;
-    this.userManagementService.deleteUser(this.userData.id, headers).subscribe({
-      next: () => {
-        // TODO: change to proper reroute path
-      },
-      error: (error: Error) => {
-        console.error('Delete user failed', error);
-      },
-    });
+    const deleteSub = this.userManagementService
+      .deleteUser(this.userData.id)
+      .subscribe({
+        next: () => {
+          alert('User deleted successfully!');
+          // TODO: change to proper reroute path
+        },
+        error: (error: Error) => {
+          console.error('Delete user failed', error);
+        },
+      });
+    this.subscriptions.add(deleteSub);
   }
 
   // Handle form submission
   onSubmit(): void {
     if (this.userForm.valid) {
       this.formErrMsgs = null;
-      const headers = new HttpHeaders({ Authorization: 'Bearer your_token' });
 
       // if (this.showPasswordField) {
       //   // TODO : RESET PASSWORD
       // }
       if (this.userCreation) {
         // user-creation
-        this.userManagementService
-          .createUser(this.userForm.value, headers)
+        const createSub = this.userManagementService
+          .createUser(this.userForm.value)
           .subscribe({
+            next: () => {
+              alert('User has been created successfully!');
+              this.userForm.reset();
+            },
             error: (error) => {
               this.formErrMsgs = error.message.split(',');
             },
           });
+        this.subscriptions.add(createSub);
       } else {
         // user-modification
-        this.userManagementService
-          .updateUser(this.userData.id, this.userForm.value, headers)
+        const updateSub = this.userManagementService
+          .updateUser(this.userData.id, this.userForm.value)
           .subscribe({
+            next: () => {
+              alert('User updated successfully!');
+            },
             error: (error) => {
               this.formErrMsgs = error.message.split(',');
             },
           });
+        this.subscriptions.add(updateSub);
       }
     }
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
