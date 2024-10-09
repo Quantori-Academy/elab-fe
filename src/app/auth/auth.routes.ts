@@ -1,10 +1,8 @@
 import { Routes } from '@angular/router';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
 import { noAuthGuard } from './noauth.guard';
-// import { roleGuard } from './role.guard';
 
 export const AuthRoutes: Routes = [
   {
@@ -14,8 +12,17 @@ export const AuthRoutes: Routes = [
   },
   {
     path: 'forgot-password',
-    component: ForgotPasswordComponent,
-    canActivate: [noAuthGuard],
+    loadComponent: () =>
+      import('./pages/forgot-password/forgot-password.component').then(
+        (comp) => comp.ForgotPasswordComponent
+      ),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./pages/reset-password/reset-password.component').then(
+        (comp) => comp.ResetPasswordComponent
+      ),
   },
   {
     path: 'login',
