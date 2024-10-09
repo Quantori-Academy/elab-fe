@@ -35,6 +35,7 @@ export class AuthService {
     const subscription = this.httpClient
       .post<LoginResponse>(this.authUrl, body, {
         headers,
+        withCredentials: true,
       })
       .pipe(
         map((resData) => resData.access_token),
@@ -78,16 +79,18 @@ export class AuthService {
           Authorization: `Bearer ${token}`,
         });
 
-        this.httpClient.get<User>(this.userUrl, { headers }).subscribe({
-          next: (user) => {
-            this.rbacService.setAuthenticatedUser(user);
-            resolve();
-          },
-          error: (err) => {
-            console.error('Error fetching user:', err);
-            reject(err);
-          },
-        });
+        this.httpClient
+          .get<User>(this.userUrl, { headers, withCredentials: true })
+          .subscribe({
+            next: (user) => {
+              this.rbacService.setAuthenticatedUser(user);
+              resolve();
+            },
+            error: (err) => {
+              console.error('Error fetching user:', err);
+              reject(err);
+            },
+          });
       } else {
         reject('No token found');
       }
