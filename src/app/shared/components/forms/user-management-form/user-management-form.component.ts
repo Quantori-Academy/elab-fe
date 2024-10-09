@@ -82,7 +82,7 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
       firstName: '',
       lastName: '',
       email: '',
-      role: UserRoles.researcher,
+      role: UserRoles.Researcher,
     };
   }
 

@@ -8,7 +8,7 @@ export interface IUserInfo {
 }
 
 export enum UserRoles {
-  admin = 'Admin',
-  procurementOfficer = 'ProcurementOfficer',
-  researcher = 'Researcher',
+  Admin = 'Admin',
+  ProcurementOfficer = 'ProcurementOfficer',
+  Researcher = 'Researcher',
 }
