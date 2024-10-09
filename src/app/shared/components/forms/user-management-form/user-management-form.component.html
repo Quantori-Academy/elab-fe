@@ -1,11 +1,15 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="user-form">
   <h2>{{ formTitle }}</h2>
 
-  <!-- Name Field -->
+  <!-- First Name Field -->
   <mat-form-field appearance="outline">
-    <mat-label>Name</mat-label>
-    <input matInput formControlName="name" />
-    <mat-error *ngIf="userForm.get('name')?.hasError('required')">
+    <mat-label>First Name</mat-label>
+    <input
+      matInput
+      oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1)"
+      formControlName="firstName"
+    />
+    <mat-error *ngIf="userForm.get('firstName')?.hasError('required')">
       First Name is <strong>required</strong>
     </mat-error>
   </mat-form-field>
@@ -13,7 +17,11 @@
   <!-- Last Name Field -->
   <mat-form-field appearance="outline">
     <mat-label>Last Name</mat-label>
-    <input matInput formControlName="lastName" />
+    <input
+      matInput
+      oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1)"
+      formControlName="lastName"
+    />
     <mat-error *ngIf="userForm.get('lastName')?.hasError('required')">
       Last Name is <strong>required</strong>
     </mat-error>
@@ -75,6 +83,13 @@
     <mat-label>New Password</mat-label>
     <input matInput type="password" formControlName="password" />
   </mat-form-field> -->
+  <div *ngIf="this.formErrMsgs">
+    <mat-error *ngFor="let errorMsg of this.formErrMsgs">
+      <p>
+        *<strong>{{ errorMsg | titlecase }}</strong>
+      </p>
+    </mat-error>
+  </div>
 
   <div class="form-actions">
     <!-- Submit Button (Always Enabled) -->

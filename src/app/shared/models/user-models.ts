@@ -1,6 +1,6 @@
 export interface IUserInfo {
   id: number;
-  name: string;
+  firstName: string;
   lastName: string;
   email: string; // Email / Username
   role: UserRoles;

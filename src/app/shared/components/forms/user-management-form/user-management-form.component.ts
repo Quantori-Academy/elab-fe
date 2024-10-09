@@ -13,7 +13,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatOptionModule } from '@angular/material/core';
 import { IUserInfo, UserRoles } from '../../../models/user-models';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../../auth/services/authentication/auth.service';
+import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-management-form',
@@ -39,16 +41,21 @@ export class UserManagementFormComponent implements OnInit {
   roles = Object.values(UserRoles); // user roles for select-options
   userCreation!: boolean; // flag to determine user modification/creation modes
   emailEditable = true; // Email is editable by default in user creation mode
+  formErrMsgs: string[] | null = null; // Failure Err messages
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userManagementService: UserManagementService
+  ) {}
 
   ngOnInit(): void {
     this.emailEditable = this.userCreation = this.userData.email === ''; // Email is editable if it's empty (user creation mode)
 
     // Initialize the form data obj
     this.userForm = this.fb.group({
-      name: [
-        { value: this.userData.name, disabled: !this.userCreation },
+      firstName: [
+        { value: this.userData.firstName, disabled: !this.userCreation },
         [Validators.required],
       ],
       lastName: [
@@ -73,7 +80,7 @@ export class UserManagementFormComponent implements OnInit {
   private generateInitialUser(): IUserInfo {
     return {
       id: -1, // placeholder -> id will not be sent as Data
-      name: '',
+      firstName: '',
       lastName: '',
       email: '',
       role: UserRoles.researcher,
@@ -98,22 +105,49 @@ export class UserManagementFormComponent implements OnInit {
   // }
 
   onDeleteUser(): void {
-    console.log('User deletion triggered');
+    if (!confirm('Confirm action -> Delete user:')) return;
+    const token = this.authService.getAccessToken();
+    const headers = token
+      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      : undefined;
+    this.userManagementService.deleteUser(this.userData.id, headers).subscribe({
+      next: () => {
+        // TODO: change to proper reroute path
+      },
+      error: (error: Error) => {
+        console.error('Delete user failed', error);
+      },
+    });
   }
 
   // Handle form submission
   onSubmit(): void {
-    // TODO : API CALL
-
     if (this.userForm.valid) {
-      console.log('Form Data:', this.userForm.value);
-      console.log('OK!');
+      this.formErrMsgs = null;
+      const headers = new HttpHeaders({ Authorization: 'Bearer your_token' });
+
       // if (this.showPasswordField) {
       //   // TODO : RESET PASSWORD
       // }
-    } else {
-      // TODO : ERR Handling
+      if (this.userCreation) {
+        // user-creation
+        this.userManagementService
+          .createUser(this.userForm.value, headers)
+          .subscribe({
+            error: (error) => {
+              this.formErrMsgs = error.message.split(',');
+            },
+          });
+      } else {
+        // user-modification
+        this.userManagementService
+          .updateUser(this.userData.id, this.userForm.value, headers)
+          .subscribe({
+            error: (error) => {
+              this.formErrMsgs = error.message.split(',');
+            },
+          });
+      }
     }
-    console.log('Current Form Data:', this.userForm.value);
   }
 }
