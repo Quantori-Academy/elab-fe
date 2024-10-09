@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   private authUrl = environment.apiUrl + '/api/v1/auth/login';
-  private userUrl = environment.apiUrl + '/api/v1/users';
+  private userUrl = environment.apiUrl + '/api/v1/users/current';
   private access_token = signal<string | undefined>(undefined);
   private error = signal('');
   private isFetching = signal(false);
@@ -66,6 +66,12 @@ export class AuthService {
 
   getCurrentUser(): Promise<void> {
     return new Promise((resolve, reject) => {
+      const cachedUser = this.rbacService.getAuthenticatedUser();
+      if (cachedUser) {
+        resolve();
+        return;
+      }
+
       const token = this.getAccessToken();
       if (token) {
         const headers = new HttpHeaders({
@@ -87,38 +93,6 @@ export class AuthService {
       }
     });
   }
-
-  // Temporary method (if you'll need to test the first one while user api is unavailable)
-
-  // getCurrentUser(): Promise<void> {
-  //   return new Promise((resolve, reject) => {
-  //     const token = this.getAccessToken();
-  //     if (token) {
-  //       const parts = token.split('.');
-  //       if (parts.length === 3) {
-  //         try {
-  //           const payload = atob(parts[1]);
-  //           const decodedPayload = JSON.parse(payload);
-
-  //           const user: User = {
-  //             id: decodedPayload.id,
-  //             email: decodedPayload.email,
-  //             role: decodedPayload.role,
-  //           };
-  //           this.rbacService.setAuthenticatedUser(user);
-  //           resolve();
-  //         } catch (e) {
-  //           console.error('Error decoding JWT:', e);
-  //           reject(e);
-  //         }
-  //       } else {
-  //         reject('Invalid token format');
-  //       }
-  //     } else {
-  //       reject('No token found');
-  //     }
-  //   });
-  // }
 
   getUserRole(): string | undefined {
     const user = this.rbacService.getAuthenticatedUser();

@@ -10,16 +10,20 @@ export const roleGuard: CanActivateFn = async (route) => {
   const authService = inject(AuthService);
   const requiredRole = route.data['role'] as string;
 
-  try {
-    await authService.getCurrentUser();
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    return router.createUrlTree(['/dashboard']);
-  }
-
   const user = rbacService.getAuthenticatedUser();
 
   if (!user) {
+    try {
+      await authService.getCurrentUser();
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return router.createUrlTree(['/dashboard']);
+    }
+  }
+
+  const currentUser = rbacService.getAuthenticatedUser();
+
+  if (!currentUser) {
     console.error('User is not set in RBAC service.');
     return router.createUrlTree(['/dashboard']);
   }

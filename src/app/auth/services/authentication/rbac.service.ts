@@ -35,6 +35,7 @@ export class RbacService {
   }
 }
 
+/** 
 // Inject into component and use like that in a template
 // @if (rbacService.isAdmin()) {
 //   <div>Admin works</div>
@@ -58,3 +59,4 @@ export class RbacService {
 //   console.log('User has no specific role');
 // }
 // }
+*/
