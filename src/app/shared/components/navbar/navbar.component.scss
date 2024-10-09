@@ -1,0 +1,29 @@
+nav {
+  min-width: 100px;
+  max-width: 200px;
+  border-right: 1px solid grey;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+.menu-link {
+  border-bottom: 1px solid gray;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: gray;
+}
+
+li:hover a {
+  color: white;
+}
