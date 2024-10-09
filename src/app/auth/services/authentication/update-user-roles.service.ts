@@ -15,7 +15,11 @@ export class UdpateUserRolesService {
 
   updateUserRole(userId: number, newRole: string): Observable<User> {
     return this.http
-      .patch<User>(`${this.rolesUrl}/${userId}/role`, { role: newRole })
+      .patch<User>(
+        `${this.rolesUrl}/${userId}/role`,
+        { role: newRole },
+        { withCredentials: true }
+      )
       .pipe(
         map((response: User) => {
           return {
@@ -28,4 +32,7 @@ export class UdpateUserRolesService {
   }
 }
 
-// Service for changing role, will be used later
+/**
+ * You can use this component and update it in a future if necessary
+ *
+ */

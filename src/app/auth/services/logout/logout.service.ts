@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { catchError, throwError } from 'rxjs';
@@ -8,7 +7,6 @@ import { AuthStateService } from '../authentication/authstate.service';
 @Injectable({ providedIn: 'root' })
 export class LogoutService {
   constructor(
-    private router: Router,
     private httpClient: HttpClient,
     private authStateService: AuthStateService
   ) {}
@@ -28,7 +26,7 @@ export class LogoutService {
       )
       .subscribe({
         next: () => {
-          this.router.createUrlTree(['/login']);
+          location.href = '/login';
           localStorage.removeItem('access_token');
           this.authStateService.logoutEvent.next();
         },

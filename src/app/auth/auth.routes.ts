@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
+import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
+import { authGuard } from './auth.guard';
+import { noAuthGuard } from './noauth.guard';
 
 export const AuthRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
@@ -24,5 +27,11 @@ export const AuthRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [noAuthGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
   },
 ];
