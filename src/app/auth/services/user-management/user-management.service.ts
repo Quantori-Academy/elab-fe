@@ -18,8 +18,6 @@ export class UserManagementService {
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    alert('An error occurred!');
-
     return throwError(
       () => new Error(error.error.message || JSON.stringify(error.error))
     );
@@ -52,6 +50,20 @@ export class UserManagementService {
   deleteUser(userId: number, headers?: HttpHeaders): Observable<string> {
     return this.http
       .delete<string>(`${this.apiUrl}/${userId}`, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  // GET All Users
+  getAllUsers(headers?: HttpHeaders): Observable<IUserInfo[]> {
+    return this.http
+      .get<IUserInfo[]>(`${this.apiUrl}/`, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  // GET user
+  getUser(userId: number, headers?: HttpHeaders): Observable<IUserInfo> {
+    return this.http
+      .get<IUserInfo>(`${this.apiUrl}/${userId}`, { headers })
       .pipe(catchError(this.handleError));
   }
 }

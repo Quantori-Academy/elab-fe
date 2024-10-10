@@ -1,3 +1,14 @@
+.grid-wrapper {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.control-bar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
 .filter-container {
   display: flex;
   gap: 1rem;

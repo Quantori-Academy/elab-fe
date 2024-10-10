@@ -1,27 +1,17 @@
-import { Component } from '@angular/core';
-import { User } from '../../../../auth/roles/types';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
+import { IUserInfo, UserRoles } from '../../../models/user-models';
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { UserManagementFormComponent } from '../../forms/user-management-form/user-management-form.component';
+import { MatButtonModule } from '@angular/material/button';
+import { NotificationPopupService } from '../../../services/notification-popup/notification-popup.service';
 
-// TODO : Change after interfaces were added to the dev branch
-interface IUserInfo {
-  id?: number;
-  firstName: string;
-  lastName: string;
-  email: string; // Email / Username
-  role: UserRoles;
-  password?: string;
-}
-
-enum UserRoles {
-  Admin = 'Admin',
-  ProcurementOfficer = 'ProcurementOfficer',
-  Researcher = 'Researcher',
-}
-//
 @Component({
   selector: 'app-users-list',
   standalone: true,
@@ -31,11 +21,19 @@ enum UserRoles {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatButtonModule,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnInit, OnDestroy {
+  users: IUserInfo[] | null = null;
+  userRoles = Object.values(UserRoles);
+  selectedRole = '';
+  searchValue = '';
+  private subscriptions = new Subscription();
+  private notificationPopupService = inject(NotificationPopupService);
+
   displayedColumns: string[] = [
     'firstName',
     'lastName',
@@ -43,42 +41,54 @@ export class UsersListComponent {
     'role',
     'actions',
   ];
-  dataSource = new MatTableDataSource<IUserInfo>([
-    {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com',
-      role: UserRoles['Admin' as keyof typeof UserRoles],
-    },
-    {
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'jane.smith@example.com',
-      role: UserRoles.ProcurementOfficer,
-    },
-    {
-      firstName: 'Alice',
-      lastName: 'Johnson',
-      email: 'alice.johnson@example.com',
-      role: UserRoles.Researcher,
-    },
-    {
-      firstName: 'Bob',
-      lastName: 'Brown',
-      email: 'bob.brown@example.com',
-      role: UserRoles.Researcher,
-    },
-  ]);
 
-  userRoles = Object.values(UserRoles);
+  dataSource!: MatTableDataSource<IUserInfo>;
 
-  selectedRole = '';
-  searchValue = '';
+  constructor(
+    private userManagementService: UserManagementService,
+    public dialog: MatDialog
+  ) {}
 
-  constructor() {
-    this.dataSource.filterPredicate = this.customFilterPredicate();
+  ngOnInit() {
+    this.loadUsers();
   }
 
+  loadUsers() {
+    const allUsersSub = this.userManagementService.getAllUsers().subscribe({
+      next: (response) => {
+        this.users = response.sort(
+          (a: IUserInfo, b: IUserInfo) =>
+            a.role > b.role ? 1 : a.role < b.role ? -1 : 0 // Admin > P-Officer > Researcher
+        );
+        this.dataSource = new MatTableDataSource<IUserInfo>(response);
+        this.dataSource.filterPredicate = this.customFilterPredicate();
+      },
+      error: (error) => {
+        console.error('Error loading users:', error.message);
+        this.notificationPopupService.error({
+          title: 'Error',
+          message: `Failed to load users: ${error.message}`,
+          duration: 3000,
+        });
+      },
+    });
+
+    this.subscriptions.add(allUsersSub);
+  }
+
+  openCreateUserDialog(): void {
+    const dialogRef = this.dialog.open(UserManagementFormComponent, {
+      width: '450px',
+    });
+
+    const dialogSub = dialogRef.afterClosed().subscribe((result) => {
+      if (result) this.loadUsers();
+    });
+
+    this.subscriptions.add(dialogSub);
+  }
+
+  // Filtering Methods
   getInputValue(event: Event): string {
     return (event.target as HTMLInputElement).value || '';
   }
@@ -112,12 +122,47 @@ export class UsersListComponent {
       return matchesName && matchesRole;
     };
   }
+  //
 
-  editUser(user: User) {
-    console.log('Editing user:', user);
+  // Actions methods
+  editUser(user: IUserInfo) {
+    const dialogRef = this.dialog.open(UserManagementFormComponent, {
+      width: '450px',
+      data: {
+        userData: user,
+        formTitle: 'User Data',
+      },
+    });
+
+    const dialogSub = dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadUsers();
+      }
+    });
+
+    this.subscriptions.add(dialogSub);
   }
 
-  deleteUser(user: User) {
-    console.log('Deleting user:', user);
+  deleteUser(user: IUserInfo) {
+    if (!confirm('Confirm action -> Delete user:')) return;
+    const deleteSub = this.userManagementService.deleteUser(user.id).subscribe({
+      next: () => {
+        this.notificationPopupService.info({
+          title: '',
+          message: 'User deleted successfully!',
+          duration: 3000,
+        });
+        this.loadUsers();
+      },
+      error: (error: Error) => {
+        console.error('Delete user failed', error);
+      },
+    });
+    this.subscriptions.add(deleteSub);
+  }
+  //
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

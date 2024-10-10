@@ -1,5 +1,8 @@
+.form-container {
+  padding: 1rem;
+}
+
 .user-form {
-  min-width: 360px;
   box-sizing: border-box;
   width: 100%;
   padding: 0 1rem;
@@ -10,14 +13,17 @@
   }
 }
 
+.form-title {
+  margin: 1.325rem auto;
+  & > * {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
 .form-actions {
   display: flex;
   justify-content: space-between;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
 }
 
 mat-grid-list {
