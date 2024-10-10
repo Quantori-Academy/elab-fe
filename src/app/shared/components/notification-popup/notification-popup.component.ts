@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { NotificationData } from '../../models/notification-popup.model';
+import { NotificationData, NotificationType } from '../../models/notification-popup.model';
 import { NotificationPopupService } from '../../services/notification-popup/notification-popup.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgClass } from '@angular/common';
@@ -49,7 +49,7 @@ export class NotificationPopupComponent implements OnInit, OnDestroy {
       if (this.progressValue < this.PROGRESS_MAX_VALUE) {
         this.animationId = requestAnimationFrame(animate);
       } else {
-        this.notificationData = null;
+        this.onClose();
         cancelAnimationFrame(this.animationId!);
       }
     };
@@ -57,12 +57,16 @@ export class NotificationPopupComponent implements OnInit, OnDestroy {
     this.animationId = requestAnimationFrame(animate);
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  isSuccess(type: string): boolean {
+    return type == NotificationType.SUCCESS
   }
 
   onClose(): void {
     this.notificationData = null;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

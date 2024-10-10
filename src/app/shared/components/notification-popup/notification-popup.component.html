@@ -2,9 +2,7 @@
 <mat-card class="card" [ngClass]="notificationData.type">
   <div class="card__content">
     <mat-icon class="card__icon">{{
-      notificationData.type === "success"
-        ? "check_circle"
-        : notificationData.type
+      isSuccess(notificationData.type) ? "check_circle" : notificationData.type
     }}</mat-icon>
     <div class="card__data">
       <strong class="card__title">{{ notificationData.title }}</strong>
