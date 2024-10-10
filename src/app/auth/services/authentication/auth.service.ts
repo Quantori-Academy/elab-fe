@@ -12,7 +12,7 @@ import { User } from '../../roles/types';
 export class AuthService {
   constructor(
     private authStateService: AuthStateService,
-    private rbacService: RbacService
+    public rbacService: RbacService
   ) {
     this.authStateService.logoutEvent.subscribe(() => {
       this.clearState();

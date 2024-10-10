@@ -1,46 +1,56 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { RouterLink, RouterOutlet, RouterModule } from '@angular/router';
 import { MenuLink } from '../../../auth/models/menu-link.interface';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { collapsed } from '../header/header.component';
+import { AuthService } from '../../../auth/services/authentication/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [
+    RouterLink,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatListModule,
+    RouterModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  // private authService = inject(AuthService);
-
-  readonly menuLinks: MenuLink[] = [
+  private authService = inject(AuthService);
+  menuLinks = signal<MenuLink[]>([
     {
       label: 'Users management',
-      link: '',
+      route: '/',
       adminOnly: true,
     },
     {
-      label: 'Link1',
-      link: '',
+      label: 'Page1',
+      route: '/',
     },
     {
-      label: 'Link2',
-      link: '',
+      label: 'Page2',
+      route: '/',
     },
     {
-      label: 'Link3',
-      link: '',
+      label: 'Page3',
+      route: '/',
     },
-    {
-      label: 'Link4',
-      link: '',
-    },
-  ];
+  ]);
 
-//Delete this and next line after add logic
-// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+  navbarWidth = computed(() => (collapsed() ? '0' : '250px'));
+
   get isAdmin(): boolean {
-    // return this.authService.getUserRole();
-    return true;
+    return this.authService.getUserRole() === 'Admin';
   }
 
   isLinkVisible(link: MenuLink): boolean {
