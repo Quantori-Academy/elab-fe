@@ -1,3 +1,7 @@
+
+
+import { Profile } from '../../../auth/roles/types';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -5,7 +9,6 @@ import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
-import { User } from '../../../auth/roles/types';
 
 export const collapsed = signal(false);
 
@@ -17,23 +20,30 @@ export const collapsed = signal(false);
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
-  private router = inject(Router);
   private authService = inject(AuthService);
   private logoutService = inject(LogoutService);
-  collapsed = collapsed;
-  currentUser: User | undefined;
+  private rbacService = inject(RbacService);
+  private router = inject(Router);
+  public collapsed = collapsed;
 
-  ngOnInit() {
-    this.getCurrentUser();
+  public get currentUser(): Profile | null {
+    return this.rbacService.getAuthenticatedUser() ?? null;
   }
-
-  async getCurrentUser() {
-    await this.authService.getCurrentUser();
-    this.currentUser = this.authService.rbacService.getAuthenticatedUser();
+  ngOnInit(): void {
+    this.loadCurrentUser();
+  }
+  loadCurrentUser() {
+    this.authService
+      .getCurrentUser()
+      .catch((error) => {
+        console.error('Error loading user:', error);
+      });
   }
 
   navigateToProfile() {
-    this.router.createUrlTree(['/']); //check with page
+    if (this.currentUser) {
+      this.router.navigate([`/profile`]);
+    }
   }
 
   logout() {

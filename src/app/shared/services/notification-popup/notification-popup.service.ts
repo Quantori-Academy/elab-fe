@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   NotificationData,
+  NotificationPosition,
   NotificationType,
 } from '../../models/notification-popup.model';
 import { Observable, Subject } from 'rxjs';
@@ -12,6 +13,7 @@ type NotificationDataArg = Omit<NotificationData, 'type'>;
 })
 export class NotificationPopupService {
   private DURATION = 2000;
+  private POSITION: NotificationPosition = 'top-right';
   private _notificationData = new Subject<NotificationData | null>();
 
   public success(data: NotificationDataArg) {
@@ -36,10 +38,12 @@ export class NotificationPopupService {
 
   private _setNotification(type: NotificationType, data: NotificationDataArg) {
     const duration = data.duration || this.DURATION;
+    const position = data.position || this.POSITION;
     this._notificationData.next({
       type,
       ...data,
       duration,
+      position,
     });
   }
 }

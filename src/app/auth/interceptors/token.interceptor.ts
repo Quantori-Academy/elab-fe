@@ -42,7 +42,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     return handler.handle(req).pipe(
       catchError((error) => {
-        const isLoginReq = req.headers.has('Login-Request');
+        const isLoginReq = req.url.includes('/api/v1/auth/login');
         if (error.status === 401 && !isLoginReq) {
           this.cachedRequests.push(req);
           return this.refresh(req, handler);

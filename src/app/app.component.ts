@@ -4,11 +4,12 @@ import { MockHealthCheckService } from './core/services/health-check/mock-health
 // import { HealthCheckService } from './core/services/health-check/health-check.service'; //it will need when backend will create endpoint HEALTHCHECK
 import { ServerHealthStatus } from './core/services/health-check/server-health-status.interface';
 import { NotificationPopupComponent } from './shared/components/notification-popup/notification-popup.component';
+import { HeaderComponent } from "./shared/components/header/header.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationPopupComponent],
+  imports: [RouterOutlet, NotificationPopupComponent,HeaderComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
