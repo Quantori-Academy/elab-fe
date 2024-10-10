@@ -14,6 +14,13 @@ export const routes: Routes = [
       import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
     pathMatch: 'prefix',
   },
+  {
+    path: 'storage-location',
+    loadComponent: () =>
+      import('./main/pages/storage-location/storage-location.component').then(
+        (comp) => comp.StorageLocationComponent
+      ),
+  },
 
   // Uncomment to use
 
