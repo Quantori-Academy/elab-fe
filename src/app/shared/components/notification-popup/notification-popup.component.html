@@ -1,5 +1,8 @@
 @if (notificationData) {
-<mat-card class="card" [ngClass]="notificationData.type">
+<mat-card
+  class="card"
+  [ngClass]="notificationData.type + ' ' + notificationData.position"
+>
   <div class="card__content">
     <mat-icon class="card__icon">{{ notificationIcon }}</mat-icon>
     <div class="card__data">
