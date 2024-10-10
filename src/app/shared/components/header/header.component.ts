@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
   private logoutService = inject(LogoutService);
   private rbacService = inject(RbacService);
   private router = inject(Router);
-  private collapsed = collapsed;
+  public collapsed = collapsed;
 
   public get currentUser(): Profile | null {
     return this.rbacService.getAuthenticatedUser() ?? null;
