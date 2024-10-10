@@ -24,15 +24,16 @@
 }
 
 .card {
-  position: absolute;
+  position: fixed;
   top: 100px;
   right: 20px;
-
   width: 300px;
-  height: 70px;
+  min-height: 70px;
   border-radius: 0;
   box-sizing: border-box;
   background-color: var(--light-color);
+  z-index: 1000;
+  box-shadow: 0 0 15px 0 #00000070;
 
   &__content {
     display: flex;
