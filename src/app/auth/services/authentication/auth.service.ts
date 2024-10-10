@@ -28,6 +28,14 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
 
+  getError() {
+    return this.error();
+  }
+
+  clearError() {
+    this.error.set('');
+  }
+
   onLoginUser(email: string, password: string) {
     const body = JSON.stringify({ email, password });
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -39,7 +47,10 @@ export class AuthService {
       })
       .pipe(
         map((resData) => resData.access_token),
-        catchError(() => throwError(() => new Error('Login failed')))
+        catchError(() => {
+          this.error.set('Incorrect username or password');
+          return throwError(() => new Error('Login Failed'));
+        })
       )
       .subscribe({
         next: (access_token) => {

@@ -2,5 +2,5 @@ import EnvironmentInterface from './environment.inreface';
 
 export const environment: EnvironmentInterface = {
   production: true,
-  apiUrl: 'http://vm5.quantori.academy:3001',
+  apiUrl: 'http://localhost:3000',
 };

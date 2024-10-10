@@ -1,5 +1,17 @@
 <div class="form-container">
   <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    @if(getErrorMessage() && errorVisible) {
+    <mat-card class="login-error"
+      >Incorrect Password or Email
+      <span
+        class="close-btn"
+        (keyup)="$event.key === 'Enter' && closeError()"
+        (click)="closeError()"
+        tabindex="0"
+        >×</span
+      >
+    </mat-card>
+    }
     <h2 id="login-h2" id="login-h2">Login</h2>
     <mat-form-field id="login-form-field" hideRequiredMarker="true">
       <mat-label>Email</mat-label>

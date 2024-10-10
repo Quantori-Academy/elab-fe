@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/authentication/auth.service';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatIcon],
+  imports: [MaterialModule, ReactiveFormsModule, MatIcon, MatCardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     newPassword: true,
     confirmPassword: true,
   };
+  public errorVisible = true;
 
   constructor(
     private authLogin: AuthService,
@@ -73,6 +75,10 @@ export class LoginComponent implements OnInit {
     return this.form.controls.password.touched;
   }
 
+  getErrorMessage(): string {
+    return this.authLogin.getError();
+  }
+
   ngOnInit() {
     const subscription = this.form.valueChanges
       .pipe(debounceTime(500))
@@ -109,6 +115,10 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('error');
     }
+
+    if (this.authLogin.getError()) {
+      this.errorVisible = true;
+    }
   }
 
   navigateToForgotPassword() {
@@ -118,5 +128,10 @@ export class LoginComponent implements OnInit {
   onTemporaryLogout() {
     this.router.createUrlTree(['/login']);
     this.logoutService.onLogoutUser();
+  }
+
+  closeError() {
+    this.errorVisible = false;
+    this.authLogin.clearError();
   }
 }
