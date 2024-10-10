@@ -12,15 +12,13 @@ import { Profile } from '../../../auth/roles/types';
   imports: [MatButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
-  // currentUser: IUser; //WHEN IUser will be implement
-
+  private logoutService = inject(LogoutService);
+  private router = inject(Router);
   currentUser: Profile | null = null;
 
-  private router = inject(Router);
   ngOnInit(): void {
     this.loadCurrentUser();
   }
@@ -35,11 +33,12 @@ export class HeaderComponent implements OnInit {
       });
   }
 
-  get fullName(): string {
-    return this.currentUser
-      ? `${this.currentUser.firstName} ${this.currentUser.lastName}`
-      : 'User';
-  }
+  
+  // get fullName(): string {
+  //   return this.currentUser
+  //     ? `${this.currentUser.firstName} ${this.currentUser.lastName}`
+  //     : 'User';
+  // }
 
   navigateToProfile() {
     if (this.currentUser) {
@@ -48,14 +47,6 @@ export class HeaderComponent implements OnInit {
       this.router.navigate([`/profile/${fullNameSlug}`]);
     }
   }
-
-  // private authService = inject(AuthService);
-  private logoutService = inject(LogoutService);
-
-  // ngOnInit() {
-  //   this.getCurrentUser();
-  // }
-
   // navigateToProfile() {
   //   this.router.createUrlTree(['']); //this.router.navigate(['/profile-page']) after Lela's merge;
   // }

@@ -1,24 +1,18 @@
-.profile {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: fit-content;
-  margin: 2rem auto;
-  border: 2px solid var(--primary-color);
-  border-radius: 20px;
-  box-shadow: 0 0 5px var(--primary-color);
-  img {
-    border-radius: 50%;
-    max-width: 100%;
-    height: auto;
-  }
   .profile-details {
     display: grid;
     gap: 1rem;
     justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: fit-content;
+    margin: 2rem auto;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    box-shadow: 0 0 5px var(--primary-color);
     h3 {
       font-size: x-large;
     }
@@ -43,4 +37,3 @@
       }
     }
   }
-}

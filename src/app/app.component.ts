@@ -9,8 +9,7 @@ import { HeaderComponent } from "./shared/components/header/header.component";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationPopupComponent],
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, NotificationPopupComponent,HeaderComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
