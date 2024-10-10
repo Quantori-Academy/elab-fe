@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { AuthService } from '../../../auth/services/forgot-password/auth.service'; //this.router.navigate(['/login']) after denis's merge;
 import { MatButtonModule } from '@angular/material/button';
 import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
 import { Profile } from '../../../auth/roles/types';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +16,12 @@ import { Profile } from '../../../auth/roles/types';
 export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private logoutService = inject(LogoutService);
+  private rbacService = inject(RbacService);
   private router = inject(Router);
-  currentUser: Profile | null = null;
+
+  public get currentUser(): Profile | null {
+    return this.rbacService.getAuthenticatedUser() ?? null;
+  }
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -25,32 +29,18 @@ export class HeaderComponent implements OnInit {
   loadCurrentUser() {
     this.authService
       .getCurrentUser()
-      .then((user) => {
-        this.currentUser = user as unknown as Profile;
-      })
       .catch((error) => {
         console.error('Error loading user:', error);
       });
   }
 
-  
-  // get fullName(): string {
-  //   return this.currentUser
-  //     ? `${this.currentUser.firstName} ${this.currentUser.lastName}`
-  //     : 'User';
-  // }
 
   navigateToProfile() {
     if (this.currentUser) {
-      const fullNameSlug =
-        `${this.currentUser.firstName}-${this.currentUser.lastName}`.toLowerCase();
-      this.router.navigate([`/profile/${fullNameSlug}`]);
+      this.router.navigate([`/profile`]);
     }
   }
-  // navigateToProfile() {
-  //   this.router.createUrlTree(['']); //this.router.navigate(['/profile-page']) after Lela's merge;
-  // }
-
+  
   logout() {
     this.logoutService.onLogoutUser();
   }

@@ -14,7 +14,7 @@ export const routes: Routes = [
       import('./auth/auth.routes').then((routes) => routes.AuthRoutes),
     pathMatch: 'prefix',
   }, {
-    path: 'profile-management',
+    path: 'profile',
     pathMatch: 'full',
     loadComponent: () =>
       import('./shared/components/profile-management/profile-management.component').then(

@@ -20,7 +20,6 @@ import {
   stagger,
 } from '@angular/animations';
 import { Profile } from '../../../auth/roles/types';
-import { Router } from '@angular/router';
 import { ChangePasswordService } from '../../../core/services/change-password.service';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
@@ -71,9 +70,11 @@ export class ProfilePageComponent implements OnInit {
   private authService = inject(AuthService);
   private rbacService = inject(RbacService);
   private fb: FormBuilder = inject(FormBuilder);
-  private router: Router = inject(Router);
 
-  user: null | Profile = null;
+  public get user(): Profile | null {
+    return this.rbacService.getAuthenticatedUser() ?? null;
+  }
+
   changePassword = false;
 
   //newPassword pattern;
@@ -91,10 +92,6 @@ export class ProfilePageComponent implements OnInit {
   loadProfile() {
     this.authService
       .getCurrentUser()
-      .then((user) => {
-        // since getCurrentUser() is returning void, ts suggested to first convert user to unknown
-        this.user = user as unknown as Profile;
-      })
       .catch((error) => {
         console.error('Error loading user profile:', error);
       });
