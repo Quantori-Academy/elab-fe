@@ -6,3 +6,7 @@ export interface User {
   role: string;
   isPasswordResetRequired: true;
 }
+export interface Profile extends User {
+  firstName: string;
+  lastName: string;
+}
