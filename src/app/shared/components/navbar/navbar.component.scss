@@ -1,29 +1,23 @@
-nav {
-  min-width: 100px;
-  max-width: 200px;
-  border-right: 1px solid grey;
+mat-sidenav-container {
+  height: calc(100vh - 60px);
 }
 
-ul {
-  margin: 0;
+mat-sidenav {
+  border-right: 1px solid #9bb6ca;
+  border-radius: 0;
+  background-color: #f0f4f8;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0;
+}
+
+mat-nav-list {
   padding: 0;
 }
 
-a {
-  text-decoration: none;
-  color: grey;
-}
-
-.menu-link {
-  border-bottom: 1px solid gray;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-li:hover {
-  background-color: gray;
-}
-
-li:hover a {
-  color: white;
+.mdc-list-item__primary-text {
+  color: 1D3E5B;
+  font-size: 14px;
+  font-weight: 500;
 }
