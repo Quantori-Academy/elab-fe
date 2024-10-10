@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import {
   FormControl,
@@ -75,9 +75,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls.password.touched;
   }
 
-  getErrorMessage(): string {
-    return this.authLogin.getError();
-  }
+  errorMessage = signal('');
 
   ngOnInit() {
     const subscription = this.form.valueChanges
@@ -94,14 +92,6 @@ export class LoginComponent implements OnInit {
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  resetForm() {
-    this.form.reset({
-      email: '',
-      password: '',
-    });
-    localStorage.removeItem('login-email');
-  }
-
   onSubmit() {
     if (this.form.invalid) {
       return;
@@ -110,14 +100,14 @@ export class LoginComponent implements OnInit {
     const enteredPassword = this.form.value.password || '';
 
     if (enteredEmail && enteredPassword) {
-      this.authLogin.onLoginUser(enteredEmail, enteredPassword);
-      this.resetForm();
+      this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
+        error: (error) => {
+          this.errorMessage.set('Incorrect Password or Email');
+          console.error(error);
+        },
+      });
     } else {
       console.log('error');
-    }
-
-    if (this.authLogin.getError()) {
-      this.errorVisible = true;
     }
   }
 
@@ -131,7 +121,6 @@ export class LoginComponent implements OnInit {
   }
 
   closeError() {
-    this.errorVisible = false;
-    this.authLogin.clearError();
+    this.errorMessage.set('');
   }
 }

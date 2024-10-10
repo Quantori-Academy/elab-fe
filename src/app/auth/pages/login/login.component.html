@@ -1,8 +1,8 @@
 <div class="form-container">
   <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-    @if(getErrorMessage() && errorVisible) {
+    @if(errorMessage()) {
     <mat-card class="login-error"
-      >Incorrect Password or Email
+      >{{ errorMessage() }}
       <span
         class="close-btn"
         (keyup)="$event.key === 'Enter' && closeError()"

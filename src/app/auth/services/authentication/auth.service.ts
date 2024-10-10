@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
-import { catchError, map, throwError } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { AuthStateService } from './authstate.service';
 import { Router } from '@angular/router';
@@ -24,56 +23,43 @@ export class AuthService {
   private access_token = signal<string | undefined>(undefined);
   private error = signal('');
   private isFetching = signal(false);
-  private destroyRef = inject(DestroyRef);
   private httpClient = inject(HttpClient);
   private router = inject(Router);
-
-  getError() {
-    return this.error();
-  }
-
-  clearError() {
-    this.error.set('');
-  }
 
   onLoginUser(email: string, password: string) {
     const body = JSON.stringify({ email, password });
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    const subscription = this.httpClient
-      .post<LoginResponse>(this.authUrl, body, {
+    const subscription = this.httpClient.post<LoginResponse>(
+      this.authUrl,
+      body,
+      {
         headers,
         withCredentials: true,
-      })
-      .pipe(
-        map((resData) => resData.access_token),
-        catchError(() => {
-          this.error.set('Incorrect username or password');
-          return throwError(() => new Error('Login Failed'));
-        })
-      )
-      .subscribe({
-        next: (access_token) => {
-          localStorage.setItem('access_token', access_token);
-          this.access_token.set(access_token);
+      }
+    );
+    subscription.subscribe({
+      next: (data) => {
+        localStorage.setItem('access_token', data.access_token);
+        this.access_token.set(data.access_token);
 
-          this.getCurrentUser()
-            .then(() => {
-              this.router.navigate(['dashboard']);
-            })
-            .catch((error) => {
-              console.error('Error fetching user after login:', error);
-            });
-        },
-        error: (error: Error) => {
-          this.error.set(error.message);
-        },
-        complete: () => {
-          this.isFetching.set(false);
-        },
-      });
+        this.getCurrentUser()
+          .then(() => {
+            this.router.navigate(['dashboard']);
+          })
+          .catch((error) => {
+            console.error('Error fetching user after login:', error);
+          });
+      },
+      error: (error: Error) => {
+        this.error.set(error.message);
+      },
+      complete: () => {
+        this.isFetching.set(false);
+      },
+    });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    return subscription;
   }
 
   getCurrentUser(): Promise<void> {
