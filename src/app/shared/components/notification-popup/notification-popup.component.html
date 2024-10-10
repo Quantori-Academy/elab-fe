@@ -1,9 +1,7 @@
 @if (notificationData) {
 <mat-card class="card" [ngClass]="notificationData.type">
   <div class="card__content">
-    <mat-icon class="card__icon">{{
-      isSuccess(notificationData.type) ? "check_circle" : notificationData.type
-    }}</mat-icon>
+    <mat-icon class="card__icon">{{ notificationIcon }}</mat-icon>
     <div class="card__data">
       <strong class="card__title">{{ notificationData.title }}</strong>
       <p class="card__message">{{ notificationData.message }}</p>

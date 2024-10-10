@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { NotificationData, NotificationType } from '../../models/notification-popup.model';
+import {
+  NotificationData,
+  NotificationType,
+} from '../../models/notification-popup.model';
 import { NotificationPopupService } from '../../services/notification-popup/notification-popup.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgClass } from '@angular/common';
@@ -15,7 +18,8 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './notification-popup.component.scss',
 })
 export class NotificationPopupComponent implements OnInit, OnDestroy {
-  private PROGRESS_MAX_VALUE = 100;
+  readonly SUCCESS_ICON = 'check_circle';
+  readonly PROGRESS_MAX_VALUE = 100;
   private animationId?: number;
   private destroy$ = new Subject<void>();
   public notificationData!: NotificationData | null;
@@ -57,8 +61,12 @@ export class NotificationPopupComponent implements OnInit, OnDestroy {
     this.animationId = requestAnimationFrame(animate);
   }
 
-  isSuccess(type: string): boolean {
-    return type == NotificationType.SUCCESS
+  get notificationIcon() {
+    return this.isSuccess() ? this.SUCCESS_ICON : this.notificationData?.type;
+  }
+
+  isSuccess(): boolean {
+    return this.notificationData?.type == NotificationType.SUCCESS;
   }
 
   onClose(): void {

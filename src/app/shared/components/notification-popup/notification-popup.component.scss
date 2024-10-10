@@ -1,26 +1,26 @@
 //COLORS FOR POPUP
 .card.success {
-  --light-color: #d4edda;
-  --dark-color: #008a20;
-  --progress-bg-color: #77b285;
+  --light-color: var(--success-light-color);
+  --dark-color: var(--success-color);
+  --progress-bg-color: var(--success-progress-bg-color);
 }
 
 .card.error {
-  --light-color: #f8d7da;
-  --dark-color: #c00010;
-  --progress-bg-color: #e5a1a1;
+  --light-color: var(--error-light-color);
+  --dark-color: var(--error-color);
+  --progress-bg-color: var(--error-progress-bg-color);
 }
 
 .card.warning {
-  --light-color: #fff3cd;
-  --dark-color: #f7c948;
-  --progress-bg-color: #fce588;
+  --light-color: var(--warning-light-color);
+  --dark-color: var(--warning-color);
+  --progress-bg-color: var(--warning-progress-bg-color);
 }
 
 .card.info {
-  --light-color: #cce5ff;
-  --dark-color: #146bc1;
-  --progress-bg-color: #82bfd3;
+  --light-color: var(--info-light-color);
+  --dark-color: var(--info-color);
+  --progress-bg-color: var(--info-progress-bg-color);
 }
 
 .card {
