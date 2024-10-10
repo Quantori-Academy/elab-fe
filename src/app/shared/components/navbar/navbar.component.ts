@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { collapsed } from '../header/header.component';
-import { AuthService } from '../../../auth/services/authentication/auth.service';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,40 +20,36 @@ import { AuthService } from '../../../auth/services/authentication/auth.service'
     MatSidenavModule,
     RouterOutlet,
     MatListModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  private authService = inject(AuthService);
+  readonly rbacService = inject(RbacService);
   menuLinks = signal<MenuLink[]>([
     {
-      label: 'Users management',
-      route: '/',
+      label: 'Users Management',
+      route: '/users',
       adminOnly: true,
     },
     {
-      label: 'Page1',
-      route: '/',
+      label: 'Profile',
+      route: '/profile',
     },
     {
-      label: 'Page2',
-      route: '/',
+      label: 'Storage Locations',
+      route: '/storage-locations',
     },
     {
-      label: 'Page3',
-      route: '/',
+      label: 'Reagents',
+      route: '/reagents',
     },
   ]);
 
   navbarWidth = computed(() => (collapsed() ? '0' : '250px'));
 
-  get isAdmin(): boolean {
-    return this.authService.getUserRole() === 'Admin';
-  }
-
   isLinkVisible(link: MenuLink): boolean {
-    return !link.adminOnly || this.isAdmin;
+    return !link.adminOnly || this.rbacService.isAdmin();
   }
 }

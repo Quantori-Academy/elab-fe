@@ -3,13 +3,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from '../shared/components/dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
 import { noAuthGuard } from './noauth.guard';
+import { UsersListComponent } from '../shared/components/grids/users-list/users-list.component';
 
 export const AuthRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
   {
     path: 'forgot-password',
     loadComponent: () =>
@@ -29,9 +25,16 @@ export const AuthRoutes: Routes = [
     component: LoginComponent,
     canActivate: [noAuthGuard],
   },
+
   {
-    path: 'dashboard',
+    path: '',
     component: DashboardComponent,
     canActivate: [authGuard],
+    children: [
+      { path: 'users', component: UsersListComponent },
+      // {path: 'profile'}
+    ],
   },
+
+  { path: '**', redirectTo: 'login' },
 ];
