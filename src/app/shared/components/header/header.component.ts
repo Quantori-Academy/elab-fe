@@ -9,7 +9,6 @@ import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
-import { User } from '../../../auth/roles/types';
 
 export const collapsed = signal(false);
 
@@ -25,7 +24,7 @@ export class HeaderComponent implements OnInit {
   private logoutService = inject(LogoutService);
   private rbacService = inject(RbacService);
   private router = inject(Router);
-   private collapsed = collapsed;
+  private collapsed = collapsed;
 
   public get currentUser(): Profile | null {
     return this.rbacService.getAuthenticatedUser() ?? null;
@@ -45,7 +44,8 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       this.router.navigate([`/profile`]);
     }
-  
+  }
+
   logout() {
     this.logoutService.onLogoutUser();
   }
