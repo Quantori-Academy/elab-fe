@@ -45,7 +45,7 @@ export class AuthService {
 
         this.getCurrentUser()
           .then(() => {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['/']);
           })
           .catch((error) => {
             console.error('Error fetching user after login:', error);

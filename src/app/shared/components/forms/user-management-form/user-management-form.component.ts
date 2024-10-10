@@ -125,6 +125,11 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
   //   if (!this.showPasswordField) this.userForm.patchValue({ password: '' });
   // }
 
+  capitalizeValue(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+  }
+
   onDeleteUser(): void {
     if (!confirm('Confirm action -> Delete user:')) return;
     const deleteSub = this.userManagementService

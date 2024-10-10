@@ -27,12 +27,13 @@ import { NotificationPopupService } from '../../../services/notification-popup/n
   styleUrl: './users-list.component.scss',
 })
 export class UsersListComponent implements OnInit, OnDestroy {
-  users: IUserInfo[] | null = null;
+  private users: IUserInfo[] | null = null;
+  private subscriptions = new Subscription();
+  private notificationPopupService = inject(NotificationPopupService);
+
   userRoles = Object.values(UserRoles);
   selectedRole = '';
   searchValue = '';
-  private subscriptions = new Subscription();
-  private notificationPopupService = inject(NotificationPopupService);
 
   displayedColumns: string[] = [
     'firstName',

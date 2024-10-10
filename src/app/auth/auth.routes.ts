@@ -4,6 +4,8 @@ import { DashboardComponent } from '../shared/components/dashboard/dashboard.com
 import { authGuard } from './auth.guard';
 import { noAuthGuard } from './noauth.guard';
 import { UsersListComponent } from '../shared/components/grids/users-list/users-list.component';
+import { ProfilePageComponent } from '../shared/components/profile-management/profile-management.component';
+import { roleGuard } from './role.guard';
 
 export const AuthRoutes: Routes = [
   {
@@ -31,8 +33,14 @@ export const AuthRoutes: Routes = [
     component: DashboardComponent,
     canActivate: [authGuard],
     children: [
-      { path: 'users', component: UsersListComponent },
-      // {path: 'profile'}
+      {
+        path: 'users',
+        component: UsersListComponent,
+        canActivate: [roleGuard],
+        data: { role: 'Admin' },
+      },
+
+      { path: 'profile', component: ProfilePageComponent },
     ],
   },
 

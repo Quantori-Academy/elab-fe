@@ -24,7 +24,6 @@ import { ChangePasswordService } from '../../../core/services/change-password.se
 import { AuthService } from '../../../auth/services/authentication/auth.service';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { NotificationPopupComponent } from '../notification-popup/notification-popup.component';
-import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-profile-management',
@@ -37,7 +36,6 @@ import { HeaderComponent } from '../header/header.component';
     MatIconModule,
     ReactiveFormsModule,
     NotificationPopupComponent,
-    HeaderComponent,
   ],
   templateUrl: './profile-management.component.html',
   styleUrl: './profile-management.component.scss',
@@ -107,9 +105,7 @@ export class ProfilePageComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     },
     {
-      validators: [
-        this.passwordMatch(),
-      ],
+      validators: [this.passwordMatch()],
     }
   );
 
@@ -145,7 +141,7 @@ export class ProfilePageComponent implements OnInit {
     if (this.changePasswordForm.valid) {
       const newPassword = this.controls['newPassword'].value;
       const oldPassword = this.controls['currentPassword'].value;
-  
+
       if (oldPassword && newPassword) {
         this.onPasswordChange(oldPassword, newPassword).subscribe(() => {
           console.log('Password changed');
