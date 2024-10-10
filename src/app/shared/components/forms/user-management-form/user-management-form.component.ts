@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  Inject,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -15,6 +22,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { IUserInfo, UserRoles } from '../../../models/user-models';
 import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
 import { Subscription } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NotificationPopupService } from '../../../services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-user-management-form',
@@ -33,20 +42,27 @@ import { Subscription } from 'rxjs';
   styleUrl: './user-management-form.component.scss',
 })
 export class UserManagementFormComponent implements OnInit, OnDestroy {
-  @Input() formTitle = 'Create New User'; // Form title
-  @Input() userData: IUserInfo = this.generateInitialUser(); // Generate initial user
-
-  private subscriptions = new Subscription(); // Observable subscriptions collections
+  @Input() formTitle: string; // Form title
+  @Input() userData: IUserInfo; // Generate initial user
   userForm!: FormGroup; // Form data obj
   roles = Object.values(UserRoles); // user roles for select-options
   userCreation!: boolean; // flag to determine user modification/creation modes
   emailEditable = true; // Email is editable by default in user creation mode
   formErrMsgs: string[] | null = null; // Failure Err messages
 
+  private subscriptions = new Subscription(); // Observable subscriptions collections
+  private notificationPopupService = inject(NotificationPopupService);
+
   constructor(
     private fb: FormBuilder,
-    private userManagementService: UserManagementService
-  ) {}
+    private userManagementService: UserManagementService,
+    public dialogRef: MatDialogRef<UserManagementFormComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public dialogData: { userData: IUserInfo; formTitle: string }
+  ) {
+    this.userData = this.dialogData?.userData || this.generateInitialUser();
+    this.formTitle = this.dialogData?.formTitle || 'Create New User';
+  }
 
   ngOnInit(): void {
     this.emailEditable = this.userCreation = this.userData.email === ''; // Email is editable if it's empty (user creation mode)
@@ -114,9 +130,13 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
     const deleteSub = this.userManagementService
       .deleteUser(this.userData.id)
       .subscribe({
-        next: () => {
-          alert('User deleted successfully!');
-          // TODO: change to proper reroute path
+        next: (res) => {
+          this.notificationPopupService.info({
+            title: '',
+            message: 'User deleted successfully!',
+            duration: 3000,
+          });
+          this.dialogRef.close(res);
         },
         error: (error: Error) => {
           console.error('Delete user failed', error);
@@ -139,8 +159,13 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
           .createUser(this.userForm.value)
           .subscribe({
             next: () => {
-              alert('User has been created successfully!');
+              this.notificationPopupService.success({
+                title: 'Success',
+                message: 'User has been created successfully!',
+                duration: 3000,
+              });
               this.userForm.reset();
+              this.dialogRef.close(this.userForm.value);
             },
             error: (error) => {
               this.formErrMsgs = error.message.split(',');
@@ -153,7 +178,12 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
           .updateUser(this.userData.id, this.userForm.value)
           .subscribe({
             next: () => {
-              alert('User updated successfully!');
+              this.notificationPopupService.success({
+                title: '',
+                message: 'User updated successfully!',
+                duration: 3000,
+              });
+              this.dialogRef.close(this.userForm.value);
             },
             error: (error) => {
               this.formErrMsgs = error.message.split(',');
@@ -163,6 +193,11 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

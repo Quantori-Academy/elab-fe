@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { MaterialModule } from '../../../material.module';
 import {
   FormControl,
@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/authentication/auth.service';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatIcon],
+  imports: [MaterialModule, ReactiveFormsModule, MatIcon, MatCardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     newPassword: true,
     confirmPassword: true,
   };
+  public errorVisible = true;
 
   constructor(
     private authLogin: AuthService,
@@ -73,6 +75,8 @@ export class LoginComponent implements OnInit {
     return this.form.controls.password.touched;
   }
 
+  errorMessage = signal('');
+
   ngOnInit() {
     const subscription = this.form.valueChanges
       .pipe(debounceTime(500))
@@ -88,14 +92,6 @@ export class LoginComponent implements OnInit {
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  resetForm() {
-    this.form.reset({
-      email: '',
-      password: '',
-    });
-    localStorage.removeItem('login-email');
-  }
-
   onSubmit() {
     if (this.form.invalid) {
       return;
@@ -104,8 +100,12 @@ export class LoginComponent implements OnInit {
     const enteredPassword = this.form.value.password || '';
 
     if (enteredEmail && enteredPassword) {
-      this.authLogin.onLoginUser(enteredEmail, enteredPassword);
-      this.resetForm();
+      this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
+        error: (error) => {
+          this.errorMessage.set('Incorrect Password or Email');
+          console.error(error);
+        },
+      });
     } else {
       console.log('error');
     }
@@ -118,5 +118,9 @@ export class LoginComponent implements OnInit {
   onTemporaryLogout() {
     this.router.createUrlTree(['/login']);
     this.logoutService.onLogoutUser();
+  }
+
+  closeError() {
+    this.errorMessage.set('');
   }
 }
