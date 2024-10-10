@@ -3,3 +3,7 @@ export interface User {
   email: string;
   role: string;
 }
+export interface Profile extends User {
+  firstName: string;
+  lastName: string;
+}
