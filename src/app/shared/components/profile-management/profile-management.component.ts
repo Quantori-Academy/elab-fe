@@ -24,6 +24,7 @@ import { ChangePasswordService } from '../../../core/services/change-password.se
 import { AuthService } from '../../../auth/services/authentication/auth.service';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { NotificationPopupComponent } from '../notification-popup/notification-popup.component';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-profile-management',
@@ -36,6 +37,7 @@ import { NotificationPopupComponent } from '../notification-popup/notification-p
     MatIconModule,
     ReactiveFormsModule,
     NotificationPopupComponent,
+    HeaderComponent,
   ],
   templateUrl: './profile-management.component.html',
   styleUrl: './profile-management.component.scss',
@@ -90,11 +92,9 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    this.authService
-      .getCurrentUser()
-      .catch((error) => {
-        console.error('Error loading user profile:', error);
-      });
+    this.authService.getCurrentUser().catch((error) => {
+      console.error('Error loading user profile:', error);
+    });
   }
 
   changePasswordForm = this.fb.group(
@@ -109,7 +109,6 @@ export class ProfilePageComponent implements OnInit {
     {
       validators: [
         this.passwordMatch(),
-        // this.currentPasswordMatching()
       ],
     }
   );
@@ -142,45 +141,27 @@ export class ProfilePageComponent implements OnInit {
     };
   }
 
-  // this might not be necessary if backend is doing it already
-  // currentPasswordMatching() {
-  //   return (formGroup: AbstractControl): ValidationErrors | null => {
-  //     const currentPasswordControl = formGroup.get('currentPassword');
-
-  //     if (!currentPasswordControl || !this.user) {
-  //       return null;
-  //     }
-
-  //     if (currentPasswordControl.hasError('required')) {
-  //       return null;
-  //     }
-  //     const currentPassword = currentPasswordControl.value;
-
-  //     // Comparing the entered current password with the actual user password
-  //     if (currentPassword !== this.user.password) {
-  //       currentPasswordControl.setErrors({ currentPasswordMismatch: true });
-  //     } else {
-  //       if (currentPasswordControl.hasError('currentPasswordMismatch')) {
-  //         currentPasswordControl.setErrors(null);
-  //       }
-  //     }
-
-  //     return null;
-  //   };
-  // }
-
-  onPasswordChange(oldPassword: string, newPassword: string) {
-    this.changePasswordService.changePassword({ oldPassword, newPassword });
-  }
-
   onSubmit() {
     if (this.changePasswordForm.valid) {
       const newPassword = this.controls['newPassword'].value;
       const oldPassword = this.controls['currentPassword'].value;
-      this.onPasswordChange(oldPassword!, newPassword!);
+  
+      if (oldPassword && newPassword) {
+        this.onPasswordChange(oldPassword, newPassword).subscribe(() => {
+          console.log('Password changed');
+          this.togglePasswordChange();
+        });
+      } else {
+        console.log('Password fields are missing');
+      }
     } else {
       console.log('Form Invalid');
     }
-    return this.togglePasswordChange();
+  }
+  onPasswordChange(oldPassword: string, newPassword: string) {
+    return this.changePasswordService.changePassword({
+      oldPassword,
+      newPassword,
+    });
   }
 }

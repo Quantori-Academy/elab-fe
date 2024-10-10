@@ -1,8 +1,9 @@
+<app-header/>
 @if (user) {
 <div class="profile-details">
   <div>
     <h3>{{ user.firstName }} {{ user.lastName }}</h3>
-    <h4>Occupation: {{ user.role }}</h4>
+    <h4>Role: {{ user.role }}</h4>
     <p>Email: {{ user.email }}</p>
     <button
       mat-stroked-button

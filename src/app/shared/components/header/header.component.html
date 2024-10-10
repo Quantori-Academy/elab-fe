@@ -6,10 +6,6 @@
         (keyup)="($event.key === 'Enter') && navigateToProfile()">
         {{ currentUser?.firstName}}   {{ currentUser?.lastName}}
       </span>
-      <!-- <div class="avatar" (click)="navigateToProfile()" tabindex="0"
-        (keyup)="($event.key === 'Enter') && navigateToProfile()">
-        <img [src]="currentUser.avatarUrl" alt="User Avatar">
-      </div> -->
     </div>
     <button mat-button (click)="logout()">Logout</button>
   </div>

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ChangedPassword } from '../../auth/models/changePassword.interface';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,15 +15,20 @@ export class ChangePasswordService {
 
   changePassword(newPasswordObj: ChangedPassword): Observable<ChangedPassword> {
     const token = localStorage.getItem('access_token');
-
+    if (!token) {
+      return throwError('No access token found');
+    }
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     });
-
     return this.http.post<ChangedPassword>(this.apiUrl, newPasswordObj, {
       headers,
-      withCredentials: true,
-    });
+    }).pipe(
+      catchError((error) => {
+        console.error('Password change failed:', error);
+        return throwError(error);
+      })
+    );
   }
 }
