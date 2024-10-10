@@ -54,7 +54,10 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
     // Initialize the form data obj
     this.userForm = this.fb.group({
       firstName: [
-        { value: this.userData.firstName, disabled: !this.userCreation },
+        {
+          value: this.userData.firstName,
+          disabled: !this.userCreation,
+        },
         [Validators.required],
       ],
       lastName: [
@@ -65,7 +68,10 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
         [Validators.required],
       ],
       email: [
-        { value: this.userData.email, disabled: !this.emailEditable },
+        {
+          value: this.userData.email,
+          disabled: !this.emailEditable,
+        },
         [Validators.required, Validators.email],
       ],
       role: [
