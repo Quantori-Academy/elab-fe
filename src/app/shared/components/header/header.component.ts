@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // import { AuthService } from '../../../auth/services/forgot-password/auth.service'; //this.router.navigate(['/login']) after denis's merge;
 import { MatButtonModule } from '@angular/material/button';
+import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
 import { Profile } from '../../../auth/roles/types';
 
@@ -10,6 +11,7 @@ import { Profile } from '../../../auth/roles/types';
   standalone: true,
   imports: [MatButtonModule],
   templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
@@ -48,7 +50,7 @@ export class HeaderComponent implements OnInit {
   }
 
   // private authService = inject(AuthService);
-  // private logoutService = inject(LogoutService);
+  private logoutService = inject(LogoutService);
 
   // ngOnInit() {
   //   this.getCurrentUser();
@@ -59,6 +61,6 @@ export class HeaderComponent implements OnInit {
   // }
 
   logout() {
-    // this.logoutService.onLogoutUser(); //WAITING for the Denis merge
+    this.logoutService.onLogoutUser();
   }
 }
