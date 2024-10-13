@@ -14,8 +14,14 @@ export class StorageLocationService {
 
   constructor(private http: HttpClient) {}
 
-  private rooms: string[] = ['Room 1', 'Room 2', 'Room 3', 'Room 4'];
-  private names: string[] = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
+  private rooms = ['Room 1', 'Room 2', 'Room 3', 'Room 4'];
+  private names = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
+  public locationNames$ = of([
+    'Room 1 Name 1',
+    'Room 2 Name 1',
+    'Room 3 Name 1',
+    'Room 4 Name 1',
+  ]);
 
   public addNewStorageLocation(newData: StorageLocationItem) {
     return this.http.post(this.apiUrl, newData);

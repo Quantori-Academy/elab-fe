@@ -18,18 +18,13 @@
   </mat-form-field>
   <mat-form-field hideRequiredMarker>
     <mat-label>Name</mat-label>
-    <input matInput formControlName="name" [matAutocomplete]="autoName" />
-    <mat-autocomplete #autoName="matAutocomplete">
-      @for (name of filteredNames$ | async; track $index) {
-      <mat-option [value]="name">
-        {{ name }}
-      </mat-option>
-      }
-    </mat-autocomplete>
+    <input matInput formControlName="name" />
     @if (hasError('name', 'required')) {
     <mat-error>Name is required</mat-error>
     }@if (hasError('name', 'maxlength')) {
     <mat-error>Name length should be less than {{ MAX_LENGTH }}</mat-error>
+    }@if (hasError('name', 'uniqueName')) {
+    <mat-error>{{ locationName }} already exists</mat-error>
     }
   </mat-form-field>
   <div class="actions">
