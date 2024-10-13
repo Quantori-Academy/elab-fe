@@ -1,24 +1,41 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @include mat.core();
 
-$elab-fe-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
-  ),
-  density: (
-    scale: 0,
+$elab-fe-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
   )
-));
+);
 
 :root {
   @include mat.all-component-themes($elab-fe-theme);
   --primary-color: #1469c0;
+
+  --error-color: #be1a1a;
+  --warning-color: #f7d070;
+  --success-color: #159815;
+  --info-color: #1469c0;
+
+  --success-light-color: #d4edda;
+  --success-progress-bg-color: #77b285;
+
+  --error-light-color: #f8d7da;
+  --error-progress-bg-color: #e5a1a1;
+
+  --warning-light-color: #fff3cd;
+  --warning-progress-bg-color: #fce588;
+
+  --info-light-color: #cce5ff;
+  --info-progress-bg-color: #82bfd3;
 }
-
-
 
 html,
 body {

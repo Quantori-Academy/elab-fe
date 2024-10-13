@@ -1,0 +1,106 @@
+//COLORS FOR POPUP
+.card.success {
+  --light-color: var(--success-light-color);
+  --dark-color: var(--success-color);
+  --progress-bg-color: var(--success-progress-bg-color);
+}
+
+.card.error {
+  --light-color: var(--error-light-color);
+  --dark-color: var(--error-color);
+  --progress-bg-color: var(--error-progress-bg-color);
+}
+
+.card.warning {
+  --light-color: var(--warning-light-color);
+  --dark-color: var(--warning-color);
+  --progress-bg-color: var(--warning-progress-bg-color);
+}
+
+.card.info {
+  --light-color: var(--info-light-color);
+  --dark-color: var(--info-color);
+  --progress-bg-color: var(--info-progress-bg-color);
+}
+
+.card {
+  position: fixed;
+
+  width: 300px;
+  border-radius: 0;
+  box-sizing: border-box;
+  background-color: var(--light-color);
+  z-index: 1000;
+  box-shadow: 0 0 10px #00000050;
+
+  &.top-left {
+    top: 70px;
+    left: 20px;
+  }
+
+  &.top-right {
+    top: 70px;
+    right: 20px;
+  }
+
+  &.bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  &.bottom-right {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px 0;
+  }
+
+  &__icon {
+    width: 42px;
+    height: 42px;
+    font-size: 42px;
+    color: var(--dark-color);
+  }
+
+  &__data {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--dark-color);
+    position: relative;
+
+    .card__message {
+      margin: 0;
+      font-size: 12px;
+    }
+    .close-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .progress {
+    margin-top: auto;
+    display: flex;
+    background: var(--progress-bg-color);
+
+    .progress-bar {
+      height: 10px;
+      background: var(--dark-color);
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@if (notificationData) {
+<mat-card
+  class="card"
+  [ngClass]="notificationData.type + ' ' + notificationData.position"
+>
+  <div class="card__content">
+    <mat-icon class="card__icon">{{ notificationIcon }}</mat-icon>
+    <div class="card__data">
+      <strong class="card__title">{{ notificationData.title }}</strong>
+      <p class="card__message">{{ notificationData.message }}</p>
+      <mat-icon class="close-btn" (click)="onClose()">close</mat-icon>
+    </div>
+  </div>
+  <div class="progress">
+    <span class="progress-bar" [style.width.%]="progressValue"></span>
+  </div>
+</mat-card>
+}
