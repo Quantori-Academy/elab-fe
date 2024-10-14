@@ -4,13 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
-import { IUserInfo, UserRoles } from '../../../models/user-models';
+import { UserManagementService } from '../../auth/services/user-management/user-management.service';
+import { IUserInfo, UserRoles } from '../../shared/models/user-models';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { UserManagementFormComponent } from '../../forms/user-management-form/user-management-form.component';
+import { UserManagementFormComponent } from './components/user-management-form/user-management-form.component';
 import { MatButtonModule } from '@angular/material/button';
-import { NotificationPopupService } from '../../../services/notification-popup/notification-popup.service';
+import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-users-list',

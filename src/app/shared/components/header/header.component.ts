@@ -1,10 +1,13 @@
 
 
-import { Profile } from '../../../auth/roles/types';
-import { RbacService } from '../../../auth/services/authentication/rbac.service';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+
+import { Profile } from '../../../auth/roles/types';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,9 +18,10 @@ export const collapsed = signal(false);
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatToolbarModule, MatIconModule],
+  imports: [MatButtonModule, MatToolbarModule, MatIconModule, NgIf, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
@@ -25,13 +29,12 @@ export class HeaderComponent implements OnInit {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   public collapsed = collapsed;
+  public currentUser$: Observable<Profile | null> = this.rbacService.authenticatedUser$;
 
-  public get currentUser(): Profile | null {
-    return this.rbacService.getAuthenticatedUser() ?? null;
-  }
   ngOnInit(): void {
     this.loadCurrentUser();
   }
+
   loadCurrentUser() {
     this.authService
       .getCurrentUser()
@@ -41,9 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateToProfile() {
-    if (this.currentUser) {
-      this.router.navigate([`/profile`]);
-    }
+    this.router.navigate([`/profile`]);
   }
 
   logout() {

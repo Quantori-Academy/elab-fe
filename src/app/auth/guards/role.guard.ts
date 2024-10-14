@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { RbacService } from './services/authentication/rbac.service';
 import { Router } from '@angular/router';
-import { AuthService } from './services/authentication/auth.service';
+import { AuthService } from '../services/authentication/auth.service';
+import { RbacService } from '../services/authentication/rbac.service';
 
 export const roleGuard: CanActivateFn = async (route) => {
   const rbacService = inject(RbacService);

@@ -19,11 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatOptionModule } from '@angular/material/core';
-import { IUserInfo, UserRoles } from '../../../models/user-models';
+import { IUserInfo, UserRoles } from '../../../../shared/models/user-models';
 import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
 import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NotificationPopupService } from '../../../services/notification-popup/notification-popup.service';
+import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-user-management-form',

@@ -19,11 +19,11 @@ import {
   query,
   stagger,
 } from '@angular/animations';
-import { Profile } from '../../../auth/roles/types';
-import { ChangePasswordService } from '../../../core/services/change-password.service';
-import { AuthService } from '../../../auth/services/authentication/auth.service';
-import { RbacService } from '../../../auth/services/authentication/rbac.service';
-import { NotificationPopupComponent } from '../notification-popup/notification-popup.component';
+import { Profile } from '../../auth/roles/types';
+import { ChangePasswordService } from '../../auth/services/change-password.service';
+import { AuthService } from '../../auth/services/authentication/auth.service';
+import { RbacService } from '../../auth/services/authentication/rbac.service';
+import { NotificationPopupComponent } from '../../shared/components/notification-popup/notification-popup.component';
 
 @Component({
   selector: 'app-profile-management',

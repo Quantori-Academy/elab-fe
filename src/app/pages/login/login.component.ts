@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
+import { MaterialModule } from '../../material.module';
 import {
   FormControl,
   FormGroup,
@@ -8,10 +8,10 @@ import {
 } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { debounceTime } from 'rxjs';
-import { AuthService } from '../../services/authentication/auth.service';
+import { AuthService } from '../../auth/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { LogoutService } from '../../services/logout/logout.service';
+import { LogoutService } from '../../auth/services/logout/logout.service';
 
 let initialEmailValue = '';
 const savedForm = localStorage.getItem('login-email');
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToForgotPassword() {
-    return this.router.navigate(['forgot-password']);
+    return this.router.navigate(['/forgot-password']);
   }
 
   onTemporaryLogout() {
