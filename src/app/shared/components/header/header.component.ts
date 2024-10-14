@@ -1,8 +1,12 @@
-
-
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -12,6 +16,7 @@ import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
+import { catchError, of } from 'rxjs';
 
 export const collapsed = signal(false);
 
@@ -29,18 +34,20 @@ export class HeaderComponent implements OnInit {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   public collapsed = collapsed;
-  public currentUser$: Observable<Profile | null> = this.rbacService.authenticatedUser$;
+  public currentUser$: Observable<Profile | null> =
+    this.rbacService.authenticatedUser$;
 
   ngOnInit(): void {
     this.loadCurrentUser();
   }
 
   loadCurrentUser() {
-    this.authService
-      .getCurrentUser()
-      .catch((error) => {
+    this.authService.getCurrentUser().pipe(
+      catchError((error) => {
         console.error('Error loading user:', error);
-      });
+        return of(null);
+      })
+    );
   }
 
   navigateToProfile() {

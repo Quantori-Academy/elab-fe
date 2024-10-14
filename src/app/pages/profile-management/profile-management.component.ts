@@ -90,9 +90,12 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    this.authService.getCurrentUser().catch((error) => {
-      console.error('Error loading user profile:', error);
-    });
+    this.authService.getCurrentUser().pipe(
+      catchError((error) => {
+        console.error('Error loading user profile:', error);
+        return of(null);
+      })
+    );
   }
 
   changePasswordForm = this.fb.group(
