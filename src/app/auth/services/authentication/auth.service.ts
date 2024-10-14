@@ -6,6 +6,16 @@ import { Router } from '@angular/router';
 import LoginResponse from '../../auth.interface';
 import { RbacService } from './rbac.service';
 import { User } from '../../roles/types';
+import {
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -26,7 +36,7 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
 
-  onLoginUser(email: string, password: string) {
+  onLoginUser(email: string, password: string): Observable<LoginResponse> {
     const body = JSON.stringify({ email, password });
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -62,36 +72,30 @@ export class AuthService {
     return subscription;
   }
 
-  getCurrentUser(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const cachedUser = this.rbacService.getAuthenticatedUser();
-      if (cachedUser) {
-        resolve();
-        return;
-      }
+  getCurrentUser(): Observable<User> {
+    const cachedUser = this.rbacService.getAuthenticatedUser();
+    if (cachedUser) {
+      return of(cachedUser);
+    }
 
-      const token = this.getAccessToken();
-      if (token) {
-        const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
-        });
+    const token = this.getAccessToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
 
-        this.httpClient
-          .get<User>(this.userUrl, { headers, withCredentials: true })
-          .subscribe({
-            next: (user) => {
-              this.rbacService.setAuthenticatedUser(user);
-              resolve();
-            },
-            error: (err) => {
-              console.error('Error fetching user:', err);
-              reject(err);
-            },
-          });
-      } else {
-        reject('No token found');
-      }
-    });
+      return this.httpClient
+        .get<User>(this.userUrl, { headers, withCredentials: true })
+        .pipe(
+          tap((user) => this.rbacService.setAuthenticatedUser(user)),
+          catchError((err) => {
+            console.error('Error fetching user:', err);
+            return throwError(err);
+          })
+        );
+    } else {
+      return throwError('No token found');
+    }
   }
 
   getUserRole(): string | undefined {

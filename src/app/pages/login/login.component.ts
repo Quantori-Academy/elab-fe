@@ -101,8 +101,12 @@ export class LoginComponent implements OnInit {
 
     if (enteredEmail && enteredPassword) {
       this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
-        error: (error) => {
-          this.errorMessage.set('Incorrect Password or Email');
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.errorMessage.set('Incorrect Password or Email');
+          } else {
+            this.errorMessage.set('Connection Error');
+          }
           console.error(error);
         },
       });
