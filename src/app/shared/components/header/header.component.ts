@@ -42,12 +42,15 @@ export class HeaderComponent implements OnInit {
   }
 
   loadCurrentUser() {
-    this.authService.getCurrentUser().pipe(
-      catchError((error) => {
-        console.error('Error loading user:', error);
-        return of(null);
-      })
-    );
+    this.authService
+      .getCurrentUser()
+      .pipe(
+        catchError((error) => {
+          console.error('Error loading user:', error);
+          return of(null);
+        })
+      )
+      .subscribe();
   }
 
   navigateToProfile() {

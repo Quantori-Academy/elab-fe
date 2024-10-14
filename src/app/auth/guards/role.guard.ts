@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
 import { RbacService } from '../services/authentication/rbac.service';
 
-export const roleGuard: CanActivateFn = async (route) => {
+export const roleGuard: CanActivateFn = (
+  route
+): Observable<boolean | UrlTree> => {
   const rbacService = inject(RbacService);
   const router = inject(Router);
   const authService = inject(AuthService);
