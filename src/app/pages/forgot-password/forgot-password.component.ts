@@ -18,15 +18,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { ForgotPasswordService } from '../../services/forgot-password/forgot-password.service';
+import { ForgotPasswordService } from '../../auth/services/forgot-password/forgot-password.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import {
   EmailSendResponse,
   EmailSendSuccess,
-} from '../../models/forgot-password.interface';
+} from '../../auth/models/forgot-password.interface';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { fadeInOutEmailSuccess } from '../../../shared/animations/fadeInOut/fadeInOut.animation';
+import { fadeInOutEmailSuccess } from '../../shared/animations/fadeInOut/fadeInOut.animation';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({

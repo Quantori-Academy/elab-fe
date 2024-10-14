@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { RbacService } from './services/authentication/rbac.service';
 import { Router } from '@angular/router';
-import { AuthService } from './services/authentication/auth.service';
+import { AuthService } from '../services/authentication/auth.service';
+import { RbacService } from '../services/authentication/rbac.service';
 
 export const roleGuard: CanActivateFn = async (route) => {
   const rbacService = inject(RbacService);
@@ -17,7 +17,7 @@ export const roleGuard: CanActivateFn = async (route) => {
       await authService.getCurrentUser();
     } catch (error) {
       console.error('Error fetching user:', error);
-      return router.createUrlTree(['/dashboard']);
+      return router.createUrlTree(['/']);
     }
   }
 
@@ -25,12 +25,12 @@ export const roleGuard: CanActivateFn = async (route) => {
 
   if (!currentUser) {
     console.error('User is not set in RBAC service.');
-    return router.createUrlTree(['/dashboard']);
+    return router.createUrlTree(['/']);
   }
 
   if (rbacService.isGranted(requiredRole)) {
     return true;
   } else {
-    return router.createUrlTree(['/dashboard']);
+    return router.createUrlTree(['/']);
   }
 };

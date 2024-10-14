@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../roles/types';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RbacService {
+  private _authenticatedUserSubject$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   private _authenticatedUser!: User;
+
+  public authenticatedUser$: Observable<User | null> = this._authenticatedUserSubject$.asObservable();
 
   setAuthenticatedUser(user: User) {
     this._authenticatedUser = user;
+    this._authenticatedUserSubject$.next(user);
   }
 
   getAuthenticatedUser(): User | undefined {

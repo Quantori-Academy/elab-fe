@@ -1,13 +1,14 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet, RouterModule } from '@angular/router';
-import { MenuLink } from '../../../auth/models/menu-link.interface';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+
+import { MenuLink } from '../../models/menu-link.interface';
 import { collapsed } from '../header/header.component';
-import { AuthService } from '../../../auth/services/authentication/auth.service';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,40 +21,32 @@ import { AuthService } from '../../../auth/services/authentication/auth.service'
     MatSidenavModule,
     RouterOutlet,
     MatListModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  private authService = inject(AuthService);
+  readonly rbacService = inject(RbacService);
   menuLinks = signal<MenuLink[]>([
     {
-      label: 'Users management',
-      route: '/',
+      label: 'Storage Locations',
+      route: '/storage-locations',
+    },
+    {
+      label: 'Reagents',
+      route: '/reagents',
+    },
+    {
+      label: 'Users Management',
+      route: '/users',
       adminOnly: true,
-    },
-    {
-      label: 'Page1',
-      route: '/',
-    },
-    {
-      label: 'Page2',
-      route: '/',
-    },
-    {
-      label: 'Page3',
-      route: '/',
     },
   ]);
 
   navbarWidth = computed(() => (collapsed() ? '0' : '250px'));
 
-  get isAdmin(): boolean {
-    return this.authService.getUserRole() === 'Admin';
-  }
-
   isLinkVisible(link: MenuLink): boolean {
-    return !link.adminOnly || this.isAdmin;
+    return !link.adminOnly || this.rbacService.isAdmin();
   }
 }

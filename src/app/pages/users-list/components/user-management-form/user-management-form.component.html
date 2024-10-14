@@ -9,7 +9,7 @@
       <mat-label>First Name</mat-label>
       <input
         matInput
-        oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1)"
+        (input)="capitalizeValue($event)"
         formControlName="firstName"
       />
       @if (userForm.get('firstName')?.hasError('required')) {
@@ -22,7 +22,7 @@
       <mat-label>Last Name</mat-label>
       <input
         matInput
-        oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1)"
+        (input)="capitalizeValue($event)"
         formControlName="lastName"
       />
       @if (userForm.get('lastName')?.hasError('required')) {

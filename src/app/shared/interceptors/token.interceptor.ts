@@ -16,7 +16,7 @@ import {
   switchMap,
   throwError,
 } from 'rxjs';
-import { AuthService } from '../services/authentication/auth.service';
+import { AuthService } from '../../auth/services/authentication/auth.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
