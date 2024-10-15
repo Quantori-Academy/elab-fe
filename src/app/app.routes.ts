@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { UserRoles } from './shared/models/user-models';
 import { authGuard } from './auth/guards/auth.guard';
 import { roleGuard } from './auth/guards/role.guard';
+import { PasswordResetGuard } from './auth/guards/password-reset.guard';
 
 export const routes: Routes = [
   {
@@ -12,13 +13,15 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent),
-    canActivate: [authGuard],
+      import('./pages/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
+    canActivate: [authGuard, PasswordResetGuard],
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/login/login.component').then(c => c.LoginComponent)
+      import('./pages/login/login.component').then((c) => c.LoginComponent),
   },
   {
     path: 'forgot-password',
@@ -37,14 +40,18 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () =>
-      import('./pages/profile-management/profile-management.component').then(c => c.ProfilePageComponent),
+      import('./pages/profile-management/profile-management.component').then(
+        (c) => c.ProfilePageComponent
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'users',
     loadComponent: () =>
-      import('./pages/users-list/users-list.component').then(c => c.UsersListComponent),
+      import('./pages/users-list/users-list.component').then(
+        (c) => c.UsersListComponent
+      ),
     canActivate: [authGuard, roleGuard],
-    data: { role: UserRoles.Admin }
+    data: { role: UserRoles.Admin },
   },
 ];

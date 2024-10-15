@@ -48,9 +48,17 @@ export class AuthService {
           this.access_token.set(data.access_token);
         }),
         switchMap((loginResponse) =>
-          this.getCurrentUser().pipe(map(() => loginResponse))
+          this.getCurrentUser().pipe(
+            tap((user) => {
+              if (user.isPasswordResetRequired) {
+                this.router.navigate(['/reset-password']);
+              } else {
+                this.router.navigate(['/dashboard']);
+              }
+            }),
+            map(() => loginResponse)
+          )
         ),
-        tap(() => this.router.navigate(['dashboard'])),
         finalize(() => this.isFetching.set(false))
       );
   }
