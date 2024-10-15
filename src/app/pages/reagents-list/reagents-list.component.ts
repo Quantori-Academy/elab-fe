@@ -23,6 +23,8 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -46,12 +48,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatSelectModule,
     MatGridListModule,
     MatOptionModule,
+    MatDialogModule
   ],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
 export class ReagentsListComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
+  public dialog = inject(MatDialog);
   private mockReagentsList = inject(mockReagentsListService);
 
   selectedCategory = '';
@@ -118,5 +122,11 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  openStructure(structure:string){
+    this.dialog.open(StructureDialogComponent, {
+      data: { structure },
+      panelClass: 'image-dialog',
+    });
+  }
   // openCreateReagentDialog() {} //this for create new reagent form
 }

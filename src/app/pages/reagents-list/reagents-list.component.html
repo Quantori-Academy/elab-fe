@@ -74,7 +74,9 @@
       <ng-container matColumnDef="structure">
         <th mat-header-cell *matHeaderCellDef>Structure</th>
         <td mat-cell *matCellDef="let element">
-          <img [src]="element.structure" alt="" />
+          <img [src]="element.structure" alt=""
+          class="clickable-image"
+          (click)="openStructure(element.structure)"  />
         </td>
       </ng-container>
 
