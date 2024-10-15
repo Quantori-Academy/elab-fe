@@ -24,6 +24,7 @@ import { ChangePasswordService } from '../../auth/services/change-password.servi
 import { AuthService } from '../../auth/services/authentication/auth.service';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { NotificationPopupComponent } from '../../shared/components/notification-popup/notification-popup.component';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-profile-management',
@@ -90,9 +91,15 @@ export class ProfilePageComponent implements OnInit {
   }
 
   loadProfile() {
-    this.authService.getCurrentUser().catch((error) => {
-      console.error('Error loading user profile:', error);
-    });
+    this.authService
+      .getCurrentUser()
+      .pipe(
+        catchError((error) => {
+          console.error('Error loading user profile:', error);
+          return of(null);
+        })
+      )
+      .subscribe();
   }
 
   changePasswordForm = this.fb.group(
