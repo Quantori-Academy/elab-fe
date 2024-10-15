@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { ChangedPassword } from '../../auth/models/changePassword.interface';
+import { ChangedPassword } from '../models/changePassword.interface';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 

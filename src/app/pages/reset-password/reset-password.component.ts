@@ -14,8 +14,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ForgotPasswordService } from '../../services/forgot-password/forgot-password.service';
-import { confirmPasswordValidator } from '../../../shared/validators/confirm-password.validator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +22,8 @@ import { MatIcon } from '@angular/material/icon';
 import { finalize, Subject, take, takeUntil } from 'rxjs';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { confirmPasswordValidator } from '../../shared/validators/confirm-password.validator';
+import { ForgotPasswordService } from '../../auth/services/forgot-password/forgot-password.service';
 
 @Component({
   selector: 'app-reset-password',

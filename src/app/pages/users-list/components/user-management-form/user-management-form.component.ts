@@ -19,11 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatOptionModule } from '@angular/material/core';
-import { IUserInfo, UserRoles } from '../../../models/user-models';
+import { IUserInfo, UserRoles } from '../../../../shared/models/user-models';
 import { UserManagementService } from '../../../../auth/services/user-management/user-management.service';
 import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NotificationPopupService } from '../../../services/notification-popup/notification-popup.service';
+import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-user-management-form',
@@ -124,6 +124,11 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
   //   this.showPasswordField = !this.showPasswordField;
   //   if (!this.showPasswordField) this.userForm.patchValue({ password: '' });
   // }
+
+  capitalizeValue(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+  }
 
   onDeleteUser(): void {
     if (!confirm('Confirm action -> Delete user:')) return;

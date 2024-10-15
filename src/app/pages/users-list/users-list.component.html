@@ -1,5 +1,10 @@
 <div class="grid-wrapper">
   <div class="control-bar-wrapper">
+    <div>
+      <button mat-flat-button color="primary" (click)="openCreateUserDialog()">
+        Create New User
+      </button>
+    </div>
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Search by name</mat-label>
@@ -19,11 +24,6 @@
           }
         </mat-select>
       </mat-form-field>
-    </div>
-    <div>
-      <button mat-flat-button color="primary" (click)="openCreateUserDialog()">
-        Create New User
-      </button>
     </div>
   </div>
 
