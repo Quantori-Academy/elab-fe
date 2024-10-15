@@ -12,6 +12,7 @@ import { AuthService } from '../../auth/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 let initialEmailValue = '';
 const savedForm = localStorage.getItem('login-email');

@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { AuthStateService } from './authstate.service';
 import { Router } from '@angular/router';
 import LoginResponse from '../../auth.interface';
 import { RbacService } from './rbac.service';
@@ -16,17 +15,13 @@ import {
   tap,
   throwError,
 } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(
-    private authStateService: AuthStateService,
-    public rbacService: RbacService
-  ) {
-    this.authStateService.logoutEvent.subscribe(() => {
-      this.clearState();
-    });
-  }
+  private logoutSubject = new Subject<void>();
+  public logout$ = this.logoutSubject.asObservable();
+  constructor(public rbacService: RbacService) {}
 
   private authUrl = environment.apiUrl + '/api/v1/auth/login';
   private userUrl = environment.apiUrl + '/api/v1/users/current';
@@ -40,36 +35,24 @@ export class AuthService {
     const body = JSON.stringify({ email, password });
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    const subscription = this.httpClient.post<LoginResponse>(
-      this.authUrl,
-      body,
-      {
+    this.isFetching.set(true);
+
+    return this.httpClient
+      .post<LoginResponse>(this.authUrl, body, {
         headers,
         withCredentials: true,
-      }
-    );
-    subscription.subscribe({
-      next: (data) => {
-        localStorage.setItem('access_token', data.access_token);
-        this.access_token.set(data.access_token);
-
-        this.getCurrentUser()
-          .then(() => {
-            this.router.navigate(['/']);
-          })
-          .catch((error) => {
-            console.error('Error fetching user after login:', error);
-          });
-      },
-      error: (error: Error) => {
-        this.error.set(error.message);
-      },
-      complete: () => {
-        this.isFetching.set(false);
-      },
-    });
-
-    return subscription;
+      })
+      .pipe(
+        tap((data) => {
+          localStorage.setItem('access_token', data.access_token);
+          this.access_token.set(data.access_token);
+        }),
+        switchMap((loginResponse) =>
+          this.getCurrentUser().pipe(map(() => loginResponse))
+        ),
+        tap(() => this.router.navigate(['dashboard'])),
+        finalize(() => this.isFetching.set(false))
+      );
   }
 
   getCurrentUser(): Observable<User> {
@@ -117,5 +100,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!this.getAccessToken();
+  }
+
+  logout() {
+    this.clearState();
+    this.logoutSubject.next();
   }
 }

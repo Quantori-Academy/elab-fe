@@ -24,6 +24,7 @@ import { ChangePasswordService } from '../../auth/services/change-password.servi
 import { AuthService } from '../../auth/services/authentication/auth.service';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { NotificationPopupComponent } from '../../shared/components/notification-popup/notification-popup.component';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-profile-management',
