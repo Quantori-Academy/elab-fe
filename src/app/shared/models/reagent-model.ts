@@ -5,6 +5,7 @@ export interface Reagents {
   quantity: number | string;
   storageLocation: string;
   structure: string;
+  dateOfCreation: string;
 }
 
 export enum Category {

@@ -1,0 +1,21 @@
+.wrapper{
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+.actions{
+  display: flex;
+  justify-content: space-between;
+}
+img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.table-wrapper{
+  overflow-x: scroll;
+}
+
+.filter-container{
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}

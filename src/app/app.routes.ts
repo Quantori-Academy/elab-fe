@@ -12,13 +12,15 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./pages/dashboard/dashboard.component').then(c => c.DashboardComponent),
+      import('./pages/dashboard/dashboard.component').then(
+        (c) => c.DashboardComponent
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/login/login.component').then(c => c.LoginComponent)
+      import('./pages/login/login.component').then((c) => c.LoginComponent),
   },
   {
     path: 'forgot-password',
@@ -37,14 +39,28 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () =>
-      import('./pages/profile-management/profile-management.component').then(c => c.ProfilePageComponent),
+      import('./pages/profile-management/profile-management.component').then(
+        (c) => c.ProfilePageComponent
+      ),
     canActivate: [authGuard],
   },
   {
     path: 'users',
     loadComponent: () =>
-      import('./pages/users-list/users-list.component').then(c => c.UsersListComponent),
+      import('./pages/users-list/users-list.component').then(
+        (c) => c.UsersListComponent
+      ),
     canActivate: [authGuard, roleGuard],
-    data: { role: UserRoles.Admin }
+    data: { role: UserRoles.Admin },
+  },
+  {
+    path: 'reagents',
+    loadComponent: () =>
+      import('./pages/reagents-list/reagents-list.component').then(
+        (c) => c.ReagentsListComponent
+      ),
+    canActivate: [authGuard, roleGuard],
+    // this should be accessible by Researcher i think, but to easily check i left admin access for now
+    data: { role: UserRoles.Admin },
   },
 ];

@@ -14,7 +14,7 @@ export class mockReagentsListService {
     return of(ELEMENT_DATA);
   }
 
-  //   realGetReagents(){
+  //   GetReagents(){
   //     return this.httpClient.get<Reagents>(this.apiUrl);
   //   }
 }
