@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
+import { MaterialModule } from '../../../../material.module';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,10 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { StorageLocationItem } from '../../models/storage-location.interface';
-import { StorageLocationService } from '../../services/storage-location/storage-location.service';
+import { StorageLocationService } from '../../storage-location/storage-location.service';
 import { debounceTime, map, Observable, switchMap, take, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { NewStorageLocation } from '../../models/storage-location.interface';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -42,6 +42,7 @@ export class StorageLocationAddNewComponent {
           '',
           [Validators.required, Validators.maxLength(this.MAX_LENGTH)],
         ],
+        description: [''],
       },
       { asyncValidators: this.validateUniqueLocation.bind(this) }
     );
@@ -81,7 +82,7 @@ export class StorageLocationAddNewComponent {
 
   onSave() {
     if (this.addStorageForm.valid) {
-      const formValue: StorageLocationItem = this.addStorageForm.value;
+      const formValue: NewStorageLocation = this.addStorageForm.value;
 
       this.storageLocationService
         .addNewStorageLocation(formValue)

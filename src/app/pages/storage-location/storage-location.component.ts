@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MaterialModule } from '../../../material.module';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { StorageLocationAddNewComponent } from '../../components/storage-location-add-new/storage-location-add-new.component';
+import { StorageLocationAddNewComponent } from './components/storage-location-add-new/storage-location-add-new.component';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-storage-location',

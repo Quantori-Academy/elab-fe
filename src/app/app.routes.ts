@@ -53,4 +53,12 @@ export const routes: Routes = [
     canActivate: [authGuard, roleGuard],
     data: { role: UserRoles.Admin },
   },
+  {
+    path: 'storage-locations',
+    loadComponent: () =>
+      import('./pages/storage-location/storage-location.component').then(
+        (c) => c.StorageLocationComponent
+      ),
+    canActivate: [authGuard],
+  },
 ];

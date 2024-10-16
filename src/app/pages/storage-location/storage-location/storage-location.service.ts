@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { StorageLocationItem } from '../../models/storage-location.interface';
 import { Observable, of } from 'rxjs';
+import { NewStorageLocation } from '../models/storage-location.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class StorageLocationService {
     'Room 4 Name 1',
   ]);
 
-  public addNewStorageLocation(newData: StorageLocationItem) {
+  public addNewStorageLocation(newData: NewStorageLocation) {
     return this.http.post(this.apiUrl, newData);
   }
 

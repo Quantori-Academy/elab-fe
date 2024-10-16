@@ -27,6 +27,10 @@
     <mat-error>{{ locationName }} already exists</mat-error>
     }
   </mat-form-field>
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
   <div class="actions">
     <button
       class="cancel-btn"
