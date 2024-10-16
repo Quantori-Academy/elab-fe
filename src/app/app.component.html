@@ -1,4 +1,11 @@
-<main class="main">
-  <router-outlet />
+<main>
+  <app-header></app-header>
+  <div style="display: flex">
+    <app-navbar></app-navbar>
+    
+    <div style="flex-grow: 1; width: 100%">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
   <app-notification-popup></app-notification-popup>
 </main>

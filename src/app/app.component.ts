@@ -1,40 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MockHealthCheckService } from './core/services/health-check/mock-health-check.service';
-// import { HealthCheckService } from './core/services/health-check/health-check.service'; //it will need when backend will create endpoint HEALTHCHECK
-import { ServerHealthStatus } from './core/services/health-check/server-health-status.interface';
 import { NotificationPopupComponent } from './shared/components/notification-popup/notification-popup.component';
 import { HeaderComponent } from "./shared/components/header/header.component";
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationPopupComponent,HeaderComponent],
+  imports: [RouterOutlet, NotificationPopupComponent, HeaderComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'E-LAB';
-
-  healthStatus: ServerHealthStatus | null = null;
   errorMessage: string | null = null;
-
-  constructor(private healthCheckService: MockHealthCheckService) {} // CHANGE TYPE TO HealthCheckService
-
-  ngOnInit(): void {
-    this.checkHealth();
-  }
-
-  checkHealth(): void {
-    this.healthCheckService.checkHealth().subscribe({
-      next: (response) => {
-        console.log('Mock data:', response); // FOR CHECK MOCK DATA
-        this.healthStatus = response;
-      },
-      error: (err) => {
-        console.error('Error:', err);
-        this.errorMessage = 'Failed to fetch health status';
-      },
-    });
-  }
 }
