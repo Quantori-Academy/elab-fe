@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { UserRoles } from './shared/models/user-models';
 import { authGuard } from './auth/guards/auth.guard';
 import { roleGuard } from './auth/guards/role.guard';
-import { PasswordResetGuard } from './auth/guards/password-reset.guard';
 
 export const routes: Routes = [
   {
@@ -16,7 +15,7 @@ export const routes: Routes = [
       import('./pages/dashboard/dashboard.component').then(
         (c) => c.DashboardComponent
       ),
-    canActivate: [authGuard, PasswordResetGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'login',
@@ -53,5 +52,12 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard, roleGuard],
     data: { role: UserRoles.Admin },
+  },
+  {
+    path: 'first-password-change',
+    loadComponent: () =>
+      import(
+        './pages/first-password-change/first-password-change.component'
+      ).then((c) => c.FirstPasswordChangeComponent),
   },
 ];

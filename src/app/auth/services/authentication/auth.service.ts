@@ -51,7 +51,7 @@ export class AuthService {
           this.getCurrentUser().pipe(
             tap((user) => {
               if (user.isPasswordResetRequired) {
-                this.router.navigate(['/reset-password']);
+                this.router.navigate(['/first-password-change']);
               } else {
                 this.router.navigate(['/dashboard']);
               }
@@ -113,5 +113,13 @@ export class AuthService {
   logout() {
     this.clearState();
     this.logoutSubject.next();
+  }
+
+  setError(message: string) {
+    this.error.set(message);
+  }
+
+  getError(): string | null {
+    return this.error();
   }
 }
