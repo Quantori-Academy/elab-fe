@@ -1,0 +1,130 @@
+<button mat-icon-button class="close-button" (click)="onClose()">
+  <mat-icon>close</mat-icon>
+</button>
+<div>
+  <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
+    
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      @if (reagentRequestForm.get('name')?.invalid && reagentRequestForm.get('name')?.touched) {
+        <mat-error>Name is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>CAS Number</mat-label>
+      <input matInput formControlName="casNumber" />
+      @if (reagentRequestForm.get('casNumber')?.hasError('required') && reagentRequestForm.get('casNumber')?.touched) {
+        <mat-error>CAS Number is required.</mat-error>
+      }
+      @if (reagentRequestForm.get('casNumber')?.hasError('minlength')) {
+        <mat-error>CAS Number must be at least 5 characters long.</mat-error>
+      }
+      @if (reagentRequestForm.get('casNumber')?.hasError('maxlength')) {
+        <mat-error>CAS Number cannot be more than 10 characters long.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Producer</mat-label>
+      <input matInput formControlName="producer" />
+      @if (reagentRequestForm.get('producer')?.invalid && reagentRequestForm.get('producer')?.touched) {
+        <mat-error>Producer is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Catalog ID</mat-label>
+      <input matInput formControlName="catalogId" />
+      @if (reagentRequestForm.get('catalogId')?.invalid && reagentRequestForm.get('catalogId')?.touched) {
+        <mat-error>Catalog ID is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Catalog Link</mat-label>
+      <input matInput formControlName="catalogLink" />
+      @if (reagentRequestForm.get('catalogLink')?.hasError('required') && reagentRequestForm.get('catalogLink')?.touched) {
+        <mat-error>Catalog Link is required.</mat-error>
+      }
+      @if (reagentRequestForm.get('catalogLink')?.hasError('pattern')) {
+        <mat-error>Catalog Link must be a valid URL.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Price Per Unit</mat-label>
+      <input matInput formControlName="pricePerUnit" />
+      @if (reagentRequestForm.get('pricePerUnit')?.hasError('required') && reagentRequestForm.get('pricePerUnit')?.touched) {
+        <mat-error>Price Per Unit is required.</mat-error>
+      }
+      @if (reagentRequestForm.get('pricePerUnit')?.hasError('pattern')) {
+        <mat-error>Price Per Unit must be a valid number.</mat-error>
+      }
+    </mat-form-field>
+
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Quantity Unit</mat-label>
+      <mat-select formControlName="quantityUnit">
+        @for (unit of units; track unit) {
+          <mat-option [value]="unit.value">{{unit.viewValue}}</mat-option>
+        }
+      </mat-select>
+      @if (reagentRequestForm.get('quantityUnit')?.invalid && reagentRequestForm.get('quantityUnit')?.touched) {
+        <mat-error>Quantity Unit is required.</mat-error>
+      }    
+    </mat-form-field>
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Total Quantity</mat-label>
+      <input matInput formControlName="totalQuantity" />
+      @if (reagentRequestForm.get('totalQuantity')?.hasError('required') && reagentRequestForm.get('totalQuantity')?.touched) {
+        <mat-error>Total Quantity is required.</mat-error>
+      }
+      @if (reagentRequestForm.get('totalQuantity')?.hasError('pattern')) {
+        <mat-error>Total Quantity must be a valid number.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" />
+      @if (reagentRequestForm.get('description')?.invalid && reagentRequestForm.get('description')?.touched) {
+        <mat-error>Description is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Quantity Left</mat-label>
+      <input matInput formControlName="quantityLeft" />
+      @if (reagentRequestForm.get('quantityLeft')?.hasError('required') && reagentRequestForm.get('quantityLeft')?.touched) {
+        <mat-error>Quantity Left is required.</mat-error>
+      }
+      @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
+        <mat-error>Quantity Left must be a valid number.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Expiration Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="expirationDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      @if (reagentRequestForm.get('expirationDate')?.invalid && reagentRequestForm.get('expirationDate')?.touched) {
+        <mat-error>Expiration Date is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field subscriptSizing="dynamic" appearance="outline">
+      <mat-label>Storage Location</mat-label>
+      <input matInput formControlName="storageLocation" (input)="onRoomNameChange()" />
+      @if (reagentRequestForm.get('storageLocation')?.invalid && reagentRequestForm.get('storageLocation')?.touched) {
+        <mat-error>Storage Location is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

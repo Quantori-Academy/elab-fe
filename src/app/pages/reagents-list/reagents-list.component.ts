@@ -7,12 +7,11 @@ import {
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
-import { mockReagentsListService } from '../../shared/services/mock-reagents-list.service';
+import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagents } from '../../shared/models/reagent-model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatButton } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,11 +19,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
+import { NewReagentFormComponent } from './new-reagent-form/new-reagent-form.component';
+import { StorageService } from '../../shared/services/storage.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -34,11 +34,8 @@ import { StructureDialogComponent } from './structure-dialog/structure-dialog.co
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
-    MatButton,
     FormsModule,
-    MatFormFieldModule,
     MatLabel,
-    MatSelect,
     MatOptionModule,
     CommonModule,
     ReactiveFormsModule,
@@ -47,8 +44,7 @@ import { StructureDialogComponent } from './structure-dialog/structure-dialog.co
     MatButtonModule,
     MatSelectModule,
     MatGridListModule,
-    MatOptionModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
@@ -56,8 +52,8 @@ import { StructureDialogComponent } from './structure-dialog/structure-dialog.co
 export class ReagentsListComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
-  private mockReagentsList = inject(mockReagentsListService);
-
+  private reagentsService = inject(ReagentsService);
+  private storageService = inject(StorageService);
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;
@@ -78,7 +74,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.mockReagentsList.getReagentsList().subscribe((reagents) => {
+    this.reagentsService.getReagentsList().subscribe((reagents) => {
       this.dataSource.data = reagents;
 
       this.dataSource.filterPredicate = (data: Reagents, filter: string) => {
@@ -93,6 +89,19 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
         return nameMatches && categoryMatches;
       };
     });
+    this.storageService.getAllStorages().subscribe({
+      next: (resp) => {
+        console.log(resp);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+
+    // will uncomment after get api is done
+    // this.reagentsService.getReagents().subscribe({
+    //   next:(resp)=>{console.log(resp)}
+    // })
   }
 
   ngAfterViewInit(): void {
@@ -113,7 +122,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // sorts name and categories if hovered on column head
+  // sorts name and categories, if hovered on column head shows sorting direction
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -122,11 +131,24 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openStructure(structure:string){
+  openStructure(structure: string) {
     this.dialog.open(StructureDialogComponent, {
       data: { structure },
       panelClass: 'image-dialog',
     });
   }
-  // openCreateReagentDialog() {} //this for create new reagent form
+  openCreateReagentDialog() {
+    const dialogRef = this.dialog.open(NewReagentFormComponent, {
+      data: {},
+    });
+
+    // After the dialog closes, refresh the list if a reagent was created, but since it's mockdata, it shows up same
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.reagentsService.getReagentsList().subscribe((reagents) => {
+          this.dataSource.data = reagents;
+        });
+      }
+    });
+  }
 }
