@@ -30,6 +30,7 @@ export class StorageLocationService {
   private names = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
 
   public httpParams$ = this.httpParamsSubject.asObservable();
+  public pageSize = 10;
 
   public listOfRooms = of(this.rooms);
   public listOfNames = of(this.names);
@@ -41,7 +42,7 @@ export class StorageLocationService {
       switchMap((params) => {
         let httpParams = new HttpParams()
           .set('skip', params.skip)
-          .set('take', params.take);
+          .set('take', params.take || this.pageSize);
 
         const setParamIfExists = (param: string, value: string | number) => {
           return value ? httpParams.set(param, value) : httpParams;

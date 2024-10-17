@@ -53,7 +53,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
     'details',
     'actions',
   ];
-  public pageSize = 10;
+  public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
   public storageLocationList$!: Observable<StorageLocationItem[]>;
@@ -70,6 +70,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
     this.storageLocationList$ =
       this.storageLocationService.getListStorageLocation();
     this.listOfRooms$ = this.storageLocationService.listOfRooms;
+    this.pageSize = this.storageLocationService.pageSize;
   }
 
   ngOnInit(): void {
