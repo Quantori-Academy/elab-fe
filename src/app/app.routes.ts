@@ -60,7 +60,13 @@ export const routes: Routes = [
         (c) => c.ReagentsListComponent
       ),
     canActivate: [authGuard, roleGuard],
-    // this should be accessible by Researcher i think, but to easily check i left admin access for now
     data: { role: UserRoles.Admin },
+  },
+  {
+    path: 'first-password-change',
+    loadComponent: () =>
+      import(
+        './pages/first-password-change/first-password-change.component'
+      ).then((c) => c.FirstPasswordChangeComponent),
   },
 ];

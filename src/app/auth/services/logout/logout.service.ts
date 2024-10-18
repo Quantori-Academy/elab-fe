@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { catchError, throwError } from 'rxjs';
-import { AuthStateService } from '../authentication/authstate.service';
+import { AuthService } from '../authentication/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LogoutService {
   constructor(
     private httpClient: HttpClient,
-    private authStateService: AuthStateService
+    private authService: AuthService
   ) {}
 
   private logOutUrl = environment.apiUrl + '/api/v1/auth/logout';
@@ -27,8 +27,7 @@ export class LogoutService {
       .subscribe({
         next: () => {
           location.href = '/login';
-          localStorage.removeItem('access_token');
-          this.authStateService.logoutEvent.next();
+          this.authService.logout();
         },
         error: (error) => {
           console.error('Logout Failed: ', error);

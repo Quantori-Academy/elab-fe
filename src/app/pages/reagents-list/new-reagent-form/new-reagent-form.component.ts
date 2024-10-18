@@ -6,22 +6,15 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatError, MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
-import {
-  MatOptionModule,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReagentsService } from '../../../shared/services/reagents.service';
 import { ReagentRequest } from '../../../shared/models/reagent-model';
 import { StorageService } from '../../../shared/services/storage.service';
-import { MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
+import { MaterialModule } from '../../../material.module';
 
 @Component({
   selector: 'app-new-reagent-form',
@@ -30,15 +23,9 @@ import { NotificationPopupService } from '../../../shared/services/notification-
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
     MatGridListModule,
-    MatOptionModule,
-    MatIconModule,
-    MatError,
     MatDatepickerModule,
+    MaterialModule,
   ],
   templateUrl: './new-reagent-form.component.html',
   styleUrl: './new-reagent-form.component.scss',
@@ -72,6 +59,8 @@ export class NewReagentFormComponent {
     { value: 'g/mL', viewValue: 'Density (g/mL)' },
   ];
 
+  urlPattern = /^(http|https):\/\/[^ "]+$/;
+
   reagentRequestForm = this.fb.group({
     name: ['', Validators.required],
     casNumber: [
@@ -82,28 +71,19 @@ export class NewReagentFormComponent {
     catalogId: ['', Validators.required],
     catalogLink: [
       '',
-      [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
+      [Validators.required, Validators.pattern(this.urlPattern)],
     ],
-    pricePerUnit: [
-      '',
-      [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)],
-    ],
+    pricePerUnit: [null, Validators.required],
     quantityUnit: ['', Validators.required],
-    totalQuantity: [
-      '',
-      [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)],
-    ],
+    totalQuantity: [null, Validators.required],
     description: ['', Validators.required],
-    quantityLeft: [
-      '',
-      [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)],
-    ],
+    quantityLeft: [null, Validators.required],
     expirationDate: ['', Validators.required],
     storageLocation: ['', Validators.required],
     storageId: [''],
   });
 
-// by typeing storage's name we fetch it's object, then use id to fill storageId field in newRequestForm;
+  // by typeing storage's name we fetch it's object, then use id to fill storageId field in newRequestForm;
   onRoomNameChange() {
     const storageName = this.reagentRequestForm.get('storageLocation')?.value;
 
@@ -164,10 +144,10 @@ export class NewReagentFormComponent {
         const formValue = {
           ...formRawValue,
           expirationDate: finalExpirationDate,
-          pricePerUnit: parseFloat(formRawValue.pricePerUnit!),
-          totalQuantity: parseFloat(formRawValue.totalQuantity!),
-          quantityLeft: parseInt(formRawValue.quantityLeft!, 10),
           storageId: parseInt(formRawValue.storageId!, 10),
+          pricePerUnit: formRawValue.pricePerUnit ?? 0, // Default to 0 if null or undefined
+          totalQuantity: formRawValue.totalQuantity ?? 0, // Default to 0 if null or undefined
+          quantityLeft: formRawValue.quantityLeft ?? 0,
         } as ReagentRequest;
 
         console.log('Form Value to Submit:', formValue);

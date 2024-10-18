@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagents } from '../../shared/models/reagent-model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -14,37 +13,28 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatLabel } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
 import { NewReagentFormComponent } from './new-reagent-form/new-reagent-form.component';
 import { StorageService } from '../../shared/services/storage.service';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-reagents-list',
   standalone: true,
   imports: [
     MatTableModule,
-    MatIconModule,
     MatPaginatorModule,
     MatSortModule,
     FormsModule,
-    MatLabel,
     MatOptionModule,
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
     MatGridListModule,
     MatDialogModule,
+    MaterialModule,
   ],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
@@ -97,11 +87,8 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
         console.log(err);
       },
     });
-
-    // will uncomment after get api is done
-    // this.reagentsService.getReagents().subscribe({
-    //   next:(resp)=>{console.log(resp)}
-    // })
+    
+this.reagentsService.getAllReagents().subscribe()
   }
 
   ngAfterViewInit(): void {

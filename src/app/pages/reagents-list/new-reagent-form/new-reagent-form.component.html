@@ -55,7 +55,7 @@
 
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Price Per Unit</mat-label>
-      <input matInput formControlName="pricePerUnit" />
+      <input matInput formControlName="pricePerUnit" type="number"/>
       @if (reagentRequestForm.get('pricePerUnit')?.hasError('required') && reagentRequestForm.get('pricePerUnit')?.touched) {
         <mat-error>Price Per Unit is required.</mat-error>
       }
@@ -78,7 +78,7 @@
     </mat-form-field>
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Total Quantity</mat-label>
-      <input matInput formControlName="totalQuantity" />
+      <input matInput formControlName="totalQuantity"  type="number"/>
       @if (reagentRequestForm.get('totalQuantity')?.hasError('required') && reagentRequestForm.get('totalQuantity')?.touched) {
         <mat-error>Total Quantity is required.</mat-error>
       }
@@ -97,7 +97,7 @@
 
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Quantity Left</mat-label>
-      <input matInput formControlName="quantityLeft" />
+      <input matInput formControlName="quantityLeft"  type="number"/>
       @if (reagentRequestForm.get('quantityLeft')?.hasError('required') && reagentRequestForm.get('quantityLeft')?.touched) {
         <mat-error>Quantity Left is required.</mat-error>
       }

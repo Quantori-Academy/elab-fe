@@ -10,6 +10,13 @@ export interface Reagents {
   structure: string;
   dateOfCreation: string;
 }
+export interface Reagent{
+  name:string;
+  category:string;
+  description:string;
+  quantityLeft:number;
+  storageId:number;
+}
 
 export enum Category {
   reagent = 'Reagent',
