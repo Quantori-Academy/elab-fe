@@ -1,4 +1,4 @@
-name: E Lab BE Non Prod
+name: E Lab FE Non Prod
 
 on: workflow_dispatch
 
