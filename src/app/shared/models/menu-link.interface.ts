@@ -1,5 +1,5 @@
 export interface MenuLink {
-  icon: string;
+  icon?: string;
   label: string;
   route: string;
   adminOnly?: boolean;

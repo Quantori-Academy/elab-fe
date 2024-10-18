@@ -6,7 +6,7 @@ import {
 } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -17,11 +17,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonModule,
     MatFormField,
     MatInputModule,
-    MatIcon,
     MatPaginatorModule,
-    MatToolbarModule,
+    MatToolbar,
+    MatIcon,
     MatIconModule,
     MatSidenavModule,
+    MatListModule,
   ],
   exports: [
     MatButtonModule,
@@ -29,7 +30,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatIcon,
     MatPaginatorModule,
-    MatToolbarModule,
+    MatToolbar,
     MatIconModule,
     MatSidenavModule,
     MatListModule,
