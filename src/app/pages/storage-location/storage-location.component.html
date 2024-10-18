@@ -27,7 +27,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>
         Room
       </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.room }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.room.name }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -46,28 +46,25 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="details">
-      <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
+    <ng-container matColumnDef="reagents">
+      <mat-header-cell *matHeaderCellDef> Reagents </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button mat-button>detail</button>
       </mat-cell>
     </ng-container>
 
+    @if(isAdmin){
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        @if(isAdmin){<button
-          mat-icon-button
-          aria-label="edit"
-          (click)="onEdit(element)"
-        >
+        <button mat-icon-button aria-label="edit" (click)="onEdit(element)">
           <mat-icon color="primary">edit</mat-icon>
         </button>
         <button mat-icon-button aria-label="delete" (click)="onDelete(element)">
-          <mat-icon color="warn">delete</mat-icon></button
-        >}
-      </mat-cell>
-    </ng-container>
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </mat-cell> </ng-container
+    >}
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

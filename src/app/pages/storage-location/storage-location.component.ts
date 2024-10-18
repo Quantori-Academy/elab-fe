@@ -46,13 +46,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class StorageLocationComponent implements OnInit, OnDestroy {
   readonly DEBOUNCE_TIME = 1000;
-  public displayedColumns: string[] = [
-    'room',
-    'name',
-    'createdAt',
-    'details',
-    'actions',
-  ];
+  public displayedColumns: string[] = ['room', 'name', 'createdAt', 'reagents'];
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
@@ -75,6 +69,9 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isAdmin = this.rbcService.isAdmin();
+    if (this.isAdmin) {
+      this.displayedColumns.push('actions');
+    }
     this.filterSubject
       .pipe(
         debounceTime(this.DEBOUNCE_TIME),
@@ -84,6 +81,12 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       .subscribe((filterData) =>
         this.storageLocationService.setFilteringPageData(filterData)
       );
+  }
+
+  private setActionsColumn() {
+    if (this.isAdmin) {
+      this.displayedColumns.push('actions');
+    }
   }
 
   onSort(sort: Sort) {

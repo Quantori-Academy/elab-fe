@@ -82,12 +82,14 @@ export class StorageLocationService {
         updatedParams = {
           ...updatedParams,
           alphabeticalName: sortingData.direction,
+          chronologicalDate: '',
         };
         break;
       case StorageLocationColumn.CreatedAt:
         updatedParams = {
           ...updatedParams,
           chronologicalDate: sortingData.direction,
+          alphabeticalName: '',
         };
         break;
       default:

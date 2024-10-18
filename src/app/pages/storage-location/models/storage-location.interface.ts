@@ -7,6 +7,11 @@ export interface StorageLocationItem {
   description: string;
   createdAt?: string;
   updatedAt?: string;
+  room: {
+    id: number;
+    name: string;
+    description: string | null;
+  };
 }
 
 export interface StorageLocationPageData {
