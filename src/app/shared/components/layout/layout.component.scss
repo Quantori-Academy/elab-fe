@@ -1,0 +1,27 @@
+mat-sidenav-container {
+  height: calc(100vh - 60px);
+}
+
+mat-sidenav {
+  border-right: 1px solid #9bb6ca;
+  border-radius: 0;
+  background-color: #f0f4f8;
+}
+
+.mat-mdc-nav-list .mat-mdc-list-item {
+  border-radius: 0;
+}
+
+mat-nav-list {
+  padding: 0;
+}
+
+.mdc-list-item__primary-text {
+  color: 1D3E5B;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+mat-sidenav-content {
+  padding: 30px;
+}

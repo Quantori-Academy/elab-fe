@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterOutlet, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 
 import { MenuLink } from '../../models/menu-link.interface';
-import { collapsed } from '../header/header.component';
+// import { collapsed } from '../header/header.component';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
@@ -30,21 +30,24 @@ export class NavbarComponent {
   readonly rbacService = inject(RbacService);
   menuLinks = signal<MenuLink[]>([
     {
+      icon: 'sl',
       label: 'Storage Locations',
-      route: '/storage-locations',
+      route: 'storage-locations',
     },
     {
+      icon: 'r',
       label: 'Reagents',
-      route: '/reagents',
+      route: 'reagents',
     },
     {
+      icon: 'um',
       label: 'Users Management',
-      route: '/users',
+      route: 'users',
       adminOnly: true,
     },
   ]);
 
-  navbarWidth = computed(() => (collapsed() ? '0' : '250px'));
+  // navbarWidth = computed(() => (collapsed() ? '0' : '250px'));
 
   isLinkVisible(link: MenuLink): boolean {
     return !link.adminOnly || this.rbacService.isAdmin();
