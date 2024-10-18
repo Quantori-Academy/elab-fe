@@ -60,4 +60,12 @@ export const routes: Routes = [
         './pages/first-password-change/first-password-change.component'
       ).then((c) => c.FirstPasswordChangeComponent),
   },
+  {
+    path: 'storage-locations',
+    loadComponent: () =>
+      import('./pages/storage-location/storage-location.component').then(
+        (c) => c.StorageLocationComponent
+      ),
+    canActivate: [authGuard],
+  },
 ];
