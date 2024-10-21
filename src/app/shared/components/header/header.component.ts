@@ -34,7 +34,9 @@ export class HeaderComponent implements OnInit {
     this.rbacService.authenticatedUser$;
 
   ngOnInit(): void {
-    this.loadCurrentUser();
+    if (this.authService.isAuthenticated()) {
+      this.loadCurrentUser();
+    }
   }
 
   loadCurrentUser() {
