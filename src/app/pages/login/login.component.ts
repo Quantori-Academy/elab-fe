@@ -102,13 +102,27 @@ export class LoginComponent implements OnInit {
 
     if (enteredEmail && enteredPassword) {
       this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
-        error: (error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            this.errorMessage.set('Incorrect Password or Email');
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error: HttpErrorResponse | unknown) => {
+          console.error('Login error:', error);
+
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === 401) {
+              this.errorMessage.set('Incorrect Password or Email');
+            } else if (error.status === 0) {
+              if (!navigator.onLine) {
+                this.errorMessage.set('No internet connection');
+              } else {
+                this.errorMessage.set('CORS Error');
+              }
+            } else {
+              this.errorMessage.set('Connection Error');
+            }
           } else {
-            this.errorMessage.set('Connection Error');
+            this.errorMessage.set('Unknown error');
           }
-          console.error(error);
         },
       });
     } else {
