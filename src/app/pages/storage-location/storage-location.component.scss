@@ -1,0 +1,13 @@
+:host {
+  padding: 10px 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.filter {
+  display: flex;
+  gap: 20px;
+}

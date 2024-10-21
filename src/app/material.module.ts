@@ -7,8 +7,13 @@ import {
   MatFormField,
   MatLabel,
 } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
@@ -16,20 +21,30 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatFormField,
     MatInputModule,
-    MatError,
+    MatPaginatorModule,
+    MatToolbar,
+    MatIcon,
     MatIconModule,
+    MatSidenavModule,
     MatSelectModule,
     MatOptionModule,
+    MatListModule,
+    MatError,
     MatLabel,
   ],
   exports: [
     MatButtonModule,
     MatFormField,
     MatInputModule,
-    MatError,
+    MatIcon,
+    MatPaginatorModule,
+    MatToolbar,
     MatIconModule,
+    MatSidenavModule,
     MatSelectModule,
     MatOptionModule,
+    MatListModule,
+    MatError,
     MatLabel,
   ],
   providers: [
