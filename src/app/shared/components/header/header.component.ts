@@ -1,9 +1,10 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable, catchError, filter, of } from 'rxjs';
+import { Observable, Subscription, catchError, filter, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -24,7 +25,7 @@ export const collapsed = signal(false);
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private logoutService = inject(LogoutService);
   private rbacService = inject(RbacService);
@@ -37,9 +38,10 @@ export class HeaderComponent implements OnInit {
     '/forgot-password',
     '/reset-password',
   ];
+  private routerSubscription!: Subscription;
 
   ngOnInit(): void {
-    this.router.events
+    this.routerSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const currentUrl = event.urlAfterRedirects;
@@ -50,6 +52,12 @@ export class HeaderComponent implements OnInit {
           this.loadCurrentUser();
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   loadCurrentUser() {
