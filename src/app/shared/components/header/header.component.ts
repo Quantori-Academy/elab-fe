@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, filter, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +7,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 import { Profile } from '../../../auth/roles/types';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
@@ -32,11 +32,24 @@ export class HeaderComponent implements OnInit {
   public collapsed = collapsed;
   public currentUser$: Observable<Profile | null> =
     this.rbacService.authenticatedUser$;
+  private excludedRoutes: string[] = [
+    '/login',
+    '/forgot-password',
+    '/reset-password',
+  ];
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
-      this.loadCurrentUser();
-    }
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const currentUrl = event.urlAfterRedirects;
+        const isExcluded = this.excludedRoutes.some((route) =>
+          currentUrl.includes(route)
+        );
+        if (!isExcluded) {
+          this.loadCurrentUser();
+        }
+      });
   }
 
   loadCurrentUser() {
