@@ -1,4 +1,9 @@
-import { Component, inject, Inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Inject,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MaterialModule } from '../../../material.module';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -9,6 +14,7 @@ import { DialogRef } from '@angular/cdk/dialog';
   imports: [MaterialModule, MatDialogModule],
   templateUrl: './delete-confirm.component.html',
   styleUrl: './delete-confirm.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeleteConfirmComponent {
   private dialogRef = inject(DialogRef<DeleteConfirmComponent>);
