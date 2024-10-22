@@ -1,17 +1,18 @@
 import { OrderEntity } from './order-entity.model';
 
-// one thats was give in issue description
-export interface Reagents {
-  id: number;
-  name: string;
-  category: Category;
-  desc: string;
-  quantity: number | string;
-  storageLocation: string;
-  structure: string;
-  dateOfCreation: string;
-}
-// the one that's in swagger get reagent Api right now
+// this interface was based on requirments in issue's description, not on current mock data, if we switch back to those requiremnts we will uncomment this
+// export interface Reagent {
+//   id: number;
+//   name: string;
+//   category: Category;
+//   description: string;
+//   quantity: number | string;
+//   storageLocation: string;
+//   structure: string;
+//   dateOfCreation: string;
+// }
+
+// the one that's in swagger "get reagent Api" right now
 // export interface Reagent{
 //   name:string;
 //   category:string;
@@ -20,7 +21,7 @@ export interface Reagents {
 //   storageId:number;
 // }
 
-// new one according to reagent's list
+//current interface, according to dimitri's reagent's list
 export interface Reagent {
   name: string;
   smiles: string;
@@ -42,7 +43,7 @@ export interface ReagentRequest extends OrderEntity {
   quantityLeft: number | null;
   expirationDate: string;
   storageId: number;
-  category: Category|null;
+  category: Category | null;
   structure: string;
 }
 

@@ -13,15 +13,12 @@ import {
 } from '../../../shared/models/reagent-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatGridListModule } from '@angular/material/grid-list';
 import {
-  MatOptionModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { ReagentsService } from '../../../shared/services/reagents.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../material.module';
 import { Subscription } from 'rxjs';
@@ -33,9 +30,6 @@ import { Subscription } from 'rxjs';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatGridListModule,
-    MatOptionModule,
-    MatDatepickerModule,
     MaterialModule,
   ],
   templateUrl: './new-reagent-form.component.html',
@@ -69,7 +63,9 @@ export class NewReagentFormComponent implements OnDestroy{
   reagentRequestForm = this.fb.group({
     name: ['', Validators.required],
     category: [Category, Validators.required],
-    structure: ['', Validators.required],
+
+// strucutre is not required as i remember from meeting with dimitry
+    structure: [''],
     casNumber: [
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(10)],
