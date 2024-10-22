@@ -1,14 +1,13 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable, Subscription, catchError, filter, of } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
 import { Profile } from '../../../auth/roles/types';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
@@ -25,7 +24,7 @@ export const collapsed = signal(false);
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthService);
   private logoutService = inject(LogoutService);
   private rbacService = inject(RbacService);
@@ -33,30 +32,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public collapsed = collapsed;
   public currentUser$: Observable<Profile | null> =
     this.rbacService.authenticatedUser$;
-  private excludedRoutes: string[] = [
-    '/login',
-    '/forgot-password',
-    '/reset-password',
-  ];
-  private routerSubscription!: Subscription;
 
   ngOnInit(): void {
-    this.routerSubscription = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const currentUrl = event.urlAfterRedirects;
-        const isExcluded = this.excludedRoutes.some((route) =>
-          currentUrl.includes(route)
-        );
-        if (!isExcluded) {
-          this.loadCurrentUser();
-        }
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
+    if (this.authService.isAuthenticated()) {
+      this.loadCurrentUser();
     }
   }
 
