@@ -99,12 +99,16 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.isLoading = true;
+
     const enteredEmail = this.form.value.email || '';
     const enteredPassword = this.form.value.password || '';
 
     if (enteredEmail && enteredPassword) {
       this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
         next: () => {
+          this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
         error: (error: HttpErrorResponse | unknown) => {
