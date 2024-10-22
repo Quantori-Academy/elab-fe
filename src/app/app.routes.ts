@@ -38,6 +38,15 @@ export const routes: Routes = [
         canActivate: [roleGuard],
         data: { role: UserRoles.Admin },
       },
+      {
+        path: 'reagents',
+        loadComponent: () =>
+          import('./pages/reagents-list/reagents-list.component').then(
+            (c) => c.ReagentsListComponent
+          ),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.Admin },
+      },
     ],
   },
   {
@@ -72,15 +81,6 @@ export const routes: Routes = [
       loadComponent: () =>
         import('./pages/users-list/users-list.component').then(
           (c) => c.UsersListComponent
-        ),
-      canActivate: [authGuard, roleGuard],
-      data: { role: UserRoles.Admin },
-    },
-    {
-      path: 'reagents',
-      loadComponent: () =>
-        import('./pages/reagents-list/reagents-list.component').then(
-          (c) => c.ReagentsListComponent
         ),
       canActivate: [authGuard, roleGuard],
       data: { role: UserRoles.Admin },
