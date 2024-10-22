@@ -7,10 +7,12 @@ import {
 } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import {
+  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
   Observable,
   Subject,
+  take,
   takeUntil,
 } from 'rxjs';
 import {
@@ -26,6 +28,10 @@ import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { PageEvent } from '@angular/material/paginator';
 import { StorageLocationColumn } from './models/storage-location.enum';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmComponent } from '../../shared/components/delete-confirm/delete-confirm.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-storage-location',
@@ -50,19 +56,23 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
-  public storageLocationList$!: Observable<StorageLocationItem[]>;
+  public storageLocationListSubject: BehaviorSubject<
+    StorageLocationItem[] | undefined
+  > = new BehaviorSubject<StorageLocationItem[] | undefined>(undefined);
+  public storageLocationList$ = this.storageLocationListSubject.asObservable();
 
   public listOfRooms$: Observable<string[]>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
+  private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
+  private dialog = inject(MatDialog);
   private filterSubject = new Subject<StorageLocationFilteredData>();
   private destroy$ = new Subject<void>();
 
   constructor() {
-    this.storageLocationList$ =
-      this.storageLocationService.getListStorageLocation();
+    this.getListStorageLocation();
     this.listOfRooms$ = this.storageLocationService.listOfRooms;
     this.pageSize = this.storageLocationService.pageSize;
   }
@@ -83,10 +93,13 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       );
   }
 
-  private setActionsColumn() {
-    if (this.isAdmin) {
-      this.displayedColumns.push('actions');
-    }
+  public getListStorageLocation() {
+    this.storageLocationService
+      .getListStorageLocation()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((storageList) =>
+        this.storageLocationListSubject.next(storageList)
+      );
   }
 
   onSort(sort: Sort) {
@@ -107,7 +120,35 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   }
 
   onDelete(element: StorageLocationItem) {
-    console.log('deleted element', element);
+    this.dialog.open(DeleteConfirmComponent, {
+      data: {
+        message: 'Are you sure you want to delete the storage location?',
+        deleteHandler: () => this.deleteHandler(element.id),
+      },
+    });
+  }
+
+  public deleteHandler(storageId: number) {
+    this.storageLocationService
+      .deleteStorageLocation(storageId)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.getListStorageLocation();
+          this.notificationPopupService.success({
+            title: 'Success',
+            message: 'Storage location is deleted successfully',
+            duration: 3000,
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          this.notificationPopupService.error({
+            title: 'Error',
+            message: error.error.message,
+            duration: 3000,
+          });
+        },
+      });
   }
 
   handlePageEvent($event: PageEvent) {
