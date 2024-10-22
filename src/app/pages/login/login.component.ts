@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ErrorHandler } from '@angular/core';
 
 let initialEmailValue = '';
@@ -26,7 +27,13 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatIcon, MatCardModule],
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatCardModule,
+    MatProgressSpinner,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -38,7 +45,8 @@ export class LoginComponent implements OnInit {
     confirmPassword: true,
   };
   public errorVisible = true;
-  private errorHandler = inject(ErrorHandler);
+  public isLoading = false;
+  public isSubmitting = false;
 
   constructor(
     private authLogin: AuthService,
@@ -58,24 +66,26 @@ export class LoginComponent implements OnInit {
     return (
       this.form.controls.email.touched &&
       this.form.controls.email.dirty &&
-      this.form.controls.email.invalid
+      this.form.controls.email.invalid &&
+      !this.isSubmitting
     );
   }
 
   get emailTouched() {
-    return this.form.controls.email.touched;
+    return this.form.controls.email.touched && !this.isSubmitting;
   }
 
   get passwordIsInvalid() {
     return (
       this.form.controls.password.touched &&
       this.form.controls.password.dirty &&
-      this.form.controls.password.invalid
+      this.form.controls.password.invalid &&
+      !this.isSubmitting
     );
   }
 
   get passwordTouched() {
-    return this.form.controls.password.touched;
+    return this.form.controls.password.touched && !this.isSubmitting;
   }
 
   errorMessage = signal('');
@@ -100,6 +110,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.isSubmitting = true;
     this.isLoading = true;
 
     const enteredEmail = this.form.value.email || '';
@@ -108,10 +119,13 @@ export class LoginComponent implements OnInit {
     if (enteredEmail && enteredPassword) {
       this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
         next: () => {
-          this.isLoading = false;
           this.router.navigate(['/dashboard']);
         },
         error: (error: HttpErrorResponse | unknown) => {
+          this.isLoading = false;
+          this.isSubmitting = false;
+          console.error('Login error:', error);
+
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
               this.errorMessage.set('Incorrect password or email');
