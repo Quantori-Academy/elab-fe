@@ -28,7 +28,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="table-wrapper">
+  <div class="table-wrapper mat-elevation-z8">
     <table
       mat-table
       [dataSource]="dataSource"
@@ -36,6 +36,7 @@
       (matSortChange)="announceSortChange($event)"
       class="mat-elevation-z8"
     >
+ 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -43,15 +44,15 @@
       </ng-container>
 
       <!-- Category Column -->
-      <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-        <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+      <ng-container matColumnDef="smiles">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Smiles</th>
+        <td mat-cell *matCellDef="let element">{{ element.smiles }}</td>
       </ng-container>
 
       <!-- Description Column -->
-      <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{ element.desc }}</td>
+      <ng-container matColumnDef="cas">
+        <th mat-header-cell *matHeaderCellDef>cas</th>
+        <td mat-cell *matCellDef="let element">{{ element.cas }}</td>
       </ng-container>
 
       <!-- Quantity Column -->
@@ -61,10 +62,10 @@
       </ng-container>
 
       <!-- Storage Location Column -->
-      <ng-container matColumnDef="storageLocation">
-        <th mat-header-cell *matHeaderCellDef>Storage Location</th>
+      <ng-container matColumnDef="package">
+        <th mat-header-cell *matHeaderCellDef>package</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.storageLocation }}
+          {{ element.package }}
         </td>
       </ng-container>
 
@@ -87,10 +88,22 @@
 
       <!-- date Column -->
       <!-- we can leave them like this, change them, remove them. also can use datepipe in case db saves nanoseconds of date -->
-      <ng-container matColumnDef="dateOfCreation">
-        <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+      <ng-container matColumnDef="quantityLeft">
+        <th mat-header-cell *matHeaderCellDef>quantityLeft</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.dateOfCreation }}
+          {{ element.quantityLeft }} {{ element.units }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef>Room</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.room }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>location</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.location }}
         </td>
       </ng-container>
 

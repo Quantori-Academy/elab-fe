@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError } from 'rxjs';
-import { ELEMENT_DATA } from '../../../../mockData';
+import { NewReagentsList } from '../../../../newMockData';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Reagent, ReagentRequest } from '../models/reagent-model';
@@ -12,8 +12,12 @@ export class ReagentsService {
   private httpClient = inject(HttpClient);
   apiUrl = `${environment.apiUrl}/api/v1/reagents`;
 
+  // swagger doesn't work so locally had to check
+  // apiUrl = `http://localhost:3000/api/v1/reagents`;
+
+
   getReagentsList() {
-    return of(ELEMENT_DATA);
+    return of(NewReagentsList);
   }
 
   getAllReagents(): Observable<Reagent[]> {
@@ -32,7 +36,6 @@ export class ReagentsService {
       })
     );
   }
-
   createReagent(reagentData?: ReagentRequest): Observable<ReagentRequest> {
     const token = localStorage.getItem('access_token');
     if (!token) {

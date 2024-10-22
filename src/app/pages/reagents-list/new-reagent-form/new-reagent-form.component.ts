@@ -3,18 +3,28 @@ import {
   Component,
   Inject,
   inject,
+  OnDestroy,
 } from '@angular/core';
+import {
+  Unit,
+  UnitLabels,
+  ReagentRequest,
+  Category,
+} from '../../../shared/models/reagent-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MatOptionModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { ReagentsService } from '../../../shared/services/reagents.service';
-import { ReagentRequest } from '../../../shared/models/reagent-model';
 import { StorageService } from '../../../shared/services/storage.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../material.module';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-new-reagent-form',
@@ -24,6 +34,7 @@ import { MaterialModule } from '../../../material.module';
     CommonModule,
     ReactiveFormsModule,
     MatGridListModule,
+    MatOptionModule,
     MatDatepickerModule,
     MaterialModule,
   ],
@@ -31,38 +42,34 @@ import { MaterialModule } from '../../../material.module';
   styleUrl: './new-reagent-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewReagentFormComponent {
+export class NewReagentFormComponent implements OnDestroy{
   private fb = inject(FormBuilder);
   private reagentsService = inject(ReagentsService);
   private storageService = inject(StorageService);
   private notificationsService = inject(NotificationPopupService);
+  private storageSubscription: Subscription | null = null;
+
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { structure: string },
     private dialogRef: MatDialogRef<NewReagentFormComponent>
   ) {}
 
-  // will move this outside the component later
-  units = [
-    { value: 'mol', viewValue: 'Molar (mol)' },
-    { value: 'mmol', viewValue: 'Millimole (mmol)' },
-    { value: 'µg', viewValue: 'Microgram (µg)' },
-    { value: 'mg', viewValue: 'Milligram (mg)' },
-    { value: 'g', viewValue: 'Gram (g)' },
-    { value: 'kg', viewValue: 'Kilogram (kg)' },
-    { value: 'L', viewValue: 'Liter (L)' },
-    { value: 'mL', viewValue: 'Milliliter (mL)' },
-    { value: 'cm³', viewValue: 'Cubic Centimeter (cm³)' },
-    { value: 'M', viewValue: 'Molarity (M)' },
-    { value: 'percent', viewValue: 'Percent (%)' },
-    { value: 'ppm', viewValue: 'Parts per Million (ppm)' },
-    { value: 'ppb', viewValue: 'Parts per Billion (ppb)' },
-    { value: 'g/mL', viewValue: 'Density (g/mL)' },
-  ];
+  units = Object.keys(Unit).map((key) => ({
+    value: Unit[key as keyof typeof Unit],
+    viewValue: UnitLabels[Unit[key as keyof typeof Unit]],
+  }));
 
-  urlPattern = /^(http|https):\/\/[^ "]+$/;
+  categories = Object.keys(Category).map((key) => ({
+    value: Category[key as keyof typeof Category],
+    viewValue: key,
+  }));
 
+  errorMessage = '';
   reagentRequestForm = this.fb.group({
     name: ['', Validators.required],
+    category: [Category, Validators.required],
+    structure: ['', Validators.required],
     casNumber: [
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(10)],
@@ -71,7 +78,7 @@ export class NewReagentFormComponent {
     catalogId: ['', Validators.required],
     catalogLink: [
       '',
-      [Validators.required, Validators.pattern(this.urlPattern)],
+      [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
     ],
     pricePerUnit: [null, Validators.required],
     quantityUnit: ['', Validators.required],
@@ -86,28 +93,31 @@ export class NewReagentFormComponent {
   // by typeing storage's name we fetch it's object, then use id to fill storageId field in newRequestForm;
   onRoomNameChange() {
     const storageName = this.reagentRequestForm.get('storageLocation')?.value;
-
+  
     if (storageName) {
+      // Unsubscribe from any previous subscription to avoid memory leaks
+      if (this.storageSubscription) {
+        this.storageSubscription.unsubscribe();
+      }
+  
       // Fetch the storage by storage name
-      this.storageService.getStorageBy(storageName).subscribe({
+      this.storageSubscription = this.storageService.getStorageBy(storageName).subscribe({
         next: (response) => {
           console.log('API Response:', response);
-
+  
           const matchingStorage = response['find'](
             (storage: Storage) =>
               storage['name'].toLowerCase() === storageName.toLowerCase()
           );
-
+  
           if (matchingStorage) {
             console.log('Found matching storage:', matchingStorage);
-
-            // Update the form with the storage ID
-
+  
             if (matchingStorage.id) {
               this.reagentRequestForm.patchValue({
                 storageId: matchingStorage.id,
               });
-
+  
               console.log(
                 'Storage ID:',
                 this.reagentRequestForm.get('storageId')?.value
@@ -116,6 +126,7 @@ export class NewReagentFormComponent {
               console.error('No storage ID found in the response.');
             }
           } else {
+            this.errorMessage = `No matching storage found for storage name: ${storageName}`;
             console.warn(
               'No matching storage found for storage name:',
               storageName
@@ -128,26 +139,28 @@ export class NewReagentFormComponent {
       });
     }
   }
+  ngOnDestroy() {
+    if (this.storageSubscription) {
+      this.storageSubscription.unsubscribe();
+    }
+  }
+  
   onSubmit() {
     if (this.reagentRequestForm.valid) {
       const formRawValue = { ...this.reagentRequestForm.value };
 
-      // Checks if expirationDate is defined and valid
+      // Validate expirationDate and format it as needed
       if (formRawValue.expirationDate) {
         const expirationDateValue = new Date(formRawValue.expirationDate);
         const formattedExpirationDate = expirationDateValue.toISOString();
         const finalExpirationDate = formattedExpirationDate.split('.')[0] + 'Z';
 
-        // deleting cuz request only needs id, not actual name of location
         delete formRawValue.storageLocation;
 
         const formValue = {
           ...formRawValue,
           expirationDate: finalExpirationDate,
           storageId: parseInt(formRawValue.storageId!, 10),
-          pricePerUnit: formRawValue.pricePerUnit ?? 0, // Default to 0 if null or undefined
-          totalQuantity: formRawValue.totalQuantity ?? 0, // Default to 0 if null or undefined
-          quantityLeft: formRawValue.quantityLeft ?? 0,
         } as ReagentRequest;
 
         console.log('Form Value to Submit:', formValue);

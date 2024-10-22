@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReagentsService } from '../../shared/services/reagents.service';
-import { Reagents } from '../../shared/models/reagent-model';
+import { Reagent } from '../../shared/models/reagent-model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -49,16 +49,17 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   currentPage = 0;
   displayedColumns: string[] = [
     'name',
-    'desc',
-    'category',
+    'smiles',
+    'cas',
     'quantity',
-    'storageLocation',
-    'structure',
-    'dateOfCreation',
+    'package',
+    'quantityLeft',
+    'room',
+    'location',
     'actions',
   ];
 
-  dataSource = new MatTableDataSource<Reagents>();
+  dataSource = new MatTableDataSource<Reagent>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,16 +68,17 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     this.reagentsService.getReagentsList().subscribe((reagents) => {
       this.dataSource.data = reagents;
 
-      this.dataSource.filterPredicate = (data: Reagents, filter: string) => {
+      this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
         const searchTerms = JSON.parse(filter);
 
         const nameMatches = data.name.toLowerCase().includes(searchTerms.name);
 
-        const categoryMatches = searchTerms.category
-          ? data.category.toLowerCase() === searchTerms.category
-          : true;
+        // const categoryMatches = searchTerms.category
+        //   ? data.category.toLowerCase() === searchTerms.category
+        //   : true;
 
-        return nameMatches && categoryMatches;
+        return nameMatches; 
+        // && categoryMatches;
       };
     });
     this.storageService.getAllStorages().subscribe({
@@ -88,7 +90,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
       },
     });
     
-this.reagentsService.getAllReagents().subscribe()
+// this.reagentsService.getAllReagents().subscribe()
   }
 
   ngAfterViewInit(): void {

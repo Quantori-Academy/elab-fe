@@ -4,8 +4,8 @@ export interface OrderEntity {
   producer: string;
   catalogId: string;
   catalogLink: string;
-  pricePerUnit: number;
+  pricePerUnit: number | null;
   quantityUnit: string;
-  totalQuantity: number;
+  totalQuantity: number | null;
   description: string;
 }
