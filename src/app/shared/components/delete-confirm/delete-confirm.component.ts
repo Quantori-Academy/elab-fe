@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MaterialModule } from '../../../material.module';
 import { DialogRef } from '@angular/cdk/dialog';
@@ -10,17 +10,13 @@ import { DialogRef } from '@angular/cdk/dialog';
   templateUrl: './delete-confirm.component.html',
   styleUrl: './delete-confirm.component.scss',
 })
-export class DeleteConfirmComponent implements OnInit {
+export class DeleteConfirmComponent {
   private dialogRef = inject(DialogRef<DeleteConfirmComponent>);
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { message: string; deleteHandler: () => void } | undefined
   ) {}
-
-  ngOnInit(): void {
-    console.log(this.data);
-  }
 
   public onDelete(): void {
     this.data?.deleteHandler();
