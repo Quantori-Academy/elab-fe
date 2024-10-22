@@ -30,7 +30,7 @@ import { StorageLocationColumn } from './models/storage-location.enum';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmComponent } from '../../shared/components/delete-confirm/delete-confirm.component';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
@@ -142,11 +142,19 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
           });
         },
         error: (error: HttpErrorResponse) => {
-          this.notificationPopupService.error({
-            title: 'Error',
-            message: error.error.message,
-            duration: 3000,
-          });
+          if (error.status === HttpStatusCode.Conflict) {
+            this.notificationPopupService.warning({
+              title: 'Warning',
+              message: error.error.message,
+              duration: 4000,
+            });
+          } else {
+            this.notificationPopupService.error({
+              title: 'Error',
+              message: error.error.message,
+              duration: 3000,
+            });
+          }
         },
       });
   }
