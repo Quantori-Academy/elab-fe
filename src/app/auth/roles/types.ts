@@ -4,7 +4,7 @@ export interface User {
   lastName: string;
   email: string;
   role: string;
-  isPasswordResetRequired: true;
+  isPasswordResetRequired: boolean;
 }
 export interface Profile extends User {
   firstName: string;

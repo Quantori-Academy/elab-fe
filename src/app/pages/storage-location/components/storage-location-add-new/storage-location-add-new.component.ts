@@ -1,17 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { StorageLocationService } from '../../storage-location/storage-location.service';
-import { debounceTime, map, Observable, switchMap, take, tap } from 'rxjs';
+import { StorageLocationService } from '../../services/storage-location.service';
 import { AsyncPipe } from '@angular/common';
 import { NewStorageLocation } from '../../models/storage-location.interface';
+import { take } from 'rxjs';
+import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -23,70 +24,62 @@ import { NewStorageLocation } from '../../models/storage-location.interface';
 export class StorageLocationAddNewComponent {
   readonly MAX_LENGTH = 300;
   readonly DEBOUNCE_TIME = 300;
-  public addStorageForm: FormGroup;
 
   private fb = inject(FormBuilder);
   private storageLocationService = inject(StorageLocationService);
+  private notificationPopupService = inject(NotificationPopupService);
 
-  public filteredRooms$: Observable<string[]>;
-  public filteredNames$: Observable<string[]>;
-
-  constructor() {
-    this.addStorageForm = this.fb.group(
-      {
-        room: [
-          '',
-          [Validators.required, Validators.maxLength(this.MAX_LENGTH)],
-        ],
-        name: [
-          '',
-          [Validators.required, Validators.maxLength(this.MAX_LENGTH)],
-        ],
-        description: [''],
-      },
-      { asyncValidators: this.validateUniqueLocation.bind(this) }
-    );
-    this.filteredRooms$ = this.addStorageForm.get('room')!.valueChanges.pipe(
-      debounceTime(this.DEBOUNCE_TIME),
-      switchMap((value) => this.storageLocationService.getRoomList(value))
-    );
-
-    this.filteredNames$ = this.addStorageForm.get('name')!.valueChanges.pipe(
-      debounceTime(this.DEBOUNCE_TIME),
-      switchMap((value) => this.storageLocationService.getNameList(value))
-    );
-  }
-
-  public get locationName(): string {
-    const { room, name } = this.addStorageForm.value;
-    return `${room} ${name}`;
-  }
-
-  public validateUniqueLocation(control: AbstractControl) {
-    const room = control.get('room')?.value.trim();
-    const name = control.get('name')?.value.trim();
-    const locationName = `${room} ${name}`;
-
-    return this.storageLocationService.locationNames$.pipe(
-      take(1),
-      map((value: string[]) => {
-        return value.includes(locationName) ? { uniqueName: true } : null;
-      }),
-      tap((error) => this.addStorageForm.get('name')?.setErrors(error))
-    );
-  }
+  public addStorageForm: FormGroup = this.fb.group({
+    room: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
+    description: [''],
+  });
+  public filteredRooms$ = this.storageLocationService.listOfNames;
 
   public hasError(label: string, error: string): boolean | undefined {
     return this.addStorageForm.get(label)?.hasError(error);
   }
 
+  public getErrorMessage(label: string, error: string): string {
+    return this.addStorageForm.get(label)?.getError(error);
+  }
+
   onSave() {
     if (this.addStorageForm.valid) {
       const formValue: NewStorageLocation = this.addStorageForm.value;
+      console.log(formValue);
 
       this.storageLocationService
         .addNewStorageLocation(formValue)
-        .pipe(take(1));
+        .pipe(take(1))
+        .subscribe({
+          next: () =>
+            this.notificationPopupService.success({
+              title: 'Success',
+              message: 'Storage Location added',
+            }),
+          error: (error: HttpErrorResponse) => {
+            switch (error.status) {
+              case HttpStatusCode.BadRequest:
+                this.addStorageForm
+                  .get('room')
+                  ?.setErrors({ roomError: error.error.message });
+                break;
+              case HttpStatusCode.NotFound:
+                this.addStorageForm
+                  .get('room')
+                  ?.setErrors({ roomNotFound: error.error.message });
+                break;
+              case HttpStatusCode.Conflict:
+                this.addStorageForm
+                  .get('name')
+                  ?.setErrors({ uniqueName: error.error.message });
+                break;
+              default:
+                break;
+            }
+          },
+        });
     }
   }
 }

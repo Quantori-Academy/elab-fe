@@ -1,19 +1,16 @@
 <p class="header">Add New Storage Location</p>
-<form class="form" [formGroup]="addStorageForm">
+<form class="form" [formGroup]="addStorageForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
     <mat-label>Room</mat-label>
-    <input matInput formControlName="room" [matAutocomplete]="autoRoom" />
-    <mat-autocomplete #autoRoom="matAutocomplete">
+    <mat-select formControlName="room">
       @for (room of filteredRooms$ | async; track $index) {
       <mat-option [value]="room">
         {{ room }}
       </mat-option>
       }
-    </mat-autocomplete>
+    </mat-select>
     @if (hasError('room', 'required')) {
     <mat-error>Room is required</mat-error>
-    }@if (hasError('room', 'maxlength')) {
-    <mat-error>Room length should be less than {{ MAX_LENGTH }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>
@@ -24,7 +21,7 @@
     }@if (hasError('name', 'maxlength')) {
     <mat-error>Name length should be less than {{ MAX_LENGTH }}</mat-error>
     }@if (hasError('name', 'uniqueName')) {
-    <mat-error>{{ locationName }} already exists</mat-error>
+    <mat-error>{{ getErrorMessage("name", "uniqueName") }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>

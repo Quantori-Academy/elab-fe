@@ -10,6 +10,8 @@ import {
 } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelect } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { MatInputModule } from '@angular/material/input';
     MatFormField,
     MatInputModule,
     MatIcon,
+    MatPaginatorModule,
     MatAutocompleteModule,
+    MatSelect,
     MatOption,
   ],
   exports: [
@@ -25,7 +29,9 @@ import { MatInputModule } from '@angular/material/input';
     MatFormField,
     MatInputModule,
     MatIcon,
+    MatPaginatorModule,
     MatAutocompleteModule,
+    MatSelect,
     MatOption,
   ],
   providers: [

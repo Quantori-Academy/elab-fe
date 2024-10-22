@@ -48,9 +48,17 @@ export class AuthService {
           this.access_token.set(data.access_token);
         }),
         switchMap((loginResponse) =>
-          this.getCurrentUser().pipe(map(() => loginResponse))
+          this.getCurrentUser().pipe(
+            tap((user) => {
+              if (user.isPasswordResetRequired) {
+                this.router.navigate(['/first-password-change']);
+              } else {
+                this.router.navigate(['/dashboard']);
+              }
+            }),
+            map(() => loginResponse)
+          )
         ),
-        tap(() => this.router.navigate(['dashboard'])),
         finalize(() => this.isFetching.set(false))
       );
   }
@@ -105,5 +113,13 @@ export class AuthService {
   logout() {
     this.clearState();
     this.logoutSubject.next();
+  }
+
+  setError(message: string) {
+    this.error.set(message);
+  }
+
+  getError(): string | null {
+    return this.error();
   }
 }

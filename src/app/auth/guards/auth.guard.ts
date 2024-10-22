@@ -1,16 +1,28 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
-import { Router } from '@angular/router';
+import { CanActivateFn, Router, UrlTree } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/authentication/auth.service';
+import { map, catchError } from 'rxjs/operators';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
-    return true;
+  if (!authService.isAuthenticated()) {
+    return of(router.createUrlTree(['/login']));
   } else {
-    return router.createUrlTree(['/login']);
+    return authService.getCurrentUser().pipe(
+      map((user) => {
+        if (user.isPasswordResetRequired) {
+          return router.createUrlTree(['/first-password-change']);
+        } else {
+          return true;
+        }
+      }),
+      catchError(() => {
+        return of(router.createUrlTree(['/login']));
+      })
+    );
   }
 };
 

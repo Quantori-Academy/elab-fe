@@ -54,6 +54,13 @@ export const routes: Routes = [
     data: { role: UserRoles.Admin },
   },
   {
+    path: 'first-password-change',
+    loadComponent: () =>
+      import(
+        './pages/first-password-change/first-password-change.component'
+      ).then((c) => c.FirstPasswordChangeComponent),
+  },
+  {
     path: 'storage-locations',
     loadComponent: () =>
       import('./pages/storage-location/storage-location.component').then(
