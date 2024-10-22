@@ -32,6 +32,7 @@ export interface Reagent {
   quantityLeft: number | null;
   room: string;
   location: string;
+  structure:string;
 }
 
 export enum Category {

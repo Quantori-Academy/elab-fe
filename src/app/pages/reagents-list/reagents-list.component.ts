@@ -5,17 +5,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagent } from '../../shared/models/reagent-model';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatOptionModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
 import { NewReagentFormComponent } from './new-reagent-form/new-reagent-form.component';
 import { StorageService } from '../../shared/services/storage.service';
@@ -24,18 +22,7 @@ import { MaterialModule } from '../../material.module';
 @Component({
   selector: 'app-reagents-list',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    FormsModule,
-    MatOptionModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatGridListModule,
-    MatDialogModule,
-    MaterialModule,
-  ],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, MaterialModule],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
@@ -49,7 +36,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   currentPage = 0;
   displayedColumns: string[] = [
     'name',
-    'smiles',
+    'structure',
     'cas',
     'quantity',
     'package',
@@ -77,7 +64,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
         //   ? data.category.toLowerCase() === searchTerms.category
         //   : true;
 
-        return nameMatches; 
+        return nameMatches;
         // && categoryMatches;
       };
     });
@@ -89,8 +76,8 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
         console.log(err);
       },
     });
-    
-// this.reagentsService.getAllReagents().subscribe()
+
+    // this.reagentsService.getAllReagents().subscribe()
   }
 
   ngAfterViewInit(): void {

@@ -9,6 +9,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Ni-Al Alloy, powder',
@@ -20,6 +21,7 @@ export const NewReagentsList = [
     quantityLeft: 0.9,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'm-iodomenzoic acid',
@@ -31,6 +33,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Benzoic acid',
@@ -42,6 +45,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '(Oxone monopersulfate)potassium pero-xymonosulfate',
@@ -53,6 +57,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '3-Bromopropionic acid, 97%',
@@ -64,6 +69,7 @@ export const NewReagentsList = [
     quantityLeft: 0.025,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '4-Bromobutyric acid, 97%',
@@ -75,6 +81,7 @@ export const NewReagentsList = [
     quantityLeft: 0.01,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '5-Bromovaleric acid, 97%',
@@ -86,6 +93,7 @@ export const NewReagentsList = [
     quantityLeft: 0.01,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '6-Bromoyexanoic acid, 98%',
@@ -97,6 +105,7 @@ export const NewReagentsList = [
     quantityLeft: 0.025,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Bromoacetic acid, 98%',
@@ -108,6 +117,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'top right shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium Nitrate',
@@ -119,6 +129,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium Nitrite',
@@ -130,6 +141,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium Iodide',
@@ -141,6 +153,7 @@ export const NewReagentsList = [
     quantityLeft: 0.01,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Hydroxide',
@@ -152,6 +165,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Hydride',
@@ -163,6 +177,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Sulphite',
@@ -174,6 +189,7 @@ export const NewReagentsList = [
     quantityLeft: 0.2,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '4-Aminobenzoic acid, 99%',
@@ -185,6 +201,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium hydrogen sulfide monohydrate',
@@ -196,6 +213,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Аcetic acid, potassium salt, 97%',
@@ -207,6 +225,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom shelf right',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'L-Tyrosine',
@@ -218,6 +237,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '4-isobutyl-a-methylphenylacetic acid 99%',
@@ -229,6 +249,7 @@ export const NewReagentsList = [
     quantityLeft: 1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'L-Histidine Hydrochlorid Monohydrate',
@@ -240,6 +261,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'L-Cysteine',
@@ -251,6 +273,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'L-Cysteine Hydrochlorid',
@@ -262,6 +285,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '2-Butanol',
@@ -273,6 +297,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: '3-Bromopyruvic acid',
@@ -284,6 +309,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Chloroacetic acid',
@@ -295,6 +321,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium sulfate',
@@ -306,6 +333,7 @@ export const NewReagentsList = [
     quantityLeft: 0.1,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Acetate',
@@ -317,6 +345,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Chloride',
@@ -328,6 +357,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium Carbonate',
@@ -339,6 +369,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Calcium Chloride',
@@ -350,6 +381,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Barium Sulfate',
@@ -361,6 +393,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium Sulfate',
@@ -372,6 +405,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium Bisulfate',
@@ -383,6 +417,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Copper sulfate',
@@ -394,6 +429,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Potassium bromide',
@@ -405,6 +441,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Bromine',
@@ -416,6 +453,7 @@ export const NewReagentsList = [
     quantityLeft: 0.25,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Calcium Carbonate',
@@ -427,6 +465,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Calcium Sulfate',
@@ -438,6 +477,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Barium Chloride',
@@ -449,6 +489,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Calcium Nitrate',
@@ -460,6 +501,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Acetic Acid',
@@ -471,6 +513,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Methanol',
@@ -482,6 +525,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Ethanol',
@@ -493,6 +537,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Dimethyl sulfoxide',
@@ -504,6 +549,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Diethyl ether',
@@ -515,6 +561,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Hexane',
@@ -526,6 +573,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Chloroform',
@@ -537,6 +585,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Dichloromethane',
@@ -548,6 +597,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Hydrochloric acid',
@@ -559,6 +609,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Nitric acid',
@@ -570,6 +621,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sulfuric acid',
@@ -581,6 +633,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Phosphoric acid',
@@ -592,6 +645,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium bicarbonate',
@@ -603,6 +657,7 @@ export const NewReagentsList = [
     quantityLeft: 0.5,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium acetate, trihydrate',
@@ -614,6 +669,7 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
   {
     name: 'Sodium hydroxide, pellets',
@@ -625,5 +681,6 @@ export const NewReagentsList = [
     quantityLeft: 1.0,
     room: 'room 1376',
     location: 'bottom left shelf',
+    structure:'https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg'
   },
 ];
