@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
                 this.errorMessage.set('CORS Error');
               }
             } else {
-              this.errorMessage.set('Connection Error');
+              this.errorMessage.set('Connection/network Error');
             }
           } else {
             this.errorMessage.set('Unknown error');
