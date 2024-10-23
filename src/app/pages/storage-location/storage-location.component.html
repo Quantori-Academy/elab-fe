@@ -20,11 +20,11 @@
     </mat-form-field>
   </div>
 </div>
-} @if ( storageLocationList$ | async; as storageLocationList ) {
+} @if ( storageLocationData$ | async; as storageLocationData ) {
 <div class="mat-elevation-z8">
   <mat-table
     class="table"
-    [dataSource]="storageLocationList"
+    [dataSource]="storageLocationData.storages"
     matSort
     (matSortChange)="onSort($event)"
   >
@@ -79,7 +79,7 @@
     #paginator
     class="demo-paginator"
     (page)="handlePageEvent($event)"
-    [length]="listLength"
+    [length]="storageLocationData.size"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     aria-label="Select page"

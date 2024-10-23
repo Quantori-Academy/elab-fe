@@ -13,6 +13,7 @@ import { NewStorageLocation } from '../../models/storage-location.interface';
 import { take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -28,13 +29,14 @@ export class StorageLocationAddNewComponent {
   private fb = inject(FormBuilder);
   private storageLocationService = inject(StorageLocationService);
   private notificationPopupService = inject(NotificationPopupService);
+  private dialogRef = inject(DialogRef);
 
   public addStorageForm: FormGroup = this.fb.group({
-    room: ['', [Validators.required]],
+    roomName: ['', [Validators.required]],
     name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
     description: [''],
   });
-  public filteredRooms$ = this.storageLocationService.listOfNames;
+  public filteredRooms$ = this.storageLocationService.listOfRooms;
 
   public hasError(label: string, error: string): boolean | undefined {
     return this.addStorageForm.get(label)?.hasError(error);
@@ -47,27 +49,28 @@ export class StorageLocationAddNewComponent {
   onSave() {
     if (this.addStorageForm.valid) {
       const formValue: NewStorageLocation = this.addStorageForm.value;
-      console.log(formValue);
 
       this.storageLocationService
         .addNewStorageLocation(formValue)
         .pipe(take(1))
         .subscribe({
-          next: () =>
+          next: () => {
+            this.dialogRef.close(true);
             this.notificationPopupService.success({
               title: 'Success',
               message: 'Storage Location added',
-            }),
+            });
+          },
           error: (error: HttpErrorResponse) => {
             switch (error.status) {
               case HttpStatusCode.BadRequest:
                 this.addStorageForm
-                  .get('room')
+                  .get('roomName')
                   ?.setErrors({ roomError: error.error.message });
                 break;
               case HttpStatusCode.NotFound:
                 this.addStorageForm
-                  .get('room')
+                  .get('roomName')
                   ?.setErrors({ roomNotFound: error.error.message });
                 break;
               case HttpStatusCode.Conflict:

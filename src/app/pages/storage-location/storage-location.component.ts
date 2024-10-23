@@ -18,6 +18,7 @@ import {
 import {
   StorageLocationFilteredData,
   StorageLocationItem,
+  StorageLocationListData,
 } from './models/storage-location.interface';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
@@ -58,12 +59,12 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
-  public storageLocationListSubject: BehaviorSubject<
-    StorageLocationItem[] | undefined
-  > = new BehaviorSubject<StorageLocationItem[] | undefined>(undefined);
-  public storageLocationList$ = this.storageLocationListSubject.asObservable();
+  public storageLocationDataSubject: BehaviorSubject<
+    StorageLocationListData | undefined
+  > = new BehaviorSubject<StorageLocationListData | undefined>(undefined);
+  public storageLocationData$ = this.storageLocationDataSubject.asObservable();
 
-  public listOfRooms$: Observable<string[]>;
+  public listOfRooms$: Observable<{ id: number; name: string }[]>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
@@ -80,7 +81,15 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   }
 
   public openDialog(): void {
-    this.dialog.open(StorageLocationAddNewComponent);
+    this.dialog
+      .open(StorageLocationAddNewComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((value) => {
+        if (value) {
+          this.getListStorageLocation();
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -104,7 +113,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       .getListStorageLocation()
       .pipe(takeUntil(this.destroy$))
       .subscribe((storageList) =>
-        this.storageLocationListSubject.next(storageList)
+        this.storageLocationDataSubject.next(storageList)
       );
   }
 

@@ -2,15 +2,19 @@
 <form class="form" [formGroup]="addStorageForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
     <mat-label>Room</mat-label>
-    <mat-select formControlName="room">
+    <mat-select formControlName="roomName">
       @for (room of filteredRooms$ | async; track $index) {
-      <mat-option [value]="room">
-        {{ room }}
+      <mat-option [value]="room.name">
+        {{ room.name }}
       </mat-option>
       }
     </mat-select>
-    @if (hasError('room', 'required')) {
+    @if (hasError('roomName', 'required')) {
     <mat-error>Room is required</mat-error>
+    }@if (hasError('roomName', 'roomError')) {
+    <mat-error>{{ getErrorMessage("roomName", "roomError") }}</mat-error>
+    }@if (hasError('roomName', 'roomNotFound')) {
+    <mat-error>{{ getErrorMessage("roomName", "roomNotFound") }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>

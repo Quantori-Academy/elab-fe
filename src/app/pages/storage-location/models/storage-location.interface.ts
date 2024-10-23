@@ -1,7 +1,7 @@
 import { StorageLocationColumn } from './storage-location.enum';
 
 export interface NewStorageLocation {
-  room: string;
+  roomName: string;
   name: string;
   description: string;
 }
@@ -18,6 +18,11 @@ export interface StorageLocationItem {
     name: string;
     description: string | null;
   };
+}
+
+export interface StorageLocationListData {
+  storages: StorageLocationItem[];
+  size: number;
 }
 
 export interface StorageLocationPageData {

@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpResponseBase } from '@angular/common/http';
 import {
   NewStorageLocation,
   StorageLocationFilteredData,
-  StorageLocationItem,
+  StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
@@ -27,14 +27,16 @@ export class StorageLocationService {
     roomName: '',
     storageName: '',
   });
-  private rooms = ['Room 1', 'Room 2', 'Room 3', 'Room 4'];
-  private names = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
+  private rooms = [
+    { id: 1, name: 'Room1' },
+    { id: 2, name: 'Room2' },
+    { id: 3, name: 'Room3' },
+  ];
 
   public httpParams$ = this.httpParamsSubject.asObservable();
   public pageSize = 10;
 
   public listOfRooms = of(this.rooms);
-  public listOfNames = of(this.names);
 
   constructor(private http: HttpClient) {}
 
@@ -42,7 +44,7 @@ export class StorageLocationService {
     return this.http.post(`${this.apiUrl}/storages`, newData);
   }
 
-  public getListStorageLocation(): Observable<StorageLocationItem[]> {
+  public getListStorageLocation(): Observable<StorageLocationListData> {
     return this.httpParams$.pipe(
       switchMap((params) => {
         let httpParams = new HttpParams()
@@ -64,9 +66,12 @@ export class StorageLocationService {
         httpParams = setParamIfExists('roomName', params.roomName);
         httpParams = setParamIfExists('storageName', params.storageName);
 
-        return this.http.get<StorageLocationItem[]>(`${this.apiUrl}/storages`, {
-          params: httpParams,
-        });
+        return this.http.get<StorageLocationListData>(
+          `${this.apiUrl}/storages`,
+          {
+            params: httpParams,
+          }
+        );
       })
     );
   }
