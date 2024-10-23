@@ -1,11 +1,12 @@
 mat-sidenav-container {
-  height: calc(100vh - 60px);
+  height: calc(100vh - var(--header-height));
 }
 
 mat-sidenav {
-  border-right: 1px solid #9bb6ca;
+  border: none;
   border-radius: 0;
   background-color: #f0f4f8;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
 }
 
 .mat-mdc-nav-list .mat-mdc-list-item {
@@ -20,4 +21,8 @@ mat-nav-list {
   color: 1D3E5B;
   font-size: 14px;
   font-weight: 500;
+}
+
+mat-sidenav-content {
+  padding: 30px;
 }

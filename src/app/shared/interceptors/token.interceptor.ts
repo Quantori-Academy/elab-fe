@@ -4,119 +4,104 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import {
   catchError,
   finalize,
-  from,
   Observable,
-  of,
-  Subject,
-  switchMap,
+  BehaviorSubject,
   throwError,
+  switchMap,
+  filter,
+  take,
 } from 'rxjs';
 import { AuthService } from '../../auth/services/authentication/auth.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
   private isRefreshing = false;
+  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+    string | null
+  >(null);
+
   private refreshUrl = environment.apiUrl + '/api/v1/auth/refreshAccessToken';
-  private access_token = localStorage.getItem('access_token');
-  private tokenSubject: Subject<string> = new Subject<string>();
-  private cachedRequests: HttpRequest<unknown>[] = [];
+
+  constructor(private authService: AuthService) {}
 
   intercept(
     req: HttpRequest<unknown>,
     handler: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token =
-      localStorage.getItem('access_token') && this.authService.getAccessToken();
-    if (req.url.startsWith(environment.apiUrl) && token) {
-      req = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${token}`),
-      });
+    const isRefreshRequest = req.url === this.refreshUrl;
+    const token = this.authService.getAccessToken();
+
+    let authReq = req;
+    if (token && req.url.startsWith(environment.apiUrl) && !isRefreshRequest) {
+      authReq = this.addToken(req, token);
     }
 
-    return handler.handle(req).pipe(
-      catchError((error) => {
-        const isLoginReq = req.url.includes('/api/v1/auth/login');
-        if (error.status === 401 && !isLoginReq) {
-          this.cachedRequests.push(req);
-          return this.refresh(req, handler);
+    return handler.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (
+          error.status === 401 &&
+          !isRefreshRequest &&
+          !authReq.url.includes('/api/v1/auth/login')
+        ) {
+          return this.handle401Error(authReq, handler);
         }
         this.authService.isAuthenticated();
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
 
-  private refresh(req: HttpRequest<unknown>, handler: HttpHandler) {
+  private addToken(request: HttpRequest<unknown>, token: string) {
+    return request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  private handle401Error(
+    request: HttpRequest<unknown>,
+    handler: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      req = req.clone({
-        method: 'GET',
-        url: this.refreshUrl,
-        setHeaders: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          access_token: this.access_token,
-        }),
-      });
+      this.tokenSubject.next(null);
 
-      return handler.handle(req).pipe(
-        switchMap((event) => {
-          if (event instanceof HttpResponse) {
-            const newTokens = event.body;
-            if (newTokens) {
-              localStorage.setItem('access_token', newTokens.access_token);
-
-              return from(this.cachedRequests).pipe(
-                switchMap((cachedReq) => {
-                  cachedReq = cachedReq.clone({
-                    headers: cachedReq.headers.set(
-                      'Authorization',
-                      `Bearer ${newTokens.access_token}`
-                    ),
-                  });
-                  return handler.handle(cachedReq);
-                }),
-                finalize(() => {
-                  this.cachedRequests = [];
-                })
-              );
-            }
+      return this.authService.refreshToken().pipe(
+        switchMap((newToken: string) => {
+          if (newToken) {
+            this.tokenSubject.next(newToken);
+            return handler.handle(this.addToken(request, newToken));
           }
-          return of(event);
+          this.authService.logout();
+          return throwError(() => new Error('Failed to refresh token'));
         }),
-        catchError((error) => {
-          this.isRefreshing = false;
-
-          if (error.status === 403) {
-            this.authService.isAuthenticated();
-          }
-          return throwError(() => error);
+        catchError((err) => {
+          this.authService.logout();
+          return throwError(() => err);
         }),
         finalize(() => {
           this.isRefreshing = false;
         })
       );
     } else {
-      return new Observable<HttpEvent<unknown>>((observer) => {
-        this.tokenSubject.subscribe((newToken) => {
-          req = req.clone({
-            headers: req.headers.set('Authorization', `Bearer ${newToken}`),
-          });
-          handler.handle(req).subscribe(
-            (event) => observer.next(event),
-            (error) => observer.error(error),
-            () => observer.complete()
-          );
-        });
-      });
+      return this.tokenSubject.pipe(
+        filter((token) => token !== null),
+        take(1),
+        switchMap((token) => {
+          if (token) {
+            return handler.handle(this.addToken(request, token));
+          }
+          this.authService.logout();
+          return throwError(() => new Error('No token avalable'));
+        })
+      );
     }
   }
 }

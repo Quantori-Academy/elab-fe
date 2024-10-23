@@ -9,12 +9,15 @@
         #rla="routerLinkActive"
         [activated]="rla.isActive"
       >
+        <mat-icon aria-hidden="false" aria-label="Link icon" matListItemIcon>{{
+          link.icon
+        }}</mat-icon>
         <span matListItemTitle>{{ link.label }}</span>
       </a>
       } }
     </mat-nav-list>
   </mat-sidenav>
-  <!-- <mat-sidenav-content class="content" [style.margin-left]="navbarWidth()">
+  <mat-sidenav-content class="content" [style.margin-left]="navbarWidth()">
     <router-outlet></router-outlet>
-  </mat-sidenav-content> -->
+  </mat-sidenav-content>
 </mat-sidenav-container>

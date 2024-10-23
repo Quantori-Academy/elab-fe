@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,22 +8,18 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-
+import { MaterialModule } from '../../../material.module';
 import { Profile } from '../../../auth/roles/types';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { LogoutService } from '../../../auth/services/logout/logout.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
-import { catchError, of } from 'rxjs';
 
 export const collapsed = signal(false);
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatToolbarModule, MatIconModule, NgIf, AsyncPipe],
+  imports: [NgIf, AsyncPipe, MaterialModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,7 +34,9 @@ export class HeaderComponent implements OnInit {
     this.rbacService.authenticatedUser$;
 
   ngOnInit(): void {
-    this.loadCurrentUser();
+    if (this.authService.isAuthenticated()) {
+      this.loadCurrentUser();
+    }
   }
 
   loadCurrentUser() {
@@ -55,6 +53,10 @@ export class HeaderComponent implements OnInit {
 
   navigateToProfile() {
     this.router.navigate([`/profile`]);
+  }
+
+  navigateToDashboard() {
+    this.router.navigate([`/`]);
   }
 
   logout() {

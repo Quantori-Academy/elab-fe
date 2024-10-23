@@ -1,30 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
-import LoginResponse from '../../auth.interface';
+import { Observable, of, throwError, Subject } from 'rxjs';
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { RbacService } from './rbac.service';
+import LoginResponse from '../../auth.interface';
 import { User } from '../../roles/types';
-import {
-  catchError,
-  finalize,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
-import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private logoutSubject = new Subject<void>();
   public logout$ = this.logoutSubject.asObservable();
+
   constructor(public rbacService: RbacService) {}
 
   private authUrl = environment.apiUrl + '/api/v1/auth/login';
   private userUrl = environment.apiUrl + '/api/v1/users/current';
+  private refreshUrl = environment.apiUrl + '/api/v1/auth/refreshAccessToken';
   private access_token = signal<string | undefined>(undefined);
   private error = signal('');
   private isFetching = signal(false);
@@ -32,7 +25,7 @@ export class AuthService {
   private router = inject(Router);
 
   onLoginUser(email: string, password: string): Observable<LoginResponse> {
-    const body = JSON.stringify({ email, password });
+    const body = { email, password };
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     this.isFetching.set(true);
@@ -81,11 +74,11 @@ export class AuthService {
           tap((user) => this.rbacService.setAuthenticatedUser(user)),
           catchError((err) => {
             console.error('Error fetching user:', err);
-            return throwError(err);
+            return throwError(() => err);
           })
         );
     } else {
-      return throwError('No token found');
+      return throwError(() => new Error('No token found'));
     }
   }
 
@@ -100,8 +93,12 @@ export class AuthService {
     );
   }
 
+  setAccessToken(token: string) {
+    this.access_token.set(token);
+    localStorage.setItem('access_token', token);
+  }
+
   clearState() {
-    this.access_token.set(undefined);
     this.error.set('');
     localStorage.removeItem('access_token');
   }
@@ -113,6 +110,7 @@ export class AuthService {
   logout() {
     this.clearState();
     this.logoutSubject.next();
+    location.href = '/login';
   }
 
   setError(message: string) {
@@ -121,5 +119,29 @@ export class AuthService {
 
   getError(): string | null {
     return this.error();
+  }
+
+  refreshToken(): Observable<string> {
+    const token = this.getAccessToken();
+
+    if (!token) {
+      this.logout();
+      return throwError(() => new Error('No access token available'));
+    }
+
+    return this.httpClient
+      .request<{ access_token: string }>('GET', this.refreshUrl, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response.access_token),
+        tap((newToken: string) => {
+          this.setAccessToken(newToken);
+        }),
+        catchError((err) => {
+          this.logout();
+          return throwError(() => err);
+        })
+      );
   }
 }

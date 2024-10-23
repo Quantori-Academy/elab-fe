@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponseBase } from '@angular/common/http';
 import {
   NewStorageLocation,
   StorageLocationFilteredData,
@@ -115,5 +115,11 @@ export class StorageLocationService {
 
   public get currentHttpParams() {
     return this.httpParamsSubject.getValue();
+  }
+
+  public deleteStorageLocation(id: number): Observable<HttpResponseBase> {
+    return this.http.delete<HttpResponseBase>(`${this.apiUrl}/storages/${id}`, {
+      observe: 'response',
+    });
   }
 }
