@@ -17,14 +17,14 @@ $elab-fe-theme: mat.define-theme(
 
 :root {
   @include mat.all-component-themes($elab-fe-theme);
-  --primary-color-dark: #06417D;
+  --primary-color-dark: #06417d;
   --primary-color: #1469c0;
-  --primary-color-light: #8DC0FF;
+  --primary-color-light: #8dc0ff;
 
-  --neutral-color-dark2: #1D3E5B;
+  --neutral-color-dark2: #1d3e5b;
   --neutral-color-dark1: #496984;
-  --neutral-color-light1: #9BB6CA;
-  --neutral-color-light2: #F0F4F8;
+  --neutral-color-light1: #9bb6ca;
+  --neutral-color-light2: #f0f4f8;
 
   --error-color: #be1a1a;
   --warning-color: #f7d070;
@@ -42,6 +42,8 @@ $elab-fe-theme: mat.define-theme(
 
   --info-light-color: #cce5ff;
   --info-progress-bg-color: #82bfd3;
+
+  --header-height: 60px;
 }
 
 html,
