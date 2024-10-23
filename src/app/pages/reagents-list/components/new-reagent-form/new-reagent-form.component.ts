@@ -10,45 +10,35 @@ import {
   UnitLabels,
   ReagentRequest,
   Category,
-} from '../../../shared/models/reagent-model';
+} from '../../../../shared/models/reagent-model';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-  provideNativeDateAdapter,
-} from '@angular/material/core';
-import { ReagentsService } from '../../../shared/services/reagents.service';
-import { StorageService } from '../../../shared/services/storage.service';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { ReagentsService } from '../../../../shared/services/reagents.service';
+import { StorageLocationService } from '../../../storage-location/services/storage-location.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
-import { MaterialModule } from '../../../material.module';
+import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
+import { MaterialModule } from '../../../../material.module';
 import { Subscription } from 'rxjs';
+import { StorageLocationItem } from '../../../storage-location/models/storage-location.interface';
 
 @Component({
   selector: 'app-new-reagent-form',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MaterialModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule],
   templateUrl: './new-reagent-form.component.html',
-  styleUrl: './new-reagent-form.component.scss',
+  styleUrls: ['./new-reagent-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewReagentFormComponent implements OnDestroy{
+export class NewReagentFormComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private reagentsService = inject(ReagentsService);
-  private storageService = inject(StorageService);
+  private storageLocationService = inject(StorageLocationService); // Use StorageLocationService
   private notificationsService = inject(NotificationPopupService);
   private storageSubscription: Subscription | null = null;
 
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { structure: string },
-    private dialogRef: MatDialogRef<NewReagentFormComponent>
-  ) {}
-
+  errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
     value: Unit[key as keyof typeof Unit],
     viewValue: UnitLabels[Unit[key as keyof typeof Unit]],
@@ -59,12 +49,9 @@ export class NewReagentFormComponent implements OnDestroy{
     viewValue: key,
   }));
 
-  errorMessage = '';
   reagentRequestForm = this.fb.group({
     name: ['', Validators.required],
     category: [Category, Validators.required],
-
-// strucutre is not required as i remember from meeting with dimitry
     structure: [''],
     casNumber: [
       '',
@@ -83,64 +70,65 @@ export class NewReagentFormComponent implements OnDestroy{
     quantityLeft: [null, Validators.required],
     expirationDate: ['', Validators.required],
     storageLocation: ['', Validators.required],
-    storageId: [''],
+    storageId: [null as number | null],
   });
 
-  // by typeing storage's name we fetch it's object, then use id to fill storageId field in newRequestForm;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { structure: string },
+    private dialogRef: MatDialogRef<NewReagentFormComponent>
+  ) {}
+
+  // Use the first service (StorageLocationService) to fetch storage data
   onRoomNameChange() {
     const storageName = this.reagentRequestForm.get('storageLocation')?.value;
-  
+
     if (storageName) {
-      // Unsubscribe from any previous subscription to avoid memory leaks
+      // Unsubscribe from previous subscription to avoid memory leaks
       if (this.storageSubscription) {
         this.storageSubscription.unsubscribe();
       }
-  
-      // Fetch the storage by storage name
-      this.storageSubscription = this.storageService.getStorageBy(storageName).subscribe({
-        next: (response) => {
-          console.log('API Response:', response);
-  
-          const matchingStorage = response['find'](
-            (storage: Storage) =>
-              storage['name'].toLowerCase() === storageName.toLowerCase()
-          );
-  
-          if (matchingStorage) {
-            console.log('Found matching storage:', matchingStorage);
-  
-            if (matchingStorage.id) {
+
+      // Fetch the list of storages by storage location name
+      this.storageSubscription = this.storageLocationService
+        .getListStorageLocation()
+        .subscribe({
+          next: (storages: StorageLocationItem[]) => {
+            const matchingStorage = storages.find(
+              (storage) =>
+                storage.name.toLowerCase() === storageName.toLowerCase()
+            );
+
+            if (matchingStorage) {
+              // Patch the storageId in the form
               this.reagentRequestForm.patchValue({
                 storageId: matchingStorage.id,
               });
-  
               console.log(
                 'Storage ID:',
                 this.reagentRequestForm.get('storageId')?.value
               );
             } else {
-              console.error('No storage ID found in the response.');
+              this.errorMessage = `No matching storage found for storage name: ${storageName}`;
+              console.warn(
+                'No matching storage found for storage name:',
+                storageName
+              );
             }
-          } else {
-            this.errorMessage = `No matching storage found for storage name: ${storageName}`;
-            console.warn(
-              'No matching storage found for storage name:',
-              storageName
-            );
-          }
-        },
-        error: (error) => {
-          console.error('Error fetching storage:', error);
-        },
-      });
+          },
+          error: (error) => {
+            console.error('Error fetching storages:', error);
+            this.errorMessage = 'Failed to fetch storages. Please try again.';
+          },
+        });
     }
   }
+
   ngOnDestroy() {
     if (this.storageSubscription) {
       this.storageSubscription.unsubscribe();
     }
   }
-  
+
   onSubmit() {
     if (this.reagentRequestForm.valid) {
       const formRawValue = { ...this.reagentRequestForm.value };
@@ -156,7 +144,7 @@ export class NewReagentFormComponent implements OnDestroy{
         const formValue = {
           ...formRawValue,
           expirationDate: finalExpirationDate,
-          storageId: parseInt(formRawValue.storageId!, 10),
+          storageId: formRawValue.storageId,
         } as ReagentRequest;
 
         console.log('Form Value to Submit:', formValue);

@@ -14,8 +14,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
-import { NewReagentFormComponent } from './new-reagent-form/new-reagent-form.component';
+import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
+import { NewReagentFormComponent } from './components/new-reagent-form/new-reagent-form.component';
 import { StorageService } from '../../shared/services/storage.service';
 import { MaterialModule } from '../../material.module';
 

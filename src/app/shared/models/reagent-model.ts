@@ -32,7 +32,7 @@ export interface Reagent {
   quantityLeft: number | null;
   room: string;
   location: string;
-  structure:string;
+  structure: string;
 }
 
 export enum Category {
@@ -43,7 +43,7 @@ export enum Category {
 export interface ReagentRequest extends OrderEntity {
   quantityLeft: number | null;
   expirationDate: string;
-  storageId: number;
+  storageId: number | null;
   category: Category | null;
   structure: string;
 }
