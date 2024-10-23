@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandler } from '@angular/core';
 
 let initialEmailValue = '';
 const savedForm = localStorage.getItem('login-email');
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
     confirmPassword: true,
   };
   public errorVisible = true;
+  private errorHandler = inject(ErrorHandler);
 
   constructor(
     private authLogin: AuthService,
@@ -106,27 +108,16 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         },
         error: (error: HttpErrorResponse | unknown) => {
-          console.error('Login error:', error);
-
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
-              this.errorMessage.set('Incorrect Password or Email');
-            } else if (error.status === 0) {
-              if (!navigator.onLine) {
-                this.errorMessage.set('No internet connection');
-              } else {
-                this.errorMessage.set('CORS Error');
-              }
+              this.errorMessage.set('Incorrect password or email');
+              this.errorHandler.handleError(error);
             } else {
-              this.errorMessage.set('Network Error');
+              this.errorHandler.handleError(error);
             }
-          } else {
-            this.errorMessage.set('Unknown error');
           }
         },
       });
-    } else {
-      console.log('error');
     }
   }
 

@@ -15,6 +15,7 @@ import { MatIcon } from '@angular/material/icon';
     MaterialModule,
     MatIcon,
   ],
+  providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
