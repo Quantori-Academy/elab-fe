@@ -1,0 +1,15 @@
+<p>{{ data?.message }}</p>
+<div class="actions">
+  <button class="cancel-btn" type="button" mat-button mat-dialog-close>
+    Cancel
+  </button>
+  <button
+    type="submit"
+    class="save-btn"
+    mat-flat-button
+    color="warn"
+    (click)="onDelete()"
+  >
+    Delete
+  </button>
+</div>
