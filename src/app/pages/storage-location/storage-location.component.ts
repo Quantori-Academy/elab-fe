@@ -52,7 +52,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   public pageIndex = 0;
   public storageLocationList$!: Observable<StorageLocationItem[]>;
 
-  public listOfRooms$: Observable<string[]>;
+  public listOfRooms$: Observable<{ id: number; name: string }[]>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
@@ -68,10 +68,18 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.setIsAdmin();
+    this.setFilterStorageName();
+  }
+
+  private setIsAdmin() {
     this.isAdmin = this.rbcService.isAdmin();
     if (this.isAdmin) {
       this.displayedColumns.push('actions');
     }
+  }
+
+  private setFilterStorageName() {
     this.filterSubject
       .pipe(
         debounceTime(this.DEBOUNCE_TIME),
@@ -83,18 +91,15 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       );
   }
 
-  private setActionsColumn() {
-    if (this.isAdmin) {
-      this.displayedColumns.push('actions');
-    }
-  }
-
   onSort(sort: Sort) {
     this.storageLocationService.setSortingPageData(sort);
   }
 
   onFilterRoom(value: string) {
-    this.filterSubject.next({ value, column: StorageLocationColumn.Room });
+    this.storageLocationService.setFilteringPageData({
+      value,
+      column: StorageLocationColumn.Room,
+    });
   }
 
   onFilterName($event: Event) {

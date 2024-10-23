@@ -22,18 +22,21 @@ export class StorageLocationService {
     skip: 0,
     take: 0,
     chronologicalDate: '',
-    alphabeticalName: '',
+    alphabeticalRoomName: '',
+    alphabeticalStorageName: '',
     roomName: '',
     storageName: '',
   });
-  private rooms = ['Room 1', 'Room 2', 'Room 3', 'Room 4'];
-  private names = ['Name 1', 'Name 2', 'Name 3', 'Name 4'];
+  private rooms = [
+    { id: 1, name: 'Room1' },
+    { id: 2, name: 'Room2' },
+    { id: 3, name: 'Room3' },
+  ];
 
   public httpParams$ = this.httpParamsSubject.asObservable();
   public pageSize = 10;
 
   public listOfRooms = of(this.rooms);
-  public listOfNames = of(this.names);
 
   constructor(private http: HttpClient) {}
 
@@ -49,8 +52,12 @@ export class StorageLocationService {
         };
 
         httpParams = setParamIfExists(
-          'alphabeticalName',
-          params.alphabeticalName
+          'alphabeticalStorageName',
+          params.alphabeticalStorageName
+        );
+        httpParams = setParamIfExists(
+          'alphabeticalRoomName',
+          params.alphabeticalRoomName
         );
         httpParams = setParamIfExists(
           'chronologicalDate',
@@ -74,38 +81,46 @@ export class StorageLocationService {
     });
   }
 
-  // TODO: optimize code
   public setSortingPageData(sortingData: Sort): void {
-    let updatedParams = { ...this.currentHttpParams };
-    switch (sortingData.active) {
-      case StorageLocationColumn.Name:
-        updatedParams = {
-          ...updatedParams,
-          alphabeticalName: sortingData.direction,
-          chronologicalDate: '',
-        };
-        break;
-      case StorageLocationColumn.CreatedAt:
-        updatedParams = {
-          ...updatedParams,
-          chronologicalDate: sortingData.direction,
-          alphabeticalName: '',
-        };
-        break;
-      default:
-        return;
-    }
+    const sortingMap = {
+      [StorageLocationColumn.Name]: {
+        alphabeticalStorageName: sortingData.direction,
+      },
+      [StorageLocationColumn.CreatedAt]: {
+        chronologicalDate: sortingData.direction,
+      },
+      [StorageLocationColumn.Room]: {
+        alphabeticalRoomName: sortingData.direction,
+      },
+    };
+    const resetSortingParams = {
+      alphabeticalStorageName: '',
+      chronologicalDate: '',
+      alphabeticalRoomName: '',
+    };
+    const updatedParams = {
+      ...this.currentHttpParams,
+      ...resetSortingParams,
+      ...sortingMap[sortingData.active as StorageLocationColumn],
+    };
     this.httpParamsSubject.next(updatedParams);
   }
 
   public setFilteringPageData(filterData: StorageLocationFilteredData): void {
     const { value, column } = filterData;
-    if (column === StorageLocationColumn.Name) {
-      this.httpParamsSubject.next({
-        ...this.currentHttpParams,
-        storageName: value,
-      });
+    let filterColumn = {};
+    switch (column) {
+      case StorageLocationColumn.Room:
+        filterColumn = { roomName: value };
+        break;
+      case StorageLocationColumn.Name:
+        filterColumn = { storageName: value };
+        break;
     }
+    this.httpParamsSubject.next({
+      ...this.currentHttpParams,
+      ...filterColumn,
+    });
   }
 
   public get currentHttpParams() {

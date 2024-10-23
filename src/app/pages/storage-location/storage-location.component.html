@@ -5,7 +5,7 @@
     <mat-select (selectionChange)="onFilterRoom($event.value)">
       <mat-option value="">All Rooms</mat-option>
       @for (room of listOfRooms$ | async; track $index) {
-      <mat-option [value]="room">{{ room }}</mat-option>
+      <mat-option [value]="room.name">{{ room.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

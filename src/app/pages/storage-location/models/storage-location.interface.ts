@@ -18,7 +18,8 @@ export interface StorageLocationPageData {
   skip: number;
   take: number;
   chronologicalDate: string;
-  alphabeticalName: string;
+  alphabeticalRoomName: string;
+  alphabeticalStorageName: string;
   roomName: string;
   storageName: string;
 }
