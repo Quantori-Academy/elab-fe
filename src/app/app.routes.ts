@@ -30,6 +30,14 @@ export const routes: Routes = [
           ).then((c) => c.ProfilePageComponent),
       },
       {
+        path: 'storage-locations',
+        loadComponent: () =>
+          import('./pages/storage-location/storage-location.component').then(
+            (c) => c.StorageLocationComponent
+          ),
+        canActivate: [authGuard],
+      },
+      {
         path: 'users',
         loadComponent: () =>
           import('./pages/users-list/users-list.component').then(
@@ -91,13 +99,5 @@ export const routes: Routes = [
       import(
         './pages/first-password-change/first-password-change.component'
       ).then((c) => c.FirstPasswordChangeComponent),
-  },
-  {
-    path: 'storage-locations',
-    loadComponent: () =>
-      import('./pages/storage-location/storage-location.component').then(
-        (c) => c.StorageLocationComponent
-      ),
-    canActivate: [authGuard],
-  },
+  }
 ];
