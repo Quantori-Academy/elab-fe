@@ -1,19 +1,11 @@
-.header {
-  border-bottom: 1px solid #9bb6ca;
-  background-color: #f0f4f8;
-  padding: 10px 20px 10px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .icons {
   display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .logo {
-  display: block;
-  width: 100px;
+  width: 60px;
 }
 
 .user-section {
@@ -25,7 +17,6 @@
     border: none;
     color: white;
     cursor: pointer;
-    font-size: 1em;
 
     &:hover {
       background-color: #be1a1a;
@@ -34,20 +25,14 @@
 }
 
 .username {
-  color: #06417d;
+  color: #496984;
+  transition: all 0.5s ease;
 }
+
 .username:hover {
   color: var(--primary-color);
-  font-weight: 500;
 }
 
 .username {
   margin-right: 10px;
-}
-
-.avatar {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: var(--primary-color);
 }

@@ -12,6 +12,7 @@ import { AuthService } from '../../auth/services/authentication/auth.service';
 import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 let initialEmailValue = '';
 const savedForm = localStorage.getItem('login-email');
@@ -101,8 +102,12 @@ export class LoginComponent implements OnInit {
 
     if (enteredEmail && enteredPassword) {
       this.authLogin.onLoginUser(enteredEmail, enteredPassword).subscribe({
-        error: (error) => {
-          this.errorMessage.set('Incorrect Password or Email');
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.errorMessage.set('Incorrect Password or Email');
+          } else {
+            this.errorMessage.set('Connection Error');
+          }
           console.error(error);
         },
       });

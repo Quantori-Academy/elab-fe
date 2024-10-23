@@ -1,0 +1,17 @@
+<mat-sidenav-container>
+  <mat-sidenav opened mode="side" [style.width]="navbarWidth()">
+    <mat-nav-list>
+      @for (link of menuLinks(); track link.label){
+      @if (isLinkVisible(link)) {
+      <a mat-list-item [routerLink]="link.route" routerLinkActive #rla="routerLinkActive" [activated]="rla.isActive">
+        <mat-icon aria-hidden="false" aria-label="Link icon" matListItemIcon>{{link.icon}}</mat-icon>
+        <span matListItemTitle>{{ link.label }}</span>
+      </a>
+      }
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="content" [style.margin-left]="navbarWidth()">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
