@@ -17,8 +17,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
 import { NewReagentFormComponent } from './components/new-reagent-form/new-reagent-form.component';
 import { MaterialModule } from '../../material.module';
-import { forkJoin, map } from 'rxjs';
-import { StorageLocationService } from '../storage-location/services/storage-location.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -31,10 +29,11 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
-  private storageLocationService = inject(StorageLocationService);
+
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;
+
   displayedColumns: string[] = [
     'name',
     'category',
@@ -44,7 +43,6 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     'quantityLeft',
     'cas',
     'location',
-    // 'location',
     'actions',
   ];
 
@@ -55,24 +53,8 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.reagentsService.getreagents().subscribe((reagents) => {
-      console.log(reagents);
-
-      const storageRequests = reagents.map((reagent) => {
-        return this.storageLocationService
-          .getStorageLocationById(reagent.storageId)
-          .pipe(
-            map((storage) => ({
-              ...reagent,
-              room: storage.room,
-              location: storage.name,
-            }))
-          );
-      });
-
-      forkJoin(storageRequests).subscribe((updatedReagents) => {
-        this.dataSource.data = updatedReagents;
-
-      });
+      this.dataSource.data = reagents;
+      
       this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
         const searchTerms = JSON.parse(filter);
 

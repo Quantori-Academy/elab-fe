@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   StorageLocationFilteredData,
   StorageLocationItem,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
-import { BehaviorSubject, Observable, of, switchMap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { StorageLocationColumn } from '../models/storage-location.enum';
@@ -36,36 +36,6 @@ export class StorageLocationService {
   public listOfNames = of(this.names);
 
   constructor(private http: HttpClient) {}
-
-  // Added this method to fetch locations for the reagents
-  public getStorageLocationById(storageId: number): Observable<StorageLocationItem> {
-    const token = localStorage.getItem('access_token');
-    if (!token) {
-      return throwError('No access token found');
-    }
-    
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-    
-    const params = new HttpParams().set('id', storageId.toString());
-
-    return this.http.get<StorageLocationItem[]>(`${this.apiUrl}/storages`, { headers, params })
-      .pipe(
-        switchMap(response => {
-          // Assuming response is an array; get the first item
-          if (response && response.length > 0) {
-            return of(response[0]); // Return the first storage location item
-          } else {
-            return throwError('Storage location not found');
-          }
-        })
-      );
-  }
-
-  
-  
   
   public getListStorageLocation(): Observable<StorageLocationItem[]> {
     return this.httpParams$.pipe(
