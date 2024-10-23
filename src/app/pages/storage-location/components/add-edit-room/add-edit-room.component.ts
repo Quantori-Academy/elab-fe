@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+  OnInit,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,7 +13,7 @@ import {
 } from '@angular/forms';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../../material.module';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { RoomManagementService } from '../../services/room-management.service';
 import { RoomData } from '../../models/storage-location.interface';
 import { take } from 'rxjs';
@@ -21,7 +27,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
   styleUrl: './add-edit-room.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEditRoomComponent {
+export class AddEditRoomComponent implements OnInit {
   private readonly MAX_LENGTH = 300;
   private fb = inject(FormBuilder);
   private roomManagementService = inject(RoomManagementService);
@@ -31,6 +37,14 @@ export class AddEditRoomComponent {
     name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
     description: [''],
   });
+
+  constructor(@Inject(MAT_DIALOG_DATA) public editionData?: RoomData) {}
+
+  ngOnInit(): void {
+    if (this.editionData) {
+      this.roomForm.patchValue(this.editionData);
+    }
+  }
 
   public hasError(label: string, error: string): boolean | undefined {
     return this.roomForm.get(label)?.hasError(error);

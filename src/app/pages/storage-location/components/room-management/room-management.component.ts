@@ -36,7 +36,9 @@ export class RoomManagementComponent {
   }
 
   public onEdit(element: RoomData) {
-    console.log('edited element', element);
+    this.dialog.open(AddEditRoomComponent, {
+      data: element,
+    });
   }
   public onDelete(element: RoomData) {
     console.log('deleted element', element);
