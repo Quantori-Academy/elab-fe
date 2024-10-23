@@ -4,6 +4,8 @@ import { NotificationPopupComponent } from './shared/components/notification-pop
 import { MaterialModule } from './material.module';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MatIcon } from '@angular/material/icon';
+import { GlobalErrorHandler } from './shared/services/error-handling/global-error-handling.component';
+import { ErrorHandler } from '@angular/core';
 
 @Component({
   selector: 'app-root',
