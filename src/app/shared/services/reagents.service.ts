@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { ELEMENT_DATA } from '../../../../mockData';
+import { NewReagentsList } from '../../../../mockData';
 // import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class mockReagentsListService {
+export class ReagentsService {
   // private httpClient = inject(HttpClient);
   apiUrl = `${environment.apiUrl}/reagents`;
   getReagentsList() {
-    return of(ELEMENT_DATA);
+    return of(NewReagentsList);
   }
 
   //   GetReagents(){

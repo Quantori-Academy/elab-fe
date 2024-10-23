@@ -5,94 +5,68 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { mockReagentsListService } from '../../shared/services/mock-reagents-list.service';
-import { Reagents } from '../../shared/models/reagent-model';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ReagentsService } from '../../shared/services/reagents.service';
+import { Reagent } from '../../shared/models/reagent-model';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatButton } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './structure-dialog/structure-dialog.component';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-reagents-list',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatButton,
-    FormsModule,
-    MatFormFieldModule,
-    MatLabel,
-    MatSelect,
-    MatOptionModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatGridListModule,
-    MatOptionModule,
-    MatDialogModule
-  ],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, MaterialModule],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
 export class ReagentsListComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
-  private mockReagentsList = inject(mockReagentsListService);
-
+  private reagentsService = inject(ReagentsService);
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;
   displayedColumns: string[] = [
     'name',
-    'desc',
-    'category',
-    'quantity',
-    'storageLocation',
     'structure',
-    'dateOfCreation',
+    'cas',
+    'quantity',
+    'package',
+    'quantityLeft',
+    'room',
+    'location',
     'actions',
   ];
 
-  dataSource = new MatTableDataSource<Reagents>();
+  dataSource = new MatTableDataSource<Reagent>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.mockReagentsList.getReagentsList().subscribe((reagents) => {
+    this.reagentsService.getReagentsList().subscribe((reagents) => {
       this.dataSource.data = reagents;
 
-      this.dataSource.filterPredicate = (data: Reagents, filter: string) => {
+      this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
         const searchTerms = JSON.parse(filter);
 
         const nameMatches = data.name.toLowerCase().includes(searchTerms.name);
 
-        const categoryMatches = searchTerms.category
-          ? data.category.toLowerCase() === searchTerms.category
-          : true;
+        // const categoryMatches = searchTerms.category
+        //   ? data.category.toLowerCase() === searchTerms.category
+        //   : true;
 
-        return nameMatches && categoryMatches;
+        return nameMatches;
+        // && categoryMatches;
       };
     });
+
+    // this.reagentsService.getAllReagents().subscribe()
   }
 
   ngAfterViewInit(): void {
@@ -113,7 +87,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // sorts name and categories if hovered on column head
+  // sorts name and categories, if hovered on column head shows sorting direction
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -122,11 +96,10 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openStructure(structure:string){
+  openStructure(structure: string) {
     this.dialog.open(StructureDialogComponent, {
       data: { structure },
       panelClass: 'image-dialog',
     });
   }
-  // openCreateReagentDialog() {} //this for create new reagent form
 }
