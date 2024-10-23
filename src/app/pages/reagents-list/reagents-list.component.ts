@@ -16,8 +16,9 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
 import { NewReagentFormComponent } from './components/new-reagent-form/new-reagent-form.component';
-import { StorageService } from '../../shared/services/storage.service';
 import { MaterialModule } from '../../material.module';
+import { forkJoin, map } from 'rxjs';
+import { StorageLocationService } from '../storage-location/services/storage-location.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -30,19 +31,20 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
-  private storageService = inject(StorageService);
+  private storageLocationService = inject(StorageLocationService);
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;
   displayedColumns: string[] = [
     'name',
+    'category',
     'structure',
-    'cas',
     'quantity',
-    'package',
+    // 'package',
     'quantityLeft',
-    'room',
+    'cas',
     'location',
+    // 'location',
     'actions',
   ];
 
@@ -52,32 +54,37 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.reagentsService.getReagentsList().subscribe((reagents) => {
-      this.dataSource.data = reagents;
+    this.reagentsService.getreagents().subscribe((reagents) => {
+      console.log(reagents);
 
+      const storageRequests = reagents.map((reagent) => {
+        return this.storageLocationService
+          .getStorageLocationById(reagent.storageId)
+          .pipe(
+            map((storage) => ({
+              ...reagent,
+              room: storage.room,
+              location: storage.name,
+            }))
+          );
+      });
+
+      forkJoin(storageRequests).subscribe((updatedReagents) => {
+        this.dataSource.data = updatedReagents;
+
+      });
       this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
         const searchTerms = JSON.parse(filter);
 
         const nameMatches = data.name.toLowerCase().includes(searchTerms.name);
 
-        // const categoryMatches = searchTerms.category
-        //   ? data.category.toLowerCase() === searchTerms.category
-        //   : true;
+        const categoryMatches = searchTerms.category
+          ? data.category.toLowerCase() === searchTerms.category
+          : true;
 
-        return nameMatches;
-        // && categoryMatches;
+        return nameMatches && categoryMatches;
       };
     });
-    this.storageService.getAllStorages().subscribe({
-      next: (resp) => {
-        console.log(resp);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-
-    // this.reagentsService.getAllReagents().subscribe()
   }
 
   ngAfterViewInit(): void {
@@ -118,10 +125,10 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
       data: {},
     });
 
-    // After the dialog closes, refresh the list if a reagent was created, but since it's mockdata, it shows up same
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.reagentsService.getReagentsList().subscribe((reagents) => {
+        this.reagentsService.getreagents().subscribe((reagents) => {
+          console.log(reagents);
           this.dataSource.data = reagents;
         });
       }

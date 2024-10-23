@@ -12,27 +12,22 @@ import { OrderEntity } from './order-entity.model';
 //   dateOfCreation: string;
 // }
 
-// the one that's in swagger "get reagent Api" right now
-// export interface Reagent{
-//   name:string;
-//   category:string;
-//   description:string;
-//   quantityLeft:number;
-//   storageId:number;
-// }
-
-//current interface, according to dimitri's reagent's list
 export interface Reagent {
   name: string;
   smiles: string;
   cas: string;
-  quantity: number | null;
+  category: Category;
+  totalQuantity: number | null;
   package: string;
-  units: string;
+  quantityUnit: string;
   quantityLeft: number | null;
-  room: string;
-  location: string;
+  storageId: number;
   structure: string;
+  room: {
+    id: number;
+    name: string;
+    description: string | null;
+  };
 }
 
 export enum Category {

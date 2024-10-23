@@ -34,7 +34,7 @@ import { StorageLocationItem } from '../../../storage-location/models/storage-lo
 export class NewReagentFormComponent implements OnDestroy {
   private fb = inject(FormBuilder);
   private reagentsService = inject(ReagentsService);
-  private storageLocationService = inject(StorageLocationService); // Use StorageLocationService
+  private storageLocationService = inject(StorageLocationService);
   private notificationsService = inject(NotificationPopupService);
   private storageSubscription: Subscription | null = null;
 
@@ -78,7 +78,6 @@ export class NewReagentFormComponent implements OnDestroy {
     private dialogRef: MatDialogRef<NewReagentFormComponent>
   ) {}
 
-  // Use the first service (StorageLocationService) to fetch storage data
   onRoomNameChange() {
     const storageName = this.reagentRequestForm.get('storageLocation')?.value;
 
@@ -152,12 +151,12 @@ export class NewReagentFormComponent implements OnDestroy {
         this.reagentsService.createReagent(formValue).subscribe({
           next: (resp) => {
             console.log('Reagent created successfully:', resp);
+            this.dialogRef.close(true);
             this.notificationsService.success({
               title: 'Success',
               message: 'Reagent created successfully!',
               duration: 3000,
             });
-            this.dialogRef.close(true);
           },
           error: (error) => {
             console.error('Error creating reagent:', error);

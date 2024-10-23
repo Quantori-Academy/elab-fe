@@ -19,7 +19,22 @@ export class ReagentsService {
   getReagentsList() {
     return of(NewReagentsList);
   }
-
+  getreagents():Observable <Reagent[]>{
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      return throwError('No access token found');
+    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+    return this.httpClient.get<Reagent[]>(this.apiUrl, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error fetching reagents:', error);
+        return throwError(() => new Error('Failed to fetch reagents'));
+      })
+    );
+  }
   getAllReagents(): Observable<Reagent[]> {
     const token = localStorage.getItem('access_token');
     if (!token) {
