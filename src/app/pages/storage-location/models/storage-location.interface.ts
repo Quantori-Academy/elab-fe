@@ -27,3 +27,9 @@ export interface StorageLocationFilteredData {
   value: string;
   column: StorageLocationColumn;
 }
+
+export interface RoomData {
+  id?: number;
+  name: string;
+  description: string;
+}
