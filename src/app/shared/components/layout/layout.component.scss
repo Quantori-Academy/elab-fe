@@ -3,10 +3,10 @@ mat-sidenav-container {
 }
 
 mat-sidenav {
-  // border-right: 1px solid #9bb6ca;
+  border: none;
   border-radius: 0;
   background-color: #f0f4f8;
-  box-shadow: 0 0 15px 0  rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
 }
 
 .mat-mdc-nav-list .mat-mdc-list-item {
