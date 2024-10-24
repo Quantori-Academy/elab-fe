@@ -134,7 +134,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   }
 
   onEdit(element: StorageLocationItem) {
-    console.log('edited element', element);
+    this.dialog.open(StorageLocationAddNewComponent, { data: element });
   }
 
   onDelete(element: StorageLocationItem) {

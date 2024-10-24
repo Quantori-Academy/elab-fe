@@ -1,5 +1,5 @@
-<p class="header">Add New Storage Location</p>
-<form class="form" [formGroup]="addStorageForm" (submit)="onSave()">
+<p class="header">{{ data ? "Edit" : "Add New" }} Storage Location</p>
+<form class="form" [formGroup]="storageForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
     <mat-label>Room</mat-label>
     <mat-select formControlName="roomName">
@@ -44,11 +44,11 @@
     </button>
     <button
       type="submit"
-      [disabled]="addStorageForm.invalid"
+      [disabled]="storageForm.invalid || (data && !hasFormChanged())"
       class="save-btn"
       mat-flat-button
     >
-      Save
+      {{ data ? "Edit" : "Save" }}
     </button>
   </div>
 </form>
