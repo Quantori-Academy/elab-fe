@@ -9,7 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagent } from '../../shared/models/reagent-model';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+// MatSort in sort
+import { Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -51,7 +52,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Reagent>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ViewChild(MatSort) sort!: MatSort;
 
 
   ngOnInit(): void {
@@ -85,30 +86,29 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 
   applyFilter() {
     this.loadReagents();
   }
 
-  // custom Sorting, but backend doesn support it yet? swagger doesn't show sorted results too
-  // onSortChange(sort: Sort) {
-  //   this.sortColumn = sort.active; // Set the current sorting column
-  //   this.sortDirection = sort.direction === '' ? 'asc' : sort.direction;
-  //   this.loadReagents(); // Fetch the sorted data
-  //   this.announceSortChange(sort); // Announce the sort change
-  // }
+  onSortChange(sort: Sort) {
+    this.sortColumn = sort.active; // Set the current sorting column
+    this.sortDirection = sort.direction === '' ? 'asc' : sort.direction;
+    this.loadReagents(); // Fetch the sorted data
+    // this.announceSortChange(sort); // Announce the sort change
+  }
 
   
   // sorts name and categories, if hovered on column head shows sorting direction
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
+  // announceSortChange(sortState: Sort) {
+  //   if (sortState.direction) {
+  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+  //   } else {
+  //     this._liveAnnouncer.announce('Sorting cleared');
+  //   }
+  // }
 
   openStructure(structure: string) {
     this.dialog.open(StructureDialogComponent, {
