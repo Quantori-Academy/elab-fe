@@ -7,7 +7,7 @@ import {
   StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
-import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { StorageLocationColumn } from '../models/storage-location.enum';
@@ -31,13 +31,6 @@ export class StorageLocationService {
   public httpParams$ = this.httpParamsSubject.asObservable();
 
   public pageSize = 10;
-
-  private rooms = [
-    { id: 1, name: 'Room1' },
-    { id: 2, name: 'Room2' },
-    { id: 3, name: 'Room3' },
-  ];
-  public listOfRooms = of(this.rooms);
 
   constructor(private http: HttpClient) {}
 

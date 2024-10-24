@@ -22,6 +22,7 @@ import {
   takeUntil,
 } from 'rxjs';
 import {
+  RoomData,
   StorageLocationFilteredData,
   StorageLocationItem,
   StorageLocationListData,
@@ -35,6 +36,7 @@ import { DeleteConfirmComponent } from '../../../../shared/components/delete-con
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { RoomManagementService } from '../../services/room-management.service';
 
 @Component({
   selector: 'app-storage-management',
@@ -60,15 +62,16 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
-  public storageLocationDataSubject: BehaviorSubject<
+  public storageLocationDataSubject = new BehaviorSubject<
     StorageLocationListData | undefined
-  > = new BehaviorSubject<StorageLocationListData | undefined>(undefined);
+  >(undefined);
   public storageLocationData$ = this.storageLocationDataSubject.asObservable();
 
-  public listOfRooms$: Observable<{ id: number; name: string }[]>;
+  public listOfRooms$: Observable<RoomData[] | undefined>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
+  private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
   private dialog = inject(MatDialog);
@@ -78,7 +81,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.getListStorageLocation();
-    this.listOfRooms$ = this.storageLocationService.listOfRooms;
+    this.listOfRooms$ = this.roomManagementService.roomData$;
     this.pageSize = this.storageLocationService.pageSize;
   }
 

@@ -20,6 +20,7 @@ import {
 import { take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { RoomManagementService } from '../../services/room-management.service';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -34,6 +35,7 @@ export class StorageLocationAddNewComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private storageLocationService = inject(StorageLocationService);
+  private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<StorageLocationAddNewComponent>);
 
@@ -42,20 +44,20 @@ export class StorageLocationAddNewComponent implements OnInit {
     name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
     description: [''],
   });
-  public filteredRooms$ = this.storageLocationService.listOfRooms;
+  public filteredRooms$ = this.roomManagementService.getListOfRooms();
 
   public originalValues: NewStorageLocation | undefined;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: StorageLocationItem | undefined
+    @Inject(MAT_DIALOG_DATA) public editionData: StorageLocationItem | undefined
   ) {}
 
   ngOnInit(): void {
-    if (this.data) {
+    if (this.editionData) {
       const editedData: NewStorageLocation = {
-        roomName: this.data.room.name,
-        name: this.data.name,
-        description: this.data.description,
+        roomName: this.editionData.room.name,
+        name: this.editionData.name,
+        description: this.editionData.description,
       };
       this.storageForm.patchValue(editedData);
       this.originalValues = { ...editedData };
@@ -80,7 +82,19 @@ export class StorageLocationAddNewComponent implements OnInit {
     );
   }
 
-  onAddNew(formValue: NewStorageLocation) {
+  onSave() {
+    if (this.storageForm.valid) {
+      const formValue: NewStorageLocation = this.storageForm.value;
+
+      if (this.editionData) {
+        this.updateStorageLocation(formValue);
+      } else {
+        this.createStorageLocation(formValue);
+      }
+    }
+  }
+
+  createStorageLocation(formValue: NewStorageLocation) {
     this.storageLocationService
       .addNewStorageLocation(formValue)
       .pipe(take(1))
@@ -120,10 +134,10 @@ export class StorageLocationAddNewComponent implements OnInit {
       });
   }
 
-  onEdit(formValue: NewStorageLocation) {
+  updateStorageLocation(formValue: NewStorageLocation) {
     const { name, description } = formValue;
     this.storageLocationService
-      .editStorageLocation(this.data!.id, { name, description })
+      .editStorageLocation(this.editionData!.id, { name, description })
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -154,17 +168,5 @@ export class StorageLocationAddNewComponent implements OnInit {
           }
         },
       });
-  }
-
-  onSave() {
-    if (this.storageForm.valid) {
-      const formValue: NewStorageLocation = this.storageForm.value;
-
-      if (this.data) {
-        this.onEdit(formValue);
-      } else {
-        this.onAddNew(formValue);
-      }
-    }
   }
 }
