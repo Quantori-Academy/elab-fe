@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   public errorVisible = true;
   public isLoading = false;
   public isSubmitting = false;
+  private errorHandler = inject(ErrorHandler);
 
   constructor(
     private authLogin: AuthService,
