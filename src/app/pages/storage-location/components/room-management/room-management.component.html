@@ -1,0 +1,46 @@
+<div class="header">
+  <button class="add-btn" mat-flat-button (click)="openDialog()">
+    Add New Room
+  </button>
+</div>
+@if (roomList$ | async; as roomList){
+<div class="mat-elevation-z8">
+  <mat-table class="table" [dataSource]="roomList">
+    <ng-container matColumnDef="room">
+      <mat-header-cell *matHeaderCellDef> Room </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.description }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="edit" (click)="onEdit(element)">
+          <mat-icon color="primary">edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="delete" (click)="onDelete(element)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <!-- <mat-paginator
+    #paginator
+    class="demo-paginator"
+    (page)="handlePageEvent($event)"
+    [length]="listLength"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    aria-label="Select page"
+  >
+  </mat-paginator> -->
+</div>
+}

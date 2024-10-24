@@ -126,6 +126,7 @@ export class StorageLocationService {
     }
     this.httpParamsSubject.next({
       ...this.currentHttpParams,
+      skip: 0,
       ...filterColumn,
     });
   }
