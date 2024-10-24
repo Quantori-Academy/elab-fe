@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ErrorHandler } from '@angular/core';
 
 let initialEmailValue = '';
@@ -27,13 +26,7 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    MaterialModule,
-    ReactiveFormsModule,
-    MatIcon,
-    MatCardModule,
-    MatProgressSpinner,
-  ],
+  imports: [MaterialModule, ReactiveFormsModule, MatIcon, MatCardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
