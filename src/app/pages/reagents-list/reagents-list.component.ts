@@ -17,11 +17,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
 import { NewReagentFormComponent } from './components/new-reagent-form/new-reagent-form.component';
 import { MaterialModule } from '../../material.module';
+import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 
 @Component({
   selector: 'app-reagents-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, MaterialModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, MaterialModule, MoleculeStructureComponent],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
@@ -54,7 +55,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.reagentsService.getreagents().subscribe((reagents) => {
       this.dataSource.data = reagents;
-      
+
       this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
         const searchTerms = JSON.parse(filter);
 
