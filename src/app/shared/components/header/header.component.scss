@@ -5,7 +5,18 @@
 }
 
 .logo {
-  width: 60px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.logo img {
+  width: 50%;
+  margin-right: 10px;
 }
 
 .user-section {

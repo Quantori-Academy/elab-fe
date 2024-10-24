@@ -55,6 +55,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([`/profile`]);
   }
 
+  navigateToDashboard() {
+    this.router.navigate([`/`]);
+  }
+
   logout() {
     this.logoutService.onLogoutUser();
   }

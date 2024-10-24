@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponseBase } from '@angular/common/http';
 import {
+  NewStorageLocation,
   StorageLocationFilteredData,
-  StorageLocationItem,
+  StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
@@ -40,7 +41,11 @@ export class StorageLocationService {
 
   constructor(private http: HttpClient) {}
 
-  public getListStorageLocation(): Observable<StorageLocationItem[]> {
+  public addNewStorageLocation(newData: NewStorageLocation) {
+    return this.http.post(`${this.apiUrl}/storages`, newData);
+  }
+
+  public getListStorageLocation(): Observable<StorageLocationListData> {
     return this.httpParams$.pipe(
       switchMap((params) => {
         let httpParams = new HttpParams()
@@ -66,9 +71,12 @@ export class StorageLocationService {
         httpParams = setParamIfExists('roomName', params.roomName);
         httpParams = setParamIfExists('storageName', params.storageName);
 
-        return this.http.get<StorageLocationItem[]>(`${this.apiUrl}/storages`, {
-          params: httpParams,
-        });
+        return this.http.get<StorageLocationListData>(
+          `${this.apiUrl}/storages`,
+          {
+            params: httpParams,
+          }
+        );
       })
     );
   }
@@ -125,5 +133,11 @@ export class StorageLocationService {
 
   public get currentHttpParams() {
     return this.httpParamsSubject.getValue();
+  }
+
+  public deleteStorageLocation(id: number): Observable<HttpResponseBase> {
+    return this.http.delete<HttpResponseBase>(`${this.apiUrl}/storages/${id}`, {
+      observe: 'response',
+    });
   }
 }

@@ -8,11 +8,7 @@
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Search by name</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter(getInputValue($event))"
-          placeholder="Enter a name"
-        />
+        <input matInput (keyup)="applyFilter(getInputValue($event))" placeholder="Enter a name" />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
@@ -61,12 +57,8 @@
           <button mat-icon-button (click)="editUser(user)">
             <mat-icon color="primary">edit</mat-icon>
           </button>
-          <button
-            style="margin-left: 0.5rem"
-            mat-icon-button
-            (click)="deleteUser(user)"
-          >
-            <mat-icon style="color: red">delete</mat-icon>
+          <button style="margin-left: 0.5rem" mat-icon-button (click)="deleteUser(user)">
+            <mat-icon color="warn">delete</mat-icon>
           </button>
         </td>
       </ng-container>
