@@ -80,23 +80,23 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
     this.pageSize = this.storageLocationService.pageSize;
   }
 
-  public openDialog(): void {
-    this.dialog
-      .open(StorageLocationAddNewComponent)
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe((value) => {
-        if (value) {
-          this.getListStorageLocation();
-        }
-      });
+  ngOnInit(): void {
+    this.setIsAdmin();
+    this.setFilterStorageName();
   }
 
-  ngOnInit(): void {
+  public openDialog(): void {
+    this.dialog.open(StorageLocationAddNewComponent);
+  }
+
+  private setIsAdmin() {
     this.isAdmin = this.rbcService.isAdmin();
     if (this.isAdmin) {
       this.displayedColumns.push('actions');
     }
+  }
+
+  private setFilterStorageName() {
     this.filterSubject
       .pipe(
         debounceTime(this.DEBOUNCE_TIME),
@@ -122,7 +122,10 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   }
 
   onFilterRoom(value: string) {
-    this.filterSubject.next({ value, column: StorageLocationColumn.Room });
+    this.storageLocationService.setFilteringPageData({
+      value,
+      column: StorageLocationColumn.Room,
+    });
   }
 
   onFilterName($event: Event) {
@@ -149,11 +152,9 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.getListStorageLocation();
           this.notificationPopupService.success({
             title: 'Success',
             message: 'Storage location is deleted successfully',
-            duration: 3000,
           });
         },
         error: (error: HttpErrorResponse) => {
