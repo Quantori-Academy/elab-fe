@@ -9,8 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagent } from '../../shared/models/reagent-model';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Sort } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,13 +26,14 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
   styleUrl: './reagents-list.component.scss',
 })
 export class ReagentsListComponent implements OnInit, AfterViewInit {
-  private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
 
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortColumn = 'name';
 
   displayedColumns: string[] = [
     'name',
@@ -50,51 +50,61 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Reagent>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(): void {
-    this.reagentsService.getreagents().subscribe((reagents) => {
-      this.dataSource.data = reagents;
 
-      this.dataSource.filterPredicate = (data: Reagent, filter: string) => {
-        const searchTerms = JSON.parse(filter);
+    // Initially load the reagents without sorting
+    this.loadReagents(false);
+  }
 
-        const nameMatches = data.name.toLowerCase().includes(searchTerms.name);
-
-        const categoryMatches = searchTerms.category
-          ? data.category.toLowerCase() === searchTerms.category
-          : true;
-
-        return nameMatches && categoryMatches;
-      };
+  loadReagents(applySorting = true) {
+    console.log('Fetching reagents with filters:', {
+      name: this.filterValue,
+      category: this.selectedCategory,
+      sortByName:
+        applySorting && this.sortColumn === 'name'
+          ? this.sortDirection
+          : undefined,
+      skip: this.paginator?.pageIndex,
+      take: this.paginator?.pageSize,
     });
+
+    this.reagentsService
+      .getReagents(
+        this.filterValue,
+        this.selectedCategory,
+        applySorting && this.sortColumn === 'name'
+          ? this.sortDirection
+          : undefined,
+        undefined, // sortByCreationDate
+        undefined, // sortByUpdatedDate
+        this.paginator?.pageIndex,
+        this.paginator?.pageSize
+      )
+      .subscribe((reagents) => {
+        this.dataSource.data = reagents;
+      });
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter() {
-    const filter = {
-      name: this.filterValue.trim().toLowerCase(),
-      category: this.selectedCategory.toLowerCase(),
-    };
-
-    this.dataSource.filter = JSON.stringify(filter);
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.loadReagents();
   }
 
-  // sorts name and categories, if hovered on column head shows sorting direction
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+  onSortChange(sort: Sort) {
+    if (sort.active === 'name') {
+      if (sort.direction === '') {
+        this.sortDirection = 'asc';
+      } else {
+        this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
+      }
     }
+
+    this.sortColumn = sort.active;
+    this.loadReagents();
   }
 
   openStructure(structure: string) {
@@ -110,10 +120,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.reagentsService.getreagents().subscribe((reagents) => {
-          console.log(reagents);
-          this.dataSource.data = reagents;
-        });
+        this.loadReagents(); // Reload reagents after creating a new one
       }
     });
   }
