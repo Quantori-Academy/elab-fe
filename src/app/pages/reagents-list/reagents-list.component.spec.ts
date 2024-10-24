@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StorageLocationComponent } from './storage-location.component';
+import { ReagentsListComponent } from './reagents-list.component';
 
-describe('StorageLocationComponent', () => {
-  let component: StorageLocationComponent;
-  let fixture: ComponentFixture<StorageLocationComponent>;
+describe('ReagentsListComponent', () => {
+  let component: ReagentsListComponent;
+  let fixture: ComponentFixture<ReagentsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StorageLocationComponent]
+      imports: [ReagentsListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StorageLocationComponent);
+    fixture = TestBed.createComponent(ReagentsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

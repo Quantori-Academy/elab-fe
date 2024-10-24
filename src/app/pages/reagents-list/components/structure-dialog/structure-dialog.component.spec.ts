@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StorageLocationComponent } from './storage-location.component';
+import { StructureDialogComponent } from './structure-dialog.component';
 
-describe('StorageLocationComponent', () => {
-  let component: StorageLocationComponent;
-  let fixture: ComponentFixture<StorageLocationComponent>;
+describe('StructureDialogComponent', () => {
+  let component: StructureDialogComponent;
+  let fixture: ComponentFixture<StructureDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StorageLocationComponent]
+      imports: [StructureDialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StorageLocationComponent);
+    fixture = TestBed.createComponent(StructureDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

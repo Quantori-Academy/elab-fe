@@ -1,12 +1,28 @@
 <div class="icons">
-  <button mat-icon-button (click)="collapsed.set(!collapsed())" *ngIf="currentUser$ | async as currentUser">
+  <button
+    mat-icon-button
+    (click)="collapsed.set(!collapsed())"
+    *ngIf="currentUser$ | async as currentUser"
+  >
     <mat-icon>menu</mat-icon>
   </button>
-  <img src="assets/icons/logo_scarlet_mormon.png" alt="Logo" class="logo" />
+  <div
+    class="logo"
+    (click)="navigateToDashboard()"
+    (keyup)="$event.key === 'Enter' && navigateToDashboard()"
+    tabindex="0"
+  >
+    <img src="assets/icons/logo_scarlet_mormon.png" alt="Logo" />
+    <div>E-LAB</div>
+  </div>
 </div>
 <div class="user-section" *ngIf="currentUser$ | async as currentUser">
-  <span class="username" (click)="navigateToProfile()" tabindex="0"
-    (keyup)="$event.key === 'Enter' && navigateToProfile()">
+  <span
+    class="username"
+    (click)="navigateToProfile()"
+    tabindex="0"
+    (keyup)="$event.key === 'Enter' && navigateToProfile()"
+  >
     {{ currentUser?.firstName }} {{ currentUser?.lastName }}
   </span>
   <button mat-flat-button (click)="logout()">Logout</button>

@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NewReagentFormComponent } from './new-reagent-form.component';
 
-import { StorageLocationComponent } from './storage-location.component';
-
-describe('StorageLocationComponent', () => {
-  let component: StorageLocationComponent;
-  let fixture: ComponentFixture<StorageLocationComponent>;
+describe('NewReagentFormComponent', () => {
+  let component: NewReagentFormComponent;
+  let fixture: ComponentFixture<NewReagentFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StorageLocationComponent]
+      imports: [NewReagentFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StorageLocationComponent);
+    fixture = TestBed.createComponent(NewReagentFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

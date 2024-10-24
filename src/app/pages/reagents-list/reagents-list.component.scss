@@ -1,0 +1,29 @@
+.wrapper {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.name-column {
+  max-width: 10rem;
+  padding: 1rem;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+img {
+  max-width: 70px;
+  max-height: 70px;
+}
+img:hover {
+  cursor: pointer;
+}
+.table-wrapper {
+  overflow-x: scroll;
+}
+
+.filter-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,153 @@
+<div class="wrapper">
+  <div class="actions">
+    <button mat-flat-button color="primary" (click)="openCreateReagentDialog()">
+      Create New Reagent
+    </button>
+
+    <div class="filter-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Search by name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="filterValue"
+          (keyup)="applyFilter()"
+          placeholder="Enter a name"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Category</mat-label>
+        <mat-select
+          [(ngModel)]="selectedCategory"
+          (selectionChange)="applyFilter()"
+        >
+          <mat-option value="">All Categories</mat-option>
+          <mat-option value="sample">Sample</mat-option>
+          <mat-option value="reagent">Reagent</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="table-wrapper mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8"
+    >
+      <!-- Name Column -->
+      <ng-container matColumnDef="name" class="name-column">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="name-column"
+        >
+          Name
+        </th>
+        <td mat-cell *matCellDef="let element" class="name-column">
+          {{ element.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+        <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+      </ng-container>
+      <!-- Smiles Column -->
+      <!-- <ng-container matColumnDef="smiles">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Smiles</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.smiles === '') {_______} @else { {{ element.smiles }} }
+        </td>
+      </ng-container> -->
+
+      <!-- i displayed svg images just for show, we will change them to actual strucutures later -->
+      <!-- Structure Column -->
+      <ng-container matColumnDef="structure">
+        <th mat-header-cell *matHeaderCellDef>Structure</th>
+        <td mat-cell *matCellDef="let element">
+          <img
+            [src]="element.structure"
+            alt="Structure Image"
+            class="clickable-image"
+            (click)="openStructure(element.structure)"
+            (keydown)="openStructure(element.structure)"
+            tabindex="0"
+            role="button"
+          />
+        </td>
+      </ng-container>
+      <!-- CAS Column -->
+      <ng-container matColumnDef="cas">
+        <th mat-header-cell *matHeaderCellDef>CAS Number</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.cas === '') {_______} @else { {{ element.casNumber }} }
+        </td>
+      </ng-container>
+
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.totalQuantity }}</td>
+      </ng-container>
+
+      <!-- Package Column -->
+      <!-- packages aren't provided by database, if we update we can uncomment this -->
+      <!-- <ng-container matColumnDef="package">
+        <th mat-header-cell *matHeaderCellDef>Package</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.package }}
+        </td>
+      </ng-container> -->
+
+      <!-- QuantityLeft Column -->
+      <ng-container matColumnDef="quantityLeft">
+        <th mat-header-cell *matHeaderCellDef>Quantity Left</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.quantityLeft }} {{ element.quantityUnit }}
+        </td>
+      </ng-container>
+
+      <!-- Room Column -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.location }}
+        </td>
+      </ng-container>
+
+      <!-- Room Column -->
+      <!-- have to comment room column becasue storages do not have room names, only locations names -->
+      <!-- <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef>Room</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.room }}
+        </td>
+      </ng-container> -->
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let user">
+          <button mat-icon-button>
+            <mat-icon color="primary">edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <!-- we can remove pagination if it's unnecessary -->
+  <mat-paginator
+  class="demo-paginator"
+    [length]="dataSource.data.length"
+    [pageSize]="10"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[15, 20, 25]"
+    [pageIndex]="currentPage"
+  ></mat-paginator>
+</div>
