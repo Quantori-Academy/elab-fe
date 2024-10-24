@@ -28,7 +28,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="table-wrapper mat-elevation-z8">
+  <div class="table-wrapper">
     <table
       mat-table
       [dataSource]="dataSource"
@@ -67,7 +67,12 @@
       <ng-container matColumnDef="structure">
         <th mat-header-cell *matHeaderCellDef>Structure</th>
         <td mat-cell *matCellDef="let element">
-          <img
+          <app-molecule-structure
+          [structure]="element.structure"
+          [width]="100"
+          [height]="100"
+        ></app-molecule-structure>
+          <!-- <img
             [src]="element.structure"
             alt="Structure Image"
             class="clickable-image"
@@ -75,12 +80,12 @@
             (keydown)="openStructure(element.structure)"
             tabindex="0"
             role="button"
-          />
+          /> -->
         </td>
       </ng-container>
       <!-- CAS Column -->
       <ng-container matColumnDef="cas">
-        <th mat-header-cell *matHeaderCellDef>CAS Number</th>
+        <th mat-header-cell *matHeaderCellDef>CAS</th>
         <td mat-cell *matCellDef="let element">
           @if (element.cas === '') {_______} @else { {{ element.casNumber }} }
         </td>
@@ -89,7 +94,7 @@
       <!-- Quantity Column -->
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef>Quantity</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalQuantity }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.totalQuantity }} {{ element.quantityUnit }}</td>
       </ng-container>
 
       <!-- Package Column -->

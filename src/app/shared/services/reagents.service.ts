@@ -13,7 +13,7 @@ export class ReagentsService {
   apiUrl = `${environment.apiUrl}/api/v1/reagents`;
 
   // swagger doesn't work so locally had to check
-  // apiUrl = `http://localhost:3000/api/v1/reagents`;
+  // apiUrl = `http://vm5.quantori.academy:3001/api/v1/reagents`;
 
 
   getReagentsList() {
