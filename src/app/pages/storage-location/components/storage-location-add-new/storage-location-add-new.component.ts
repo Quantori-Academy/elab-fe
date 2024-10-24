@@ -20,6 +20,7 @@ import {
 import { take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { RoomManagementService } from '../../services/room-management.service';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -34,6 +35,7 @@ export class StorageLocationAddNewComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private storageLocationService = inject(StorageLocationService);
+  private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<StorageLocationAddNewComponent>);
 
@@ -42,23 +44,24 @@ export class StorageLocationAddNewComponent implements OnInit {
     name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
     description: [''],
   });
-  public filteredRooms$ = this.storageLocationService.listOfRooms;
+  public filteredRooms$ = this.roomManagementService.getListOfRooms();
 
   public originalValues: NewStorageLocation | undefined;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: StorageLocationItem | undefined
+    @Inject(MAT_DIALOG_DATA) public editionData: StorageLocationItem | undefined
   ) {}
 
   ngOnInit(): void {
-    if (this.data) {
+    if (this.editionData) {
       const editedData: NewStorageLocation = {
-        roomName: this.data.room.name,
-        name: this.data.name,
-        description: this.data.description,
+        roomName: this.editionData.room.name,
+        name: this.editionData.name,
+        description: this.editionData.description,
       };
       this.storageForm.patchValue(editedData);
       this.originalValues = { ...editedData };
+      this.storageForm.get('roomName')?.disable();
     }
   }
 
@@ -74,7 +77,6 @@ export class StorageLocationAddNewComponent implements OnInit {
     if (!this.originalValues) return false;
     const currentValues = this.storageForm.value;
     return (
-      currentValues.roomName !== this.originalValues.roomName ||
       currentValues.name !== this.originalValues.name ||
       currentValues.description !== this.originalValues.description
     );
@@ -84,48 +86,87 @@ export class StorageLocationAddNewComponent implements OnInit {
     if (this.storageForm.valid) {
       const formValue: NewStorageLocation = this.storageForm.value;
 
-      if (this.data) {
-        console.log(formValue);
-        this.dialogRef.close(false);
+      if (this.editionData) {
+        this.updateStorageLocation(formValue);
       } else {
-        this.storageLocationService
-          .addNewStorageLocation(formValue)
-          .pipe(take(1))
-          .subscribe({
-            next: () => {
-              this.notificationPopupService.success({
-                title: 'Success',
-                message: 'Storage Location added',
-              });
-              this.dialogRef.close(true);
-            },
-            error: (error: HttpErrorResponse) => {
-              switch (error.status) {
-                case HttpStatusCode.BadRequest:
-                  this.storageForm
-                    .get('roomName')
-                    ?.setErrors({ roomError: error.error.message });
-                  break;
-                case HttpStatusCode.NotFound:
-                  this.storageForm
-                    .get('roomName')
-                    ?.setErrors({ roomNotFound: error.error.message });
-                  break;
-                case HttpStatusCode.Conflict:
-                  this.storageForm
-                    .get('name')
-                    ?.setErrors({ uniqueName: error.error.message });
-                  break;
-                default:
-                  this.notificationPopupService.error({
-                    title: 'Error',
-                    message: error.error.message,
-                  });
-                  break;
-              }
-            },
-          });
+        this.createStorageLocation(formValue);
       }
     }
+  }
+
+  createStorageLocation(formValue: NewStorageLocation) {
+    this.storageLocationService
+      .addNewStorageLocation(formValue)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Success',
+            message: 'Storage Location added',
+          });
+          this.dialogRef.close(true);
+        },
+        error: (error: HttpErrorResponse) => {
+          switch (error.status) {
+            case HttpStatusCode.BadRequest:
+              this.storageForm
+                .get('roomName')
+                ?.setErrors({ roomError: error.error.message });
+              break;
+            case HttpStatusCode.NotFound:
+              this.storageForm
+                .get('roomName')
+                ?.setErrors({ roomNotFound: error.error.message });
+              break;
+            case HttpStatusCode.Conflict:
+              this.storageForm
+                .get('name')
+                ?.setErrors({ uniqueName: error.error.message });
+              break;
+            default:
+              this.notificationPopupService.error({
+                title: 'Error',
+                message: error.error.message,
+              });
+              break;
+          }
+        },
+      });
+  }
+
+  updateStorageLocation(formValue: NewStorageLocation) {
+    const { name, description } = formValue;
+    this.storageLocationService
+      .editStorageLocation(this.editionData!.id, { name, description })
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Success',
+            message: 'Storage Location edited',
+          });
+          this.dialogRef.close(true);
+        },
+        error: (error: HttpErrorResponse) => {
+          switch (error.status) {
+            case HttpStatusCode.BadRequest:
+              this.storageForm
+                .get('roomName')
+                ?.setErrors({ roomError: error.error.message });
+              break;
+            case HttpStatusCode.Conflict:
+              this.storageForm
+                .get('name')
+                ?.setErrors({ uniqueName: error.error.message });
+              break;
+            default:
+              this.notificationPopupService.error({
+                title: 'Error',
+                message: error.error.message,
+              });
+              break;
+          }
+        },
+      });
   }
 }

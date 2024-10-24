@@ -11,7 +11,7 @@
       <mat-icon class="close-btn" (click)="onClose()">close</mat-icon>
     </div>
   </div>
-  @if (!notificationData.showProgress) {
+  @if (notificationData.showProgress) {
   <div class="progress">
     <span class="progress-bar" [style.width.%]="progressValue"></span>
   </div>

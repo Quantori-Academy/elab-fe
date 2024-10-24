@@ -7,7 +7,7 @@ import {
   StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
-import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { StorageLocationColumn } from '../models/storage-location.enum';
@@ -31,13 +31,6 @@ export class StorageLocationService {
   public httpParams$ = this.httpParamsSubject.asObservable();
 
   public pageSize = 10;
-
-  private rooms = [
-    { id: 1, name: 'Room1' },
-    { id: 2, name: 'Room2' },
-    { id: 3, name: 'Room3' },
-  ];
-  public listOfRooms = of(this.rooms);
 
   constructor(private http: HttpClient) {}
 
@@ -93,7 +86,7 @@ export class StorageLocationService {
       [StorageLocationColumn.Name]: {
         alphabeticalStorageName: sortingData.direction,
       },
-      [StorageLocationColumn.CreatedAt]: {
+      [StorageLocationColumn.Date]: {
         chronologicalDate: sortingData.direction,
       },
       [StorageLocationColumn.Room]: {
@@ -137,6 +130,17 @@ export class StorageLocationService {
 
   public addNewStorageLocation(newData: NewStorageLocation) {
     return this.http.post(`${this.apiUrl}/storages`, newData).pipe(
+      tap(() => {
+        this.httpParamsSubject.next(this.currentHttpParams);
+      })
+    );
+  }
+
+  public editStorageLocation(
+    id: number,
+    newData: Omit<NewStorageLocation, 'roomName'>
+  ) {
+    return this.http.patch(`${this.apiUrl}/storages/${id}`, newData).pipe(
       tap(() => {
         this.httpParamsSubject.next(this.currentHttpParams);
       })

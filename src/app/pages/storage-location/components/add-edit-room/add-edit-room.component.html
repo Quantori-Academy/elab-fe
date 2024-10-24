@@ -1,4 +1,4 @@
-<p class="header">Add New Storage Location</p>
+<p class="header">{{ editionData ? "Edit" : "Add New" }} Room</p>
 <form class="form" [formGroup]="roomForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
     <mat-label>Room</mat-label>
@@ -25,7 +25,7 @@
     </button>
     <button
       type="submit"
-      [disabled]="roomForm.invalid"
+      [disabled]="roomForm.invalid || (editionData && !hasFormChanged())"
       class="save-btn"
       mat-flat-button
     >

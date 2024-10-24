@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StorageLocationComponent } from './storage-management.component';
+import { StorageManagementComponent } from './storage-management.component';
 
-describe('StorageLocationComponent', () => {
-  let component: StorageLocationComponent;
-  let fixture: ComponentFixture<StorageLocationComponent>;
+describe('StorageManagementComponent', () => {
+  let component: StorageManagementComponent;
+  let fixture: ComponentFixture<StorageManagementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StorageLocationComponent],
+      imports: [StorageManagementComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StorageLocationComponent);
+    fixture = TestBed.createComponent(StorageManagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
