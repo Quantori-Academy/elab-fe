@@ -7,7 +7,7 @@ import {
   StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
-import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { StorageLocationColumn } from '../models/storage-location.enum';
@@ -28,22 +28,18 @@ export class StorageLocationService {
     roomName: '',
     storageName: '',
   });
+  public httpParams$ = this.httpParamsSubject.asObservable();
+
+  public pageSize = 10;
+
   private rooms = [
     { id: 1, name: 'Room1' },
     { id: 2, name: 'Room2' },
     { id: 3, name: 'Room3' },
   ];
-
-  public httpParams$ = this.httpParamsSubject.asObservable();
-  public pageSize = 10;
-
   public listOfRooms = of(this.rooms);
 
   constructor(private http: HttpClient) {}
-
-  public addNewStorageLocation(newData: NewStorageLocation) {
-    return this.http.post(`${this.apiUrl}/storages`, newData);
-  }
 
   public getListStorageLocation(): Observable<StorageLocationListData> {
     return this.httpParams$.pipe(
@@ -52,7 +48,10 @@ export class StorageLocationService {
           .set('skip', params.skip)
           .set('take', params.take || this.pageSize);
 
-        const setParamIfExists = (param: string, value: string | number) => {
+        const setParamIfExists = (
+          param: keyof StorageLocationPageData,
+          value: string | number
+        ) => {
           return value ? httpParams.set(param, value) : httpParams;
         };
 
@@ -135,9 +134,23 @@ export class StorageLocationService {
     return this.httpParamsSubject.getValue();
   }
 
+  public addNewStorageLocation(newData: NewStorageLocation) {
+    return this.http.post(`${this.apiUrl}/storages`, newData).pipe(
+      tap(() => {
+        this.httpParamsSubject.next(this.currentHttpParams);
+      })
+    );
+  }
+
   public deleteStorageLocation(id: number): Observable<HttpResponseBase> {
-    return this.http.delete<HttpResponseBase>(`${this.apiUrl}/storages/${id}`, {
-      observe: 'response',
-    });
+    return this.http
+      .delete<HttpResponseBase>(`${this.apiUrl}/storages/${id}`, {
+        observe: 'response',
+      })
+      .pipe(
+        tap(() => {
+          this.httpParamsSubject.next(this.currentHttpParams);
+        })
+      );
   }
 }

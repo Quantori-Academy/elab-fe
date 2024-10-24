@@ -6,14 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { StorageLocationService } from '../../services/storage-location.service';
 import { AsyncPipe } from '@angular/common';
 import { NewStorageLocation } from '../../models/storage-location.interface';
 import { take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-storage-location-add-new',
@@ -29,7 +28,7 @@ export class StorageLocationAddNewComponent {
   private fb = inject(FormBuilder);
   private storageLocationService = inject(StorageLocationService);
   private notificationPopupService = inject(NotificationPopupService);
-  private dialogRef = inject(DialogRef);
+  private dialogRef = inject(MatDialogRef<StorageLocationAddNewComponent>);
 
   public addStorageForm: FormGroup = this.fb.group({
     roomName: ['', [Validators.required]],
@@ -55,11 +54,11 @@ export class StorageLocationAddNewComponent {
         .pipe(take(1))
         .subscribe({
           next: () => {
-            this.dialogRef.close(true);
             this.notificationPopupService.success({
               title: 'Success',
               message: 'Storage Location added',
             });
+            this.dialogRef.close(true);
           },
           error: (error: HttpErrorResponse) => {
             switch (error.status) {

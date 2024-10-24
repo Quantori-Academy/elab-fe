@@ -80,21 +80,13 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
     this.pageSize = this.storageLocationService.pageSize;
   }
 
-  public openDialog(): void {
-    this.dialog
-      .open(StorageLocationAddNewComponent)
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe((value) => {
-        if (value) {
-          this.getListStorageLocation();
-        }
-      });
-  }
-
   ngOnInit(): void {
     this.setIsAdmin();
     this.setFilterStorageName();
+  }
+
+  public openDialog(): void {
+    this.dialog.open(StorageLocationAddNewComponent);
   }
 
   private setIsAdmin() {
@@ -160,11 +152,9 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.getListStorageLocation();
           this.notificationPopupService.success({
             title: 'Success',
             message: 'Storage location is deleted successfully',
-            duration: 3000,
           });
         },
         error: (error: HttpErrorResponse) => {
