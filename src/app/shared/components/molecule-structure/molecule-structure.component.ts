@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   Input,
-  ViewChild,
+  OnChanges,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, shareReplay } from 'rxjs/operators';
@@ -28,16 +30,18 @@ export interface DrawDetails {
   templateUrl: './molecule-structure.component.html',
   styleUrls: ['./molecule-structure.component.scss'],
 })
-export class MoleculeStructureComponent implements AfterViewInit {
-  @Input() width!: number;
-  @Input() height!: number;
+export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
+  @Input() width = 100;
+  @Input() height = 100;
   @Input() structure!: string;
   @Input() molDrawOptions?: MolDrawOptions;
+  @Input() refreshDelay?: number;
 
   drawDetails!: DrawDetails;
   rdkit$!: Observable<RDKitModule>;
   error: string | null = null;
   loading = true;
+  refreshTimeout?: ReturnType<typeof setTimeout>;
 
   @ViewChild('molCanvas', { read: ElementRef })
   canvasContainer!: ElementRef<HTMLCanvasElement>;
@@ -55,6 +59,28 @@ export class MoleculeStructureComponent implements AfterViewInit {
         this.error = 'RDKit failed to load';
       },
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      !Object.keys(changes).some(
+        (k) => changes[k].currentValue !== changes[k].previousValue
+      )
+    ) {
+      return;
+    }
+
+    if (this.refreshDelay) {
+      if (this.refreshTimeout) {
+        clearTimeout(this.refreshTimeout);
+      }
+      this.refreshTimeout = setTimeout(
+        () => this.renderStructure(),
+        this.refreshDelay
+      );
+    } else {
+      this.renderStructure();
+    }
   }
 
   ngAfterViewInit(): void {
