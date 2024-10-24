@@ -9,9 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import { Reagent } from '../../shared/models/reagent-model';
 import { MatPaginator } from '@angular/material/paginator';
-// MatSort in sort
 import { Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +25,6 @@ import { MaterialModule } from '../../material.module';
   styleUrl: './reagents-list.component.scss',
 })
 export class ReagentsListComponent implements OnInit, AfterViewInit {
-  private _liveAnnouncer = inject(LiveAnnouncer);
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
 
@@ -52,29 +49,31 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Reagent>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // @ViewChild(MatSort) sort!: MatSort;
-
 
   ngOnInit(): void {
-    this.loadReagents();
+    // Initially load the reagents without sorting
+    this.loadReagents(false);
   }
 
-  loadReagents() {
-     console.log("Fetching reagents with filters:", {
-        name: this.filterValue,
-        category: this.selectedCategory,
-        sortByName: this.sortColumn === 'name' ? this.sortDirection : undefined,
-        skip: this.paginator?.pageIndex,
-        take: this.paginator?.pageSize
+  loadReagents(applySorting = true) {
+    console.log('Fetching reagents with filters:', {
+      name: this.filterValue,
+      category: this.selectedCategory,
+      sortByName:
+        applySorting && this.sortColumn === 'name'
+          ? this.sortDirection
+          : undefined,
+      skip: this.paginator?.pageIndex,
+      take: this.paginator?.pageSize,
     });
 
-    // Fetch reagents with current filters and sorting options
     this.reagentsService
       .getReagents(
         this.filterValue,
         this.selectedCategory,
-        this.sortColumn === 'name' ? this.sortDirection : undefined,
-        //columns not added yet
+        applySorting && this.sortColumn === 'name'
+          ? this.sortDirection
+          : undefined,
         undefined, // sortByCreationDate
         undefined, // sortByUpdatedDate
         this.paginator?.pageIndex,
@@ -84,9 +83,9 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
         this.dataSource.data = reagents;
       });
   }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
   }
 
   applyFilter() {
@@ -94,21 +93,17 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   }
 
   onSortChange(sort: Sort) {
-    this.sortColumn = sort.active; // Set the current sorting column
-    this.sortDirection = sort.direction === '' ? 'asc' : sort.direction;
-    this.loadReagents(); // Fetch the sorted data
-    // this.announceSortChange(sort); // Announce the sort change
-  }
+    if (sort.active === 'name') {
+      if (sort.direction === '') {
+        this.sortDirection = 'asc';
+      } else {
+        this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
+      }
+    }
 
-  
-  // sorts name and categories, if hovered on column head shows sorting direction
-  // announceSortChange(sortState: Sort) {
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
+    this.sortColumn = sort.active;
+    this.loadReagents();
+  }
 
   openStructure(structure: string) {
     this.dialog.open(StructureDialogComponent, {
