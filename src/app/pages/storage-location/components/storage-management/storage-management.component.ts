@@ -1,3 +1,10 @@
+import { MatTableModule } from '@angular/material/table';
+import { MaterialModule } from '../../../../material.module';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,27 +12,28 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MaterialModule } from '../../../../material.module';
 import {
+  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
   Observable,
   Subject,
+  take,
   takeUntil,
 } from 'rxjs';
 import {
   StorageLocationFilteredData,
   StorageLocationItem,
+  StorageLocationListData,
 } from '../../models/storage-location.interface';
 import { StorageLocationService } from '../../services/storage-location.service';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
+import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
-import { PageEvent } from '@angular/material/paginator';
+import { StorageLocationAddNewComponent } from '../storage-location-add-new/storage-location-add-new.component';
 import { StorageLocationColumn } from '../../models/storage-location.enum';
-import { FormsModule } from '@angular/forms';
+import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-storage-management',
@@ -39,6 +47,7 @@ import { FormsModule } from '@angular/forms';
     AsyncPipe,
     CommonModule,
     FormsModule,
+    MatDialogModule,
   ],
   templateUrl: './storage-management.component.html',
   styleUrl: './storage-management.component.scss',
@@ -50,28 +59,44 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
-  public storageLocationList$!: Observable<StorageLocationItem[]>;
+  public storageLocationDataSubject: BehaviorSubject<
+    StorageLocationListData | undefined
+  > = new BehaviorSubject<StorageLocationListData | undefined>(undefined);
+  public storageLocationData$ = this.storageLocationDataSubject.asObservable();
 
-  public listOfRooms$: Observable<string[]>;
+  public listOfRooms$: Observable<{ id: number; name: string }[]>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
+  private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
+  private dialog = inject(MatDialog);
   private filterSubject = new Subject<StorageLocationFilteredData>();
   private destroy$ = new Subject<void>();
 
   constructor() {
-    this.storageLocationList$ =
-      this.storageLocationService.getListStorageLocation();
+    this.getListStorageLocation();
     this.listOfRooms$ = this.storageLocationService.listOfRooms;
     this.pageSize = this.storageLocationService.pageSize;
   }
 
   ngOnInit(): void {
+    this.setIsAdmin();
+    this.setFilterStorageName();
+  }
+
+  public openDialog(): void {
+    this.dialog.open(StorageLocationAddNewComponent);
+  }
+
+  private setIsAdmin() {
     this.isAdmin = this.rbcService.isAdmin();
     if (this.isAdmin) {
       this.displayedColumns.push('actions');
     }
+  }
+
+  private setFilterStorageName() {
     this.filterSubject
       .pipe(
         debounceTime(this.DEBOUNCE_TIME),
@@ -83,10 +108,13 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
       );
   }
 
-  private setActionsColumn() {
-    if (this.isAdmin) {
-      this.displayedColumns.push('actions');
-    }
+  public getListStorageLocation() {
+    this.storageLocationService
+      .getListStorageLocation()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((storageList) =>
+        this.storageLocationDataSubject.next(storageList)
+      );
   }
 
   onSort(sort: Sort) {
@@ -94,7 +122,10 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   onFilterRoom(value: string) {
-    this.filterSubject.next({ value, column: StorageLocationColumn.Room });
+    this.storageLocationService.setFilteringPageData({
+      value,
+      column: StorageLocationColumn.Room,
+    });
   }
 
   onFilterName($event: Event) {
@@ -107,7 +138,41 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   onDelete(element: StorageLocationItem) {
-    console.log('deleted element', element);
+    this.dialog.open(DeleteConfirmComponent, {
+      data: {
+        message: 'Are you sure you want to delete the storage location?',
+        deleteHandler: () => this.deleteHandler(element.id),
+      },
+    });
+  }
+
+  public deleteHandler(storageId: number) {
+    this.storageLocationService
+      .deleteStorageLocation(storageId)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Success',
+            message: 'Storage location is deleted successfully',
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === HttpStatusCode.Conflict) {
+            this.notificationPopupService.warning({
+              title: 'Warning',
+              message: error.error.message,
+              duration: 4000,
+            });
+          } else {
+            this.notificationPopupService.error({
+              title: 'Error',
+              message: error.error.message,
+              duration: 3000,
+            });
+          }
+        },
+      });
   }
 
   handlePageEvent($event: PageEvent) {

@@ -1,25 +1,30 @@
-@if ( storageLocationList$ | async; as storageLocationList ) { @if(isAdmin){
-<div class="filter">
-  <mat-form-field class="filter__item" appearance="fill">
-    <mat-label>Filter by room</mat-label>
-    <mat-select (selectionChange)="onFilterRoom($event.value)">
-      <mat-option value="">All Rooms</mat-option>
-      @for (room of listOfRooms$ | async; track $index) {
-      <mat-option [value]="room">{{ room }}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+@if(isAdmin){
+<div class="header">
+  <div class="filter">
+    <mat-form-field class="filter__item" appearance="fill">
+      <mat-label>Filter by room</mat-label>
+      <mat-select (selectionChange)="onFilterRoom($event.value)">
+        <mat-option value="">All Rooms</mat-option>
+        @for (room of listOfRooms$ | async; track $index) {
+        <mat-option [value]="room.name">{{ room.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="filter__item" appearance="fill">
-    <mat-label>Filter by name</mat-label>
-    <input matInput (input)="onFilterName($event)" />
-  </mat-form-field>
+    <mat-form-field class="filter__item" appearance="fill">
+      <mat-label>Filter by name</mat-label>
+      <input matInput (input)="onFilterName($event)" />
+    </mat-form-field>
+  </div>
+  <button class="add-btn" mat-flat-button (click)="openDialog()">
+    Add New Storage Location
+  </button>
 </div>
-}
+} @if ( storageLocationData$ | async; as storageLocationData ) {
 <div class="mat-elevation-z8">
   <mat-table
     class="table"
-    [dataSource]="storageLocationList"
+    [dataSource]="storageLocationData.storages"
     matSort
     (matSortChange)="onSort($event)"
   >
@@ -74,7 +79,7 @@
     #paginator
     class="demo-paginator"
     (page)="handlePageEvent($event)"
-    [length]="listLength"
+    [length]="storageLocationData.size"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
     aria-label="Select page"
