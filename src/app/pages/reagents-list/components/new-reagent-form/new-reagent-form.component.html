@@ -2,6 +2,7 @@
   <mat-icon>close</mat-icon>
 </button>
 <div>
+  <h1 class="new-reagent-h1">Create New Reagent</h1>
   <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Name</mat-label>
@@ -12,24 +13,8 @@
       }
     </mat-form-field>
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
-      <mat-label>Category</mat-label>
-      <mat-select formControlName="category">
-        <mat-option *ngFor="let category of categories" [value]="category.value">
-          {{ category.viewValue }}
-        </mat-option>
-      </mat-select>
-      @if (reagentRequestForm.get('category')?.invalid &&
-      reagentRequestForm.get('category')?.touched) {
-      <mat-error>Category is required.</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Structure</mat-label>
       <input matInput formControlName="structure" />
-      @if (reagentRequestForm.get('structure')?.invalid &&
-      reagentRequestForm.get('structure')?.touched) {
-      <mat-error>Structure is required.</mat-error>
-      }
     </mat-form-field>
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>CAS Number</mat-label>
@@ -163,7 +148,6 @@
         <mat-error>{{errorMessage}}</mat-error>
       }
       -->
-
     </mat-form-field>
 
     <button mat-flat-button color="primary" type="submit">Submit</button>

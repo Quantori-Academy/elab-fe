@@ -2,7 +2,7 @@
 //   overflow-y: scroll;
 // }
 form {
-  padding: 4.5rem 1.5rem 1.5rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -16,4 +16,10 @@ form {
 }
 .mat-mdc-form-field-error{
   max-width: 190px;
+}
+
+.new-reagent-h1 {
+  margin: 1.325rem auto;
+  text-align: center;
+  font-size: 2rem;
 }
