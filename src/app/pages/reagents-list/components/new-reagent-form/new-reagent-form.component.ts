@@ -51,8 +51,7 @@ export class NewReagentFormComponent implements OnDestroy {
 
   reagentRequestForm = this.fb.group({
     name: ['', Validators.required],
-    category: [Category.reagent],
-    structure: ['Reagent'],
+    structure: [''],
     casNumber: [
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(10)],
@@ -143,6 +142,7 @@ export class NewReagentFormComponent implements OnDestroy {
 
         const formValue = {
           ...formRawValue,
+          category: Category.reagent,
           expirationDate: finalExpirationDate,
           storageId: formRawValue.storageId,
         } as ReagentRequest;
