@@ -1,0 +1,35 @@
+<p class="header">Add New Storage Location</p>
+<form class="form" [formGroup]="roomForm" (submit)="onSave()">
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Room</mat-label>
+    <input matInput formControlName="name" />
+    @if (hasError('name', 'required')) {
+    <mat-error>Room is required</mat-error>
+    } @if (hasError('name', 'serverError')) {
+    <mat-error>{{ getErrorMessage("name", "serverError") }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+  <div class="actions">
+    <button
+      class="cancel-btn"
+      type="button"
+      mat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="roomForm.invalid"
+      class="save-btn"
+      mat-flat-button
+    >
+      {{ editionData ? "Edit" : "Save" }}
+    </button>
+  </div>
+</form>

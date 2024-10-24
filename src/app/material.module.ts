@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import {
+  MatAutocompleteModule,
+  MatOption,
+} from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import {
@@ -14,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelect } from '@angular/material/select';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -27,6 +32,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatFormField,
     MatInputModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
+    MatSelect,
+    MatOption,
     MatToolbar,
     MatIcon,
     MatSortModule,
@@ -52,6 +60,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatIcon,
     MatTableModule,
     MatPaginatorModule,
+    MatAutocompleteModule,
+    MatSelect,
+    MatOption,
     MatToolbar,
     MatIconModule,
     MatSidenavModule,

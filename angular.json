@@ -35,6 +35,11 @@
                 "glob": "**/*",
                 "input": "ketcher",
                 "output": "ketcher"
+              },
+              {
+                "glob": "**/*",
+                "input": "rdkit",
+                "output": "rdkit"
               }
             ],
             "styles": [
@@ -110,6 +115,11 @@
                 "glob": "**/*",
                 "input": "ketcher",
                 "output": "ketcher"
+              },
+              {
+                "glob": "**/*",
+                "input": "rdkit",
+                "output": "rdkit"
               }
             ],
             "styles": [

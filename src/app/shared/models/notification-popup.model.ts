@@ -17,4 +17,5 @@ export interface NotificationData {
   message: string;
   duration?: number;
   position?: NotificationPosition;
+  showProgress?: boolean;
 }

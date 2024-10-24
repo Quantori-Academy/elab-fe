@@ -1,0 +1,54 @@
+<p class="header">{{ data ? "Edit" : "Add New" }} Storage Location</p>
+<form class="form" [formGroup]="storageForm" (submit)="onSave()">
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Room</mat-label>
+    <mat-select formControlName="roomName">
+      @for (room of filteredRooms$ | async; track $index) {
+      <mat-option [value]="room.name">
+        {{ room.name }}
+      </mat-option>
+      }
+    </mat-select>
+    @if (hasError('roomName', 'required')) {
+    <mat-error>Room is required</mat-error>
+    }@if (hasError('roomName', 'roomError')) {
+    <mat-error>{{ getErrorMessage("roomName", "roomError") }}</mat-error>
+    }@if (hasError('roomName', 'roomNotFound')) {
+    <mat-error>{{ getErrorMessage("roomName", "roomNotFound") }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" />
+    @if (hasError('name', 'required')) {
+    <mat-error>Name is required</mat-error>
+    }@if (hasError('name', 'maxlength')) {
+    <mat-error>Name length should be less than {{ MAX_LENGTH }}</mat-error>
+    }@if (hasError('name', 'uniqueName')) {
+    <mat-error>{{ getErrorMessage("name", "uniqueName") }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field hideRequiredMarker>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+  <div class="actions">
+    <button
+      class="cancel-btn"
+      type="button"
+      mat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="storageForm.invalid || (data && !hasFormChanged())"
+      class="save-btn"
+      mat-flat-button
+    >
+      {{ data ? "Edit" : "Save" }}
+    </button>
+  </div>
+</form>

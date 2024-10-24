@@ -8,9 +8,9 @@
   </button>
   <div
     class="logo"
-    tabindex="0" 
-    (keyup.enter)="navigateToDashboard()"
-    (keyup.space)="navigateToDashboard()"
+    (click)="navigateToDashboard()"
+    (keyup)="$event.key === 'Enter' && navigateToDashboard()"
+    tabindex="0"
   >
     <img src="assets/icons/logo_scarlet_mormon.png" alt="Logo" />
     <div>E-LAB</div>
