@@ -19,7 +19,7 @@ import { StorageLocationService } from '../../../storage-location/services/stora
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../../material.module';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { StorageLocationItem } from '../../../storage-location/models/storage-location.interface';
 
 @Component({
@@ -90,6 +90,7 @@ export class NewReagentFormComponent implements OnDestroy {
       // Fetch the list of storages by storage location name
       this.storageSubscription = this.storageLocationService
         .getListStorageLocation()
+        .pipe(map((storageData) => storageData.storages))
         .subscribe({
           next: (storages: StorageLocationItem[]) => {
             const matchingStorage = storages.find(

@@ -18,8 +18,8 @@ import {
 import {
   StorageLocationFilteredData,
   StorageLocationItem,
+  StorageLocationListData,
 } from './models/storage-location.interface';
-import { StorageLocationService } from './services/storage-location.service';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -28,10 +28,12 @@ import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { PageEvent } from '@angular/material/paginator';
 import { StorageLocationColumn } from './models/storage-location.enum';
 import { FormsModule } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmComponent } from '../../shared/components/delete-confirm/delete-confirm.component';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { StorageLocationAddNewComponent } from './components/storage-location-add-new/storage-location-add-new.component';
+import { StorageLocationService } from './services/storage-location.service';
 
 @Component({
   selector: 'app-storage-location',
@@ -45,6 +47,7 @@ import { NotificationPopupService } from '../../shared/services/notification-pop
     AsyncPipe,
     CommonModule,
     FormsModule,
+    MatDialogModule,
   ],
   templateUrl: './storage-location.component.html',
   styleUrl: './storage-location.component.scss',
@@ -56,12 +59,12 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
-  public storageLocationListSubject: BehaviorSubject<
-    StorageLocationItem[] | undefined
-  > = new BehaviorSubject<StorageLocationItem[] | undefined>(undefined);
-  public storageLocationList$ = this.storageLocationListSubject.asObservable();
+  public storageLocationDataSubject: BehaviorSubject<
+    StorageLocationListData | undefined
+  > = new BehaviorSubject<StorageLocationListData | undefined>(undefined);
+  public storageLocationData$ = this.storageLocationDataSubject.asObservable();
 
-  public listOfRooms$: Observable<string[]>;
+  public listOfRooms$: Observable<{ id: number; name: string }[]>;
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
@@ -75,6 +78,18 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
     this.getListStorageLocation();
     this.listOfRooms$ = this.storageLocationService.listOfRooms;
     this.pageSize = this.storageLocationService.pageSize;
+  }
+
+  public openDialog(): void {
+    this.dialog
+      .open(StorageLocationAddNewComponent)
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((value) => {
+        if (value) {
+          this.getListStorageLocation();
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -98,7 +113,7 @@ export class StorageLocationComponent implements OnInit, OnDestroy {
       .getListStorageLocation()
       .pipe(takeUntil(this.destroy$))
       .subscribe((storageList) =>
-        this.storageLocationListSubject.next(storageList)
+        this.storageLocationDataSubject.next(storageList)
       );
   }
 
