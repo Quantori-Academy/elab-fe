@@ -36,6 +36,15 @@ export const routes: Routes = [
             (c) => c.StorageLocationComponent
           ),
         canActivate: [authGuard],
+        pathMatch: 'full',
+      },
+      {
+        path: 'storage-locations/:id',
+        loadComponent: () =>
+          import(
+            './pages/storage-location-detail/storage-location-detail.component'
+          ).then((c) => c.StorageLocationDetailComponent),
+        canActivate: [authGuard],
       },
       {
         path: 'users',
@@ -75,29 +84,29 @@ export const routes: Routes = [
       import('./pages/reset-password/reset-password.component').then(
         (c) => c.ResetPasswordComponent
       ),
-    },
-    {
-      path: 'profile',
-      loadComponent: () =>
-        import('./pages/profile-management/profile-management.component').then(
-          (c) => c.ProfilePageComponent
-        ),
-      canActivate: [authGuard],
-    },
-    {
-      path: 'users',
-      loadComponent: () =>
-        import('./pages/users-list/users-list.component').then(
-          (c) => c.UsersListComponent
-        ),
-      canActivate: [authGuard, roleGuard],
-      data: { role: UserRoles.Admin },
-    },
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./pages/profile-management/profile-management.component').then(
+        (c) => c.ProfilePageComponent
+      ),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'users',
+    loadComponent: () =>
+      import('./pages/users-list/users-list.component').then(
+        (c) => c.UsersListComponent
+      ),
+    canActivate: [authGuard, roleGuard],
+    data: { role: UserRoles.Admin },
+  },
   {
     path: 'first-password-change',
     loadComponent: () =>
       import(
         './pages/first-password-change/first-password-change.component'
       ).then((c) => c.FirstPasswordChangeComponent),
-  }
+  },
 ];

@@ -34,6 +34,7 @@ import { StorageLocationColumn } from '../../models/storage-location.enum';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-storage-management',
@@ -55,7 +56,7 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class StorageManagementComponent implements OnInit, OnDestroy {
   readonly DEBOUNCE_TIME = 1000;
-  public displayedColumns: string[] = ['room', 'name', 'createdAt', 'reagents'];
+  public displayedColumns: string[] = ['room', 'name', 'date', 'open-detail'];
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
@@ -71,6 +72,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
   private filterSubject = new Subject<StorageLocationFilteredData>();
   private destroy$ = new Subject<void>();
 
@@ -85,14 +87,20 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
     this.setFilterStorageName();
   }
 
-  public openDialog(): void {
-    this.dialog.open(StorageLocationAddNewComponent);
+  public redirectToDetailPage(element: StorageLocationItem) {
+    this.router.navigate(['/storage-locations', element.id], {
+      queryParams: { data: JSON.stringify(element) },
+    });
   }
 
   private setIsAdmin() {
     this.isAdmin = this.rbcService.isAdmin();
     if (this.isAdmin) {
-      this.displayedColumns.push('actions');
+      this.displayedColumns.splice(
+        this.displayedColumns.length - 1,
+        0,
+        'actions'
+      );
     }
   }
 
@@ -133,11 +141,15 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
     this.filterSubject.next({ value, column: StorageLocationColumn.Name });
   }
 
-  onEdit(element: StorageLocationItem) {
-    console.log('edited element', element);
+  public onCreate(): void {
+    this.dialog.open(StorageLocationAddNewComponent);
   }
 
-  onDelete(element: StorageLocationItem) {
+  public onEdit(element: StorageLocationItem) {
+    this.dialog.open(StorageLocationAddNewComponent, { data: element });
+  }
+
+  public onDelete(element: StorageLocationItem) {
     this.dialog.open(DeleteConfirmComponent, {
       data: {
         message: 'Are you sure you want to delete the storage location?',
