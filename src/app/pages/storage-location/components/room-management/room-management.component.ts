@@ -17,6 +17,7 @@ import { first, take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
+import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-room-management',
@@ -37,12 +38,18 @@ export class RoomManagementComponent implements OnInit {
   private dialog = inject(MatDialog);
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
+  private rbcService = inject(RbacService);
 
-  public displayedColumns = ['room', 'description', 'actions'];
+  public displayedColumns = ['room', 'description'];
   public roomList$ = this.roomManagementService.roomData$;
+  public isAdmin = false;
 
   ngOnInit(): void {
     this.roomManagementService.getListOfRooms().pipe(first()).subscribe();
+    this.isAdmin = this.rbcService.isAdmin();
+    if (this.isAdmin) {
+      this.displayedColumns.push('actions');
+    }
   }
 
   public openDialog() {
