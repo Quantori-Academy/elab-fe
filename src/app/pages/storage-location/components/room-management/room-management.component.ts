@@ -46,6 +46,9 @@ export class RoomManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.roomManagementService.getListOfRooms().pipe(first()).subscribe();
+    this.defineIsAdmin();
+  }
+  private defineIsAdmin() {
     this.isAdmin = this.rbcService.isAdmin();
     if (this.isAdmin) {
       this.displayedColumns.push('actions');

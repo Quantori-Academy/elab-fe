@@ -58,7 +58,7 @@ import { RoomManagementService } from '../../services/room-management.service';
 })
 export class StorageManagementComponent implements OnInit, OnDestroy {
   readonly DEBOUNCE_TIME = 1000;
-  public displayedColumns: string[] = ['room', 'name', 'date', 'open-detail'];
+  public displayedColumns: string[] = ['room', 'name', 'date', 'actions'];
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
@@ -86,7 +86,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.setIsAdmin();
+    this.isAdmin = this.rbcService.isAdmin();
     this.setFilterStorageName();
   }
 
@@ -94,17 +94,6 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
     this.router.navigate(['/storage-locations', element.id], {
       queryParams: { data: JSON.stringify(element) },
     });
-  }
-
-  private setIsAdmin() {
-    this.isAdmin = this.rbcService.isAdmin();
-    if (this.isAdmin) {
-      this.displayedColumns.splice(
-        this.displayedColumns.length - 1,
-        0,
-        'actions'
-      );
-    }
   }
 
   private setFilterStorageName() {
