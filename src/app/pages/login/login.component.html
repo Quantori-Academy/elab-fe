@@ -71,5 +71,15 @@
         Login
       </button>
     </span>
+    @if (isLoading) {
+    <div class="login-spinner-container">
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="120"
+        class="login-spinner"
+      >
+      </mat-progress-spinner>
+    </div>
+    }
   </form>
 </div>
