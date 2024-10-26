@@ -11,9 +11,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="filter__item" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
       <mat-label>Filter by name</mat-label>
       <input matInput (input)="onFilterName($event)" />
+      @if (isLoading) {
+      <span class="loader"></span>
+      }
     </mat-form-field>
   </div>
   <button class="add-btn" mat-flat-button (click)="onCreate()">

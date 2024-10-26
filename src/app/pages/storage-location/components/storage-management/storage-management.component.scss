@@ -17,3 +17,11 @@
   display: flex;
   gap: 20px;
 }
+
+.mat-form-field-with-loader {
+  position: relative;
+
+  .mat-mdc-input-element {
+    width: 90%;
+  }
+}

@@ -20,6 +20,7 @@ import {
   Subject,
   take,
   takeUntil,
+  tap,
 } from 'rxjs';
 import {
   RoomData,
@@ -69,6 +70,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
 
   public listOfRooms$: Observable<RoomData[] | undefined>;
   public isAdmin = false;
+  public isLoading = false;
 
   private storageLocationService = inject(StorageLocationService);
   private roomManagementService = inject(RoomManagementService);
@@ -99,13 +101,15 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   private setFilterStorageName() {
     this.filterSubject
       .pipe(
+        tap(() => (this.isLoading = true)),
         debounceTime(this.DEBOUNCE_TIME),
         distinctUntilChanged(),
         takeUntil(this.destroy$)
       )
-      .subscribe((filterData) =>
-        this.storageLocationService.setFilteringPageData(filterData)
-      );
+      .subscribe((filterData) => {
+        this.storageLocationService.setFilteringPageData(filterData);
+        this.isLoading = false;
+      });
   }
 
   public getListStorageLocation() {
