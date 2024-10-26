@@ -18,6 +18,7 @@ import { NotificationPopupService } from '../../../../shared/services/notificati
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-room-management',
@@ -40,7 +41,7 @@ export class RoomManagementComponent implements OnInit {
   private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
 
-  public displayedColumns = ['room', 'description'];
+  public displayedColumns = ['room', 'description', 'storages'];
   public roomList$ = this.roomManagementService.roomData$;
   public isAdmin = false;
 
@@ -53,6 +54,10 @@ export class RoomManagementComponent implements OnInit {
     if (this.isAdmin) {
       this.displayedColumns.push('actions');
     }
+  }
+
+  public getRandomStorageNumber(): number {
+    return Math.floor(Math.random() * 10);
   }
 
   public openDialog() {
@@ -101,5 +106,9 @@ export class RoomManagementComponent implements OnInit {
           }
         },
       });
+  }
+
+  handlePageEvent($event: PageEvent) {
+    console.log($event);
   }
 }
