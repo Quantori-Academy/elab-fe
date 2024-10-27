@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StorageLocationItem } from '../storage-location/models/storage-location.interface';
-import { JsonPipe } from '@angular/common';
+import { MaterialModule } from '../../material.module';
 
 @Component({
   selector: 'app-storage-location-detail',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [MaterialModule],
   templateUrl: './storage-location-detail.component.html',
   styleUrl: './storage-location-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
