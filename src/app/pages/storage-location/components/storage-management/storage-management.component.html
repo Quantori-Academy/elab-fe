@@ -1,5 +1,8 @@
 @if(isAdmin){
 <div class="header">
+  <button class="add-btn" mat-flat-button (click)="onCreate()">
+    Add New Storage Location
+  </button>
   <div class="filter">
     <mat-form-field class="filter__item" appearance="fill">
       <mat-label>Filter by room</mat-label>
@@ -19,9 +22,6 @@
       }
     </mat-form-field>
   </div>
-  <button class="add-btn" mat-flat-button (click)="onCreate()">
-    Add New Storage Location
-  </button>
 </div>
 } @if ( storageLocationData$ | async; as storageLocationData ) {
 <div class="mat-elevation-z8">
@@ -86,6 +86,7 @@
     [length]="storageLocationData.size"
     [pageSize]="pageSize"
     [pageIndex]="pageIndex"
+    [pageSizeOptions]="pageSizeOptions"
     aria-label="Select page"
   >
   </mat-paginator>

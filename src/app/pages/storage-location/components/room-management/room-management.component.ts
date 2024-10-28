@@ -19,6 +19,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 import { PageEvent } from '@angular/material/paginator';
+import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 
 @Component({
   selector: 'app-room-management',
@@ -42,6 +43,7 @@ export class RoomManagementComponent implements OnInit {
   private rbcService = inject(RbacService);
 
   public displayedColumns = ['room', 'description', 'storages'];
+  public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
   public roomList$ = this.roomManagementService.roomData$;
   public isAdmin = false;
 

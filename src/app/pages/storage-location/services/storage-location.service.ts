@@ -34,6 +34,10 @@ export class StorageLocationService {
 
   constructor(private http: HttpClient) {}
 
+  public get currentHttpParams() {
+    return this.httpParamsSubject.getValue();
+  }
+
   public getListStorageLocation(): Observable<StorageLocationListData> {
     return this.httpParams$.pipe(
       switchMap((params) => {
@@ -122,10 +126,6 @@ export class StorageLocationService {
       skip: 0,
       ...filterColumn,
     });
-  }
-
-  public get currentHttpParams() {
-    return this.httpParamsSubject.getValue();
   }
 
   public addNewStorageLocation(newData: NewStorageLocation) {

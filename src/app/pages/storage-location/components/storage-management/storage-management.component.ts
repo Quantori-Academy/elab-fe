@@ -31,13 +31,14 @@ import {
 import { StorageLocationService } from '../../services/storage-location.service';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
-import { StorageLocationAddNewComponent } from '../storage-location-add-new/storage-location-add-new.component';
+import { AddEditStorageComponent } from '../add-edit-storage/add-edit-storage.component';
 import { StorageLocationColumn } from '../../models/storage-location.enum';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { RoomManagementService } from '../../services/room-management.service';
+import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 
 @Component({
   selector: 'app-storage-management',
@@ -63,6 +64,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
+  public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
   public storageLocationDataSubject = new BehaviorSubject<
     StorageLocationListData | undefined
   >(undefined);
@@ -138,11 +140,11 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   public onCreate(): void {
-    this.dialog.open(StorageLocationAddNewComponent);
+    this.dialog.open(AddEditStorageComponent);
   }
 
   public onEdit(element: StorageLocationItem) {
-    this.dialog.open(StorageLocationAddNewComponent, { data: element });
+    this.dialog.open(AddEditStorageComponent, { data: element });
   }
 
   public onDelete(element: StorageLocationItem) {
