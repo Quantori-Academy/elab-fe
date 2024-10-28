@@ -8,11 +8,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { StorageLocationItem } from '../storage-location/models/storage-location.interface';
 import { MaterialModule } from '../../material.module';
+import { ReagentsListComponent } from '../reagents-list/reagents-list.component';
 
 @Component({
   selector: 'app-storage-location-detail',
   standalone: true,
-  imports: [MaterialModule],
+  imports: [MaterialModule, ReagentsListComponent],
   templateUrl: './storage-location-detail.component.html',
   styleUrl: './storage-location-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
