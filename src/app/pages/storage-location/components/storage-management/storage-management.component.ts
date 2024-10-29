@@ -39,6 +39,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { RoomManagementService } from '../../services/room-management.service';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
+import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 
 @Component({
   selector: 'app-storage-management',
@@ -53,6 +54,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
     CommonModule,
     FormsModule,
     MatDialogModule,
+    SpinnerDirective,
   ],
   templateUrl: './storage-management.component.html',
   styleUrl: './storage-management.component.scss',
