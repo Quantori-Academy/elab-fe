@@ -7,10 +7,7 @@
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Filter by Status</mat-label>
-        <mat-select
-          [(ngModel)]="selectedStatus"
-          (selectionChange)="applyFilter()"
-        >
+        <mat-select [(ngModel)]="selectedStatus">
           <mat-option value="">All Statuses</mat-option>
           <mat-option value="Pending">Pending</mat-option>
           <mat-option value="Ordered">Ordered</mat-option>
@@ -21,24 +18,13 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Filter by Name</mat-label>
-        <input
-          matInput
-          [(ngModel)]="filterName"
-          (ngModelChange)="applyFilter()"
-          placeholder="Enter name"
-        />
+        <input matInput [(ngModel)]="filterName" placeholder="Enter name" />
       </mat-form-field>
     </div>
   </div>
 
   <div class="table-wrapper">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      (matSortChange)="onSortChange($event)"
-      class="mat-elevation-z8"
-    >
+    <table mat-table matSort class="mat-elevation-z8">
       <!-- Name -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -48,6 +34,7 @@
       <ng-container matColumnDef="structureImage">
         <th mat-header-cell *matHeaderCellDef>Structure</th>
         <td mat-cell *matCellDef="let element">
+          <!-- In progress -->
           <!-- <app-molecule-structure
                 [structureImage]="element.structureImage"
                 [width]="100"
@@ -118,7 +105,6 @@
 
   <mat-paginator
     class="demo-paginator"
-    [length]="dataSource.data.length"
     [pageSize]="10"
     [showFirstLastButtons]="true"
     [pageSizeOptions]="[5, 10, 20]"
