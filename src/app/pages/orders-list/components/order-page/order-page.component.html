@@ -1,0 +1,114 @@
+@if (order$ | async; as order) {
+<h1>Order Title: {{ order.title }}</h1>
+<h2>Seller: {{ order.seller }}</h2>
+<h3>Created: {{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
+
+@if (order.updatedAt === '') {
+<h3>Last updated: {{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
+}@else {
+<h3>Updated: {{ order.updatedAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
+}
+
+<h4>Ordered Reagents</h4>
+<div class="mat-elevation-z8">
+  <mat-table
+    class="table"
+    [dataSource]="order.reagents"
+    matSort
+   
+  >
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cas">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> CAS </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.cas }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modification date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Modification Date</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        @if (element.updatedAt === '') {
+        <span>______</span>
+        }@else { {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalQuantity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Total Quantity
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.totalQuantity }} {{ element.quantityUnit }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="package">
+      <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.package }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantityLeft">
+      <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.quantityLeft }}
+        {{ element.quantityUnit }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="structure">
+      <mat-header-cell *matHeaderCellDef> Structure </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.structure }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="room">
+      <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.room.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="edit">
+          <mat-icon color="primary">edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="delete">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="open-detail">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="delete">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <!-- <mat-paginator
+          #paginator
+          class="demo-paginator"
+          (page)="handlePageEvent($event)"
+          [length]="length$ | async"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          aria-label="Select page"
+        >
+          ></mat-paginator
+        > -->
+</div>
+
+} @else {
+<p>Loading...</p>
+}

@@ -1,0 +1,115 @@
+<div class="header">
+  <div class="filter">
+    <mat-form-field class="filter__item" appearance="fill">
+      <mat-label>Filter by status</mat-label>
+      <mat-select (selectionChange)="onFilterByStatus($event.value)">
+        <mat-option value="">All Orders</mat-option>
+        @for (status of statusOptions; track $index ) {
+        <mat-option [value]="status"> {{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+      <mat-label>Filter by Title</mat-label>
+      <input matInput   (input)="onFilterByTitle($event)" />
+    </mat-form-field>
+
+    <mat-form-field class="filter__item" appearance="fill">
+      <mat-label>Filter by Seller</mat-label>
+      <input matInput  (input)="onFilterBySeller($event)"/>
+    </mat-form-field>
+  </div>
+
+  <!-- (click)="onCreate()" -->
+  <button class="add-btn" mat-flat-button >
+    Create new order
+  </button>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table
+    class="table"
+    [dataSource]="ordersList$"
+    matSort
+    (matSortChange)="onSort($event)"
+  >
+    <ng-container matColumnDef="order title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Order Title
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.title }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="creation date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Creation Date
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="modification date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Modification Date</mat-header-cell
+      >
+      <mat-cell *matCellDef="let element">
+        @if (element.updatedAt === '') {
+        <span>______</span>
+        }@else { {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="seller">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Seller/Producer
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.seller }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="edit">
+          <mat-icon color="primary">edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          aria-label="delete"
+          (click)="onDelete(element.id)"
+        >
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          aria-label="view details"
+          (click)="redirectToDetailPage(element)"
+        >
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    #paginator
+    class="demo-paginator"
+    (page)="handlePageEvent($event)"
+    [length]="length$ | async"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    aria-label="Select page"
+  >
+    ></mat-paginator
+  >
+</div>

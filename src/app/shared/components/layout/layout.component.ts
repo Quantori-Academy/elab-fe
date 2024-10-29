@@ -32,6 +32,11 @@ export class LayoutComponent {
       route: 'reagents',
     },
     {
+      icon: 'storefront',
+      label: 'Orders Management',
+      route: 'orders',
+    },
+    {
       icon: 'person_add',
       label: 'Users Management',
       route: 'users',
