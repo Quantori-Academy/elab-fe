@@ -69,9 +69,7 @@
       <ng-container matColumnDef="userComments">
         <th mat-header-cell *matHeaderCellDef>User Comments</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.userComments) {
-          {{ element.userComments }}
-          } @else { N/A }
+          {{ element.userComments || "N/A" }}
         </td>
       </ng-container>
       <!-- Procurement comments -->
@@ -104,10 +102,9 @@
   </div>
 
   <mat-paginator
-    class="demo-paginator"
-    [pageSize]="10"
-    [showFirstLastButtons]="true"
     [pageSizeOptions]="[5, 10, 20]"
-    [pageIndex]="currentPage"
-  ></mat-paginator>
+    showFirstLastButtons
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>

@@ -1,10 +1,17 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
+import { StatusFilter } from '../../shared/models/status.type';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -18,14 +25,15 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
   ],
   templateUrl: './reagent-request-page.component.html',
   styleUrls: ['./reagent-request-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
 
-  selectedStatus = '' as 'Pending' | 'Ordered' | 'Declined' | 'Fulfilled' | '';
+  selectedStatus: StatusFilter = '';
   currentPage = 0;
-  sortDirection = 'asc' as 'asc' | 'desc';
-  sortColumn = 'createdAt' as 'createdAt' | 'quantity' | 'updatedAt';
+  sortDirection: 'asc' | 'desc' = 'asc';
+  sortColumn: 'createdAt' | 'quantity' | 'updatedAt' = 'createdAt';
   filterName = '';
 
   displayedColumns = [
@@ -48,5 +56,10 @@ export class ReagentsRequestPageComponent implements OnInit {
 
   loadReagentRequests() {
     // in progress
+  }
+
+  onPageChange(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.loadReagentRequests();
   }
 }
