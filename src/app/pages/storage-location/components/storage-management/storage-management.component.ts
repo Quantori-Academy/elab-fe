@@ -60,7 +60,13 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 })
 export class StorageManagementComponent implements OnInit, OnDestroy {
   readonly DEBOUNCE_TIME = 1000;
-  public displayedColumns: string[] = ['room', 'name', 'date', 'actions'];
+  public displayedColumns: string[] = [
+    'room',
+    'name',
+    'date',
+    'reagents',
+    'actions',
+  ];
   public pageSize: number;
   public listLength = 100;
   public pageIndex = 0;
@@ -92,6 +98,10 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isAdmin = this.rbcService.isAdmin();
     this.setFilterStorageName();
+  }
+
+  public getRandomReagentsNumber(): number {
+    return Math.floor(Math.random() * 10);
   }
 
   public redirectToDetailPage(element: StorageLocationItem) {
