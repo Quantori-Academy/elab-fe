@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { mockOrders } from '../../../../../MockData';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
-import { Order, OrderQuery } from '../model/order-model';
+import { Order, OrderQuery, OrderRequest } from '../model/order-model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
@@ -12,7 +12,7 @@ import { environment } from '../../../../environments/environment';
 export class OrderService {
   private url = environment.apiUrl;
 
-  private apiUrl = `${this.url}/orders`;
+  private apiUrl = `${this.url}/api/v1/orders`;
   private httpClient = inject(HttpClient);
   private totalOrdersSubject = new BehaviorSubject<number>(mockOrders.length);
   public totalOrders$ = this.totalOrdersSubject.asObservable();
@@ -119,9 +119,10 @@ export class OrderService {
     this.httpClient.delete(`${this.apiUrl}/${id}`);
   }
   // for post api
-  public createOrder(order: Order): Observable<Order> {
-    return this.httpClient.post<Order>(`${this.apiUrl}`, { order });
+  public createOrder(order: OrderRequest): Observable<OrderRequest> {    
+    return this.httpClient.post<OrderRequest>(this.apiUrl, order);
   }
+  
 
   public setPageData(pageData: PageEvent): void {
     this.httpParamsSubject.next({

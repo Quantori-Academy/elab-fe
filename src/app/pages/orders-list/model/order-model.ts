@@ -28,21 +28,10 @@ export interface OrderQuery {
   orderSeller?: string;
   orderStatus?: string;
 }
-// Arman's interface: export interface Order {
-//   id: number;
-//   userId: number;
-//   status: Status;
-//   reagents: Reagent[];  // assuming Reagent is another interface
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
-// interface Order {
-//   id: number
-//   userId: number
-//   tittle: string
-//   seller: string
-//   status: Status // enum
-//   reagents: Reagent[]
-//   createdAt: Date
-//   updatedAt: Date
-// }
+// orderRequest body
+
+export interface OrderRequest {
+  title: string;
+  seller: string;
+  reagents: { id: number }[];
+}

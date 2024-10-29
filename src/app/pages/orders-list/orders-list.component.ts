@@ -13,7 +13,7 @@ import { Order, OrderQuery, Status } from './model/order-model';
 import { OrderService } from './service/order.service';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-// import { OrderFormComponent } from './components/order-form/order-form.component';
+import { OrderFormComponent } from './components/order-form/order-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 
@@ -158,9 +158,9 @@ export class OrdersListComponent implements OnInit {
     this.fetchOrders();
   }
 
-  // onCreate() {
-  //   this.dialog.open(OrderFormComponent);
-  // }
+  onCreate() {
+    this.dialog.open(OrderFormComponent);
+  }
 
   public redirectToDetailPage(order: Order) {
     this.router.navigate(['/orders', order.id], {
