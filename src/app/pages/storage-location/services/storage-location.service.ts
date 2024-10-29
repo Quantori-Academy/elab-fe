@@ -4,6 +4,7 @@ import { HttpClient, HttpParams, HttpResponseBase } from '@angular/common/http';
 import {
   NewStorageLocation,
   StorageLocationFilteredData,
+  StorageLocationItem,
   StorageLocationListData,
   StorageLocationPageData,
 } from '../models/storage-location.interface';
@@ -71,6 +72,10 @@ export class StorageLocationService {
         );
       })
     );
+  }
+
+  public getStorageLocation(id: string): Observable<StorageLocationItem> {
+    return this.http.get<StorageLocationItem>(`${this.apiUrl}/storages/${id}`);
   }
 
   public setPageData(pageData: PageEvent): void {

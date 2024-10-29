@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -21,11 +22,18 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
 @Component({
   selector: 'app-reagents-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, MaterialModule, MoleculeStructureComponent],
+  imports: [
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    MoleculeStructureComponent,
+  ],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
 export class ReagentsListComponent implements OnInit, AfterViewInit {
+  @Input() storageLocationId?: number;
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
 
@@ -52,7 +60,6 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-
     // Initially load the reagents without sorting
     this.loadReagents(false);
   }
