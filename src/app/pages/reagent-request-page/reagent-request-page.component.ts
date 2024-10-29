@@ -21,7 +21,6 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
 })
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
-  // private reagentRequestService = inject(ReagentRequestService);
 
   selectedStatus = '' as 'Pending' | 'Ordered' | 'Declined' | 'Fulfilled' | '';
   currentPage = 0;
@@ -40,8 +39,6 @@ export class ReagentsRequestPageComponent implements OnInit {
     'createdAt',
     'updatedAt',
   ];
-
-  // dataSource = new MatTableDataSource<ReagentRequest>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
