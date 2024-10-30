@@ -70,7 +70,7 @@ export const routes: Routes = [
           import(
             './pages/reagent-request-page/reagent-request-page.component'
           ).then((c) => c.ReagentsRequestPageComponent),
-        canActivate: [authGuard, roleGuard],
+        canActivate: [authGuard],
       },
     ],
   },
