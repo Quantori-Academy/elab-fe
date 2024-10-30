@@ -29,8 +29,8 @@
         }
       </mat-autocomplete>
     </mat-form-field>
-
-    <table
+<div class="table-container">
+      <table
       mat-table
       [dataSource]="dataSource$"
       class="mat-elevation-z8 demo-table"
@@ -75,6 +75,8 @@
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>
+</div>
+
 
     @if (!selectedReagents.size && !reagentsSelectionError) {
     <div>No reagent choosen yet</div>
