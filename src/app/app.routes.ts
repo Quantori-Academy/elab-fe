@@ -71,7 +71,6 @@ export const routes: Routes = [
             './pages/reagent-request-page/reagent-request-page.component'
           ).then((c) => c.ReagentsRequestPageComponent),
         canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.ProcurementOfficer },
       },
     ],
   },
