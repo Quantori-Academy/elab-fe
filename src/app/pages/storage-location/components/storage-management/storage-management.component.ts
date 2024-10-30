@@ -40,6 +40,7 @@ import { Router } from '@angular/router';
 import { RoomManagementService } from '../../services/room-management.service';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
   selector: 'app-storage-management',
@@ -55,6 +56,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
     FormsModule,
     MatDialogModule,
     SpinnerDirective,
+    TableLoaderSpinnerComponent,
   ],
   templateUrl: './storage-management.component.html',
   styleUrl: './storage-management.component.scss',

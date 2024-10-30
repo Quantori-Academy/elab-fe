@@ -49,8 +49,11 @@
     [length]="10"
     [pageSize]="10"
     [pageIndex]="0"
+    [pageSizeOptions]="pageSizeOptions"
     aria-label="Select page"
   >
   </mat-paginator>
 </div>
+}@else {
+<app-table-loader-spinner />
 }

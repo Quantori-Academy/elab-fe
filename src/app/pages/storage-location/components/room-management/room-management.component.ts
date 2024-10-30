@@ -20,6 +20,7 @@ import { DeleteConfirmComponent } from '../../../../shared/components/delete-con
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
   selector: 'app-room-management',
@@ -31,6 +32,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
     MatSelectModule,
     AsyncPipe,
     DatePipe,
+    TableLoaderSpinnerComponent,
   ],
   templateUrl: './room-management.component.html',
   styleUrl: './room-management.component.scss',
