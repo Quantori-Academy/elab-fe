@@ -64,6 +64,14 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
         data: { role: UserRoles.Admin },
       },
+      {
+        path: 'reagent-request-page',
+        loadComponent: () =>
+          import(
+            './pages/reagent-request-page/reagent-request-page.component'
+          ).then((c) => c.ReagentsRequestPageComponent),
+        canActivate: [authGuard],
+      },
     ],
   },
   {
