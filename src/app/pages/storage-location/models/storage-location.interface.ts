@@ -13,6 +13,7 @@ export interface StorageLocationItem {
   description: string;
   createdAt?: string;
   updatedAt?: string;
+  numberOfReagents: number;
   room: {
     id: number;
     name: string;
@@ -44,4 +45,5 @@ export interface RoomData {
   id?: number;
   name: string;
   description: string;
+  numberOfStorages: number;
 }

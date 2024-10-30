@@ -60,10 +60,6 @@ export class RoomManagementComponent implements OnInit {
     }
   }
 
-  public getRandomStorageNumber(): number {
-    return Math.floor(Math.random() * 10);
-  }
-
   public openDialog() {
     this.dialog.open(AddEditRoomComponent);
   }

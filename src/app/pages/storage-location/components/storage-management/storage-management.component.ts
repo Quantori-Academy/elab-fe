@@ -104,10 +104,6 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
     this.setFilterStorageName();
   }
 
-  public getRandomReagentsNumber(): number {
-    return Math.floor(Math.random() * 10);
-  }
-
   public redirectToDetailPage(element: StorageLocationItem) {
     this.router.navigate(['/storage-locations', element.id], {
       queryParams: { data: JSON.stringify(element) },
