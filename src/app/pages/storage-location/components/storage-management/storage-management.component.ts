@@ -8,12 +8,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import {
-  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
   Observable,
@@ -63,7 +63,7 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StorageManagementComponent implements OnInit, OnDestroy {
-  readonly DEBOUNCE_TIME = 1000;
+  private readonly DEBOUNCE_TIME = 1000;
   public displayedColumns: string[] = [
     'room',
     'name',
@@ -75,14 +75,10 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   public listLength = 100;
   public pageIndex = 0;
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
-  public storageLocationDataSubject = new BehaviorSubject<
-    StorageLocationListData | undefined
-  >(undefined);
-  public storageLocationData$ = this.storageLocationDataSubject.asObservable();
+  public storageLocationData$?: Observable<StorageLocationListData | undefined>;
 
   public listOfRooms$: Observable<RoomData[] | undefined>;
   public isAdmin = false;
-  public isLoading = false;
 
   private storageLocationService = inject(StorageLocationService);
   private roomManagementService = inject(RoomManagementService);
@@ -93,8 +89,11 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   private filterSubject = new Subject<StorageLocationFilteredData>();
   private destroy$ = new Subject<void>();
 
+  public isLoading = computed(() => this.storageLocationService.isLoading());
+
   constructor() {
-    this.getListStorageLocation();
+    this.storageLocationData$ =
+      this.storageLocationService.getListStorageLocation();
     this.listOfRooms$ = this.roomManagementService.roomData$;
     this.pageSize = this.storageLocationService.pageSize;
   }
@@ -105,32 +104,20 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   public redirectToDetailPage(element: StorageLocationItem) {
-    this.router.navigate(['/storage-locations', element.id], {
-      queryParams: { data: JSON.stringify(element) },
-    });
+    this.router.navigate(['/storage-locations', element.id]);
   }
 
   private setFilterStorageName() {
     this.filterSubject
       .pipe(
-        tap(() => (this.isLoading = true)),
+        tap(() => this.storageLocationService.isLoading.set(true)),
         debounceTime(this.DEBOUNCE_TIME),
         distinctUntilChanged(),
         takeUntil(this.destroy$)
       )
       .subscribe((filterData) => {
         this.storageLocationService.setFilteringPageData(filterData);
-        this.isLoading = false;
       });
-  }
-
-  public getListStorageLocation() {
-    this.storageLocationService
-      .getListStorageLocation()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((storageList) =>
-        this.storageLocationDataSubject.next(storageList)
-      );
   }
 
   onSort(sort: Sort) {

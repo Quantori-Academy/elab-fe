@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams, HttpResponseBase } from '@angular/common/http';
 import {
@@ -31,6 +31,7 @@ export class StorageLocationService {
   public httpParams$ = this.httpParamsSubject.asObservable();
 
   public pageSize = 10;
+  public isLoading = signal(false);
 
   constructor(private http: HttpClient) {}
 
@@ -41,6 +42,7 @@ export class StorageLocationService {
   public getListStorageLocation(): Observable<StorageLocationListData> {
     return this.httpParams$.pipe(
       switchMap((params) => {
+        this.isLoading.set(true);
         let httpParams = new HttpParams()
           .set('skip', params.skip)
           .set('take', params.take || this.pageSize);
@@ -67,17 +69,17 @@ export class StorageLocationService {
         httpParams = setParamIfExists('roomName', params.roomName);
         httpParams = setParamIfExists('storageName', params.storageName);
 
-        return this.http.get<StorageLocationListData>(
-          `${this.apiUrl}/storages`,
-          {
+        return this.http
+          .get<StorageLocationListData>(`${this.apiUrl}/storages`, {
             params: httpParams,
-          }
-        );
+          })
+          .pipe(tap(() => this.isLoading.set(false)));
       })
     );
   }
 
   public setPageData(pageData: PageEvent): void {
+    this.isLoading.set(true);
     this.httpParamsSubject.next({
       ...this.currentHttpParams,
       skip: pageData.pageIndex * pageData.pageSize,
@@ -86,6 +88,7 @@ export class StorageLocationService {
   }
 
   public setSortingPageData(sortingData: Sort): void {
+    this.isLoading.set(true);
     const sortingMap = {
       [StorageLocationColumn.Name]: {
         alphabeticalStorageName: sortingData.direction,
@@ -111,6 +114,7 @@ export class StorageLocationService {
   }
 
   public setFilteringPageData(filterData: StorageLocationFilteredData): void {
+    this.isLoading.set(true);
     const { value, column } = filterData;
     let filterColumn = {};
     switch (column) {
