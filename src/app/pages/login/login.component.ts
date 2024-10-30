@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit {
     confirmPassword: true,
   };
   public errorVisible = true;
+  public isLoading = false;
+  public isSubmitting = false;
   private errorHandler = inject(ErrorHandler);
 
   constructor(
@@ -58,24 +60,26 @@ export class LoginComponent implements OnInit {
     return (
       this.form.controls.email.touched &&
       this.form.controls.email.dirty &&
-      this.form.controls.email.invalid
+      this.form.controls.email.invalid &&
+      !this.isSubmitting
     );
   }
 
   get emailTouched() {
-    return this.form.controls.email.touched;
+    return this.form.controls.email.touched && !this.isSubmitting;
   }
 
   get passwordIsInvalid() {
     return (
       this.form.controls.password.touched &&
       this.form.controls.password.dirty &&
-      this.form.controls.password.invalid
+      this.form.controls.password.invalid &&
+      !this.isSubmitting
     );
   }
 
   get passwordTouched() {
-    return this.form.controls.password.touched;
+    return this.form.controls.password.touched && !this.isSubmitting;
   }
 
   errorMessage = signal('');
@@ -99,6 +103,10 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.isSubmitting = true;
+    this.isLoading = true;
+
     const enteredEmail = this.form.value.email || '';
     const enteredPassword = this.form.value.password || '';
 
@@ -108,6 +116,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
         },
         error: (error: HttpErrorResponse | unknown) => {
+          this.isLoading = false;
+          this.isSubmitting = false;
+          console.error('Login error:', error);
+
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
               this.errorMessage.set('Incorrect password or email');

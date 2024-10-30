@@ -25,6 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDatepickerModule,
     MatLabel,
     MatDialogModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatButtonModule,
@@ -72,6 +74,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatError,
     MatLabel,
     MatDialogModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

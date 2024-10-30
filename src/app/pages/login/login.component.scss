@@ -67,3 +67,23 @@
     font-size: 28px;
     color: red;
 }
+
+.login-spinner-container {
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+.login-spinner {
+    position: absolute;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
