@@ -23,13 +23,13 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { RoomManagementService } from '../../services/room-management.service';
 
 @Component({
-  selector: 'app-storage-location-add-new',
+  selector: 'app-add-edit-storage',
   standalone: true,
   imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, AsyncPipe],
-  templateUrl: './storage-location-add-new.component.html',
-  styleUrl: './storage-location-add-new.component.scss',
+  templateUrl: './add-edit-storage.component.html',
+  styleUrl: './add-edit-storage.component.scss',
 })
-export class StorageLocationAddNewComponent implements OnInit {
+export class AddEditStorageComponent implements OnInit {
   readonly MAX_LENGTH = 300;
   readonly DEBOUNCE_TIME = 300;
 
@@ -37,7 +37,7 @@ export class StorageLocationAddNewComponent implements OnInit {
   private storageLocationService = inject(StorageLocationService);
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
-  private dialogRef = inject(MatDialogRef<StorageLocationAddNewComponent>);
+  private dialogRef = inject(MatDialogRef<AddEditStorageComponent>);
 
   public storageForm: FormGroup = this.fb.group({
     roomName: ['', [Validators.required]],
