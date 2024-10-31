@@ -1,17 +1,30 @@
 import { SortDirection } from '@angular/material/sort';
-import { Reagent } from '../../../shared/models/reagent-model';
 
 export interface Order {
-  title: string;
-  seller: string;
   id: number;
   userId: number;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  status: Status;
-  reagents: Reagent[];
+  title: string;
+  seller: string;
+  status: 'Pending' | 'Fulfilled' | 'Cancelled' | string;
+  createdAt: string; 
+  updatedAt: string;
+  reagents: RequestedReagents[];
 }
-
+export interface RequestedReagents {
+  id: number;
+  userId: number;
+  name: string;
+  structureSmiles: string;
+  casNumber: string;
+  desiredQuantity: number;
+  quantityUnit: string;
+  userComments: string | null;
+  procurementComments: string | null;
+  status: 'Pending' | 'Fulfilled' | 'Cancelled' | string;
+  createdAt: string;
+  updatedAt: string;
+  orderId: number;
+}
 export enum Status {
   pending = 'Pending',
   ordered = 'Ordered',
@@ -28,7 +41,6 @@ export interface OrderQuery {
   orderSeller?: string;
   orderStatus?: string;
 }
-// orderRequest body
 
 export interface OrderRequest {
   title: string;

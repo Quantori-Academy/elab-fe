@@ -1,4 +1,10 @@
-import { Component, inject, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Order, OrderRequest } from '../../model/order-model';
@@ -12,7 +18,7 @@ import {
 import { OrderService } from '../../service/order.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../service/reagent-request.service';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable,} from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
 import { mockOrders } from '../../../../../../MockData';
 import { AsyncPipe } from '@angular/common';
@@ -28,14 +34,14 @@ import { AsyncPipe } from '@angular/common';
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderFormComponent implements OnInit, OnDestroy {
+export class OrderFormComponent implements OnInit {
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<Order>);
   private fb = inject(FormBuilder);
   private orderService = inject(OrderService);
   private reagentRequestService = inject(ReagentRequestService);
-  private destroyed$ = new Subject<void>();
 
   constructor(@Inject(MAT_DIALOG_DATA) public editionData: Order | null) {}
 
@@ -48,23 +54,18 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   ];
   reagentsSelectionError = false;
 
-  dataSource$ = new BehaviorSubject<ReagentRequest[]>([]);
+  dataSource$!: Observable<ReagentRequest[]>;
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
 
   orderForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(200)]],
-    seller: [''],
+    seller: ['',Validators.required],
     reagents: [[], Validators.required],
   });
 
   ngOnInit(): void {
-    this.reagentRequestService
-      .getReagentRequests()
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((data) => {
-        this.dataSource$.next(data);
-      });
+    this.dataSource$ = this.reagentRequestService.getReagentRequests()
 
     const uniqueSellers = [...new Set(mockOrders.map((order) => order.seller))];
     this.sellerOptions$.next(uniqueSellers);
@@ -76,10 +77,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     } else {
       this.selectedReagents.add(id);
     }
-    this.updateReagentsFormControl();
+    this.updateOrdersFormControl();
   }
 
-  updateReagentsFormControl() {
+  updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents).map(
       (id) => ({ id })
     );
@@ -112,9 +113,5 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   onClose() {
     this.dialogRef.close();
-  }
-  ngOnDestroy(): void {
-    this.destroyed$.next();
-    this.destroyed$.complete();
   }
 }

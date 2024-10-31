@@ -22,12 +22,12 @@ export class OrderPageComponent {
   private activatedRoutes = inject(ActivatedRoute);
   displayedColumns = [
     'name',
-    'cas',
-    'totalQuantity',
-    'package',
-    'quantityLeft',
-    'structure',
-    'room',
+    'casNumber',
+    'desiredQuantity',
+    // 'package',
+    // 'quantityLeft',
+    'structureSmiles',
+    'userComments',
   ];
  
   order$ = this.activatedRoutes.paramMap.pipe(

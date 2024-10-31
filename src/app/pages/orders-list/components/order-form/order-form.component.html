@@ -3,9 +3,8 @@
 </button>
 <div>
   <h1 class="new-order-h1">Create New Order</h1>
-  
-  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
 
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
     <mat-form-field subscriptSizing="dynamic" appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput formControlName="title" />
@@ -28,55 +27,58 @@
         <mat-option [value]="option">{{ option }}</mat-option>
         }
       </mat-autocomplete>
+      @if (orderForm.get('seller')?.invalid && orderForm.get('seller')?.touched)
+      {
+      <mat-error>Seller is required.</mat-error>
+      }
     </mat-form-field>
-<div class="table-container">
+    <div class="table-container">
       <table
-      mat-table
-      [dataSource]="dataSource$"
-      class="mat-elevation-z8 demo-table"
-    >
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-      </ng-container>
+        mat-table
+        [dataSource]="dataSource$"
+        class="mat-elevation-z8 demo-table"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
 
-      <!-- desiredQuantity Column -->
-      <ng-container matColumnDef="desiredQuantity">
-        <th mat-header-cell *matHeaderCellDef>Desired quantity</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.desiredQuantity }} {{ element.quantityUnit }}
-        </td>
-      </ng-container>
+        <!-- desiredQuantity Column -->
+        <ng-container matColumnDef="desiredQuantity">
+          <th mat-header-cell *matHeaderCellDef>Desired quantity</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.desiredQuantity }} {{ element.quantityUnit }}
+          </td>
+        </ng-container>
 
-      <!-- userComments Column -->
-      <ng-container matColumnDef="userComments">
-        <th mat-header-cell *matHeaderCellDef>userComments</th>
-        <td mat-cell *matCellDef="let element">{{ element.userComments }}</td>
-      </ng-container>
+        <!-- userComments Column -->
+        <ng-container matColumnDef="userComments">
+          <th mat-header-cell *matHeaderCellDef>userComments</th>
+          <td mat-cell *matCellDef="let element">{{ element.userComments }}</td>
+        </ng-container>
 
-      <!-- casNumber -->
-      <ng-container matColumnDef="casNumber">
-        <th mat-header-cell *matHeaderCellDef>casNumber</th>
-        <td mat-cell *matCellDef="let element">{{ element.casNumber }}</td>
-      </ng-container>
+        <!-- casNumber -->
+        <ng-container matColumnDef="casNumber">
+          <th mat-header-cell *matHeaderCellDef>casNumber</th>
+          <td mat-cell *matCellDef="let element">{{ element.casNumber }}</td>
+        </ng-container>
 
-      <!-- id -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>id</th>
-        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-      </ng-container>
+        <!-- id -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        mat-row
-        (click)="onSelect(row.id)"
-        [class.demo-row-is-clicked]="selectedReagents.has(row.id)"
-        *matRowDef="let row; columns: displayedColumns"
-      ></tr>
-    </table>
-</div>
-
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          (click)="onSelect(row.id)"
+          [class.demo-row-is-clicked]="selectedReagents.has(row.id)"
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+      </table>
+    </div>
 
     @if (!selectedReagents.size && !reagentsSelectionError) {
     <div>No reagent choosen yet</div>

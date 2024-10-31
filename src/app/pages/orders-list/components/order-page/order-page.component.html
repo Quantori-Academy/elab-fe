@@ -11,28 +11,19 @@
 
 <h4>Ordered Reagents</h4>
 <div class="mat-elevation-z8">
-  <mat-table
-    class="table"
-    [dataSource]="order.reagents"
-    matSort
-   
-  >
+  <mat-table class="table" [dataSource]="order.reagents">
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Name
-      </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="cas">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> CAS </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.cas }} </mat-cell>
+    <ng-container matColumnDef="casNumber">
+      <mat-header-cell *matHeaderCellDef> casNumber </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.casNumber }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="modification date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header
-        >Modification Date</mat-header-cell
-      >
+      <mat-header-cell *matHeaderCellDef>Modification Date</mat-header-cell>
       <mat-cell *matCellDef="let element">
         @if (element.updatedAt === '') {
         <span>______</span>
@@ -40,19 +31,18 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="totalQuantity">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Total Quantity
-      </mat-header-cell>
+    <ng-container matColumnDef="desiredQuantity">
+      <mat-header-cell *matHeaderCellDef> Desired Quantity </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.totalQuantity }} {{ element.quantityUnit }}
+        {{ element.desiredQuantity }} {{ element.quantityUnit }}
       </mat-cell>
     </ng-container>
 
+    <!--
     <ng-container matColumnDef="package">
       <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{ element.package }} </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <ng-container matColumnDef="quantityLeft">
       <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>
@@ -62,17 +52,21 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="structure">
+    <ng-container matColumnDef="structureSmiles">
       <mat-header-cell *matHeaderCellDef> Structure </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.structure }} </mat-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.structureSmiles }}
+      </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="room">
-      <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.room.name }} </mat-cell>
+    <ng-container matColumnDef="userComments">
+      <mat-header-cell *matHeaderCellDef> Creator's comment </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.userComments }}
+      </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <!-- <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button mat-icon-button aria-label="edit">
@@ -90,7 +84,7 @@
           <mat-icon>open_in_new</mat-icon>
         </button>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
