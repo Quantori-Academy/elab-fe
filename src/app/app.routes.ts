@@ -63,6 +63,27 @@ export const routes: Routes = [
           ),
         canActivate: [authGuard, roleGuard],
         data: { role: UserRoles.Admin },
+        pathMatch: 'full',
+      },
+      {
+        path: 'reagents/create-reagent',
+        loadComponent: () =>
+          import(
+            './pages/reagents-list/components/create-reagent/create-reagent.component'
+          ).then((c) => c.CreateReagentComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.Admin },
+        pathMatch: 'full',
+      },
+      {
+        path: 'reagents/create-sample',
+        loadComponent: () =>
+          import(
+            './pages/reagents-list/components/create-reagent/create-reagent.component'
+          ).then((c) => c.CreateReagentComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.Admin, isSample: true },
+        pathMatch: 'full',
       },
       {
         path: 'reagent-request-page',

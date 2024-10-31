@@ -13,6 +13,11 @@
   justify-content: space-between;
 }
 
+.create-btns {
+  display: flex;
+  column-gap: 10px;
+}
+
 img:hover {
   cursor: pointer;
 }
