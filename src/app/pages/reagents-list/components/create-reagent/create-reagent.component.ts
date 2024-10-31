@@ -1,9 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Inject,
   inject,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import {
   Unit,
@@ -16,27 +16,31 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { StorageLocationService } from '../../../storage-location/services/storage-location.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../../material.module';
-import { map, Subscription } from 'rxjs';
+import { map, Subscription, take } from 'rxjs';
 import { StorageLocationItem } from '../../../storage-location/models/storage-location.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-new-reagent-form',
+  selector: 'app-create-reagent',
   standalone: true,
   providers: [provideNativeDateAdapter()],
   imports: [CommonModule, ReactiveFormsModule, MaterialModule],
-  templateUrl: './new-reagent-form.component.html',
-  styleUrls: ['./new-reagent-form.component.scss'],
+  templateUrl: './create-reagent.component.html',
+  styleUrl: './create-reagent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewReagentFormComponent implements OnDestroy {
+export class CreateReagentComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private reagentsService = inject(ReagentsService);
   private storageLocationService = inject(StorageLocationService);
   private notificationsService = inject(NotificationPopupService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
   private storageSubscription: Subscription | null = null;
+
+  public isSample = false;
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -72,10 +76,11 @@ export class NewReagentFormComponent implements OnDestroy {
     storageId: [null as number | null],
   });
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { structure: string },
-    private dialogRef: MatDialogRef<NewReagentFormComponent>
-  ) {}
+  ngOnInit(): void {
+    this.activatedRoute.data
+      .pipe(take(1))
+      .subscribe((data) => (this.isSample = data['isSample']));
+  }
 
   onRoomNameChange() {
     const storageName = this.reagentRequestForm.get('storageLocation')?.value;
@@ -122,12 +127,6 @@ export class NewReagentFormComponent implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    if (this.storageSubscription) {
-      this.storageSubscription.unsubscribe();
-    }
-  }
-
   onSubmit() {
     if (this.reagentRequestForm.valid) {
       const formRawValue = { ...this.reagentRequestForm.value };
@@ -152,7 +151,6 @@ export class NewReagentFormComponent implements OnDestroy {
         this.reagentsService.createReagent(formValue).subscribe({
           next: (resp) => {
             console.log('Reagent created successfully:', resp);
-            this.dialogRef.close(true);
             this.notificationsService.success({
               title: 'Success',
               message: 'Reagent created successfully!',
@@ -176,7 +174,13 @@ export class NewReagentFormComponent implements OnDestroy {
     }
   }
 
-  onClose(): void {
-    this.dialogRef.close();
+  public redirectToReagentList() {
+    return this.router.navigate(['reagents']);
+  }
+
+  ngOnDestroy() {
+    if (this.storageSubscription) {
+      this.storageSubscription.unsubscribe();
+    }
   }
 }

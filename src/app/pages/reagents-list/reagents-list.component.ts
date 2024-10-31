@@ -15,9 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
-import { NewReagentFormComponent } from './components/new-reagent-form/new-reagent-form.component';
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reagents-list',
@@ -36,6 +36,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   @Input() storageLocationId?: number;
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
+  private router = inject(Router);
 
   selectedCategory = '';
   filterValue = '';
@@ -120,15 +121,12 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
       panelClass: 'image-dialog',
     });
   }
-  openCreateReagentDialog() {
-    const dialogRef = this.dialog.open(NewReagentFormComponent, {
-      data: {},
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadReagents(); // Reload reagents after creating a new one
-      }
-    });
+  redirectToCreatePage(page: 'reagent' | 'sample') {
+    if (page === 'reagent') {
+      this.router.navigate(['reagents/create-reagent']);
+    } else {
+      this.router.navigate(['reagents/create-sample']);
+    }
   }
 }
