@@ -1,0 +1,13 @@
+.table-loader {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loader {
+    position: unset;
+    left: unset;
+    top: unset;
+    transform: unset;
+  }
+}
