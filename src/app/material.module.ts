@@ -26,6 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatLabel,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatCardModule,
   ],
   exports: [
     MatButtonModule,
@@ -75,6 +77,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatLabel,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatCardModule,
   ],
   providers: [
     {
