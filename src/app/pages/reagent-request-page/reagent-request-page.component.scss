@@ -13,6 +13,8 @@
   }
   
   .table-wrapper {
+    display: flex;
+    flex-direction: column;
     overflow-x: scroll;
     padding: 15px;
   }
@@ -20,5 +22,9 @@
   .filter-container {
     display: flex;
     gap: 1rem;
+  }
+
+  .mat-column-desiredQuantity {
+    text-align: center;
   }
   
