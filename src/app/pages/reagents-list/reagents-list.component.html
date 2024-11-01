@@ -1,18 +1,10 @@
 <div class="wrapper">
   <div class="actions">
     <div class="create-btns">
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="redirectToCreatePage('reagent')"
-      >
+      <button mat-flat-button color="primary" (click)="redirectToCreatePage('reagent')">
         Create Reagent
       </button>
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="redirectToCreatePage('sample')"
-      >
+      <button mat-flat-button color="primary" (click)="redirectToCreatePage('sample')">
         Create Sample
       </button>
     </div>
@@ -26,10 +18,10 @@
       <mat-form-field appearance="fill">
         <mat-label>Filter by Category</mat-label>
         <mat-select [(ngModel)]="selectedCategory" (selectionChange)="applyFilter()">
-          <mat-option value="">All Categories</mat-option>
-          <mat-option value="Sample">Sample</mat-option>
-          <mat-option value="Reagent">Reagent</mat-option>
-        </mat-select>
+            <mat-option value="">All Categories</mat-option>
+            <mat-option value="Sample">Sample</mat-option>
+            <mat-option value="Reagent">Reagent</mat-option>
+          </mat-select>
       </mat-form-field>
     </div>
   </div>
