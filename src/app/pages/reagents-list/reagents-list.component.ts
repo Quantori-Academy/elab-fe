@@ -18,6 +18,7 @@ import { StructureDialogComponent } from './components/structure-dialog/structur
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-reagents-list',
@@ -37,6 +38,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
   private router = inject(Router);
+  isLoading$ = new BehaviorSubject<boolean>(false);
 
   selectedCategory = '';
   filterValue = '';
@@ -62,10 +64,10 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Initially load the reagents without sorting
-    this.loadReagents(false);
+    this.loadReagents(false).subscribe();
   }
 
-  loadReagents(applySorting = true) {
+  loadReagents(applySorting = true): Observable<Reagent[]> {
     console.log('Fetching reagents with filters:', {
       name: this.filterValue,
       category: this.selectedCategory,
@@ -77,21 +79,21 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
       take: this.paginator?.pageSize,
     });
 
-    this.reagentsService
-      .getReagents(
-        this.filterValue,
-        this.selectedCategory,
-        applySorting && this.sortColumn === 'name'
-          ? this.sortDirection
-          : undefined,
-        undefined, // sortByCreationDate
-        undefined, // sortByUpdatedDate
-        this.paginator?.pageIndex,
-        this.paginator?.pageSize
-      )
-      .subscribe((reagents) => {
+    this.isLoading$.next(true);
+    return this.reagentsService.getReagents(
+      this.filterValue,
+      this.selectedCategory,
+      applySorting && this.sortColumn === 'name' ? this.sortDirection : undefined,
+      undefined,
+      undefined,
+      this.paginator?.pageIndex,
+      this.paginator?.pageSize
+    ).pipe(
+      tap((reagents) => {
         this.dataSource.data = reagents;
-      });
+        this.isLoading$.next(false);
+      })
+    );
   }
 
   ngAfterViewInit(): void {
@@ -99,8 +101,9 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   }
 
   applyFilter() {
-    this.loadReagents();
+    this.loadReagents().subscribe();
   }
+
 
   onSortChange(sort: Sort) {
     if (sort.active === 'name') {
@@ -112,7 +115,7 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     }
 
     this.sortColumn = sort.active;
-    this.loadReagents();
+    this.loadReagents().subscribe();
   }
 
   openStructure(structure: string) {

@@ -3,6 +3,10 @@
   margin-bottom: 1.5rem;
 }
 
+mat-cell{
+  height: 120px;
+}
+
 .name-column {
   max-width: 10rem;
   padding: 1rem;
@@ -22,12 +26,16 @@ img:hover {
   cursor: pointer;
 }
 
-.table-wrapper {
-  overflow-x: scroll;
-  padding: 15px;
-}
 
 .filter-container {
   display: flex;
   gap: 1rem;
 }
+
+.reagents-list-spinner-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
