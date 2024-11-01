@@ -87,7 +87,7 @@ export const routes: Routes = [
           import(
             './pages/orders-list/components/order-page/order-page.component'
           ).then((c) => c.OrderPageComponent),
-        canActivate: [authGuard,roleGuard],
+        canActivate: [authGuard, roleGuard],
         data: { role: UserRoles.ProcurementOfficer },
       },
     ],

@@ -18,7 +18,7 @@ import {
 import { OrderService } from '../../service/order.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../service/reagent-request.service';
-import { BehaviorSubject, Observable,} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
 import { mockOrders } from '../../../../../../MockData';
 import { AsyncPipe } from '@angular/common';
@@ -60,12 +60,12 @@ export class OrderFormComponent implements OnInit {
 
   orderForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(200)]],
-    seller: ['',Validators.required],
+    seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
 
   ngOnInit(): void {
-    this.dataSource$ = this.reagentRequestService.getReagentRequests()
+    this.dataSource$ = this.reagentRequestService.getReagentRequests();
 
     const uniqueSellers = [...new Set(mockOrders.map((order) => order.seller))];
     this.sellerOptions$.next(uniqueSellers);
@@ -94,9 +94,8 @@ export class OrderFormComponent implements OnInit {
 
       const orderData: OrderRequest = this.orderForm.value;
       this.orderService.createOrder(orderData).subscribe({
-        next: (data) => {
+        next: () => {
           this.dialogRef.close();
-          console.log(data);
           this.notificationPopupService.success({
             title: 'Success',
             message: 'Order created successfully!',
