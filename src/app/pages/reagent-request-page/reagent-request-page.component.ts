@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, inject, OnInit, ViewChild } from '@angular/core';
 import { ReagentRequestService } from './reagent-request-page.service';
 import { ReagentRequestList } from './reagent-request-page.interface';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -17,6 +10,11 @@ import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { StructureDialogComponent } from '../reagents-list/components/structure-dialog/structure-dialog.component';
 import { StatusFilter } from '../../shared/models/status.type';
+import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
+import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject, of } from 'rxjs';
+import { catchError, delay, tap } from 'rxjs/operators';
+import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -27,50 +25,43 @@ import { StatusFilter } from '../../shared/models/status.type';
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
+    SpinnerDirective,
+    TableLoaderSpinnerComponent,
   ],
   templateUrl: './reagent-request-page.component.html',
   styleUrls: ['./reagent-request-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
-  private cdr = inject(ChangeDetectorRef);
-  private isLoading = false;
-
+  public isLoading = computed(() => this.reagentRequestService.isLoading());
+  dataSource$ = new BehaviorSubject<ReagentRequestList[]>([]);
   selectedStatus: StatusFilter = '';
   currentPage = 0;
   sortDirection: 'asc' | 'desc' = 'asc';
   sortColumn: 'createdAt' | 'quantity' | 'updatedAt' = 'createdAt';
   filterName = '';
-
   displayedColumns = [
     'name',
     'structureSmiles',
     'casNumber',
     'desiredQuantity',
     'status',
-    // 'userComments',
-    // 'procurementComments',
     'createdAt',
     'updatedAt',
     'actions',
   ];
-
-  dataSource: ReagentRequestList[] = [];
   totalItems = 0;
   pageSize = 10;
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dataSource = new MatTableDataSource<ReagentRequestList>();
 
   ngOnInit(): void {
     this.loadReagentRequests();
   }
 
   loadReagentRequests() {
-    this.isLoading = true;
     const skip = this.currentPage * this.pageSize;
-
     this.reagentRequestService
       .getReagentRequests(
         this.selectedStatus || undefined,
@@ -81,18 +72,18 @@ export class ReagentsRequestPageComponent implements OnInit {
         this.pageSize,
         this.filterName || undefined
       )
-      .subscribe({
-        next: (requests) => {
-          this.dataSource = requests;
+      .pipe(
+        delay(2000),
+        tap((requests) => {
           this.totalItems = requests.length;
-          this.isLoading = false;
-          this.cdr.markForCheck();
-        },
-        error: (err) => {
+          this.dataSource$.next(requests);
+        }),
+        catchError((err) => {
           console.error('Error:', err);
-          this.isLoading = false;
-        },
-      });
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 
   onPageChange(event: PageEvent) {
@@ -113,12 +104,11 @@ export class ReagentsRequestPageComponent implements OnInit {
     if (['createdAt', 'quantity', 'updatedAt'].includes(sort.active)) {
       this.sortColumn = sort.active as 'createdAt' | 'quantity' | 'updatedAt';
       this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
-      this.loadReagentRequests();
     } else {
       this.sortColumn = 'createdAt';
       this.sortDirection = 'asc';
-      this.loadReagentRequests();
     }
+    this.loadReagentRequests();
   }
 
   openStructure(structure: string) {
@@ -127,18 +117,18 @@ export class ReagentsRequestPageComponent implements OnInit {
       panelClass: 'image-dialog',
     });
   }
-
-  // Currently in progress
-
-  // openCreateReagentRequestDialog() {
-  //   const dialogRef = this.dialog.open(NewReagentFormComponent, {
-  //     data: {},
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.loadReagentRequests();
-  //     }
-  //   });
-  // }
 }
+
+// Currently in progress
+
+// openCreateReagentRequestDialog() {
+//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
+//     data: {},
+//   });
+
+//   dialogRef.afterClosed().subscribe((result) => {
+//     if (result) {
+//       this.loadReagentRequests();
+//     }
+//   });
+// }

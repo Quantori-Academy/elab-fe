@@ -1,9 +1,5 @@
 <div class="wrapper">
   <div class="actions">
-    <!-- <button mat-flat-button color="primary" (click)="openCreateReagentRequestDialog()">
-              Create New Request
-            </button> -->
-
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Filter by Status</mat-label>
@@ -34,39 +30,37 @@
   <div class="table-wrapper">
     <table
       mat-table
-      [dataSource]="dataSource"
+      [dataSource]="dataSource$"
       matSort
       (matSortChange)="onSortChange($event)"
       class="mat-elevation-z8"
+      [appSpinner]="isLoading()"
     >
-      <!-- Name -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
-      <!-- Structure -->
+
       <ng-container matColumnDef="structureSmiles">
         <th mat-header-cell *matHeaderCellDef>Structure</th>
         <td mat-cell *matCellDef="let element">
-          @if(element.structureSmiles) {
-          <app-molecule-structure
-            [structure]="element.structureSmiles"
-            [width]="100"
-            [height]="100"
-          ></app-molecule-structure>
-          } @if(!element.structureSmiles) {
-          <span>No Structure Data</span>
-          }
+          <div class="image-container">
+            <app-molecule-structure
+              [structure]="element.structureSmiles"
+              [width]="100"
+              [height]="100"
+            ></app-molecule-structure>
+          </div>
         </td>
       </ng-container>
-      <!-- CAS -->
+
       <ng-container matColumnDef="casNumber">
         <th mat-header-cell *matHeaderCellDef>CAS Number</th>
         <td mat-cell *matCellDef="let element">
           {{ element.casNumber || "N/A" }}
         </td>
       </ng-container>
-      <!-- Desired quantity -->
+
       <ng-container matColumnDef="desiredQuantity">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Desired Quantity
@@ -75,39 +69,26 @@
           {{ element.desiredQuantity }}
         </td>
       </ng-container>
-      <!-- Status -->
+
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let element">{{ element.status }}</td>
       </ng-container>
-      <!-- User comments -->
-      <!-- <ng-container matColumnDef="userComments">
-        <th mat-header-cell *matHeaderCellDef>User Comments</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.userComments || "N/A" }}
-        </td>
-      </ng-container> -->
-      <!-- Procurement comments -->
-      <!-- <ng-container matColumnDef="procurementComments">
-        <th mat-header-cell *matHeaderCellDef>Procurement Comments</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.procurementComments || "N/A" }}
-        </td>
-      </ng-container> -->
-      <!-- Created at -->
+
       <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
         <td mat-cell *matCellDef="let element">
           {{ element.createdAt | date : "short" }}
         </td>
       </ng-container>
-      <!-- Updated at -->
+
       <ng-container matColumnDef="updatedAt">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated At</th>
         <td mat-cell *matCellDef="let element">
           {{ element.updatedAt | date : "short" }}
         </td>
       </ng-container>
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
@@ -120,6 +101,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
     <mat-paginator
       class="mat-elevation-z8"
       [length]="totalItems"
@@ -127,7 +109,6 @@
       [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons
       (page)="onPageChange($event)"
-    >
-    </mat-paginator>
+    ></mat-paginator>
   </div>
 </div>
