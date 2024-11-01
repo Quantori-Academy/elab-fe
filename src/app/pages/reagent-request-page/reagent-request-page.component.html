@@ -27,10 +27,11 @@
     </div>
   </div>
 
+  @if ( dataSource$ | async; as dataSource ) {
   <div class="table-wrapper">
     <table
       mat-table
-      [dataSource]="dataSource$"
+      [dataSource]="dataSource"
       matSort
       (matSortChange)="onSortChange($event)"
       class="mat-elevation-z8"
@@ -111,4 +112,7 @@
       (page)="onPageChange($event)"
     ></mat-paginator>
   </div>
+  } @else {
+  <app-table-loader-spinner />
+  }
 </div>

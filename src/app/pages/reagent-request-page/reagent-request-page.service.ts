@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, delay, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReagentRequestList } from './reagent-request-page.interface';
@@ -48,12 +48,12 @@ export class ReagentRequestService {
       params = params.append('name', name);
     }
 
-    console.log('Loaded', this.isLoading());
     this.isLoading.set(true);
-    console.log('Loaded', this.isLoading());
+
     return this.httpClient
       .get<ReagentRequestList[]>(this.apiUrl, { headers, params })
       .pipe(
+        delay(2000),
         tap(() => this.isLoading.set(false)),
         catchError((error) => {
           this.isLoading.set(false);
