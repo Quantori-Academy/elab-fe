@@ -12,8 +12,26 @@ export const roleGuard: CanActivateFn = (
   const router = inject(Router);
   const authService = inject(AuthService);
   const requiredRole = route.data['role'] as string;
+  const requiredRoles = route.data['roles'] as string[];
+
+  let rolesToCheck: string[] = [];
+
+  if (requiredRoles && Array.isArray(requiredRoles)) {
+    rolesToCheck = requiredRoles;
+  } else if (requiredRole && typeof requiredRole === 'string') {
+    rolesToCheck = [requiredRole];
+  }
+
+  if (rolesToCheck.length === 0) {
+    console.warn('No role:', route.url);
+    return of(router.createUrlTree(['/dashboard']));
+  }
 
   const user = rbacService.getAuthenticatedUser();
+
+  const hasAnyRole = (roles: string[]): boolean => {
+    return roles.some((role) => rbacService.isGranted(role));
+  };
 
   if (!user) {
     return authService.getCurrentUser().pipe(
@@ -25,7 +43,7 @@ export const roleGuard: CanActivateFn = (
           return router.createUrlTree(['/dashboard']);
         }
 
-        if (rbacService.isGranted(requiredRole)) {
+        if (hasAnyRole(rolesToCheck)) {
           return true;
         } else {
           return router.createUrlTree(['/dashboard']);
@@ -37,7 +55,7 @@ export const roleGuard: CanActivateFn = (
       })
     );
   } else {
-    if (rbacService.isGranted(requiredRole)) {
+    if (hasAnyRole(rolesToCheck)) {
       return of(true);
     } else {
       return of(router.createUrlTree(['/dashboard']));

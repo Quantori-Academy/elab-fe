@@ -1,8 +1,21 @@
 <div class="wrapper">
   <div class="actions">
-    <button mat-flat-button color="primary" (click)="openCreateReagentDialog()">
-      Create New Reagent
-    </button>
+    <div class="create-btns">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="redirectToCreatePage('reagent')"
+      >
+        Create Reagent
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="redirectToCreatePage('sample')"
+      >
+        Create Sample
+      </button>
+    </div>
 
     <div class="filter-container">
       <mat-form-field appearance="fill">
@@ -59,10 +72,10 @@
         <th mat-header-cell *matHeaderCellDef>Structure</th>
         <td mat-cell *matCellDef="let element">
           <app-molecule-structure
-          [structure]="element.structure"
-          [width]="100"
-          [height]="100"
-        ></app-molecule-structure>
+            [structure]="element.structure"
+            [width]="100"
+            [height]="100"
+          ></app-molecule-structure>
           <!-- <img
             [src]="element.structure"
             alt="Structure Image"
@@ -85,7 +98,9 @@
       <!-- Quantity Column -->
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef>Quantity</th>
-        <td mat-cell *matCellDef="let element">{{ element.totalQuantity }} {{ element.quantityUnit }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.totalQuantity }} {{ element.quantityUnit }}
+        </td>
       </ng-container>
 
       <!-- Package Column -->
