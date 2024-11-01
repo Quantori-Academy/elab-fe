@@ -1,6 +1,9 @@
 :host {
   padding: 20px 20px 50px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 .header {
   display: flex;
@@ -24,4 +27,21 @@
 td,
 th {
   min-height: 2.5rem;
+}
+.loader {
+  font-size: 4px;
+  width: 5px;
+  height: 5px;
+  left: unset;
+  top: unset;
+  transform: unset;
+  right: 2px;
+}
+
+.mat-form-field-with-loader {
+  position: relative;
+
+  .mat-mdc-input-element {
+    width: 90%;
+  }
 }

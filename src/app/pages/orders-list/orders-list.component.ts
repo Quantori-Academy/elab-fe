@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnInit,
 } from '@angular/core';
@@ -13,11 +14,13 @@ import { PageEvent } from '@angular/material/paginator';
 import { OrderFormComponent } from './components/order-form/order-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
+import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
+import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
   selector: 'app-orders-list',
   standalone: true,
-  imports: [MaterialModule, DatePipe, AsyncPipe, RouterLink],
+  imports: [MaterialModule, DatePipe, AsyncPipe, RouterLink, SpinnerDirective, TableLoaderSpinnerComponent],
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +29,7 @@ export class OrdersListComponent implements OnInit {
   private ordersService = inject(OrderService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  public isLoading = computed(() => this.ordersService.isLoading());
 
   ordersList$ = this.ordersService.getOrders();
   length$ = this.ordersService.totalOrders$;
@@ -47,7 +51,6 @@ export class OrdersListComponent implements OnInit {
     this.ordersService.updateQueryParams({ skip: 0, take: this.pageSize });
   }
 
-
   onSort(sort: Sort) {
     const sortParams: Partial<OrderQuery> = {
       sortBySeller: sort.active === 'seller' ? sort.direction : '',
@@ -64,8 +67,11 @@ export class OrdersListComponent implements OnInit {
   }
 
   onFilterBySeller(event: Event) {
-    const target = event.target as HTMLInputElement; 
-    this.ordersService.updateQueryParams({ orderSeller: target.value, skip: 0 });
+    const target = event.target as HTMLInputElement;
+    this.ordersService.updateQueryParams({
+      orderSeller: target.value,
+      skip: 0,
+    });
   }
 
   onFilterByStatus(status: Status | '') {
@@ -74,7 +80,10 @@ export class OrdersListComponent implements OnInit {
 
   handlePageEvent(event: PageEvent) {
     const { pageIndex, pageSize } = event;
-    this.ordersService.updateQueryParams({ skip: pageIndex * pageSize, take: pageSize });
+    this.ordersService.updateQueryParams({
+      skip: pageIndex * pageSize,
+      take: pageSize,
+    });
   }
 
   onCreate() {

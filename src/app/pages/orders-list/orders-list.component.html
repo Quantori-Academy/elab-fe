@@ -17,18 +17,21 @@
       <input matInput (input)="onFilterByTitle($event)" />
     </mat-form-field>
 
-    <mat-form-field class="filter__item" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
       <mat-label>Filter by Seller</mat-label>
       <input matInput (input)="onFilterBySeller($event)" />
     </mat-form-field>
   </div>
 </div>
+@if (ordersList$ |async; as OrdersList) {
+
 <div class="mat-elevation-z8">
-  <mat-table
+  <mat-table 
     class="table"
     [dataSource]="ordersList$"
     matSort
     (matSortChange)="onSort($event)"
+    [appSpinner]="true"
   >
     <ng-container matColumnDef="order title">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Title</th>
@@ -104,3 +107,4 @@
     ></mat-paginator
   >
 </div>
+} @else {<app-table-loader-spinner />}

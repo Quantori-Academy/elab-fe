@@ -1,30 +1,3 @@
-export const data = {
-  id: 15,
-  userId: 3,
-  title: 'test 2',
-  seller: 'LabDirect',
-  status: 'Pending',
-  createdAt: '2024-10-30T20:16:27.408Z',
-  updatedAt: '2024-10-30T20:16:27.408Z',
-  reagents: [
-    {
-      id: 3,
-      userId: 5,
-      name: 'Reagent A',
-      structureSmiles: 'CO',
-      casNumber: '123-45-67',
-      desiredQuantity: 500,
-      quantityUnit: 'ml',
-      userComments: 'Commenting here...',
-      procurementComments: null,
-      status: 'Pending',
-      createdAt: '2024-10-29T17:12:48.954Z',
-      updatedAt: '2024-10-30T20:16:27.408Z',
-      orderId: 15,
-    },
-  ],
-};
-
 export const mockOrders = [
   {
     id: 101,
