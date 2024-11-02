@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Reagent, ReagentRequest } from '../models/reagent-model';
@@ -10,6 +10,9 @@ import { Reagent, ReagentRequest } from '../models/reagent-model';
 export class ReagentsService {
   private httpClient = inject(HttpClient);
   apiUrl = `${environment.apiUrl}/api/v1/reagents`;
+
+  private uniqueProducersSubject = new BehaviorSubject<string[]>([]);
+  public uniqueProducers$ = this.uniqueProducersSubject.asObservable();
 
   getReagents(
     name?: string,
@@ -80,5 +83,19 @@ export class ReagentsService {
           return throwError(() => new Error('Failed to create reagent'));
         })
       );
+  }
+
+  // to get producers from whom we already bought before
+  public getAllUniqueSellers(): Observable<string[]> {
+    return this.httpClient.get<Reagent[]>(`${this.apiUrl}`).pipe(
+      map((reagentData: Reagent[]) => {
+        const uniqueSellers = Array.from(
+          new Set(reagentData.map((reagent) => reagent.producer))
+        );
+
+        this.uniqueProducersSubject.next(uniqueSellers);
+        return uniqueSellers;
+      })
+    );
   }
 }

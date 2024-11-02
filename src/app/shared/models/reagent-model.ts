@@ -17,6 +17,7 @@ export interface Reagent {
   smiles: string;
   cas: string;
   category: Category;
+  producer:string;
   totalQuantity: number | null;
   package: string;
   quantityUnit: string;

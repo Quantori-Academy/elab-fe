@@ -15,13 +15,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { OrderService } from '../../service/order.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../service/reagent-request.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
-import { mockOrders } from '../../../../../../MockData';
 import { AsyncPipe } from '@angular/common';
+import { OrdersService } from '../../service/orders.service';
+import { ReagentsService } from '../../../../shared/services/reagents.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-form',
@@ -31,6 +32,7 @@ import { AsyncPipe } from '@angular/common';
     ReactiveFormsModule,
     MatAutocompleteModule,
     AsyncPipe,
+    RouterLink
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -40,9 +42,10 @@ export class OrderFormComponent implements OnInit {
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<Order>);
   private fb = inject(FormBuilder);
-  private orderService = inject(OrderService);
+  private ordersService = inject(OrdersService);
   private reagentRequestService = inject(ReagentRequestService);
-
+  private reagentService = inject(ReagentsService);
+  private router = inject(Router);
   constructor(@Inject(MAT_DIALOG_DATA) public editionData: Order | null) {}
 
   displayedColumns: string[] = [
@@ -66,9 +69,9 @@ export class OrderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource$ = this.reagentRequestService.getReagentRequests();
-
-    const uniqueSellers = [...new Set(mockOrders.map((order) => order.seller))];
-    this.sellerOptions$.next(uniqueSellers);
+    this.reagentService
+      .getAllUniqueSellers()
+      .subscribe((sellers) => this.sellerOptions$.next(sellers));
   }
 
   onSelect(id: number) {
@@ -79,7 +82,7 @@ export class OrderFormComponent implements OnInit {
     }
     this.updateOrdersFormControl();
   }
-
+  
   updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents).map(
       (id) => ({ id })
@@ -93,7 +96,7 @@ export class OrderFormComponent implements OnInit {
       this.reagentsSelectionError = false;
 
       const orderData: OrderRequest = this.orderForm.value;
-      this.orderService.createOrder(orderData).subscribe({
+      this.ordersService.createOrder(orderData).subscribe({
         next: () => {
           this.dialogRef.close();
           this.notificationPopupService.success({

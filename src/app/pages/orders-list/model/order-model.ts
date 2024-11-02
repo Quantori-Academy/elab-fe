@@ -1,12 +1,10 @@
-import { SortDirection } from '@angular/material/sort';
-
 export interface Order {
   id: number;
   userId: number;
   title: string;
   seller: string;
   status: 'Pending' | 'Fulfilled' | 'Cancelled' | string;
-  createdAt: string; 
+  createdAt: string;
   updatedAt: string;
   reagents: RequestedReagents[];
 }
@@ -32,18 +30,33 @@ export enum Status {
   declined = 'Declined',
 }
 export interface OrderQuery {
-  skip?: number;
-  take?: number;
-  sortBySeller?: SortDirection;
-  sortByCreationDate?: SortDirection;
-  sortByTitle?: SortDirection;
-  orderTitle?: string;
-  orderSeller?: string;
-  orderStatus?: string;
+  skip: number;
+  take: number;
+  title: string;
+  seller: string;
+  status: string;
+  titleOrder: string;
+  sellerOrder: string;
+  createdAt: string;
+  updatedAt: string;
 }
-
 export interface OrderRequest {
   title: string;
   seller: string;
   reagents: { id: number }[];
+}
+export interface OrdersListData {
+  orders: Order[];
+  size: number;
+}
+export enum OrdersTableColumns {
+  title = 'title',
+  seller = 'seller',
+  createdAt = 'createdAt',
+  updatedAt = 'updatedAt',
+  status = 'status'
+}
+export interface OrderFilter {
+  value: string;
+  column: OrdersTableColumns;
 }

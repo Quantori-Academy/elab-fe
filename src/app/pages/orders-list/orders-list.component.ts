@@ -3,12 +3,18 @@ import {
   Component,
   computed,
   inject,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { Order, OrderQuery, Status } from './model/order-model';
-import { OrderService } from './service/order.service';
+import {
+  Order,
+  OrderFilter,
+  OrdersListData,
+  OrdersTableColumns,
+  Status,
+} from './model/order-model';
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { OrderFormComponent } from './components/order-form/order-form.component';
@@ -16,90 +22,113 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { OrdersService } from './service/orders.service';
+import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+  Subject,
+  takeUntil,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-orders-list',
   standalone: true,
-  imports: [MaterialModule, DatePipe, AsyncPipe, RouterLink, SpinnerDirective, TableLoaderSpinnerComponent],
+  imports: [
+    MaterialModule,
+    DatePipe,
+    AsyncPipe,
+    RouterLink,
+    SpinnerDirective,
+    TableLoaderSpinnerComponent,
+  ],
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersListComponent implements OnInit {
-  private ordersService = inject(OrderService);
+export class OrdersListComponent implements OnInit, OnDestroy {
+  private readonly DEBOUNCE_TIME = 1000;
+  public pageSize: number;
+  public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
+  public ordersList$?: Observable<OrdersListData | undefined>;
+  public filterSubject = new Subject<OrderFilter>();
+  public listLength = 100;
+  public pageIndex = 0;
   private dialog = inject(MatDialog);
   private router = inject(Router);
-  public isLoading = computed(() => this.ordersService.isLoading());
+  private destroy$ = new Subject<void>();
+  private orderService = inject(OrdersService);
+  statusOptions = Object.values(Status);
+  public isLoading = computed(() => this.orderService.isLoading());
 
-  ordersList$ = this.ordersService.getOrders();
-  length$ = this.ordersService.totalOrders$;
+  constructor() {
+    this.ordersList$ = this.orderService.getOrdersList();
+    this.pageSize = this.orderService.pagesize;
+  }
 
   displayedColumns: string[] = [
-    'order title',
-    'creation date',
-    'modification date',
+    'title',
+    'createdAt',
+    'updatedAt',
     'seller',
     'status',
     'actions',
   ];
 
-  pageSize = 25;
-  pageIndex = 0;
-  statusOptions = Object.values(Status);
-
   ngOnInit(): void {
-    this.ordersService.updateQueryParams({ skip: 0, take: this.pageSize });
+    this.filterOrder();
+  }
+
+  filterOrder() {
+    this.filterSubject
+      .pipe(
+        tap(() => this.orderService.isLoading.set(true)),
+        debounceTime(this.DEBOUNCE_TIME),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filteredData) => {
+        this.orderService.filtering(filteredData);
+      });
   }
 
   onSort(sort: Sort) {
-    const sortParams: Partial<OrderQuery> = {
-      sortBySeller: sort.active === 'seller' ? sort.direction : '',
-      sortByCreationDate: sort.active === 'creation date' ? sort.direction : '',
-      sortByTitle: sort.active === 'order title' ? sort.direction : '',
-    };
-
-    this.ordersService.updateQueryParams({ ...sortParams, skip: 0 });
+    this.orderService.sorting(sort);
   }
 
-  onFilterByTitle(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.ordersService.updateQueryParams({ orderTitle: target.value, skip: 0 });
+  onFilterByTitle($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.filterSubject.next({ value, column: OrdersTableColumns.title });
   }
 
-  onFilterBySeller(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.ordersService.updateQueryParams({
-      orderSeller: target.value,
-      skip: 0,
-    });
+  onFilterBySeller($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.filterSubject.next({ value, column: OrdersTableColumns.seller });
   }
 
   onFilterByStatus(status: Status | '') {
-    this.ordersService.updateQueryParams({ orderStatus: status, skip: 0 });
-  }
-
-  handlePageEvent(event: PageEvent) {
-    const { pageIndex, pageSize } = event;
-    this.ordersService.updateQueryParams({
-      skip: pageIndex * pageSize,
-      take: pageSize,
+    this.filterSubject.next({
+      value: status,
+      column: OrdersTableColumns.status,
     });
   }
 
   onCreate() {
     this.dialog.open(OrderFormComponent);
   }
+
   public redirectToDetailPage(order: Order) {
-    this.router.navigate(['/orders', order.id], {
-      queryParams: { data: JSON.stringify(order.id) },
-    });
+    this.router.navigate(['/orders', order.id], {});
+  }
+  
+  handlePageEvent($event: PageEvent) {
+    this.orderService.setPageData($event);
   }
 
-  onDelete(id: number) {
-    this.ordersService.deleteOrderFromMockDataById(id).subscribe({
-      next: () => {
-        this.ordersService.updateQueryParams({ skip: 0 });
-      },
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

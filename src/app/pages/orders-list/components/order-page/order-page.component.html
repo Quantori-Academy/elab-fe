@@ -1,13 +1,29 @@
 @if (order$ | async; as order) {
-<h1>Order Title: {{ order.title }}</h1>
-<h2>Seller: {{ order.seller }}</h2>
-<h3>Created: {{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
+<div class="info">
+  <div>
+    <img src="/assets/icons/order.svg" alt="Order list" />
+  </div>
+  <div>
+    <h1>Order Title: {{ order.title }}</h1>
+    <h2>
+      Seller: <span>{{ order.seller }}</span>
+    </h2>
+    <h3>
+      Created: <span>{{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</span>
+    </h3>
 
-@if (order.updatedAt === '') {
-<h3>Last updated: {{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
-}@else {
-<h3>Updated: {{ order.updatedAt | date : "dd/MM/yyyy - HH:mm" }}</h3>
-}
+    @if (order.updatedAt === '') {
+    <h3>
+      Last updated:
+      <span>{{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</span>
+    </h3>
+    }@else {
+    <h3>
+      Updated: <span>{{ order.updatedAt | date : "dd/MM/yyyy - HH:mm" }}</span>
+    </h3>
+    }
+  </div>
+</div>
 
 <h4>Ordered Reagents</h4>
 <div class="mat-elevation-z8">
@@ -52,7 +68,7 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="structureSmiles">
+    <ng-container matColumnDef="structure">
       <mat-header-cell *matHeaderCellDef> Structure </mat-header-cell>
       <mat-cell *matCellDef="let element">
         {{ element.structureSmiles }}
@@ -89,18 +105,6 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
-
-  <!-- <mat-paginator
-          #paginator
-          class="demo-paginator"
-          (page)="handlePageEvent($event)"
-          [length]="length$ | async"
-          [pageSize]="pageSize"
-          [pageIndex]="pageIndex"
-          aria-label="Select page"
-        >
-          ></mat-paginator
-        > -->
 </div>
 
 } @else {
