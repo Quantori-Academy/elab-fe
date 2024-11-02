@@ -23,7 +23,7 @@ export class OrderPageComponent {
     'desiredQuantity',
     // 'package',
     // 'quantityLeft',
-    'structure',
+    'structureSmiles',
     'userComments',
   ];
 

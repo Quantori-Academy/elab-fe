@@ -68,10 +68,14 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="structure">
-      <mat-header-cell *matHeaderCellDef> Structure </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.structureSmiles }}
+    <ng-container matColumnDef="structureSmiles">
+      <mat-header-cell *matHeaderCellDef>Structure</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="structure-container">
+        <app-molecule-structure
+          [structure]="element.structureSmiles"
+          [width]="100"
+          [height]="100"
+        ></app-molecule-structure>
       </mat-cell>
     </ng-container>
 
