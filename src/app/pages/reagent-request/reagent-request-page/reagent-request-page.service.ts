@@ -78,4 +78,24 @@ export class ReagentRequestService {
         })
       );
   }
+
+  updateReagentRequest(
+    id: number,
+    reagentData: Partial<ReagentRequestList>
+  ): Observable<ReagentRequestList> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.httpClient
+      .post<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
+        headers,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error:', error);
+          return throwError(() => new Error('Error'));
+        })
+      );
+  }
 }

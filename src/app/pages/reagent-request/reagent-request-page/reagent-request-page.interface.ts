@@ -1,5 +1,5 @@
 export interface ReagentRequestList {
-  id?: number;
+  id: number;
   casNumber: string | null;
   name: string;
   userId: number;
