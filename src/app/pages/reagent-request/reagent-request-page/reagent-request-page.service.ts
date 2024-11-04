@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { ReagentRequestList } from './reagent-request-page.interface';
 
 @Injectable({

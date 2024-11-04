@@ -89,7 +89,7 @@ export const routes: Routes = [
         path: 'reagent-request-page',
         loadComponent: () =>
           import(
-            './pages/reagent-request-page/reagent-request-page.component'
+            './pages/reagent-request/reagent-request-page/reagent-request-page.component'
           ).then((c) => c.ReagentsRequestPageComponent),
         canActivate: [authGuard],
       },
