@@ -42,7 +42,7 @@ export class ReagentsRequestPageComponent implements OnInit {
   selectedStatus: StatusFilter = '';
   currentPage = 0;
   sortDirection: 'asc' | 'desc' = 'asc';
-  sortColumn: 'createdAt' | 'quantity' | 'updatedAt' = 'createdAt';
+  sortColumn: 'createdAt' | 'desiredQuantity' | 'updatedAt' = 'createdAt';
   filterName = '';
   displayedColumns = [
     'name',
@@ -70,7 +70,7 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.reagentRequestService
       .getReagentRequests(
         this.selectedStatus || undefined,
-        this.sortColumn === 'quantity' ? this.sortDirection : undefined,
+        this.sortColumn === 'desiredQuantity' ? this.sortDirection : undefined,
         this.sortColumn === 'createdAt' ? this.sortDirection : undefined,
         this.sortColumn === 'updatedAt' ? this.sortDirection : undefined,
         skip,
@@ -105,8 +105,11 @@ export class ReagentsRequestPageComponent implements OnInit {
   }
 
   onSortChange(sort: Sort) {
-    if (['createdAt', 'quantity', 'updatedAt'].includes(sort.active)) {
-      this.sortColumn = sort.active as 'createdAt' | 'quantity' | 'updatedAt';
+    if (['createdAt', 'desiredQuantity', 'updatedAt'].includes(sort.active)) {
+      this.sortColumn = sort.active as
+        | 'createdAt'
+        | 'desiredQuantity'
+        | 'updatedAt';
       this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
     } else {
       this.sortColumn = 'createdAt';
