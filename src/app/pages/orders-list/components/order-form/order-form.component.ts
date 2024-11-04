@@ -2,12 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  Inject,
   OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Order, OrderRequest } from '../../model/order-model';
+import { OrderRequest } from '../../model/order-model';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import {
   FormBuilder,
@@ -15,6 +13,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../service/reagent-request.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -23,6 +23,7 @@ import { AsyncPipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Router, RouterLink } from '@angular/router';
+import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 
 @Component({
   selector: 'app-order-form',
@@ -32,7 +33,7 @@ import { Router, RouterLink } from '@angular/router';
     ReactiveFormsModule,
     MatAutocompleteModule,
     AsyncPipe,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -40,19 +41,18 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class OrderFormComponent implements OnInit {
   private notificationPopupService = inject(NotificationPopupService);
-  private dialogRef = inject(MatDialogRef<Order>);
   private fb = inject(FormBuilder);
   private ordersService = inject(OrdersService);
   private reagentRequestService = inject(ReagentRequestService);
   private reagentService = inject(ReagentsService);
+  private dialog = inject(MatDialog);
   private router = inject(Router);
-  constructor(@Inject(MAT_DIALOG_DATA) public editionData: Order | null) {}
-
   displayedColumns: string[] = [
     'name',
     'desiredQuantity',
     'userComments',
     'casNumber',
+    'actions',
     'id',
   ];
   reagentsSelectionError = false;
@@ -73,7 +73,12 @@ export class OrderFormComponent implements OnInit {
       .getAllUniqueSellers()
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
   }
-
+  openReagentDialog(id: string): void {
+    this.dialog.open(ReagentPageComponent, {
+      width: '600px',
+      data: { id },
+    });
+  }
   onSelect(id: number) {
     if (this.selectedReagents.has(id)) {
       this.selectedReagents.delete(id);
@@ -82,7 +87,7 @@ export class OrderFormComponent implements OnInit {
     }
     this.updateOrdersFormControl();
   }
-  
+
   updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents).map(
       (id) => ({ id })
@@ -98,12 +103,12 @@ export class OrderFormComponent implements OnInit {
       const orderData: OrderRequest = this.orderForm.value;
       this.ordersService.createOrder(orderData).subscribe({
         next: () => {
-          this.dialogRef.close();
           this.notificationPopupService.success({
             title: 'Success',
             message: 'Order created successfully!',
             duration: 3000,
           });
+          this.redirectToReagentList();
         },
         error: (err) => this.notificationPopupService.error(err),
       });
@@ -112,8 +117,7 @@ export class OrderFormComponent implements OnInit {
       this.orderForm.markAllAsTouched();
     }
   }
-
-  onClose() {
-    this.dialogRef.close();
+  public redirectToReagentList() {
+    return this.router.navigate(['orders']);
   }
 }

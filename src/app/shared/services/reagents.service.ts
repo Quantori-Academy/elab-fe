@@ -85,6 +85,10 @@ export class ReagentsService {
       );
   }
 
+  public getReagentById(id:string):Observable<Reagent>{
+return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`)
+  }
+
   // to get producers from whom we already bought before
   public getAllUniqueSellers(): Observable<string[]> {
     return this.httpClient.get<Reagent[]>(`${this.apiUrl}`).pipe(

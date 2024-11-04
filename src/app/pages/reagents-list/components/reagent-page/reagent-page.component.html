@@ -1,0 +1,45 @@
+@if (reagent$ | async; as reagent) {
+<h1 class="header">Reagent's Details</h1>
+<button mat-icon-button class="close-button" (click)="onClose()">
+  <mat-icon>close</mat-icon>
+</button>
+<div class="info">
+  <div>
+    <img src="/assets/icons/reagent.svg" alt="reagent" />
+  </div>
+  <div>
+    <h1>Reagent's name: {{ reagent.name }}</h1>
+    <h2>
+      Producer: <span>{{ reagent.producer }}</span>
+    </h2>
+    <div class="structure">
+      <h3>Reagent's structure:</h3>
+      <app-molecule-structure
+        [structure]="reagent.structure"
+        [width]="200"
+        [height]="200"
+      ></app-molecule-structure>
+    </div>
+    <!-- <h3>
+      Location:
+      <span>{{ reagent.room.name }} {{ reagent.room.description }}</span>
+    </h3> -->
+    <h3>
+      Reagent's total quantity:
+      <span
+        >{{ reagent.totalQuantity }} {{ reagent.quantityUnit }} per @if
+        (reagent.package) {
+        {{ reagent.package }}
+        }@else { package }
+      </span>
+    </h3>
+    <h3>
+      Quantity left:
+      <span>{{ reagent.quantityLeft }} {{ reagent.quantityUnit }}</span>
+    </h3>
+  </div>
+</div>
+
+} @else {
+<app-table-loader-spinner />
+}

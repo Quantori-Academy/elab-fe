@@ -17,7 +17,6 @@ import {
 } from './model/order-model';
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-import { OrderFormComponent } from './components/order-form/order-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink } from '@angular/router';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
@@ -116,7 +115,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   }
 
   onCreate() {
-    this.dialog.open(OrderFormComponent);
+    this.router.navigate(['orders/create-order']);
   }
 
   public redirectToDetailPage(order: Order) {
