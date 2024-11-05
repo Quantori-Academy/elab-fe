@@ -62,6 +62,27 @@ export class ReagentRequestService {
       );
   }
 
+  getReagentRequestById(id: number): Observable<ReagentRequestList> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    this.isLoading.set(true);
+
+    return this.httpClient
+      .get<ReagentRequestList>(`${this.apiUrl}/${id}`, { headers })
+      .pipe(
+        tap(() => this.isLoading.set(false)),
+        catchError((error) => {
+          this.isLoading.set(false);
+          console.error('Error fetching reagent request by id:', error);
+          return throwError(
+            () => new Error('Error fetching reagent request by id')
+          );
+        })
+      );
+  }
+
   createReagentRequest(
     reagentData: ReagentRequestList
   ): Observable<ReagentRequestList> {

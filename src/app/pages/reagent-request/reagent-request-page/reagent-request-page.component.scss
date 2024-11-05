@@ -27,4 +27,12 @@
   .mat-column-desiredQuantity {
     text-align: center;
   }
+
+  .actions-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5px;
+    align-items: center;
+  }
+
   

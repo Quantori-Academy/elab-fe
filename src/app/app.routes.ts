@@ -120,6 +120,14 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
         data: { role: UserRoles.ProcurementOfficer },
       },
+      {
+        path: 'reagent-request-page/details/:id',
+        loadComponent: () =>
+          import(
+            './pages/reagent-request/reagent-request-detail/reagent-request-detail.component'
+          ).then((c) => c.ReagentRequestDetailComponent),
+        canActivate: [authGuard],
+      },
     ],
   },
   {
