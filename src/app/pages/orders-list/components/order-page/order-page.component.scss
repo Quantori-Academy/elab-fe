@@ -1,0 +1,20 @@
+.info {
+  margin: 0 100px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  box-sizing: border-box;
+}
+h1 {
+  font-size: xx-large;
+  color: var(--primary-color-dark);
+}
+h2,
+h3,
+h4 {
+  font-size: x-large;
+  color: var(--primary-color-dark);
+}
+span {
+  color: var(--primary-color);
+}

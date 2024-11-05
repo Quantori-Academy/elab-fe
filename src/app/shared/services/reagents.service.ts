@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Reagent, ReagentRequest } from '../models/reagent-model';
@@ -10,7 +10,10 @@ import { Reagent, ReagentRequest } from '../models/reagent-model';
 export class ReagentsService {
   private httpClient = inject(HttpClient);
   apiUrl = `${environment.apiUrl}/api/v1/reagents`;
-  
+
+  private uniqueProducersSubject = new BehaviorSubject<string[]>([]);
+  public uniqueProducers$ = this.uniqueProducersSubject.asObservable();
+
   getReagents(
     name?: string,
     category?: string,
@@ -20,7 +23,6 @@ export class ReagentsService {
     skip?: number,
     take?: number
   ): Observable<Reagent[]> {
-
     const token = localStorage.getItem('access_token');
     if (!token) {
       return throwError('No access token found');
@@ -53,14 +55,15 @@ export class ReagentsService {
       params = params.append('take', take.toString());
     }
 
-    return this.httpClient.get<Reagent[]>(this.apiUrl, { headers, params }).pipe(
-      catchError((error) => {
-        console.error('Error fetching reagents:', error);
-        return throwError(() => new Error('Failed to fetch reagents'));
-      })
-    );
+    return this.httpClient
+      .get<Reagent[]>(this.apiUrl, { headers, params })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching reagents:', error);
+          return throwError(() => new Error('Failed to fetch reagents'));
+        })
+      );
   }
-
   createReagent(reagentData?: ReagentRequest): Observable<ReagentRequest> {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -80,5 +83,23 @@ export class ReagentsService {
           return throwError(() => new Error('Failed to create reagent'));
         })
       );
+  }
+
+  public getReagentById(id:string):Observable<Reagent>{
+return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`)
+  }
+
+  // to get producers from whom we already bought before
+  public getAllUniqueSellers(): Observable<string[]> {
+    return this.httpClient.get<Reagent[]>(`${this.apiUrl}`).pipe(
+      map((reagentData: Reagent[]) => {
+        const uniqueSellers = Array.from(
+          new Set(reagentData.map((reagent) => reagent.producer))
+        );
+
+        this.uniqueProducersSubject.next(uniqueSellers);
+        return uniqueSellers;
+      })
+    );
   }
 }
