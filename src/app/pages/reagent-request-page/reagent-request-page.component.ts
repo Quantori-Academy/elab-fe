@@ -11,7 +11,6 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
 import { StructureDialogComponent } from '../reagents-list/components/structure-dialog/structure-dialog.component';
 import { StatusFilter } from '../../shared/models/status.type';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
-// import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
@@ -35,7 +34,6 @@ export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
   public isLoading = computed(() => this.reagentRequestService.isLoading());
-  // dataSource$ = new BehaviorSubject<ReagentRequestList[]>([]);
   private dataSourceSubject = new BehaviorSubject<ReagentRequestList[] | null>(
     null
   );
@@ -57,7 +55,6 @@ export class ReagentsRequestPageComponent implements OnInit {
   totalItems = 0;
   pageSize = 10;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // dataSource = new MatTableDataSource<ReagentRequestList>();
   dataSource$: Observable<ReagentRequestList[] | null> =
     this.dataSourceSubject.asObservable();
 
@@ -125,17 +122,3 @@ export class ReagentsRequestPageComponent implements OnInit {
     });
   }
 }
-
-// Currently in progress
-
-// openCreateReagentRequestDialog() {
-//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
-//     data: {},
-//   });
-
-//   dialogRef.afterClosed().subscribe((result) => {
-//     if (result) {
-//       this.loadReagentRequests();
-//     }
-//   });
-// }
