@@ -18,6 +18,8 @@ import { StructureDialogComponent } from './components/structure-dialog/structur
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
+import { TableLoaderSpinnerComponent } from "../../shared/components/table-loader-spinner/table-loader-spinner.component";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-reagents-list',
@@ -28,7 +30,8 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-  ],
+    TableLoaderSpinnerComponent
+],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
@@ -57,8 +60,13 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   ];
 
   dataSource = new MatTableDataSource<Reagent>();
+  reagents$: Observable<Reagent[] | undefined>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor() {
+    this.reagents$ = this.reagentsService.getReagents();
+  }
 
   ngOnInit(): void {
     // Initially load the reagents without sorting
