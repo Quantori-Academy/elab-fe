@@ -28,13 +28,12 @@
   </div>
 
   @if ( dataSource$ | async; as dataSource ) {
-  <div class="table-wrapper">
+  <div class="table-wrapper mat-elevation-z8">
     <table
       mat-table
       [dataSource]="dataSource"
       matSort
       (matSortChange)="onSortChange($event)"
-      class="mat-elevation-z8"
       [appSpinner]="isLoading()"
     >
       <ng-container matColumnDef="name">
@@ -104,7 +103,6 @@
     </table>
 
     <mat-paginator
-      class="mat-elevation-z8"
       [length]="totalItems"
       [pageSize]="pageSize"
       [pageSizeOptions]="[5, 10, 20]"
