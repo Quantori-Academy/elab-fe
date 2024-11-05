@@ -27,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatButtonModule,
@@ -78,6 +80,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatCheckboxModule,
   ],
   providers: [
     {

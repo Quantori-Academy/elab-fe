@@ -13,6 +13,7 @@ import { OrderEntity } from './order-entity.model';
 // }
 
 export interface Reagent {
+  id?: number;
   name: string;
   smiles: string;
   cas: string;
@@ -28,6 +29,16 @@ export interface Reagent {
     name: string;
     description: string | null;
   };
+  quantityUsed?: number;
+}
+
+export interface SelectedReagentSample {
+  reagentId: number;
+  isSelect?: boolean;
+  quantityUsed: number;
+  name: string;
+  quantityUnit: string;
+  structure: string;
 }
 
 export enum Category {
