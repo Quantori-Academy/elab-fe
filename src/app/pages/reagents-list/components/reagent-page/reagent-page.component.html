@@ -8,22 +8,18 @@
     <img src="/assets/icons/reagent.svg" alt="reagent" />
   </div>
   <div>
-    <h1>Reagent's name: {{ reagent.name }}</h1>
+    <h1>Reagent name: {{ reagent.name }}</h1>
     <h2>
       Producer: <span>{{ reagent.producer }}</span>
     </h2>
     <div class="structure">
-      <h3>Reagent's structure:</h3>
+      <h3>Reagent structure: <span>{{reagent.structure}}</span></h3>
       <app-molecule-structure
         [structure]="reagent.structure"
         [width]="200"
         [height]="200"
       ></app-molecule-structure>
     </div>
-    <!-- <h3>
-      Location:
-      <span>{{ reagent.room.name }} {{ reagent.room.description }}</span>
-    </h3> -->
     <h3>
       Reagent's total quantity:
       <span

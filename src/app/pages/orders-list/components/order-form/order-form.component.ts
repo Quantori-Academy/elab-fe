@@ -24,6 +24,7 @@ import { OrdersService } from '../../service/orders.service';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Router, RouterLink } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-order-form',
@@ -34,6 +35,7 @@ import { ReagentPageComponent } from '../../../reagents-list/components/reagent-
     MatAutocompleteModule,
     AsyncPipe,
     RouterLink,
+    MatCheckboxModule,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -48,14 +50,15 @@ export class OrderFormComponent implements OnInit {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   displayedColumns: string[] = [
+    'select',
     'name',
     'desiredQuantity',
     'userComments',
     'casNumber',
     'actions',
-    'id',
   ];
   reagentsSelectionError = false;
+  selectedReagentNames: string[] = [];
 
   dataSource$!: Observable<ReagentRequest[]>;
   sellerOptions$ = new BehaviorSubject<string[]>([]);
@@ -68,7 +71,7 @@ export class OrderFormComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.dataSource$ = this.reagentRequestService.getReagentRequests();
+    this.dataSource$ = this.reagentRequestService.getPendingReagentRequests();
     this.reagentService
       .getAllUniqueSellers()
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
@@ -79,15 +82,18 @@ export class OrderFormComponent implements OnInit {
       data: { id },
     });
   }
-  onSelect(id: number) {
-    if (this.selectedReagents.has(id)) {
-      this.selectedReagents.delete(id);
+  onCheckboxChange(element: ReagentRequest): void {
+    if (this.selectedReagents.has(element.id)) {
+      this.selectedReagents.delete(element.id);
+      this.selectedReagentNames = this.selectedReagentNames.filter(
+        (name) => name !== element.name
+      );
     } else {
-      this.selectedReagents.add(id);
+      this.selectedReagents.add(element.id);
+      this.selectedReagentNames.push(element.name);
     }
     this.updateOrdersFormControl();
   }
-
   updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents).map(
       (id) => ({ id })
