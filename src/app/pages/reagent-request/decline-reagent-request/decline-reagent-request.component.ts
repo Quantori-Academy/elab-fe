@@ -81,8 +81,4 @@ export class DeclineReagentRequestComponent implements OnInit {
         },
       });
   }
-
-  onLinkClick() {
-    window.open('http://example.com', '_blank');
-  }
 }

@@ -19,7 +19,9 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
-import { DeclineReagentRequestComponent } from '../edit-reagent-request/decline-reagent-request.component';
+import { DeclineReagentRequestComponent } from '../decline-reagent-request/decline-reagent-request.component';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-reagents-request-page',
   standalone: true,
@@ -38,6 +40,7 @@ import { DeclineReagentRequestComponent } from '../edit-reagent-request/decline-
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
+  private router = inject(Router);
   public isLoading = computed(() => this.reagentRequestService.isLoading());
   private dataSourceSubject = new BehaviorSubject<ReagentRequestList[] | null>(
     null
@@ -146,6 +149,10 @@ export class ReagentsRequestPageComponent implements OnInit {
         this.loadReagentRequests();
       }
     });
+  }
+
+  redirectToDetailPage(element: ReagentRequestList): void {
+    this.router.navigate(['/reagent-request-page/details', element.id]);
   }
 }
 
