@@ -42,6 +42,7 @@ export class LayoutComponent {
       label: 'Reagent Request',
       route: 'reagent-request-page',
       procurementOnly: true,
+      researcherOnly: true,
     },
     {
       icon: 'person_add',
@@ -54,12 +55,11 @@ export class LayoutComponent {
   public navbarWidth = computed(() => (collapsed() ? '60px' : '250px'));
 
   isLinkVisible(link: MenuLink): boolean {
-    if (link.adminOnly) {
-      return this.rbacService.isAdmin();
-    }
-    if (link.procurementOnly) {
-      return this.rbacService.isProcurementOfficer();
-    }
-    return true;
+    return (
+      (link.adminOnly && this.rbacService.isAdmin()) ||
+      (link.procurementOnly && this.rbacService.isProcurementOfficer()) ||
+      (link.researcherOnly && this.rbacService.isResearcher()) ||
+      (!link.adminOnly && !link.procurementOnly && !link.researcherOnly)
+    );
   }
 }
