@@ -3,7 +3,7 @@ import { ReagentRequestService } from './reagent-request-page.service';
 import { ReagentRequestList } from './reagent-request-page.interface';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from '../../material.module';
@@ -12,7 +12,12 @@ import { StructureDialogComponent } from '../reagents-list/components/structure-
 import { StatusFilter } from '../../shared/models/status.type';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import {
+  catchError,
+  tap,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
@@ -42,6 +47,7 @@ export class ReagentsRequestPageComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
   sortColumn: 'createdAt' | 'desiredQuantity' | 'updatedAt' = 'createdAt';
   filterName = '';
+  filterNameControl = new FormControl('');
   displayedColumns = [
     'name',
     'structureSmiles',
@@ -59,6 +65,17 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.dataSourceSubject.asObservable();
 
   ngOnInit(): void {
+    this.filterNameControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((value) => {
+        this.filterName = value ?? '';
+
+        this.currentPage = 0;
+        if (this.paginator) {
+          this.paginator.firstPage();
+        }
+        this.loadReagentRequests();
+      });
     this.loadReagentRequests();
   }
 
@@ -102,16 +119,12 @@ export class ReagentsRequestPageComponent implements OnInit {
   }
 
   onSortChange(sort: Sort) {
-    if (['createdAt', 'desiredQuantity', 'updatedAt'].includes(sort.active)) {
-      this.sortColumn = sort.active as
-        | 'createdAt'
-        | 'desiredQuantity'
-        | 'updatedAt';
-      this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
-    } else {
-      this.sortColumn = 'createdAt';
-      this.sortDirection = 'asc';
-    }
+    this.sortColumn = (
+      ['createdAt', 'desiredQuantity', 'updatedAt'].includes(sort.active)
+        ? sort.active
+        : 'createdAt'
+    ) as 'createdAt' | 'desiredQuantity' | 'updatedAt';
+    this.sortDirection = sort.direction || 'asc';
     this.loadReagentRequests();
   }
 

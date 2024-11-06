@@ -19,9 +19,8 @@
         <mat-label>Filter by Name</mat-label>
         <input
           matInput
-          [(ngModel)]="filterName"
+          [formControl]="filterNameControl"
           placeholder="Enter name"
-          (input)="applyFilter()"
         />
       </mat-form-field>
     </div>
