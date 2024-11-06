@@ -21,6 +21,8 @@ import { MaterialModule } from '../../../../material.module';
 import { map, Subscription, take } from 'rxjs';
 import { StorageLocationItem } from '../../../storage-location/models/storage-location.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddStructureComponent } from '../../../../shared/components/structure-editor/add-structure/add-structure.component';
 
 @Component({
   selector: 'app-create-reagent',
@@ -38,6 +40,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private notificationsService = inject(NotificationPopupService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
   private storageSubscription: Subscription | null = null;
 
   public isSample = false;
@@ -58,20 +61,20 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     structure: [''],
     casNumber: [
       '',
-      [Validators.required, Validators.minLength(5), Validators.maxLength(10)],
+      [Validators.minLength(5), Validators.maxLength(10)],
     ],
-    producer: ['', Validators.required],
-    catalogId: ['', Validators.required],
+    producer: [''],
+    catalogId: [''],
     catalogLink: [
       '',
-      [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
+      [Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
     ],
-    pricePerUnit: [null, Validators.required],
+    pricePerUnit: [null],
     quantityUnit: ['', Validators.required],
     totalQuantity: [null, Validators.required],
-    description: ['', Validators.required],
+    description: [''],
     quantityLeft: [null, Validators.required],
-    expirationDate: ['', Validators.required],
+    expirationDate: [''],
     storageLocation: ['', Validators.required],
     storageId: [null as number | null],
   });
@@ -172,6 +175,21 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  openStructureEditor() {
+    const dialogRef = this.dialog.open(AddStructureComponent, {
+      width: '650px',
+      height: '600px',
+      minWidth: '650px',
+      minHeight: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.reagentRequestForm.patchValue({ structure: result });
+      }
+    });
   }
 
   public redirectToReagentList() {

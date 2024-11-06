@@ -14,10 +14,6 @@
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" />
-        @if (reagentRequestForm.get('description')?.invalid &&
-        reagentRequestForm.get('description')?.touched) {
-        <mat-error>Description is required.</mat-error>
-        }
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Expiration Date</mat-label>
@@ -32,10 +28,6 @@
           [for]="picker"
         ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        @if (reagentRequestForm.get('expirationDate')?.invalid &&
-        reagentRequestForm.get('expirationDate')?.touched) {
-        <mat-error>Expiration Date is required.</mat-error>
-        }
       </mat-form-field>
     </mat-card-content>
   </mat-card>
@@ -44,19 +36,15 @@
     <mat-card-content>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Structure</mat-label>
-        <input matInput formControlName="structure" />
-        @if (reagentRequestForm.get('structure')?.invalid &&
-        reagentRequestForm.get('structure')?.touched) {
-        <mat-error>Structure is required.</mat-error>
-        }
+        <input matInput formControlName="structure"/>
+        <button mat-icon-button matSuffix (click)="openStructureEditor()">
+          <mat-icon>draw</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>CAS Number</mat-label>
         <input matInput formControlName="casNumber" />
-        @if (reagentRequestForm.get('casNumber')?.hasError('required') &&
-        reagentRequestForm.get('casNumber')?.touched) {
-        <mat-error>CAS Number is required.</mat-error>
-        } @if (reagentRequestForm.get('casNumber')?.hasError('minlength')) {
+         @if (reagentRequestForm.get('casNumber')?.hasError('minlength')) {
         <mat-error>CAS Number must be at least 5 characters long.</mat-error>
         } @if (reagentRequestForm.get('casNumber')?.hasError('maxlength')) {
         <mat-error
@@ -135,28 +123,17 @@
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Producer</mat-label>
         <input matInput formControlName="producer" />
-        @if (reagentRequestForm.get('producer')?.invalid &&
-        reagentRequestForm.get('producer')?.touched) {
-        <mat-error>Producer is required.</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Catalog ID</mat-label>
         <input matInput formControlName="catalogId" />
-        @if (reagentRequestForm.get('catalogId')?.invalid &&
-        reagentRequestForm.get('catalogId')?.touched) {
-        <mat-error>Catalog ID is required.</mat-error>
-        }
       </mat-form-field>
 
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Catalog Link</mat-label>
         <input matInput formControlName="catalogLink" />
-        @if (reagentRequestForm.get('catalogLink')?.hasError('required') &&
-        reagentRequestForm.get('catalogLink')?.touched) {
-        <mat-error>Catalog Link is required.</mat-error>
-        } @if (reagentRequestForm.get('catalogLink')?.hasError('pattern')) {
+         @if (reagentRequestForm.get('catalogLink')?.hasError('pattern')) {
         <mat-error>Catalog Link must be a valid URL.</mat-error>
         }
       </mat-form-field>
@@ -164,10 +141,7 @@
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Price Per Unit</mat-label>
         <input matInput formControlName="pricePerUnit" type="number" />
-        @if (reagentRequestForm.get('pricePerUnit')?.hasError('required') &&
-        reagentRequestForm.get('pricePerUnit')?.touched) {
-        <mat-error>Price Per Unit is required.</mat-error>
-        } @if (reagentRequestForm.get('pricePerUnit')?.hasError('pattern')) {
+         @if (reagentRequestForm.get('pricePerUnit')?.hasError('pattern')) {
         <mat-error>Price Per Unit must be a valid number.</mat-error>
         }
       </mat-form-field>
@@ -187,3 +161,5 @@
     <button mat-flat-button color="primary" type="submit">Submit</button>
   </div>
 </form>
+
+
