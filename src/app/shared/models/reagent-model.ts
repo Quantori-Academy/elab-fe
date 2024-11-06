@@ -29,16 +29,16 @@ export interface Reagent {
     name: string;
     description: string | null;
   };
-  quantityUsed?: number;
 }
 
 export interface SelectedReagentSample {
   reagentId: number;
-  isSelect?: boolean;
+  isSelect: boolean;
   quantityUsed: number;
   name: string;
   quantityUnit: string;
   structure: string;
+  errorMessage?: string;
 }
 
 export enum Category {

@@ -57,7 +57,35 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private storageSubscription: Subscription | null = null;
 
   public isSample = false;
-  public selectedReagentSample = signal<SelectedReagentSample[]>([]);
+  public selectedReagentSample = signal<SelectedReagentSample[]>([
+    {
+      reagentId: 3,
+      isSelect: true,
+      quantityUsed: 200,
+      quantityUnit: 'g',
+      name: 'Reagent J',
+      structure: 'OC(=O)CBr',
+      errorMessage: 'Insufficient quantity',
+    },
+    {
+      reagentId: 4,
+      isSelect: true,
+      quantityUsed: 1,
+      quantityUnit: 'g',
+      name: 'Reagent 3',
+      structure: 'OC(=O)CBr',
+      errorMessage: 'Insufficient quantity',
+    },
+    {
+      reagentId: 6,
+      isSelect: true,
+      quantityUsed: 15,
+      quantityUnit: 'mg',
+      name: 'Reag',
+      structure: 'C=OO',
+      errorMessage: 'Insufficient quantity',
+    },
+  ]);
   public reagentRequestForm!: FormGroup;
 
   errorMessage = '';
@@ -180,8 +208,10 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     const usedReagentSampleControl =
       this.reagentRequestForm.get('usedReagentSample');
 
-    if (hasRequiredError) {
-      usedReagentSampleControl?.setValidators([Validators.required]);
+    if (!usedReagentSampleControl?.value.length) {
+      if (!hasRequiredError) {
+        usedReagentSampleControl?.setValidators([Validators.required]);
+      }
     } else {
       usedReagentSampleControl?.clearValidators();
     }
@@ -210,6 +240,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.isSample) {
+      this.setRequiredErrorReagents();
+    }
     if (this.reagentRequestForm.valid) {
       const formRawValue = { ...this.reagentRequestForm.value };
       // Validate expirationDate and format it as needed
@@ -225,11 +258,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           storageId: formRawValue.storageId,
         } as ReagentRequest;
 
-        if (this.isSample) {
-          if (formRawValue.usedReagentSample) {
-            this.setRequiredErrorReagents();
-          }
-        }
         console.log('Form Value to Submit:', formValue);
         this.reagentsService.createReagent(formValue).subscribe({
           next: (resp) => {

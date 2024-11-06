@@ -6,6 +6,7 @@ import {
   inject,
   Inject,
   ChangeDetectionStrategy,
+  OnDestroy,
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
@@ -25,7 +26,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { map } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-add-reagent-sample',
@@ -35,12 +37,15 @@ import { map } from 'rxjs';
     MaterialModule,
     MoleculeStructureComponent,
     ReactiveFormsModule,
+    NgIf,
   ],
   templateUrl: './add-reagent-sample.component.html',
   styleUrl: './add-reagent-sample.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddReagentSampleComponent implements OnInit, AfterViewInit {
+export class AddReagentSampleComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   public displayedColumns: string[] = [
     'name',
     'category',
@@ -60,6 +65,8 @@ export class AddReagentSampleComponent implements OnInit, AfterViewInit {
   private reagentsService = inject(ReagentsService);
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<AddReagentSampleComponent>);
+  private destroy$ = new Subject<void>();
+
   public formSelection = this.fb.group({ reagents: this.fb.array([]) });
 
   public dataSource = new MatTableDataSource<Reagent>();
@@ -102,22 +109,7 @@ export class AddReagentSampleComponent implements OnInit, AfterViewInit {
         this.paginator?.pageIndex,
         this.paginator?.pageSize
       )
-      .pipe(
-        map((reagents: Reagent[]) =>
-          reagents.map((reagent) => {
-            const selectedReagent = this.selectedReagentSample.find(
-              (selectedReagent) => selectedReagent.reagentId === reagent.id!
-            );
-            return selectedReagent
-              ? {
-                  ...reagent,
-                  isSelected: true,
-                  quantityUsed: selectedReagent.quantityUsed,
-                }
-              : reagent;
-          })
-        )
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((reagents) => {
         this.setReagentsFormArray(reagents);
         this.dataSource.data = reagents;
@@ -125,14 +117,16 @@ export class AddReagentSampleComponent implements OnInit, AfterViewInit {
   }
 
   public setReagentsFormArray(reagents: Reagent[]) {
-    const data = this.formSelection.get('reagents') as FormArray;
+    const formArray = this.formSelection.get('reagents') as FormArray;
 
-    reagents.map((reagent, index) => {
+    reagents.forEach((reagent, index) => {
+      const selectedReagent = this.hasSelectedReagent(reagent.id!);
+
       const reagentControl = this.fb.group({
         reagentId: [reagent.id],
-        isSelect: [reagent.quantityUsed ? true : false],
+        isSelect: [selectedReagent?.isSelect ? true : false],
         quantityUsed: [
-          reagent.quantityUsed,
+          selectedReagent?.quantityUsed || 0,
           [
             Validators.min(0),
             Validators.max(reagent.quantityLeft || 0),
@@ -151,15 +145,27 @@ export class AddReagentSampleComponent implements OnInit, AfterViewInit {
         quantityUsedControl?.disable();
       }
 
-      isSelectControl?.valueChanges.subscribe((isSelected) => {
-        if (isSelected) {
-          quantityUsedControl?.enable();
-        } else {
-          quantityUsedControl?.disable();
-        }
-      });
+      if (selectedReagent?.errorMessage) {
+        quantityUsedControl?.setValidators(() =>
+          quantityUsedControl.value === selectedReagent.quantityUsed
+            ? { serverError: true }
+            : null
+        );
+        quantityUsedControl?.updateValueAndValidity();
+        quantityUsedControl?.markAsTouched();
+      }
 
-      data.setControl(index, reagentControl);
+      isSelectControl?.valueChanges
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((isSelected) => {
+          if (isSelected) {
+            quantityUsedControl?.enable();
+          } else {
+            quantityUsedControl?.disable();
+          }
+        });
+
+      formArray.setControl(index, reagentControl);
     });
   }
 
@@ -233,5 +239,10 @@ export class AddReagentSampleComponent implements OnInit, AfterViewInit {
     } else {
       this.formSelection.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

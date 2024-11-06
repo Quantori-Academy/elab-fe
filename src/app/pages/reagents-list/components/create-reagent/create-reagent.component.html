@@ -137,7 +137,7 @@
         @for (item of selectedReagentSample(); track $index; let i = $index) {
         <mat-card>
           <mat-card-content class="reagent-item">
-            <p class="reagent-item__seq">{{ i + 1 }}</p>
+            <p class="reagent-item__seq">{{ i + 1 }}.</p>
             <p class="reagent-item__name">{{ item.name }}</p>
             <app-molecule-structure
               [structure]="item.structure"
