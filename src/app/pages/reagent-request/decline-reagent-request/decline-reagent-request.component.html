@@ -2,7 +2,7 @@
 <form class="form" [formGroup]="reagentRequestForm" (ngSubmit)="onSave()">
   <mat-form-field>
     <mat-label>Status</mat-label>
-    <input matInput formControlName="status" readonly="" />
+    <input matInput formControlName="status" readonly />
   </mat-form-field>
 
   <mat-form-field>
@@ -12,10 +12,10 @@
       formControlName="procurementComment"
       maxlength="{{ MAX_LENGTH }}"
     ></textarea>
-    <mat-hint align="end"
-      >{{ reagentRequestForm.get("procurementComment")?.value?.length || 0 }} /
-      {{ MAX_LENGTH }}</mat-hint
-    >
+    <mat-hint align="end">
+      {{ reagentRequestForm.get("procurementComment")?.value?.length || 0 }} /
+      {{ MAX_LENGTH }}
+    </mat-hint>
   </mat-form-field>
 
   <div class="actions">

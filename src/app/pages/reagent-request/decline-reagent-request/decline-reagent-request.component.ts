@@ -57,19 +57,19 @@ export class DeclineReagentRequestComponent implements OnInit {
         status: 'Declined',
       };
 
-      this.updateReagentRequest(formValue);
+      this.declineReagentRequest(formValue);
     }
   }
 
-  updateReagentRequest(formValue: Partial<ReagentRequestList>) {
+  declineReagentRequest(formValue: Partial<ReagentRequestList>) {
     this.reagentRequestService
-      .updateReagentRequest(this.editionData.id, formValue)
+      .declineReagentRequest(this.editionData.id, formValue)
       .pipe(take(1))
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
             title: 'Success',
-            message: 'Reagent Request updated',
+            message: 'Reagent Request declined',
           });
           this.dialogRef.close(true);
         },

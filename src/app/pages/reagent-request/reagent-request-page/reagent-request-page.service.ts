@@ -100,7 +100,7 @@ export class ReagentRequestService {
       );
   }
 
-  updateReagentRequest(
+  declineReagentRequest(
     id: number,
     reagentData: Partial<ReagentRequestList>
   ): Observable<ReagentRequestList> {
