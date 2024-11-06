@@ -31,6 +31,18 @@ export interface Reagent {
   };
 }
 
+export interface SampleRequest extends OrderEntity {
+  structure: string;
+  quantityLeft: number;
+  expirationDate: string;
+  storageId: number;
+  category: Category | null;
+  usedReagentSample: {
+    reagentId: number;
+    quantityUsed: number;
+  }[];
+}
+
 export interface SelectedReagentSample {
   reagentId: number;
   isSelect: boolean;
@@ -39,6 +51,11 @@ export interface SelectedReagentSample {
   quantityUnit: string;
   structure: string;
   errorMessage?: string;
+}
+
+export interface SampleRequestError {
+  reagentId: number;
+  errorMessage: string;
 }
 
 export enum Category {

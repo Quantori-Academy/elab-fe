@@ -9,11 +9,11 @@ import {
 import {
   Unit,
   UnitLabels,
-  ReagentRequest,
   Category,
   SelectedReagentSample,
+  SampleRequestError,
 } from '../../../../shared/models/reagent-model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import {
   FormBuilder,
   Validators,
@@ -31,6 +31,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddReagentSampleComponent } from '../add-reagent-sample/add-reagent-sample.component';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-reagent',
@@ -41,6 +42,7 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
+    NgClass,
   ],
   templateUrl: './create-reagent.component.html',
   styleUrl: './create-reagent.component.scss',
@@ -57,35 +59,8 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private storageSubscription: Subscription | null = null;
 
   public isSample = false;
-  public selectedReagentSample = signal<SelectedReagentSample[]>([
-    {
-      reagentId: 3,
-      isSelect: true,
-      quantityUsed: 200,
-      quantityUnit: 'g',
-      name: 'Reagent J',
-      structure: 'OC(=O)CBr',
-      errorMessage: 'Insufficient quantity',
-    },
-    {
-      reagentId: 4,
-      isSelect: true,
-      quantityUsed: 1,
-      quantityUnit: 'g',
-      name: 'Reagent 3',
-      structure: 'OC(=O)CBr',
-      errorMessage: 'Insufficient quantity',
-    },
-    {
-      reagentId: 6,
-      isSelect: true,
-      quantityUsed: 15,
-      quantityUnit: 'mg',
-      name: 'Reag',
-      structure: 'C=OO',
-      errorMessage: 'Insufficient quantity',
-    },
-  ]);
+  public selectedReagentSample = signal<SelectedReagentSample[]>([]);
+  public hasReagentSampleError = signal(false);
   public reagentRequestForm!: FormGroup;
 
   errorMessage = '';
@@ -112,14 +87,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       description: ['', Validators.required],
       expirationDate: ['', Validators.required],
       structure: [''],
-      casNumber: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(10),
-        ],
-      ],
       quantityUnit: ['', Validators.required],
       totalQuantity: [null, Validators.required],
       quantityLeft: [null, Validators.required],
@@ -130,6 +97,14 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
             usedReagentSample: [[]],
           }
         : {
+            casNumber: [
+              '',
+              [
+                Validators.required,
+                Validators.minLength(5),
+                Validators.maxLength(10),
+              ],
+            ],
             producer: ['', Validators.required],
             catalogId: ['', Validators.required],
             catalogLink: [
@@ -219,7 +194,18 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     usedReagentSampleControl?.updateValueAndValidity();
   }
 
-  openAddReagentDialog() {
+  public setSampleRequestError(errorReagents: SampleRequestError[]) {
+    errorReagents.forEach((errorReagent) => {
+      const errorSelectedReagent = this.selectedReagentSample().find(
+        (reagent) => reagent.reagentId === errorReagent.reagentId
+      );
+      if (errorSelectedReagent) {
+        errorSelectedReagent.errorMessage = errorReagent.errorMessage;
+      }
+    });
+  }
+
+  public openAddReagentDialog() {
     this.dialog
       .open(AddReagentSampleComponent, {
         minWidth: '1000px',
@@ -235,6 +221,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
             .get('usedReagentSample')
             ?.setValue(result.map(this.asSelectedReagentSample));
           this.setRequiredErrorReagents();
+          this.hasReagentSampleError.set(false);
         }
       });
   }
@@ -253,35 +240,46 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
         delete formRawValue.storageLocation;
         const formValue = {
           ...formRawValue,
-          category: Category.reagent,
+          category: this.isSample ? Category.sample : Category.reagent,
           expirationDate: finalExpirationDate,
           storageId: formRawValue.storageId,
-        } as ReagentRequest;
+        };
 
-        console.log('Form Value to Submit:', formValue);
-        this.reagentsService.createReagent(formValue).subscribe({
-          next: (resp) => {
-            console.log('Reagent created successfully:', resp);
+        const formRequest = this.isSample
+          ? this.reagentsService.createSample(formValue)
+          : this.reagentsService.createReagent(formValue);
+        formRequest.subscribe({
+          next: () => {
             this.notificationsService.success({
               title: 'Success',
-              message: 'Reagent created successfully!',
+              message: `${
+                this.isSample ? 'Sample' : 'Reagent'
+              } created successfully!`,
               duration: 3000,
             });
+            this.router.navigate(['reagents']);
           },
-          error: (error) => {
-            console.error('Error creating reagent:', error);
+          error: (error: HttpErrorResponse) => {
+            if (this.isSample && error.status === HttpStatusCode.BadRequest) {
+              this.hasReagentSampleError.set(true);
+              this.setSampleRequestError(error.error.details);
+            }
             this.notificationsService.error({
               title: 'Error',
-              message: 'Failed to create reagent. Please try again.',
+              message: `Failed to create ${
+                this.isSample ? 'sample' : 'reagent'
+              }. Please try again.`,
               duration: 3000,
             });
           },
         });
       } else {
-        console.error('Expiration date is not defined or invalid.');
+        this.notificationsService.error({
+          title: 'Error',
+          message: 'Expiration date is not defined or invalid',
+          duration: 3000,
+        });
       }
-    } else {
-      console.log('Form is invalid');
     }
   }
 

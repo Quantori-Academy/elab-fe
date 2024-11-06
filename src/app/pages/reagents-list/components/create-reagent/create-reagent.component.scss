@@ -43,6 +43,10 @@ mat-form-field {
   width: 100%;
 }
 
+.errorCard {
+  box-shadow: 0 0 10px var(--error-color);
+}
+
 .reagents-card-content {
   display: flex;
   gap: 15px;
