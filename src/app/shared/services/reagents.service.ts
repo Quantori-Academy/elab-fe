@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import {
@@ -14,6 +14,9 @@ import {
 export class ReagentsService {
   private httpClient = inject(HttpClient);
   apiUrl = `${environment.apiUrl}/api/v1/reagents`;
+
+  private uniqueProducersSubject = new BehaviorSubject<string[]>([]);
+  public uniqueProducers$ = this.uniqueProducersSubject.asObservable();
 
   getReagents(
     name?: string,
@@ -65,7 +68,6 @@ export class ReagentsService {
         })
       );
   }
-
   createReagent(reagentData?: ReagentRequest): Observable<ReagentRequest> {
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -91,6 +93,23 @@ export class ReagentsService {
     return this.httpClient.post<SampleRequest>(
       `${this.apiUrl}/create/sample`,
       sampleData
+    );
+  }
+  public getReagentById(id: string): Observable<Reagent> {
+    return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
+  }
+
+  // to get producers from whom we already bought before
+  public getAllUniqueSellers(): Observable<string[]> {
+    return this.httpClient.get<Reagent[]>(`${this.apiUrl}`).pipe(
+      map((reagentData: Reagent[]) => {
+        const uniqueSellers = Array.from(
+          new Set(reagentData.map((reagent) => reagent.producer))
+        );
+
+        this.uniqueProducersSubject.next(uniqueSellers);
+        return uniqueSellers;
+      })
     );
   }
 }

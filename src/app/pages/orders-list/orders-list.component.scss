@@ -1,0 +1,47 @@
+:host {
+  padding: 20px 20px 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter {
+  display: flex;
+  gap: 20px;
+}
+.mat-column-order-title {
+  flex: 2;
+}
+.mat-column-creation-date,
+.mat-column-modification-date,
+.mat-column-seller,
+.mat-column-status,
+.mat-column-actions {
+  flex: 1;
+}
+td,
+th {
+  min-height: 2.5rem;
+}
+.loader {
+  font-size: 4px;
+  width: 5px;
+  height: 5px;
+  left: unset;
+  top: unset;
+  transform: unset;
+  right: 2px;
+}
+
+.mat-form-field-with-loader {
+  position: relative;
+
+  .mat-mdc-input-element {
+    width: 90%;
+  }
+}

@@ -32,9 +32,17 @@ export class LayoutComponent {
       route: 'reagents',
     },
     {
+      icon: 'storefront',
+      label: 'Orders Management',
+      route: 'orders',
+      procurementOnly: true,
+    },
+    {
       icon: 'science',
       label: 'Reagent Request',
       route: 'reagent-request-page',
+      procurementOnly: true,
+      researcherOnly: true,
     },
     {
       icon: 'person_add',
@@ -47,6 +55,11 @@ export class LayoutComponent {
   public navbarWidth = computed(() => (collapsed() ? '60px' : '250px'));
 
   isLinkVisible(link: MenuLink): boolean {
-    return !link.adminOnly || this.rbacService.isAdmin();
+    return (
+      (link.adminOnly && this.rbacService.isAdmin()) ||
+      (link.procurementOnly && this.rbacService.isProcurementOfficer()) ||
+      (link.researcherOnly && this.rbacService.isResearcher()) ||
+      (!link.adminOnly && !link.procurementOnly && !link.researcherOnly)
+    );
   }
 }

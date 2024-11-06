@@ -3,4 +3,6 @@ export interface MenuLink {
   label: string;
   route: string;
   adminOnly?: boolean;
+  procurementOnly?: boolean;
+  researcherOnly?: boolean;
 }
