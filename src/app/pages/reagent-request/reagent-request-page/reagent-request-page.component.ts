@@ -19,6 +19,7 @@ import {
   distinctUntilChanged,
 } from 'rxjs/operators';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { DeclineReagentRequestComponent } from '../edit-reagent-request/decline-reagent-request.component';
 @Component({
   selector: 'app-reagents-request-page',
   standalone: true,
@@ -131,6 +132,19 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.dialog.open(StructureDialogComponent, {
       data: { structure },
       panelClass: 'image-dialog',
+    });
+  }
+
+  openDeclineDialog(element: ReagentRequestList): void {
+    const dialogRef = this.dialog.open(DeclineReagentRequestComponent, {
+      data: element,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadReagentRequests();
+      }
     });
   }
 }

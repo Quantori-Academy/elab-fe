@@ -1,0 +1,44 @@
+<p class="header">Decline Reagent Request</p>
+<form class="form" [formGroup]="reagentRequestForm" (ngSubmit)="onSave()">
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <input matInput formControlName="status" readonly="" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Procurement Comment</mat-label>
+    <textarea
+      matInput
+      formControlName="procurementComment"
+      maxlength="{{ MAX_LENGTH }}"
+    ></textarea>
+    <mat-hint align="end"
+      >{{ reagentRequestForm.get("procurementComment")?.value?.length || 0 }} /
+      {{ MAX_LENGTH }}</mat-hint
+    >
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      class="cancel-btn"
+      type="button"
+      mat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="reagentRequestForm.invalid"
+      class="save-btn"
+      mat-flat-button
+    >
+      Save
+    </button>
+  </div>
+
+  <div class="link-button">
+    <button mat-button (click)="onLinkClick()">Link</button>
+  </div>
+</form>

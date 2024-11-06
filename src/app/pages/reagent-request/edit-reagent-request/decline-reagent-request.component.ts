@@ -14,31 +14,29 @@ import {
 import { ReagentRequestService } from '../reagent-request-page/reagent-request-page.service';
 import { AsyncPipe } from '@angular/common';
 import { ReagentRequestList } from '../reagent-request-page/reagent-request-page.interface';
-import { take } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-edit-reagent-request',
+  selector: 'app-decline-reagent-request',
   standalone: true,
   imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, AsyncPipe],
-  templateUrl: './edit-reagent-request.component.html',
-  styleUrls: ['./edit-reagent-request.component.scss'],
+  templateUrl: './decline-reagent-request.component.html',
+  styleUrls: ['./decline-reagent-request.component.scss'],
 })
-export class EditReagentRequestComponent implements OnInit {
+export class DeclineReagentRequestComponent implements OnInit {
   readonly MAX_LENGTH = 300;
 
   private fb = inject(FormBuilder);
   private reagentRequestService = inject(ReagentRequestService);
   private notificationPopupService = inject(NotificationPopupService);
-  private dialogRef = inject(MatDialogRef<EditReagentRequestComponent>);
+  private dialogRef = inject(MatDialogRef<DeclineReagentRequestComponent>);
 
   public reagentRequestForm: FormGroup = this.fb.group({
-    desiredQuantity: ['', [Validators.required]],
-    status: ['', [Validators.required]],
+    status: [{ value: 'Declined', disabled: true }, [Validators.required]],
+    procurementComment: ['', [Validators.maxLength(this.MAX_LENGTH)]],
   });
-
-  public originalValues: Partial<ReagentRequestList> | undefined;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public editionData: ReagentRequestList
@@ -46,35 +44,18 @@ export class EditReagentRequestComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.editionData) {
-      const editedData = {
-        desiredQuantity: this.editionData.desiredQuantity,
-        status: this.editionData.status,
-      };
-      this.reagentRequestForm.patchValue(editedData);
-      this.originalValues = { ...editedData };
+      this.reagentRequestForm.patchValue({
+        procurementComment: this.editionData.procurementComments || '',
+      });
     }
-  }
-
-  public hasError(label: string, error: string): boolean | undefined {
-    return this.reagentRequestForm.get(label)?.hasError(error);
-  }
-
-  public getErrorMessage(label: string, error: string): string {
-    return this.reagentRequestForm.get(label)?.getError(error);
-  }
-
-  hasFormChanged(): boolean {
-    if (!this.originalValues) return false;
-    const currentValues = this.reagentRequestForm.value;
-    return (
-      currentValues.desiredQuantity !== this.originalValues.desiredQuantity ||
-      currentValues.status !== this.originalValues.status
-    );
   }
 
   onSave() {
     if (this.reagentRequestForm.valid) {
-      const formValue = this.reagentRequestForm.value;
+      const formValue = {
+        ...this.reagentRequestForm.getRawValue(),
+        status: 'Declined',
+      };
 
       this.updateReagentRequest(formValue);
     }
@@ -99,5 +80,9 @@ export class EditReagentRequestComponent implements OnInit {
           });
         },
       });
+  }
+
+  onLinkClick() {
+    window.open('http://example.com', '_blank');
   }
 }
