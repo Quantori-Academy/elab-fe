@@ -42,6 +42,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private storageSubscription: Subscription | null = null;
+  private structureSubscription: Subscription | null = null;
 
   public isSample = false;
 
@@ -61,20 +62,20 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     structure: [''],
     casNumber: [
       '',
-      [Validators.minLength(5), Validators.maxLength(10)],
+      [Validators.required, Validators.minLength(5), Validators.maxLength(10)],
     ],
-    producer: [''],
-    catalogId: [''],
+    producer: ['', Validators.required],
+    catalogId: ['', Validators.required],
     catalogLink: [
       '',
-      [Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
+      [Validators.required, Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
     ],
-    pricePerUnit: [null],
+    pricePerUnit: [null, Validators.required],
     quantityUnit: ['', Validators.required],
     totalQuantity: [null, Validators.required],
-    description: [''],
+    description: ['', Validators.required],
     quantityLeft: [null, Validators.required],
-    expirationDate: [''],
+    expirationDate: ['', Validators.required],
     storageLocation: ['', Validators.required],
     storageId: [null as number | null],
   });
@@ -185,7 +186,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       minHeight: '600px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.reagentRequestForm.patchValue({ structure: result });
       }
@@ -199,6 +200,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.storageSubscription) {
       this.storageSubscription.unsubscribe();
+    }
+    if (this.structureSubscription) {
+      this.structureSubscription.unsubscribe();
     }
   }
 }
