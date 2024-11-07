@@ -41,3 +41,29 @@ img:hover {
   gap: 0.5px;
   align-items: center;
 }
+
+.status-label {
+  display: inline-block;
+  padding: 0.8em 1.2em;
+  font-size: 1.2em;
+  font-weight: 400;
+  line-height: 1;
+  color: #000;
+  border-radius: 0.25em;
+}
+
+.status-pending {
+  background-color: rgba(240, 173, 78, 0.8); 
+}
+
+.status-fulfilled {
+  background-color: rgba(92, 184, 92, 0.8); 
+}
+
+.status-declined {
+  background-color: rgba(217, 83, 79, 0.8); 
+}
+
+.status-ordered {
+  background-color: rgba(147, 112, 219, 0.8); 
+}

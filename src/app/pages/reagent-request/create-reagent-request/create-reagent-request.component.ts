@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { ReagentRequestCreate } from '../reagent-request-page/reagent-request-page.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AddStructureComponent } from '../../../shared/components/structure-editor/add-structure/add-structure.component';
 
 @Component({
   selector: 'app-create-reagent-request',
@@ -19,6 +21,7 @@ export class CreateReagentRequestComponent {
   private reagentRequestService = inject(ReagentRequestService);
   private notificationsService = inject(NotificationPopupService);
   private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   reagentRequestForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -71,5 +74,20 @@ export class CreateReagentRequestComponent {
 
   cancel() {
     this.router.navigate(['/reagent-request-page']);
+  }
+
+  openStructureEditor() {
+    const dialogRef = this.dialog.open(AddStructureComponent, {
+      width: '650px',
+      height: '600px',
+      minWidth: '650px',
+      minHeight: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.reagentRequestForm.patchValue({ structureSmiles: result });
+      }
+    });
   }
 }
