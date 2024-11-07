@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="actions">
-    <div class="create-btn">
+    <div class="create-btn" *ngIf="isResearcher">
       <button
         mat-flat-button
         color="primary"
@@ -114,6 +114,7 @@
               <button
                 mat-icon-button
                 color="primary"
+                *ngIf="isProcurementOfficer"
                 (click)="openDeclineDialog(element)"
               >
                 <mat-icon color="warn">delete</mat-icon>

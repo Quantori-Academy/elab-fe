@@ -21,6 +21,7 @@ import {
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { DeclineReagentRequestComponent } from '../decline-reagent-request/decline-reagent-request.component';
 import { Router } from '@angular/router';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -41,6 +42,8 @@ export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
   private router = inject(Router);
+  private rbacService = inject(RbacService);
+
   public isLoading = computed(() => this.reagentRequestService.isLoading());
   private dataSourceSubject = new BehaviorSubject<ReagentRequestList[] | null>(
     null
@@ -67,7 +70,13 @@ export class ReagentsRequestPageComponent implements OnInit {
   dataSource$: Observable<ReagentRequestList[] | null> =
     this.dataSourceSubject.asObservable();
 
+  isProcurementOfficer = false;
+  isResearcher = false;
+
   ngOnInit(): void {
+    this.isProcurementOfficer = this.rbacService.isProcurementOfficer();
+    this.isResearcher = this.rbacService.isResearcher();
+
     this.filterNameControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {

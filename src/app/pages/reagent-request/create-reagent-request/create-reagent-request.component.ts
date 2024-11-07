@@ -8,6 +8,7 @@ import { MaterialModule } from '../../../material.module';
 import { ReagentRequestCreate } from '../reagent-request-page/reagent-request-page.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddStructureComponent } from '../../../shared/components/structure-editor/add-structure/add-structure.component';
+import { Unit, UnitLabels } from '../../../shared/models/reagent-model';
 
 @Component({
   selector: 'app-create-reagent-request',
@@ -33,10 +34,10 @@ export class CreateReagentRequestComponent {
     package: [''],
   });
 
-  units = [
-    { value: 'ml', viewValue: 'ml' },
-    { value: 'g', viewValue: 'g' },
-  ];
+  units = Object.keys(Unit).map((key) => ({
+    value: Unit[key as keyof typeof Unit],
+    viewValue: UnitLabels[Unit[key as keyof typeof Unit]],
+  }));
 
   onSubmit() {
     if (this.reagentRequestForm.valid) {

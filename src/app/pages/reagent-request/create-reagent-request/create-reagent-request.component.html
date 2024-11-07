@@ -1,7 +1,9 @@
 <h1 class="header">Create New Reagent Request</h1>
 <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
   <mat-card>
-    <mat-card-header>General Information</mat-card-header>
+    <mat-card-header>
+      <div class="mat-headline">General Information</div>
+    </mat-card-header>
     <mat-card-content>
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -24,15 +26,15 @@
             reagentRequestForm.get('desiredQuantity')?.touched
           "
         >
-          Desired Quantity is required.
+          Desired Quantity is required and must be at least 1.
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Quantity Unit</mat-label>
         <mat-select formControlName="quantityUnit">
-          <mat-option *ngFor="let unit of units" [value]="unit.value">{{
-            unit.viewValue
-          }}</mat-option>
+          <mat-option *ngFor="let unit of units" [value]="unit.value">
+            {{ unit.viewValue }}
+          </mat-option>
         </mat-select>
         <mat-error
           *ngIf="
@@ -46,7 +48,9 @@
     </mat-card-content>
   </mat-card>
   <mat-card>
-    <mat-card-header>Additional Information</mat-card-header>
+    <mat-card-header>
+      <div class="mat-headline">Additional Information</div>
+    </mat-card-header>
     <mat-card-content>
       <mat-form-field appearance="outline">
         <mat-label>Structure SMILES</mat-label>
