@@ -1,0 +1,12 @@
+<p class="header">Structure drawing</p>
+<form class="form" (submit)="getSmilesFromEditor($event)">
+  <app-structure-editor></app-structure-editor>
+  <div class="actions">
+    <button class="cancel-btn" type="button" mat-button mat-dialog-close color="warn">
+      Cancel
+    </button>
+    <button type="submit" class="save-btn" mat-flat-button>
+      Add structure
+    </button>
+  </div>
+</form>
