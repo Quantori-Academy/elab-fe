@@ -70,6 +70,33 @@ export const routes: Routes = [
           ).then((c) => c.ReagentsRequestPageComponent),
         canActivate: [authGuard],
       },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./pages/orders-list/orders-list.component').then(
+            (c) => c.OrdersListComponent
+          ),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.ProcurementOfficer },
+      },
+      {
+        path: 'orders/create-order',
+        loadComponent: () =>
+          import(
+            './pages/orders-list/components/order-form/order-form.component'
+          ).then((c) => c.OrderFormComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.ProcurementOfficer },
+      },
+      {
+        path: 'orders/:id',
+        loadComponent: () =>
+          import(
+            './pages/orders-list/components/order-page/order-page.component'
+          ).then((c) => c.OrderPageComponent),
+        canActivate: [authGuard, roleGuard],
+        data: { role: UserRoles.ProcurementOfficer },
+      },
     ],
   },
   {
