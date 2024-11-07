@@ -2,7 +2,10 @@ import { inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { ReagentRequestList } from './reagent-request-page.interface';
+import {
+  ReagentRequestList,
+  ReagentRequestCreate,
+} from './reagent-request-page.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -84,7 +87,7 @@ export class ReagentRequestService {
   }
 
   createReagentRequest(
-    reagentData: ReagentRequestList
+    reagentData: ReagentRequestCreate
   ): Observable<ReagentRequestList> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

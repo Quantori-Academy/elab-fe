@@ -1,5 +1,14 @@
 <div class="wrapper">
   <div class="actions">
+    <div class="create-btn">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="redirectToCreateReagentRequest()"
+      >
+        Create Reagent Request
+      </button>
+    </div>
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Filter by Status</mat-label>

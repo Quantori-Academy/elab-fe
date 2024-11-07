@@ -154,6 +154,10 @@ export class ReagentsRequestPageComponent implements OnInit {
   redirectToDetailPage(element: ReagentRequestList): void {
     this.router.navigate(['/reagent-request-page/details', element.id]);
   }
+
+  redirectToCreateReagentRequest() {
+    this.router.navigate(['/reagent-request-page/create-reagent-request']);
+  }
 }
 
 // Currently in progress

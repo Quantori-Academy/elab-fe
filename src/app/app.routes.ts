@@ -94,6 +94,14 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       {
+        path: 'reagent-request-page/create-reagent-request',
+        loadComponent: () =>
+          import(
+            './pages/reagent-request/create-reagent-request/create-reagent-request.component'
+          ).then((c) => c.CreateReagentRequestComponent),
+        canActivate: [authGuard],
+      },
+      {
         path: 'orders',
         loadComponent: () =>
           import('./pages/orders-list/orders-list.component').then(

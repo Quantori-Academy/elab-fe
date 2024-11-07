@@ -1,1 +1,75 @@
-<p>create-reagent-request works!</p>
+<h1 class="header">Create New Reagent Request</h1>
+<form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>General Information</mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error
+          *ngIf="
+            reagentRequestForm.get('name')?.invalid &&
+            reagentRequestForm.get('name')?.touched
+          "
+        >
+          Name is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Desired Quantity</mat-label>
+        <input matInput formControlName="desiredQuantity" type="number" />
+        <mat-error
+          *ngIf="
+            reagentRequestForm.get('desiredQuantity')?.invalid &&
+            reagentRequestForm.get('desiredQuantity')?.touched
+          "
+        >
+          Desired Quantity is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity Unit</mat-label>
+        <mat-select formControlName="quantityUnit">
+          <mat-option *ngFor="let unit of units" [value]="unit.value">{{
+            unit.viewValue
+          }}</mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            reagentRequestForm.get('quantityUnit')?.invalid &&
+            reagentRequestForm.get('quantityUnit')?.touched
+          "
+        >
+          Quantity Unit is required.
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-card-header>Additional Information</mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Structure SMILES</mat-label>
+        <input matInput formControlName="structureSmiles" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CAS Number</mat-label>
+        <input matInput formControlName="casNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>User Comments</mat-label>
+        <textarea matInput formControlName="userComments"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Package</mat-label>
+        <input matInput formControlName="package" />
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <div class="actions">
+    <button mat-button color="warn" type="button" (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-flat-button color="primary" type="submit">Submit</button>
+  </div>
+</form>
