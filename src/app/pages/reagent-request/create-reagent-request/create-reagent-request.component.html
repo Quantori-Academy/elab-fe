@@ -8,26 +8,20 @@
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" />
-        <mat-error
-          *ngIf="
-            reagentRequestForm.get('name')?.invalid &&
-            reagentRequestForm.get('name')?.touched
-          "
-        >
-          Name is required.
-        </mat-error>
+        @if ( reagentRequestForm.get('name')?.invalid &&
+        reagentRequestForm.get('name')?.touched ) {
+        <mat-error>Name is required.</mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Desired Quantity</mat-label>
         <input matInput formControlName="desiredQuantity" type="number" />
-        <mat-error
-          *ngIf="
-            reagentRequestForm.get('desiredQuantity')?.invalid &&
-            reagentRequestForm.get('desiredQuantity')?.touched
-          "
-        >
+        @if ( reagentRequestForm.get('desiredQuantity')?.invalid &&
+        reagentRequestForm.get('desiredQuantity')?.touched ) {
+        <mat-error>
           Desired Quantity is required and must be at least 1.
         </mat-error>
+        }
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Quantity Unit</mat-label>
@@ -36,14 +30,10 @@
             {{ unit.viewValue }}
           </mat-option>
         </mat-select>
-        <mat-error
-          *ngIf="
-            reagentRequestForm.get('quantityUnit')?.invalid &&
-            reagentRequestForm.get('quantityUnit')?.touched
-          "
-        >
-          Quantity Unit is required.
-        </mat-error>
+        @if ( reagentRequestForm.get('quantityUnit')?.invalid &&
+        reagentRequestForm.get('quantityUnit')?.touched ) {
+        <mat-error>Quantity Unit is required.</mat-error>
+        }
       </mat-form-field>
     </mat-card-content>
   </mat-card>

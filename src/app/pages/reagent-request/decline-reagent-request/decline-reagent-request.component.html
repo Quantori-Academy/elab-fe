@@ -9,11 +9,11 @@
     <mat-label>Procurement Comment</mat-label>
     <textarea
       matInput
-      formControlName="procurementComment"
+      formControlName="procurementComments"
       maxlength="{{ MAX_LENGTH }}"
     ></textarea>
     <mat-hint align="end">
-      {{ reagentRequestForm.get("procurementComment")?.value?.length || 0 }} /
+      {{ reagentRequestForm.get("procurementComments")?.value?.length || 0 }} /
       {{ MAX_LENGTH }}
     </mat-hint>
   </mat-form-field>

@@ -35,7 +35,7 @@ export class DeclineReagentRequestComponent implements OnInit {
 
   public reagentRequestForm: FormGroup = this.fb.group({
     status: [{ value: 'Declined', disabled: true }, [Validators.required]],
-    procurementComment: ['', [Validators.maxLength(this.MAX_LENGTH)]],
+    procurementComments: ['', [Validators.maxLength(this.MAX_LENGTH)]],
   });
 
   constructor(
@@ -45,7 +45,7 @@ export class DeclineReagentRequestComponent implements OnInit {
   ngOnInit(): void {
     if (this.editionData) {
       this.reagentRequestForm.patchValue({
-        procurementComment: this.editionData.procurementComments || '',
+        procurementComments: this.editionData.procurementComments || '',
       });
     }
   }

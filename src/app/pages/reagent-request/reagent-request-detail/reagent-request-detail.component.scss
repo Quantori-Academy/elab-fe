@@ -27,7 +27,6 @@ mat-card {
     margin-bottom: 10px;
 
     .mat-headline {
-      font-size: 1.5rem;
       font-weight: bold;
     }
   }
@@ -42,21 +41,15 @@ mat-card {
       }
 
       td {
+        width: 50%;
         padding: 8px;
+        text-align: center;
+        vertical-align: middle;
       }
 
       .label {
-        width: 40%;
         font-weight: bold;
-        text-align: right;
-        vertical-align: top;
         border-right: 1px solid #e0e0e0;
-      }
-
-      .value {
-        width: 60%;
-        text-align: left;
-        padding-left: 16px;
       }
     }
 
@@ -69,18 +62,9 @@ mat-card {
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-
-  button {
-    margin-left: auto;
-  }
-}
-
-.loading-spinner {
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100%;
+  gap: 10px;
 }
+
