@@ -11,6 +11,14 @@
     </div>
     <div class="filter-container">
       <mat-form-field appearance="fill">
+        <mat-label>Filter by Name</mat-label>
+        <input
+          matInput
+          [formControl]="filterNameControl"
+          placeholder="Enter name"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
         <mat-label>Filter by Status</mat-label>
         <mat-select
           [(ngModel)]="selectedStatus"
@@ -22,15 +30,6 @@
           <mat-option value="Declined">Declined</mat-option>
           <mat-option value="Fulfilled">Fulfilled</mat-option>
         </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Filter by Name</mat-label>
-        <input
-          matInput
-          [formControl]="filterNameControl"
-          placeholder="Enter name"
-        />
       </mat-form-field>
     </div>
   </div>
