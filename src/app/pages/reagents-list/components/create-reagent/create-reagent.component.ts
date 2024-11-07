@@ -32,6 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddReagentSampleComponent } from '../add-reagent-sample/add-reagent-sample.component';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { AddStructureComponent } from '../../../../shared/components/structure-editor/add-structure/add-structure.component';
 
 @Component({
   selector: 'app-create-reagent',
@@ -55,8 +56,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private notificationsService = inject(NotificationPopupService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  public dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
   private storageSubscription: Subscription | null = null;
+  private structureSubscription: Subscription | null = null;
 
   public isSample = false;
   public selectedReagentSample = signal<SelectedReagentSample[]>([]);
@@ -283,6 +285,21 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     }
   }
 
+  openStructureEditor() {
+    const dialogRef = this.dialog.open(AddStructureComponent, {
+      width: '650px',
+      height: '600px',
+      minWidth: '650px',
+      minHeight: '600px',
+    });
+
+    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.reagentRequestForm.patchValue({ structure: result });
+      }
+    });
+  }
+
   public redirectToReagentList() {
     return this.router.navigate(['reagents']);
   }
@@ -290,6 +307,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.storageSubscription) {
       this.storageSubscription.unsubscribe();
+    }
+    if (this.structureSubscription) {
+      this.structureSubscription.unsubscribe();
     }
   }
 }
