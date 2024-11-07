@@ -1,2 +1,7 @@
-<iframe id="ifKetcher" #ketcherFrame src="/ketcher/index.html" width="600" height="400"></iframe>
-
+@if (loading) {
+<div class="loading-indicator">
+  <app-table-loader-spinner></app-table-loader-spinner>
+</div>
+} @if (ketcherUrl){
+<iframe id="ifKetcher" #ketcherFrame [src]="ketcherUrl" width="600" height="400"></iframe>
+}
