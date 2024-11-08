@@ -1,8 +1,11 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { ReagentRequestList } from './reagent-request-page.interface';
+import { environment } from '../../../../environments/environment';
+import {
+  ReagentRequestList,
+  ReagentRequestCreate,
+} from './reagent-request-page.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -62,8 +65,29 @@ export class ReagentRequestService {
       );
   }
 
+  getReagentRequestById(id: number): Observable<ReagentRequestList> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    this.isLoading.set(true);
+
+    return this.httpClient
+      .get<ReagentRequestList>(`${this.apiUrl}/${id}`, { headers })
+      .pipe(
+        tap(() => this.isLoading.set(false)),
+        catchError((error) => {
+          this.isLoading.set(false);
+          console.error('Error fetching reagent request by id:', error);
+          return throwError(
+            () => new Error('Error fetching reagent request by id')
+          );
+        })
+      );
+  }
+
   createReagentRequest(
-    reagentData: ReagentRequestList
+    reagentData: ReagentRequestCreate
   ): Observable<ReagentRequestList> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -71,6 +95,26 @@ export class ReagentRequestService {
 
     return this.httpClient
       .post<ReagentRequestList>(this.apiUrl, reagentData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error:', error);
+          return throwError(() => new Error('Error'));
+        })
+      );
+  }
+
+  declineReagentRequest(
+    id: number,
+    reagentData: Partial<ReagentRequestList>
+  ): Observable<ReagentRequestList> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.httpClient
+      .post<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
+        headers,
+      })
       .pipe(
         catchError((error) => {
           console.error('Error:', error);
