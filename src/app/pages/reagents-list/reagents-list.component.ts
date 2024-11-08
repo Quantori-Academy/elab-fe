@@ -18,8 +18,9 @@ import { StructureDialogComponent } from './components/structure-dialog/structur
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
-import { TableLoaderSpinnerComponent } from "../../shared/components/table-loader-spinner/table-loader-spinner.component";
+import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { Observable } from 'rxjs';
+import { RbacService } from '../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -30,8 +31,8 @@ import { Observable } from 'rxjs';
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-    TableLoaderSpinnerComponent
-],
+    TableLoaderSpinnerComponent,
+  ],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
@@ -39,8 +40,10 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
   @Input() storageLocationId?: number;
   public dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
+  private rbacService = inject(RbacService);
   private router = inject(Router);
 
+  public isResearcher = this.rbacService.isResearcher();
   selectedCategory = '';
   filterValue = '';
   currentPage = 0;

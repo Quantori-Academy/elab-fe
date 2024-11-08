@@ -1,23 +1,41 @@
 <div class="wrapper">
   <div class="actions">
+    @if (isResearcher) {
     <div class="create-btns">
-      <button mat-flat-button color="primary" (click)="redirectToCreatePage('reagent')">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="redirectToCreatePage('reagent')"
+      >
         Create Reagent
       </button>
-      <button mat-flat-button color="primary" (click)="redirectToCreatePage('sample')">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="redirectToCreatePage('sample')"
+      >
         Create Sample
       </button>
     </div>
+    }
 
     <div class="filter-container">
       <mat-form-field appearance="fill">
         <mat-label>Search by name</mat-label>
-        <input matInput [(ngModel)]="filterValue" (ngModelChange)="applyFilter()" placeholder="Enter a name" />
+        <input
+          matInput
+          [(ngModel)]="filterValue"
+          (ngModelChange)="applyFilter()"
+          placeholder="Enter a name"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Filter by Category</mat-label>
-        <mat-select [(ngModel)]="selectedCategory" (selectionChange)="applyFilter()">
+        <mat-select
+          [(ngModel)]="selectedCategory"
+          (selectionChange)="applyFilter()"
+        >
           <mat-option value="">All Categories</mat-option>
           <mat-option value="Sample">Sample</mat-option>
           <mat-option value="Reagent">Reagent</mat-option>
@@ -28,7 +46,12 @@
   <!-- @if(isLoading$ | async){ -->
   @if(reagents$ | async){
   <div class="mat-elevation-z8">
-    <mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" class="table">
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="onSortChange($event)"
+      class="table"
+    >
       <!-- Name Column -->
       <ng-container matColumnDef="name" class="name-column">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="name-column">
@@ -46,7 +69,11 @@
       <ng-container matColumnDef="structure">
         <mat-header-cell *matHeaderCellDef>Structure</mat-header-cell>
         <mat-cell *matCellDef="let element" class="structure-container">
-          <app-molecule-structure [structure]="element.structure" [width]="100" [height]="100"></app-molecule-structure>
+          <app-molecule-structure
+            [structure]="element.structure"
+            [width]="100"
+            [height]="100"
+          ></app-molecule-structure>
 
           <!-- <mat-progress-spinner mode="indeterminate" diameter="100" /> -->
           <!-- <img
@@ -71,7 +98,9 @@
       <!-- Quantity Column -->
       <ng-container matColumnDef="quantity">
         <mat-header-cell *matHeaderCellDef>Quantity</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.totalQuantity }} {{ element.quantityUnit }}</mat-cell>
+        <mat-cell *matCellDef="let element"
+          >{{ element.totalQuantity }} {{ element.quantityUnit }}</mat-cell
+        >
       </ng-container>
 
       <!-- Package Column -->
@@ -122,11 +151,16 @@
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
 
-    <mat-paginator #paginator class="demo-paginator" [length]="dataSource.data.length" [pageSize]="10"
-      [pageIndex]="currentPage" aria-label="Select page"></mat-paginator>
+    <mat-paginator
+      #paginator
+      class="demo-paginator"
+      [length]="dataSource.data.length"
+      [pageSize]="10"
+      [pageIndex]="currentPage"
+      aria-label="Select page"
+    ></mat-paginator>
   </div>
-  }
-  @else {
+  } @else {
   <app-table-loader-spinner />
   }
 </div>

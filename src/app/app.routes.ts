@@ -57,33 +57,9 @@ export const routes: Routes = [
       },
       {
         path: 'reagents',
-        loadComponent: () =>
-          import('./pages/reagents-list/reagents-list.component').then(
-            (c) => c.ReagentsListComponent
-          ),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin },
-        pathMatch: 'full',
-      },
-      {
-        path: 'reagents/create-reagent',
-        loadComponent: () =>
-          import(
-            './pages/reagents-list/components/create-reagent/create-reagent.component'
-          ).then((c) => c.CreateReagentComponent),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin },
-        pathMatch: 'full',
-      },
-      {
-        path: 'reagents/create-sample',
-        loadComponent: () =>
-          import(
-            './pages/reagents-list/components/create-reagent/create-reagent.component'
-          ).then((c) => c.CreateReagentComponent),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin, isSample: true },
-        pathMatch: 'full',
+        loadChildren: () =>
+          import('./pages/reagents-list/reagent.router').then((r) => r.routes),
+        canActivate: [authGuard],
       },
       {
         path: 'reagent-request-page',
