@@ -41,6 +41,7 @@
           <mat-icon>draw</mat-icon>
         </button>
       </mat-form-field>
+      @if (!isSample) {
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>CAS Number</mat-label>
         <input matInput formControlName="casNumber" />
@@ -52,6 +53,7 @@
         >
         }
       </mat-form-field>
+      }
     </mat-card-content>
   </mat-card>
 
@@ -116,7 +118,46 @@
     </mat-card-content>
   </mat-card>
 
-  @if(isSample) { } @else {
+  @if(isSample) {
+  <mat-card [ngClass]="{ errorCard: isSample && hasReagentSampleError() }">
+    <mat-card-header> Reagents* </mat-card-header>
+    <mat-card-content class="reagents-card-content">
+      @if(selectedReagentSample().length) {
+      <div class="reagents-list">
+        @for (item of selectedReagentSample(); track $index; let i = $index) {
+        <mat-card>
+          <mat-card-content class="reagent-item">
+            <p class="reagent-item__seq">{{ i + 1 }}.</p>
+            <p class="reagent-item__name">{{ item.name }}</p>
+            <app-molecule-structure
+              [structure]="item.structure"
+              [width]="50"
+              [height]="50"
+            />
+            <p class="reagent-item__quantity">
+              {{ item.quantityUsed }} {{ item.quantityUnit }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+        }
+      </div>
+      }
+      <div class="reagent-action">
+        @if (hasError('usedReagentSample', 'required')) {
+        <mat-error>Reagents are required</mat-error>
+        }
+        <button
+          mat-icon-button
+          type="button"
+          style="margin-left: auto"
+          (click)="openAddReagentDialog()"
+        >
+          <mat-icon>playlist_add</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  } @else {
   <mat-card>
     <mat-card-header>Order Details</mat-card-header>
     <mat-card-content>

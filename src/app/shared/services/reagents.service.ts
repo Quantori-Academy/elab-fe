@@ -2,7 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Reagent, ReagentRequest } from '../models/reagent-model';
+import {
+  Reagent,
+  ReagentRequest,
+  SampleRequest,
+} from '../models/reagent-model';
 
 @Injectable({
   providedIn: 'root',
@@ -85,7 +89,13 @@ export class ReagentsService {
       );
   }
 
-  public getReagentById(id:string):Observable<Reagent>{
-return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`)
+  createSample(sampleData: SampleRequest): Observable<SampleRequest> {
+    return this.httpClient.post<SampleRequest>(
+      `${this.apiUrl}/create/sample`,
+      sampleData
+    );
+  }
+  public getReagentById(id: string): Observable<Reagent> {
+    return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
   }
 }

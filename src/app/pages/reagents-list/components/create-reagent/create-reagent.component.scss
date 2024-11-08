@@ -43,6 +43,52 @@ mat-form-field {
   width: 100%;
 }
 
+.errorCard {
+  box-shadow: 0 0 10px var(--error-color);
+}
+
+.reagents-card-content {
+  display: flex;
+  gap: 15px;
+
+  .reagents-list {
+    max-height: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+    overflow-y: auto;
+
+    .reagent-item {
+      display: flex;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        padding: 0;
+        margin: 0;
+      }
+
+      &__seq {
+        width: 50px;
+      }
+
+      &__name {
+        width: 200px;
+      }
+
+      &__quantity {
+        width: 75px;
+      }
+    }
+  }
+  .reagent-action {
+    display: flex;
+    align-items: center;
+  }
+}
+
 .actions {
   margin-left: auto;
   display: flex;
