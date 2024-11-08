@@ -17,7 +17,7 @@ export interface Reagent {
   smiles: string;
   cas: string;
   category: Category;
-  producer:string;
+  producer: string;
   totalQuantity: number | null;
   package: string;
   quantityUnit: string;
@@ -76,4 +76,16 @@ export const UnitLabels: { [key in Unit]: string } = {
   [Unit.PPM]: 'Parts per Million (ppm)',
   [Unit.PPB]: 'Parts per Billion (ppb)',
   [Unit.DENSITY]: 'Density (g/mL)',
+};
+
+export enum Package {
+  BOTTLE = 'Bottle',
+  SOLVENTS_BOX = 'SolventsBox',
+  PACKAGE_BOX = 'PackageBox',
+}
+
+export const PackageLabels: { [key in Package]: string } = {
+  [Package.BOTTLE]: 'Bottle',
+  [Package.SOLVENTS_BOX]: 'Solvents Box',
+  [Package.PACKAGE_BOX]: 'Package Box',
 };
