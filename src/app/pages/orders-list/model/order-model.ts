@@ -25,7 +25,7 @@ export interface RequestedReagents {
 }
 export enum Status {
   pending = 'Pending',
-  ordered = 'Submitted',
+  submitted = 'Submitted',
   fulfilled = 'Fulfilled',
   declined = 'Declined',
 }

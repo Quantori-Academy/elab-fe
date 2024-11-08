@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../material.module';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import {
   Order,
   OrderFilter,
@@ -39,6 +39,7 @@ import { ChangeDetectorRef } from '@angular/core';
   standalone: true,
   imports: [
     MaterialModule,
+    CommonModule,
     DatePipe,
     AsyncPipe,
     SpinnerDirective,
@@ -74,10 +75,10 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [
     'title',
-    'createdAt',
-    'updatedAt',
     'seller',
     'status',
+    'createdAt',
+    'updatedAt',
     'actions',
   ];
 

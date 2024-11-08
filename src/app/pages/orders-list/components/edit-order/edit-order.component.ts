@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
-import { Order, RequestedReagents, UpdateOrder } from '../../model/order-model';
+import { Order, RequestedReagents, Status, UpdateOrder } from '../../model/order-model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -37,7 +37,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
-  statusOptions: string[] = ['Pending', 'Submitted', 'Fulfilled', 'Cancelled'];
+  statusOptions: Status[] = [Status.pending, Status.submitted, Status.fulfilled, Status.declined];
 
   displayedColumns = [
     'name',
@@ -100,16 +100,17 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
   private setStatusOptions(status: string) {
     switch (status) {
-      case 'Pending':
-        this.statusOptions = ['Pending', 'Submitted'];
+      case Status.pending:
+        this.statusOptions = [Status.pending, Status.submitted];
         break;
-      case 'Submitted':
-        this.statusOptions = ['Declined', 'Fulfilled'];
+      case Status.submitted:
+        this.statusOptions = [Status.declined, Status.fulfilled];
         break;
       default:
         this.statusOptions = [];
     }
   }
+  
 
   onSubmit() {
     const modifiedValues: Partial<UpdateOrder> = {};

@@ -17,18 +17,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ReagentRequestService } from '../../service/reagent-request.service';
-import {
-  BehaviorSubject,
-  catchError,
-  finalize,
-  forkJoin,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  takeUntil,
-} from 'rxjs';
+import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
 import { AsyncPipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
@@ -36,6 +26,7 @@ import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Router } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 
 @Component({
   selector: 'app-order-form',
@@ -61,7 +52,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private destroy$ = new Subject<void>();
 
-  dataSource$!: Observable<ReagentRequest[]>;
+  dataSource$!: Observable<ReagentRequestList[]>;
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
   reagentsSelectionError = false;
@@ -83,8 +74,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.dataSource$ = this.reagentRequestService.getPendingReagentRequests();
-    this.reagentService
+    this.dataSource$ = this.reagentRequestService.getReagentRequests('Pending');
+    this.ordersService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
@@ -123,42 +114,17 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.reagentsSelectionError = false;
 
       const orderData: OrderRequest = this.orderForm.value;
-      this.ordersService
-        .createOrder(orderData)
-        .pipe(
-          switchMap(() => {
-            const updateRequests = Array.from(this.selectedReagents).map(
-              (reagentId) =>
-                this.reagentRequestService
-                  .updateReagentRequest(reagentId, {
-                    status: 'Ordered',
-                    procurementComments: '',
-                  })
-                  .pipe(
-                    catchError((error) => {
-                      console.error(
-                        `Failed to update reagent request ${reagentId}:`,
-                        error
-                      );
-                      return of(null);
-                    })
-                  )
-            );
-
-            return forkJoin(updateRequests);
-          }),
-          finalize(() => this.redirectToReagentList())
-        )
-        .subscribe({
-          next: () => {
-            this.notificationPopupService.success({
-              title: 'Success',
-              message: 'Order created and reagents updated successfully!',
-              duration: 3000,
-            });
-          },
-          error: (err) => this.notificationPopupService.error(err),
-        });
+      this.ordersService.createOrder(orderData).subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Success',
+            message: 'Order created successfully!',
+            duration: 3000,
+          });
+          this.redirectToReagentList();
+        },
+        error: (err) => this.notificationPopupService.error(err),
+      });
     } else {
       this.reagentsSelectionError = true;
       this.orderForm.markAllAsTouched();
