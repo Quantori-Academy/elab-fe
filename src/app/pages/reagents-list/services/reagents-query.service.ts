@@ -1,6 +1,14 @@
 import { HttpParams } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { Injectable, OnDestroy, signal } from '@angular/core';
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Subject,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import {
   ReagentListColumn,
   ReagentListFilteredData,
@@ -12,9 +20,12 @@ import { Sort } from '@angular/material/sort';
 @Injectable({
   providedIn: 'root',
 })
-export class ReagentsQueryService {
+export class ReagentsQueryService implements OnDestroy {
+  private readonly DEBOUNCE_TIME = 1000;
   public readonly pageSize = 10;
   public isLoading = signal(false);
+  public nameFilterSubject = new Subject<ReagentListFilteredData>();
+  private destroy$ = new Subject<void>();
   private httpParamsSubject = new BehaviorSubject<ReagentListQuery>({
     name: '',
     category: '',
@@ -25,6 +36,7 @@ export class ReagentsQueryService {
     skip: 0,
     take: 0,
   });
+
   public httpParams$ = this.httpParamsSubject.pipe(
     map((params) => {
       let httpParams = new HttpParams()
@@ -54,6 +66,10 @@ export class ReagentsQueryService {
       return httpParams;
     })
   );
+
+  constructor() {
+    this.setFilterName();
+  }
 
   public get currentHttpParams() {
     return this.httpParamsSubject.getValue();
@@ -88,6 +104,19 @@ export class ReagentsQueryService {
     this.httpParamsSubject.next(updatedParams);
   }
 
+  private setFilterName() {
+    this.nameFilterSubject
+      .pipe(
+        tap(() => this.isLoading.set(true)),
+        debounceTime(this.DEBOUNCE_TIME),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filterData) => {
+        this.setFilteringPageData(filterData);
+      });
+  }
+
   public setFilteringPageData(filterData: ReagentListFilteredData): void {
     this.isLoading.set(true);
     const { value, column } = filterData;
@@ -105,5 +134,10 @@ export class ReagentsQueryService {
       skip: 0,
       ...filterColumn,
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
