@@ -59,8 +59,7 @@ export const routes: Routes = [
         path: 'reagents',
         loadChildren: () =>
           import('./pages/reagents-list/reagent.router').then((r) => r.routes),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Researcher },
+        canActivate: [authGuard],
       },
       {
         path: 'reagent-request-page',

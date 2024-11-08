@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { roleGuard } from '../../auth/guards/role.guard';
+import { UserRoles } from '../../shared/models/user-models';
 
 export const routes: Routes = [
   {
@@ -13,6 +15,8 @@ export const routes: Routes = [
       import('./components/create-reagent/create-reagent.component').then(
         (c) => c.CreateReagentComponent
       ),
+    canActivate: [roleGuard],
+    data: { role: UserRoles.Researcher },
   },
   {
     path: 'create-sample',
@@ -20,6 +24,7 @@ export const routes: Routes = [
       import('./components/create-reagent/create-reagent.component').then(
         (c) => c.CreateReagentComponent
       ),
-    data: { isSample: true },
+    data: { role: UserRoles.Researcher, isSample: true },
+    canActivate: [roleGuard],
   },
 ];
