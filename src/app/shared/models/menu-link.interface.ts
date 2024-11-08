@@ -4,4 +4,5 @@ export interface MenuLink {
   route: string;
   adminOnly?: boolean;
   procurementOnly?: boolean;
+  researcherOnly?: boolean;
 }
