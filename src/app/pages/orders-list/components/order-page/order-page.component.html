@@ -59,9 +59,13 @@
 
     <ng-container matColumnDef="package">
       <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.package }} </mat-cell>
+      <mat-cell *matCellDef="let element">
+        @if (element.package === null) {
+        <span>______</span>
+        }@else { {{ element.package }} }
+      </mat-cell>
     </ng-container>
-    
+
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef> status </mat-header-cell>
       <mat-cell *matCellDef="let element">
