@@ -1,0 +1,76 @@
+<h1 class="header">Reagent Request Details</h1>
+@if (reagentRequest) {
+<mat-card>
+  <mat-card-header>
+    <div class="mat-headline">General Information</div>
+  </mat-card-header>
+  <mat-card-content>
+    <table class="detail-table">
+      <tr>
+        <td class="label">ID:</td>
+        <td class="value">{{ reagentRequest.id }}</td>
+      </tr>
+      <tr>
+        <td class="label">Name:</td>
+        <td class="value">{{ reagentRequest.name }}</td>
+      </tr>
+      <tr>
+        <td class="label">Status:</td>
+        <td class="value">{{ reagentRequest.status }}</td>
+      </tr>
+      <tr>
+        <td class="label">Desired Quantity:</td>
+        <td class="value">{{ reagentRequest.desiredQuantity }}</td>
+      </tr>
+      <tr>
+        <td class="label">Quantity Unit:</td>
+        <td class="value">{{ reagentRequest.quantityUnit }}</td>
+      </tr>
+      <tr>
+        <td class="label">CAS Number:</td>
+        <td class="value">{{ reagentRequest.casNumber || "N/A" }}</td>
+      </tr>
+      <tr>
+        <td class="label">User Comments:</td>
+        <td class="value">{{ reagentRequest.userComments || "N/A" }}</td>
+      </tr>
+      <tr>
+        <td class="label">Procurement Comments:</td>
+        <td class="value">{{ reagentRequest.procurementComments || "N/A" }}</td>
+      </tr>
+      <tr>
+        <td class="label">Created At:</td>
+        <td class="value">{{ reagentRequest.createdAt | date : "short" }}</td>
+      </tr>
+      <tr>
+        <td class="label">Updated At:</td>
+        <td class="value">{{ reagentRequest.updatedAt | date : "short" }}</td>
+      </tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <div class="mat-headline">Structure</div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="structure-container">
+      <app-molecule-structure
+        [structure]="reagentRequest.structureSmiles || ''"
+        [width]="300"
+        [height]="300"
+      ></app-molecule-structure>
+      <p>
+        <strong>SMILES:</strong> {{ reagentRequest.structureSmiles || "N/A" }}
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="actions">
+  <button mat-flat-button color="primary" (click)="goBack()">Done</button>
+</div>
+} @else {
+<app-table-loader-spinner></app-table-loader-spinner>
+}
