@@ -36,7 +36,7 @@ export class CreateReagentRequestComponent {
     structureSmiles: [null],
     casNumber: [null],
     userComments: [null],
-    package: [null],
+    packageType: [null],
   });
 
   units = Object.keys(Unit).map((key) => ({
@@ -58,7 +58,7 @@ export class CreateReagentRequestComponent {
         desiredQuantity: Number(formValue.desiredQuantity),
         quantityUnit: formValue.quantityUnit,
         status: 'Pending',
-        ...(formValue.package ? { package: formValue.package } : {}),
+        ...(formValue.packageType ? { package: formValue.packageType } : {}),
         ...(formValue.structureSmiles
           ? { structureSmiles: formValue.structureSmiles }
           : {}),
