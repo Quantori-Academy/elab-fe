@@ -1,15 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
-import { Reagent } from '../../shared/models/reagent-model';
-import { MatPaginator } from '@angular/material/paginator';
+import {
+  ReagentListColumn,
+  ReagentListResponse,
+} from '../../shared/models/reagent-model';
+import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,6 +15,9 @@ import { MoleculeStructureComponent } from '../../shared/components/molecule-str
 import { Router } from '@angular/router';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { Observable } from 'rxjs';
+import { ReagentsQueryService } from './services/reagents-query.service';
+import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
+import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 
 @Component({
@@ -32,98 +30,62 @@ import { RbacService } from '../../auth/services/authentication/rbac.service';
     MaterialModule,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
+    SpinnerDirective,
   ],
+  providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
-export class ReagentsListComponent implements OnInit, AfterViewInit {
+export class ReagentsListComponent implements OnInit {
   @Input() storageLocationId?: number;
-  public dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
+  private reagentsQueryService = inject(ReagentsQueryService);
   private rbacService = inject(RbacService);
   private router = inject(Router);
 
+  public currentPage = 0;
+  public pageSize = this.reagentsQueryService.pageSize;
+  public isLoading = computed(() => this.reagentsQueryService.isLoading());
+  public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
   public isResearcher = this.rbacService.isResearcher();
-  selectedCategory = '';
-  filterValue = '';
-  currentPage = 0;
-  sortDirection: 'asc' | 'desc' = 'asc';
-  sortColumn = 'name';
 
-  displayedColumns: string[] = [
-    'name',
-    'category',
-    'structure',
-    'quantity',
-    // 'package',
-    'quantityLeft',
-    'cas',
-    'location',
-    'actions',
+  public displayedColumns: ReagentListColumn[] = [
+    ReagentListColumn.NAME,
+    ReagentListColumn.CATEGORY,
+    ReagentListColumn.STRUCTURE,
+    ReagentListColumn.QUANTITY,
+    ReagentListColumn.QUANTITYLEFT,
+    ReagentListColumn.CAS,
+    ReagentListColumn.LOCATION,
+    ReagentListColumn.ACTIONS,
   ];
 
-  dataSource = new MatTableDataSource<Reagent>();
-  reagents$: Observable<Reagent[] | undefined>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor() {
-    this.reagents$ = this.reagentsService.getReagents();
-  }
+  public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
 
   ngOnInit(): void {
-    // Initially load the reagents without sorting
-    this.loadReagents(false);
+    this.reagentsResponse$ = this.storageLocationId
+      ? this.reagentsService.getReagents(this.storageLocationId)
+      : this.reagentsService.getReagents();
   }
 
-  loadReagents(applySorting = true) {
-    console.log('Fetching reagents with filters:', {
-      name: this.filterValue,
-      category: this.selectedCategory,
-      sortByName:
-        applySorting && this.sortColumn === 'name'
-          ? this.sortDirection
-          : undefined,
-      skip: this.paginator?.pageIndex,
-      take: this.paginator?.pageSize,
+  onFilterName($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.reagentsQueryService.nameFilterSubject.next({
+      value,
+      column: ReagentListColumn.NAME,
     });
-
-    this.reagentsService
-      .getReagents(
-        this.filterValue,
-        this.selectedCategory,
-        applySorting && this.sortColumn === 'name'
-          ? this.sortDirection
-          : undefined,
-        undefined, // sortByCreationDate
-        undefined, // sortByUpdatedDate
-        this.paginator?.pageIndex,
-        this.paginator?.pageSize
-      )
-      .subscribe((reagents) => {
-        this.dataSource.data = reagents;
-      });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  applyFilter() {
-    this.loadReagents();
+  onFilterCategory(value: string) {
+    this.reagentsQueryService.setFilteringPageData({
+      value,
+      column: ReagentListColumn.CATEGORY,
+    });
   }
 
   onSortChange(sort: Sort) {
-    if (sort.active === 'name') {
-      if (sort.direction === '') {
-        this.sortDirection = 'asc';
-      } else {
-        this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
-      }
-    }
-
-    this.sortColumn = sort.active;
-    this.loadReagents();
+    this.reagentsQueryService.setSortingPageData(sort);
   }
 
   openStructure(structure: string) {
@@ -139,5 +101,9 @@ export class ReagentsListComponent implements OnInit, AfterViewInit {
     } else {
       this.router.navigate(['reagents/create-sample']);
     }
+  }
+
+  handlePageEvent($event: PageEvent) {
+    this.reagentsQueryService.setPageData($event);
   }
 }

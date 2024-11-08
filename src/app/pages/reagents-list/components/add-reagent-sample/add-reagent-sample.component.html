@@ -1,3 +1,4 @@
+@if (dataSource.data) {
 <div class="wrapper">
   <div class="actions">
     <div class="filter-container">
@@ -5,18 +6,14 @@
         <mat-label>Search by name</mat-label>
         <input
           matInput
-          [(ngModel)]="filterValue"
-          (ngModelChange)="applyFilter()"
+          (input)="onFilterName($event)"
           placeholder="Enter a name"
         />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Filter by Category</mat-label>
-        <mat-select
-          [(ngModel)]="selectedCategory"
-          (selectionChange)="applyFilter()"
-        >
+        <mat-select (selectionChange)="onFilterCategory($event.value)">
           <mat-option value="">All Categories</mat-option>
           <mat-option value="Sample">Sample</mat-option>
           <mat-option value="Reagent">Reagent</mat-option>
@@ -129,9 +126,16 @@
                 <mat-error>Quantity should more than 0</mat-error>
                 } @if(hasError(i,'quantityUsed', 'required')) {
                 <mat-error>Quantity is required</mat-error>
-                }<mat-error *ngIf="hasError(i, 'quantityUsed', 'serverError')">
-                  Server error
+                } @if (hasError(i, 'quantityUsed', 'serverError')) {
+                <mat-error>
+                  {{
+                    reagentsFormArray
+                      .at(i)
+                      .get("quantityUsed")
+                      ?.getError("serverError")
+                  }}
                 </mat-error>
+                }
               </mat-form-field>
             </td>
           </ng-container>
@@ -145,11 +149,16 @@
 
   <!-- we can remove pagination if it's unnecessary -->
   <mat-paginator
+    #paginator
     class="demo-paginator"
-    [length]="dataSource.data.length"
-    [pageSize]="10"
-    [showFirstLastButtons]="true"
-    [pageSizeOptions]="[5, 10, 20]"
+    (page)="handlePageEvent($event)"
+    [length]="reagentsSize"
+    [pageSize]="pageSize"
     [pageIndex]="currentPage"
+    [pageSizeOptions]="pageSizeOptions"
+    aria-label="Select page"
   ></mat-paginator>
 </div>
+} @else {
+<app-table-loader-spinner />
+}

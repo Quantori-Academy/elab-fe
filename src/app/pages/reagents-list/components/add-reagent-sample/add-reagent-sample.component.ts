@@ -1,21 +1,21 @@
 import {
   Component,
-  ViewChild,
   OnInit,
-  AfterViewInit,
   inject,
   Inject,
   ChangeDetectionStrategy,
   OnDestroy,
+  computed,
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   Reagent,
+  ReagentListColumn,
   SelectedReagentSample,
 } from '../../../../shared/models/reagent-model';
-import { MatPaginator } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Sort } from '@angular/material/sort';
 import {
@@ -27,7 +27,9 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { NgIf } from '@angular/common';
+import { ReagentsQueryService } from '../../services/reagents-query.service';
+import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 
 @Component({
   selector: 'app-add-reagent-sample',
@@ -37,15 +39,20 @@ import { NgIf } from '@angular/common';
     MaterialModule,
     MoleculeStructureComponent,
     ReactiveFormsModule,
-    NgIf,
+    TableLoaderSpinnerComponent,
   ],
+  providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './add-reagent-sample.component.html',
   styleUrl: './add-reagent-sample.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddReagentSampleComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class AddReagentSampleComponent implements OnInit, OnDestroy {
+  private reagentsService = inject(ReagentsService);
+  private reagentsQueryService = inject(ReagentsQueryService);
+  private fb = inject(FormBuilder);
+  private dialogRef = inject(MatDialogRef<AddReagentSampleComponent>);
+  private destroy$ = new Subject<void>();
+
   public displayedColumns: string[] = [
     'name',
     'category',
@@ -55,17 +62,12 @@ export class AddReagentSampleComponent
     'isSelect',
     'selectQuantity',
   ];
-  public selectedCategory = '';
-  public filterValue = '';
   public currentPage = 0;
-  public sortDirection: 'asc' | 'desc' = 'asc';
-  public sortColumn = 'name';
+  public reagentsSize = 0;
+  public pageSize = this.reagentsQueryService.pageSize;
+  public isLoading = computed(() => this.reagentsQueryService.isLoading());
+  public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
   public selectedReagentSample: SelectedReagentSample[] = [];
-
-  private reagentsService = inject(ReagentsService);
-  private fb = inject(FormBuilder);
-  private dialogRef = inject(MatDialogRef<AddReagentSampleComponent>);
-  private destroy$ = new Subject<void>();
 
   public formSelection = this.fb.group({ reagents: this.fb.array([]) });
 
@@ -78,41 +80,15 @@ export class AddReagentSampleComponent
     this.selectedReagentSample = data.selectedReagentSample;
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   ngOnInit(): void {
     // Initially load the reagents without sorting
-    this.loadReagents(false);
-  }
-
-  loadReagents(applySorting = true) {
-    console.log('Fetching reagents with filters:', {
-      name: this.filterValue,
-      category: this.selectedCategory,
-      sortByName:
-        applySorting && this.sortColumn === 'name'
-          ? this.sortDirection
-          : undefined,
-      skip: this.paginator?.pageIndex,
-      take: this.paginator?.pageSize,
-    });
-
     this.reagentsService
-      .getReagents(
-        this.filterValue,
-        this.selectedCategory,
-        applySorting && this.sortColumn === 'name'
-          ? this.sortDirection
-          : undefined,
-        undefined, // sortByCreationDate
-        undefined, // sortByUpdatedDate
-        this.paginator?.pageIndex,
-        this.paginator?.pageSize
-      )
+      .getReagents()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((reagents) => {
-        this.setReagentsFormArray(reagents);
-        this.dataSource.data = reagents;
+      .subscribe((reagentsResponse) => {
+        this.setReagentsFormArray(reagentsResponse.reagents);
+        this.dataSource.data = reagentsResponse.reagents;
+        this.reagentsSize = reagentsResponse.size;
       });
   }
 
@@ -148,7 +124,7 @@ export class AddReagentSampleComponent
       if (selectedReagent?.errorMessage) {
         quantityUsedControl?.setValidators(() =>
           quantityUsedControl.value === selectedReagent.quantityUsed
-            ? { serverError: true }
+            ? { serverError: selectedReagent.errorMessage }
             : null
         );
         quantityUsedControl?.updateValueAndValidity();
@@ -204,14 +180,6 @@ export class AddReagentSampleComponent
     );
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  applyFilter() {
-    this.loadReagents();
-  }
-
   public hasError(
     index: number,
     label: string,
@@ -220,25 +188,35 @@ export class AddReagentSampleComponent
     return this.reagentsFormArray.at(index).get(label)?.hasError(error);
   }
 
-  onSortChange(sort: Sort) {
-    if (sort.active === 'name') {
-      if (sort.direction === '') {
-        this.sortDirection = 'asc';
-      } else {
-        this.sortDirection = sort.direction === 'asc' ? 'asc' : 'desc';
-      }
-    }
-
-    this.sortColumn = sort.active;
-    this.loadReagents();
-  }
-
   public onSave(): void {
     if (this.formSelection.valid) {
       this.dialogRef.close(this.getSelectedReagentSample);
     } else {
       this.formSelection.markAllAsTouched();
     }
+  }
+
+  onFilterName($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.reagentsQueryService.nameFilterSubject.next({
+      value,
+      column: ReagentListColumn.NAME,
+    });
+  }
+
+  onFilterCategory(value: string) {
+    this.reagentsQueryService.setFilteringPageData({
+      value,
+      column: ReagentListColumn.CATEGORY,
+    });
+  }
+
+  onSortChange(sort: Sort) {
+    this.reagentsQueryService.setSortingPageData(sort);
+  }
+
+  handlePageEvent($event: PageEvent) {
+    this.reagentsQueryService.setPageData($event);
   }
 
   ngOnDestroy(): void {

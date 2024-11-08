@@ -18,7 +18,7 @@ export interface Reagent {
   smiles: string;
   cas: string;
   category: Category;
-  producer:string;
+  producer: string;
   totalQuantity: number | null;
   package: string;
   quantityUnit: string;
@@ -30,6 +30,11 @@ export interface Reagent {
     name: string;
     description: string | null;
   };
+}
+
+export interface ReagentListResponse {
+  reagents: Reagent[];
+  size: number;
 }
 
 export interface SampleRequest extends OrderEntity {
@@ -70,6 +75,33 @@ export interface ReagentRequest extends OrderEntity {
   storageId: number | null;
   category: Category | null;
   structure: string;
+}
+
+export interface ReagentListQuery {
+  name: string;
+  category: string;
+  storageId: string;
+  sortByName: string;
+  sortByCreationDate: string;
+  sortByUpdatedDate: string;
+  skip: number;
+  take: number;
+}
+
+export interface ReagentListFilteredData {
+  value: string;
+  column: ReagentListColumn;
+}
+
+export enum ReagentListColumn {
+  NAME = 'name',
+  CATEGORY = 'category',
+  STRUCTURE = 'structure',
+  QUANTITY = 'quantity',
+  QUANTITYLEFT = 'quantityLeft',
+  CAS = 'cas',
+  LOCATION = 'location',
+  ACTIONS = 'actions',
 }
 
 export enum Unit {
