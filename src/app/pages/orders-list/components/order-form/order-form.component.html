@@ -68,7 +68,9 @@
           <ng-container matColumnDef="package">
             <th mat-header-cell *matHeaderCellDef>Package</th>
             <td mat-cell *matCellDef="let element">
+              @if (element.package === null) {<span>N/A</span>}@else {
               {{ element.package }}
+              }
             </td>
           </ng-container>
 
@@ -111,7 +113,7 @@
       <mat-error>Select at least one reagent</mat-error>
       }
       <ul>
-        @for (name of selectedReagentNames; track  $index) {
+        @for (name of selectedReagentNames; track $index) {
         <li>Selected Reagent: {{ name }}</li>
         }
       </ul>

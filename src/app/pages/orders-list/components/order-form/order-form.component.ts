@@ -72,9 +72,18 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
-
   ngOnInit(): void {
-    this.dataSource$ = this.reagentRequestService.getReagentRequests('Pending');
+    const pageSize = 1000;
+    const skip = 0;
+    this.dataSource$ = this.reagentRequestService.getReagentRequests(
+      'Pending',
+      undefined,
+      undefined,
+      undefined,
+      skip,
+      pageSize,
+      undefined
+    );
     this.ordersService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
