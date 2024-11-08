@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
 import {
@@ -47,19 +47,5 @@ export class ReagentsService {
 
   public getReagentById(id: string): Observable<Reagent> {
     return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
-  }
-
-  // to get producers from whom we already bought before
-  public getAllUniqueSellers(): Observable<string[]> {
-    return this.httpClient.get<Reagent[]>(`${this.apiUrl}`).pipe(
-      map((reagentData: Reagent[]) => {
-        const uniqueSellers = Array.from(
-          new Set(reagentData.map((reagent) => reagent.producer))
-        );
-
-        this.uniqueProducersSubject.next(uniqueSellers);
-        return uniqueSellers;
-      })
-    );
   }
 }

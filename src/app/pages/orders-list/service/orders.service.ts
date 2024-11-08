@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import {
   OrderFilter,
@@ -7,12 +7,12 @@ import {
   OrderRequest,
   OrdersListData,
   OrdersTableColumns,
+  UpdateOrder,
 } from '../model/order-model';
 import { Order } from '../model/order-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Sort } from '@angular/material/sort';
-import { mockOrders } from '../../../../../MockData';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,6 @@ export class OrdersService {
   private url = environment.apiUrl;
   private apiUrl = `${this.url}/api/v1/orders`;
   private httpClient = inject(HttpClient);
-
   private uniqueSellersSubject = new BehaviorSubject<string[]>([]);
   public uniqueSellers$ = this.uniqueSellersSubject.asObservable();
 
@@ -74,23 +73,24 @@ export class OrdersService {
     );
   }
 
-  // public getAllUniqueSellers(): Observable<string[]> {
-  //   const httpParams = new HttpParams()
-  //     .set('skip', 0)
-  //     .set('take', 1000);  // hardcoded number to fetch all records, because BE is sending already paginated data and not all at the same time, for now i switched to using reagent's producers/sellers, i can switch back to this.
   
-  //   return this.httpClient.get<OrdersListData>(`${this.apiUrl}`, { params: httpParams }).pipe(
-  //     map((ordersData: OrdersListData) => {
-  //       const uniqueSellers = Array.from(
-  //         new Set(ordersData.orders.map(order => order.seller))
-  //       );
-  
-  //       this.uniqueSellersSubject.next(uniqueSellers);
-  //       return uniqueSellers;
-  //     })
-  //   );
-  // }
-  
+  // hardcoded number to fetch all records, because BE is sending already paginated data and not all at the same time, for now i switched to using reagent's producers/sellers, i can switch back to this.
+
+  public getAllUniqueSellers(): Observable<string[]> {
+    const httpParams = new HttpParams()
+      .set('skip', 0)
+      .set('take', 1000);
+    return this.httpClient.get<OrdersListData>(`${this.apiUrl}`, { params: httpParams }).pipe(
+      map((ordersData: OrdersListData) => {
+        const uniqueSellers = Array.from(
+          new Set(ordersData.orders.map(order => order.seller))
+        );
+
+        this.uniqueSellersSubject.next(uniqueSellers);
+        return uniqueSellers;
+      })
+    );
+  }
 
   public sorting(sorting: Sort): void {
     this.isLoading.set(true);
@@ -170,8 +170,11 @@ export class OrdersService {
     return this.httpClient.post<OrderRequest>(this.apiUrl, order);
   }
 
-  public getOrderFromMockDataById(id: number): Observable<Order | null> {
-    const order = mockOrders.find((order) => order.id === id);
-    return of(order || null);
+  public getReagentById(id: number): Observable<Order> {
+    return this.httpClient.get<Order>(`${this.apiUrl}/${id}`);
+  }
+
+  public updateOrder(id: number, data: UpdateOrder): Observable<Order> {
+    return this.httpClient.patch<Order>(`${this.apiUrl}/${id}`, data);
   }
 }

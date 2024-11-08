@@ -25,7 +25,7 @@ export interface RequestedReagents {
 }
 export enum Status {
   pending = 'Pending',
-  ordered = 'Ordered',
+  submitted = 'Submitted',
   fulfilled = 'Fulfilled',
   declined = 'Declined',
 }
@@ -54,9 +54,17 @@ export enum OrdersTableColumns {
   seller = 'seller',
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',
-  status = 'status'
+  status = 'status',
 }
 export interface OrderFilter {
   value: string;
   column: OrdersTableColumns;
+}
+
+export interface UpdateOrder {
+  title?: string;
+  seller?: string;
+  status?: string;
+  includeReagents?: { id: number }[];
+  excludeReagents?: { id: number }[];
 }

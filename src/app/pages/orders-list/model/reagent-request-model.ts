@@ -15,9 +15,14 @@ export interface ReagentRequest {
 }
 
 export interface ReagentRequestTable {
-    casNumber: string;
-    desiredQuantity: number;
-    id: number;
-    name: string;
-    userComments: string;
-  }
+  casNumber: string;
+  desiredQuantity: number;
+  id: number;
+  name: string;
+  userComments: string;
+}
+
+export interface UpdateReagentRequest {
+  status: string;
+  procurementComments: string;
+}

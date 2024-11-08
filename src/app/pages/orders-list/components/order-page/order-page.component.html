@@ -9,6 +9,9 @@
       Seller: <span>{{ order.seller }}</span>
     </h2>
     <h3>
+      Status: <span>{{ order.status }}</span>
+    </h3>
+    <h3>
       Created: <span>{{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</span>
     </h3>
 
@@ -38,7 +41,7 @@
       <mat-cell *matCellDef="let element"> {{ element.casNumber }} </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="modification date">
+    <ng-container matColumnDef="updatedAt">
       <mat-header-cell *matHeaderCellDef>Modification Date</mat-header-cell>
       <mat-cell *matCellDef="let element">
         @if (element.updatedAt === '') {
@@ -54,10 +57,21 @@
       </mat-cell>
     </ng-container>
 
-    <!--  <ng-container matColumnDef="package">
+    <ng-container matColumnDef="package">
       <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.package }} </mat-cell>
-    </ng-container> -->
+      <mat-cell *matCellDef="let element">
+        @if (element.package === null) {
+        <span>______</span>
+        }@else { {{ element.package }} }
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> status </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.status }}
+      </mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="quantityLeft">
       <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>

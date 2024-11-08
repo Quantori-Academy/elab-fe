@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
@@ -16,15 +17,16 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ReagentRequestService } from '../../service/reagent-request.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
 import { AsyncPipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 
 @Component({
   selector: 'app-order-form',
@@ -34,14 +36,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatAutocompleteModule,
     AsyncPipe,
-    RouterLink,
     MatCheckboxModule,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderFormComponent implements OnInit {
+export class OrderFormComponent implements OnInit, OnDestroy {
   private notificationPopupService = inject(NotificationPopupService);
   private fb = inject(FormBuilder);
   private ordersService = inject(OrdersService);
@@ -49,39 +50,53 @@ export class OrderFormComponent implements OnInit {
   private reagentService = inject(ReagentsService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  private destroy$ = new Subject<void>();
+
+  dataSource$!: Observable<ReagentRequestList[]>;
+  sellerOptions$ = new BehaviorSubject<string[]>([]);
+  selectedReagents = new Set<number>();
+  reagentsSelectionError = false;
+  selectedReagentNames: string[] = [];
   displayedColumns: string[] = [
     'select',
     'name',
     'desiredQuantity',
+    'package',
     'userComments',
     'casNumber',
     'actions',
   ];
-  reagentsSelectionError = false;
-  selectedReagentNames: string[] = [];
-
-  dataSource$!: Observable<ReagentRequest[]>;
-  sellerOptions$ = new BehaviorSubject<string[]>([]);
-  selectedReagents = new Set<number>();
 
   orderForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(200)]],
     seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
-
   ngOnInit(): void {
-    this.dataSource$ = this.reagentRequestService.getPendingReagentRequests();
-    this.reagentService
+    const pageSize = 1000;
+    const skip = 0;
+    this.dataSource$ = this.reagentRequestService.getReagentRequests(
+      'Pending',
+      undefined,
+      undefined,
+      undefined,
+      skip,
+      pageSize,
+      undefined
+    );
+    this.ordersService
       .getAllUniqueSellers()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
   }
+
   openReagentDialog(id: string): void {
     this.dialog.open(ReagentPageComponent, {
       width: '600px',
       data: { id },
     });
   }
+
   onCheckboxChange(element: ReagentRequest): void {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
@@ -94,6 +109,7 @@ export class OrderFormComponent implements OnInit {
     }
     this.updateOrdersFormControl();
   }
+
   updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents).map(
       (id) => ({ id })
@@ -123,7 +139,12 @@ export class OrderFormComponent implements OnInit {
       this.orderForm.markAllAsTouched();
     }
   }
-  public redirectToReagentList() {
+
+  redirectToReagentList() {
     return this.router.navigate(['orders']);
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

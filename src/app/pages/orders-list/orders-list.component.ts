@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../material.module';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import {
   Order,
   OrderFilter,
@@ -18,28 +18,30 @@ import {
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { OrdersService } from './service/orders.service';
 import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import {
+  BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
-  Observable,
   Subject,
   takeUntil,
   tap,
 } from 'rxjs';
+import { EditOrderComponent } from './components/edit-order/edit-order.component';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-orders-list',
   standalone: true,
   imports: [
     MaterialModule,
+    CommonModule,
     DatePipe,
     AsyncPipe,
-    RouterLink,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
   ],
@@ -51,7 +53,10 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   private readonly DEBOUNCE_TIME = 1000;
   public pageSize: number;
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
-  public ordersList$?: Observable<OrdersListData | undefined>;
+  private ordersListSubject = new BehaviorSubject<OrdersListData | undefined>(
+    undefined
+  );
+  ordersList$ = this.ordersListSubject.asObservable();
   public filterSubject = new Subject<OrderFilter>();
   public listLength = 100;
   public pageIndex = 0;
@@ -60,6 +65,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   statusOptions = Object.values(Status);
+  private cdr = inject(ChangeDetectorRef);
   public isLoading = computed(() => this.orderService.isLoading());
 
   constructor() {
@@ -69,10 +75,10 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = [
     'title',
-    'createdAt',
-    'updatedAt',
     'seller',
     'status',
+    'createdAt',
+    'updatedAt',
     'actions',
   ];
 
@@ -118,10 +124,23 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.router.navigate(['orders/create-order']);
   }
 
-  public redirectToDetailPage(order: Order) {
+  openEditor(order: Order) {
+    const dialogRef = this.dialog.open(EditOrderComponent, {
+      data: order.id,
+      minWidth: 'fit-content',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.ordersList$ = this.orderService.getOrdersList();
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  redirectToDetailPage(order: Order) {
     this.router.navigate(['/orders', order.id], {});
   }
-  
   handlePageEvent($event: PageEvent) {
     this.orderService.setPageData($event);
   }

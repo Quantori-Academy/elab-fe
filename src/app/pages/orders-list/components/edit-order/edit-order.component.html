@@ -1,0 +1,135 @@
+<div class="content">
+  <h3>Edit Order</h3>
+  @if (reagents$ |async) {
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+    <!-- Title Field -->
+    <div class="fields">
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+
+      <!-- Seller Field -->
+      <mat-form-field appearance="outline">
+        <mat-label>Seller</mat-label>
+        <input matInput formControlName="seller" />
+      </mat-form-field>
+
+      <!-- Status Field -->
+      <mat-form-field subscriptSizing="dynamic" appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" [matAutocomplete]="auto" />
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (option of statusOptions; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <h4>Ordered Reagents</h4>
+    <div class="mat-elevation-z8 table-container">
+      <table mat-table class="mat-elevation-z8" [dataSource]="reagents$">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="casNumber">
+          <mat-header-cell *matHeaderCellDef> casNumber </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.casNumber }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="modification date">
+          <mat-header-cell *matHeaderCellDef>Modification Date</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            @if (element.updatedAt === '') {
+            <span>______</span>
+            }@else { {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="desiredQuantity">
+          <mat-header-cell *matHeaderCellDef>
+            Desired Quantity
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.desiredQuantity }} {{ element.quantityUnit }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="quantityLeft">
+          <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.quantityLeft }}
+            {{ element.quantityUnit }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="structureSmiles">
+          <mat-header-cell *matHeaderCellDef>Structure</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="structure-container">
+            <app-molecule-structure
+              [structure]="element.structureSmiles"
+              [width]="50"
+              [height]="50"
+            ></app-molecule-structure>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="userComments">
+          <mat-header-cell *matHeaderCellDef>
+            Creator's comment
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.userComments }}
+          </mat-cell>
+        </ng-container>
+
+        @if (updateForm.get('status')?.value ==='Pending') {
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              aria-label="close"
+              mat-icon-button
+              aria-label="close"
+              (click)="onRemove(element)"
+              type="button"
+              [disabled]="updateForm.get('status')?.value !== 'Pending'"
+            >
+              <mat-icon color="warn">close</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        }
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </table>
+    </div>
+    @if (errorMessage !=='') {
+    <mat-error>{{ errorMessage }}</mat-error>
+    }
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="updateForm.invalid"
+      >
+        Update
+      </button>
+      <button mat-button color="warn" type="button" (click)="onClose()">
+        Close
+      </button>
+    </div>
+  </form>
+
+  } @else {
+  <app-table-loader-spinner />
+  }
+</div>
