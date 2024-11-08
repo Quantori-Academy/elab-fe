@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { ReagentsQueryService } from './services/reagents-query.service';
 import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
+import { RbacService } from '../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -37,12 +38,14 @@ export class ReagentsListComponent implements OnInit {
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
   private reagentsQueryService = inject(ReagentsQueryService);
+  private rbacService = inject(RbacService);
   private router = inject(Router);
 
   public currentPage = 0;
   public pageSize = this.reagentsQueryService.pageSize;
   public isLoading = computed(() => this.reagentsQueryService.isLoading());
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
+  public isResearcher = this.rbacService.isResearcher();
 
   public displayedColumns: ReagentListColumn[] = [
     ReagentListColumn.NAME,

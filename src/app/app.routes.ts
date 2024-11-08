@@ -57,40 +57,24 @@ export const routes: Routes = [
       },
       {
         path: 'reagents',
-        loadComponent: () =>
-          import('./pages/reagents-list/reagents-list.component').then(
-            (c) => c.ReagentsListComponent
-          ),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin },
-        pathMatch: 'full',
-      },
-      {
-        path: 'reagents/create-reagent',
-        loadComponent: () =>
-          import(
-            './pages/reagents-list/components/create-reagent/create-reagent.component'
-          ).then((c) => c.CreateReagentComponent),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin },
-        pathMatch: 'full',
-      },
-      {
-        path: 'reagents/create-sample',
-        loadComponent: () =>
-          import(
-            './pages/reagents-list/components/create-reagent/create-reagent.component'
-          ).then((c) => c.CreateReagentComponent),
-        canActivate: [authGuard, roleGuard],
-        data: { role: UserRoles.Admin, isSample: true },
-        pathMatch: 'full',
+        loadChildren: () =>
+          import('./pages/reagents-list/reagent.router').then((r) => r.routes),
+        canActivate: [authGuard],
       },
       {
         path: 'reagent-request-page',
         loadComponent: () =>
           import(
-            './pages/reagent-request-page/reagent-request-page.component'
+            './pages/reagent-request/reagent-request-page/reagent-request-page.component'
           ).then((c) => c.ReagentsRequestPageComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'reagent-request-page/create-reagent-request',
+        loadComponent: () =>
+          import(
+            './pages/reagent-request/create-reagent-request/create-reagent-request.component'
+          ).then((c) => c.CreateReagentRequestComponent),
         canActivate: [authGuard],
       },
       {
@@ -119,6 +103,14 @@ export const routes: Routes = [
           ).then((c) => c.OrderPageComponent),
         canActivate: [authGuard, roleGuard],
         data: { role: UserRoles.ProcurementOfficer },
+      },
+      {
+        path: 'reagent-request-page/details/:id',
+        loadComponent: () =>
+          import(
+            './pages/reagent-request/reagent-request-detail/reagent-request-detail.component'
+          ).then((c) => c.ReagentRequestDetailComponent),
+        canActivate: [authGuard],
       },
     ],
   },

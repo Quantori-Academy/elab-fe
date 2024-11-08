@@ -6,11 +6,11 @@ import { Sort } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { MaterialModule } from '../../material.module';
-import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
-import { StructureDialogComponent } from '../reagents-list/components/structure-dialog/structure-dialog.component';
-import { StatusFilter } from '../../shared/models/status.type';
-import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
+import { MaterialModule } from '../../../material.module';
+import { MoleculeStructureComponent } from '../../../shared/components/molecule-structure/molecule-structure.component';
+import { StructureDialogComponent } from '../../reagents-list/components/structure-dialog/structure-dialog.component';
+import { StatusFilter } from '../../../shared/models/status.type';
+import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   catchError,
@@ -18,7 +18,10 @@ import {
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs/operators';
-import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { DeclineReagentRequestComponent } from '../decline-reagent-request/decline-reagent-request.component';
+import { Router } from '@angular/router';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -38,6 +41,9 @@ import { TableLoaderSpinnerComponent } from '../../shared/components/table-loade
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
+  private router = inject(Router);
+  private rbacService = inject(RbacService);
+
   public isLoading = computed(() => this.reagentRequestService.isLoading());
   private dataSourceSubject = new BehaviorSubject<ReagentRequestList[] | null>(
     null
@@ -64,7 +70,13 @@ export class ReagentsRequestPageComponent implements OnInit {
   dataSource$: Observable<ReagentRequestList[] | null> =
     this.dataSourceSubject.asObservable();
 
+  isProcurementOfficer = false;
+  isResearcher = false;
+
   ngOnInit(): void {
+    this.isProcurementOfficer = this.rbacService.isProcurementOfficer();
+    this.isResearcher = this.rbacService.isResearcher();
+
     this.filterNameControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
@@ -134,4 +146,39 @@ export class ReagentsRequestPageComponent implements OnInit {
       panelClass: 'image-dialog',
     });
   }
+
+  openDeclineDialog(element: ReagentRequestList): void {
+    const dialogRef = this.dialog.open(DeclineReagentRequestComponent, {
+      data: element,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadReagentRequests();
+      }
+    });
+  }
+
+  redirectToDetailPage(element: ReagentRequestList): void {
+    this.router.navigate(['/reagent-request-page/details', element.id]);
+  }
+
+  redirectToCreateReagentRequest() {
+    this.router.navigate(['/reagent-request-page/create-reagent-request']);
+  }
 }
+
+// Currently in progress
+
+// openCreateReagentRequestDialog() {
+//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
+//     data: {},
+//   });
+
+//   dialogRef.afterClosed().subscribe((result) => {
+//     if (result) {
+//       this.loadReagentRequests();
+//     }
+//   });
+// }

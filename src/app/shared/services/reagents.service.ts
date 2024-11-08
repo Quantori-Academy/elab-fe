@@ -2,8 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Reagent, ReagentRequest } from '../models/reagent-model';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
+import {
+  Reagent,
+  ReagentRequest,
+  SampleRequest,
+} from '../models/reagent-model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +35,13 @@ export class ReagentsService {
 
   createReagent(reagentData?: ReagentRequest): Observable<ReagentRequest> {
     return this.httpClient.post<ReagentRequest>(this.apiUrl, reagentData);
+  }
+
+  createSample(sampleData: SampleRequest): Observable<SampleRequest> {
+    return this.httpClient.post<SampleRequest>(
+      `${this.apiUrl}/create/sample`,
+      sampleData
+    );
   }
 
   public getReagentById(id: string): Observable<Reagent> {
