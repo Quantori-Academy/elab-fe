@@ -86,9 +86,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public initializeForm(): void {
     this.reagentRequestForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
-      expirationDate: ['', Validators.required],
-      structure: [''],
+      description: [null],
+      expirationDate: [null],
+      structure: [null],
       quantityUnit: ['', Validators.required],
       totalQuantity: [null, Validators.required],
       quantityLeft: [null, Validators.required],
@@ -100,23 +100,16 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           }
         : {
             casNumber: [
-              '',
-              [
-                Validators.required,
-                Validators.minLength(5),
-                Validators.maxLength(10),
-              ],
+              null,
+              [Validators.minLength(5), Validators.maxLength(10)],
             ],
-            producer: ['', Validators.required],
-            catalogId: ['', Validators.required],
+            producer: [null],
+            catalogId: [null],
             catalogLink: [
-              '',
-              [
-                Validators.required,
-                Validators.pattern(/^(http|https):\/\/[^ "]+$/),
-              ],
+              null,
+              [Validators.pattern(/^(http|https):\/\/[^ "]+$/)],
             ],
-            pricePerUnit: [null, Validators.required],
+            pricePerUnit: [null],
           }),
     });
   }
