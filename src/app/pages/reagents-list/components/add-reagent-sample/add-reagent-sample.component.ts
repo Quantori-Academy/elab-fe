@@ -122,7 +122,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
       if (selectedReagent?.errorMessage) {
         quantityUsedControl?.setValidators(() =>
           quantityUsedControl.value === selectedReagent.quantityUsed
-            ? { serverError: true }
+            ? { serverError: selectedReagent.errorMessage }
             : null
         );
         quantityUsedControl?.updateValueAndValidity();

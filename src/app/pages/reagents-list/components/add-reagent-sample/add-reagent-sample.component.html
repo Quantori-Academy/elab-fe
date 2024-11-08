@@ -126,9 +126,16 @@
                 <mat-error>Quantity should more than 0</mat-error>
                 } @if(hasError(i,'quantityUsed', 'required')) {
                 <mat-error>Quantity is required</mat-error>
-                }<mat-error *ngIf="hasError(i, 'quantityUsed', 'serverError')">
-                  Server error
+                } @if (hasError(i, 'quantityUsed', 'serverError')) {
+                <mat-error>
+                  {{
+                    reagentsFormArray
+                      .at(i)
+                      .get("quantityUsed")
+                      ?.getError("serverError")
+                  }}
                 </mat-error>
+                }
               </mat-form-field>
             </td>
           </ng-container>
