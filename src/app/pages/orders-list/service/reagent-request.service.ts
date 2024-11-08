@@ -2,7 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { ReagentRequest } from '../model/reagent-request-model';
+import {
+  ReagentRequest,
+  UpdateReagentRequest,
+} from '../model/reagent-request-model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,14 @@ export class ReagentRequestService {
   apiUrl = `${environment.apiUrl}/api/v1/reagent_requests`;
 
   public getPendingReagentRequests(): Observable<ReagentRequest[]> {
-    const params = new HttpParams().set('status', 'Pending'); 
+    const params = new HttpParams().set('status', 'Pending');
     return this.httpClient.get<ReagentRequest[]>(this.apiUrl, { params });
+  }
+
+  public updateReagentRequest(
+    id: number,
+    data: UpdateReagentRequest
+  ): Observable<ReagentRequest> {
+    return this.httpClient.post<ReagentRequest>(`${this.apiUrl}/${id}`, data);
   }
 }
