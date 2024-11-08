@@ -8,7 +8,12 @@ import { MaterialModule } from '../../../material.module';
 import { ReagentRequestCreate } from '../reagent-request-page/reagent-request-page.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddStructureComponent } from '../../../shared/components/structure-editor/add-structure/add-structure.component';
-import { Unit, UnitLabels } from '../../../shared/models/reagent-model';
+import {
+  Unit,
+  UnitLabels,
+  Package,
+  PackageLabels,
+} from '../../../shared/models/reagent-model';
 
 @Component({
   selector: 'app-create-reagent-request',
@@ -26,12 +31,12 @@ export class CreateReagentRequestComponent {
 
   reagentRequestForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
-    desiredQuantity: [0, [Validators.required, Validators.min(1)]],
+    desiredQuantity: [null, [Validators.required, Validators.min(1)]],
     quantityUnit: ['', Validators.required],
-    structureSmiles: [''],
-    casNumber: [''],
-    userComments: [''],
-    package: [''],
+    structureSmiles: [null],
+    casNumber: [null],
+    userComments: [null],
+    packageType: [null],
   });
 
   units = Object.keys(Unit).map((key) => ({
@@ -39,15 +44,30 @@ export class CreateReagentRequestComponent {
     viewValue: UnitLabels[Unit[key as keyof typeof Unit]],
   }));
 
+  packages = Object.keys(Package).map((key) => ({
+    value: Package[key as keyof typeof Package],
+    viewValue: PackageLabels[Package[key as keyof typeof Package]],
+  }));
+
   onSubmit() {
     if (this.reagentRequestForm.valid) {
       const formValue = this.reagentRequestForm.getRawValue();
 
       const reagentRequest: ReagentRequestCreate = {
-        ...formValue,
-        status: 'Pending',
+        name: formValue.name,
         desiredQuantity: Number(formValue.desiredQuantity),
+        quantityUnit: formValue.quantityUnit,
+        status: 'Pending',
+        ...(formValue.packageType ? { package: formValue.packageType } : {}),
+        ...(formValue.structureSmiles
+          ? { structureSmiles: formValue.structureSmiles }
+          : {}),
+        ...(formValue.casNumber ? { casNumber: formValue.casNumber } : {}),
+        ...(formValue.userComments
+          ? { userComments: formValue.userComments }
+          : {}),
       };
+
       this.reagentRequestService
         .createReagentRequest(reagentRequest)
         .subscribe({
