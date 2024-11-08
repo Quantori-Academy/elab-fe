@@ -63,6 +63,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
     'selectQuantity',
   ];
   public currentPage = 0;
+  public reagentsSize = 0;
   public pageSize = this.reagentsQueryService.pageSize;
   public isLoading = computed(() => this.reagentsQueryService.isLoading());
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
@@ -84,9 +85,10 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
     this.reagentsService
       .getReagents()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((reagents) => {
-        this.setReagentsFormArray(reagents);
-        this.dataSource.data = reagents;
+      .subscribe((reagentsResponse) => {
+        this.setReagentsFormArray(reagentsResponse.reagents);
+        this.dataSource.data = reagentsResponse.reagents;
+        this.reagentsSize = reagentsResponse.size;
       });
   }
 

@@ -32,6 +32,11 @@ export interface Reagent {
   };
 }
 
+export interface ReagentListResponse {
+  reagents: Reagent[];
+  size: number;
+}
+
 export interface SampleRequest extends OrderEntity {
   structure: string;
   quantityLeft: number;

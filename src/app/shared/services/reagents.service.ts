@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
 import {
   Reagent,
+  ReagentListResponse,
   ReagentRequest,
   SampleRequest,
 } from '../models/reagent-model';
@@ -20,14 +21,14 @@ export class ReagentsService {
   private uniqueProducersSubject = new BehaviorSubject<string[]>([]);
   public uniqueProducers$ = this.uniqueProducersSubject.asObservable();
 
-  getReagents(storageId?: number): Observable<Reagent[]> {
+  getReagents(storageId?: number): Observable<ReagentListResponse> {
     return this.reagentsQueryService.httpParams$.pipe(
       map((params) => {
         return storageId ? params.set('storageId', storageId) : params;
       }),
       switchMap((params) => {
         return this.httpClient
-          .get<Reagent[]>(this.apiUrl, { params })
+          .get<ReagentListResponse>(this.apiUrl, { params })
           .pipe(tap(() => this.reagentsQueryService.isLoading.set(false)));
       })
     );

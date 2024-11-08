@@ -1,6 +1,9 @@
 import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
-import { Reagent, ReagentListColumn } from '../../shared/models/reagent-model';
+import {
+  ReagentListColumn,
+  ReagentListResponse,
+} from '../../shared/models/reagent-model';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -58,10 +61,10 @@ export class ReagentsListComponent implements OnInit {
     ReagentListColumn.ACTIONS,
   ];
 
-  public reagents$?: Observable<Reagent[] | undefined>;
+  public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
 
   ngOnInit(): void {
-    this.reagents$ = this.storageLocationId
+    this.reagentsResponse$ = this.storageLocationId
       ? this.reagentsService.getReagents(this.storageLocationId)
       : this.reagentsService.getReagents();
   }

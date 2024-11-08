@@ -40,11 +40,11 @@
     </div>
   </div>
   <!-- @if(isLoading$ | async){ -->
-  @if(reagents$ | async; as reagents){
+  @if(reagentsResponse$ | async; as reagentsResponse){
   <div class="mat-elevation-z8">
     <table
       mat-table
-      [dataSource]="reagents"
+      [dataSource]="reagentsResponse.reagents"
       matSort
       (matSortChange)="onSortChange($event)"
       class="mat-elevation-z8"
@@ -158,7 +158,7 @@
       #paginator
       class="demo-paginator"
       (page)="handlePageEvent($event)"
-      [length]="100"
+      [length]="reagentsResponse.size"
       [pageSize]="pageSize"
       [pageIndex]="currentPage"
       [pageSizeOptions]="pageSizeOptions"
