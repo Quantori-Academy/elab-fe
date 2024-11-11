@@ -25,19 +25,25 @@ import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { StorageLocationService } from '../../../storage-location/services/storage-location.service';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { MaterialModule } from '../../../../material.module';
-import { map, Subscription, take } from 'rxjs';
-import { StorageLocationItem } from '../../../storage-location/models/storage-location.interface';
+import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddReagentSampleComponent } from '../add-reagent-sample/add-reagent-sample.component';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { AddStructureComponent } from '../../../../shared/components/structure-editor/add-structure/add-structure.component';
+import { StorageLocationQueryService } from '../../../storage-location/services/storage-location-query.service';
+import { StorageLocationColumn } from '../../../storage-location/models/storage-location.enum';
+import { StorageLocationName } from '../../../storage-location/models/storage-location.interface';
 
 @Component({
   selector: 'app-create-reagent',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    provideNativeDateAdapter(),
+    StorageLocationService,
+    StorageLocationQueryService,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -53,17 +59,19 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private reagentsService = inject(ReagentsService);
   private storageLocationService = inject(StorageLocationService);
+  private storageLocationQueryService = inject(StorageLocationQueryService);
   private notificationsService = inject(NotificationPopupService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
-  private storageSubscription: Subscription | null = null;
-  private structureSubscription: Subscription | null = null;
+  private destroy$ = new Subject<void>();
 
   public isSample = false;
   public selectedReagentSample = signal<SelectedReagentSample[]>([]);
   public hasReagentSampleError = signal(false);
   public reagentRequestForm!: FormGroup;
+  public storageLocations$?: Observable<StorageLocationName[]>;
+  public maxStorageLocationOptions = 5;
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -81,6 +89,10 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((data) => (this.isSample = data['isSample']));
     this.initializeForm();
+    this.storageLocations$ =
+      this.storageLocationService.searchStorageLocationByName(
+        this.maxStorageLocationOptions
+      );
   }
 
   public initializeForm(): void {
@@ -118,49 +130,17 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     return this.reagentRequestForm.get(label)?.hasError(error);
   }
 
-  onRoomNameChange() {
-    const storageName = this.reagentRequestForm.get('storageLocation')?.value;
+  displayFn = (option: StorageLocationName): string => {
+    this.reagentRequestForm.get('storageId')?.setValue(option.storageId);
+    return option ? option.name : '';
+  };
 
-    if (storageName) {
-      // Unsubscribe from previous subscription to avoid memory leaks
-      if (this.storageSubscription) {
-        this.storageSubscription.unsubscribe();
-      }
-
-      // Fetch the list of storages by storage location name
-      this.storageSubscription = this.storageLocationService
-        .getListStorageLocation()
-        .pipe(map((storageData) => storageData.storages))
-        .subscribe({
-          next: (storages: StorageLocationItem[]) => {
-            const matchingStorage = storages.find(
-              (storage) =>
-                storage.name.toLowerCase() === storageName.toLowerCase()
-            );
-
-            if (matchingStorage) {
-              // Patch the storageId in the form
-              this.reagentRequestForm.patchValue({
-                storageId: matchingStorage.id,
-              });
-              console.log(
-                'Storage ID:',
-                this.reagentRequestForm.get('storageId')?.value
-              );
-            } else {
-              this.errorMessage = `No matching storage found for storage name: ${storageName}`;
-              console.warn(
-                'No matching storage found for storage name:',
-                storageName
-              );
-            }
-          },
-          error: (error) => {
-            console.error('Error fetching storages:', error);
-            this.errorMessage = 'Failed to fetch storages. Please try again.';
-          },
-        });
-    }
+  onRoomNameChange($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.storageLocationQueryService.nameFilterSubject.next({
+      value,
+      column: StorageLocationColumn.Name,
+    });
   }
 
   public asSelectedReagentSample(reagent: SelectedReagentSample): {
@@ -226,55 +206,47 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       this.setRequiredErrorReagents();
     }
     if (this.reagentRequestForm.valid) {
-      const formRawValue = { ...this.reagentRequestForm.value };
+      let formRawValue = { ...this.reagentRequestForm.value };
       // Validate expirationDate and format it as needed
+      delete formRawValue.storageLocation;
       if (formRawValue.expirationDate) {
         const expirationDateValue = new Date(formRawValue.expirationDate);
         const formattedExpirationDate = expirationDateValue.toISOString();
         const finalExpirationDate = formattedExpirationDate.split('.')[0] + 'Z';
-        delete formRawValue.storageLocation;
-        const formValue = {
+        formRawValue = {
           ...formRawValue,
-          category: this.isSample ? Category.sample : Category.reagent,
           expirationDate: finalExpirationDate,
-          storageId: formRawValue.storageId,
         };
-
-        const formRequest = this.isSample
-          ? this.reagentsService.createSample(formValue)
-          : this.reagentsService.createReagent(formValue);
-        formRequest.subscribe({
-          next: () => {
-            this.notificationsService.success({
-              title: 'Success',
-              message: `${
-                this.isSample ? 'Sample' : 'Reagent'
-              } created successfully!`,
-              duration: 3000,
-            });
-            this.router.navigate(['reagents']);
-          },
-          error: (error: HttpErrorResponse) => {
-            if (this.isSample && error.status === HttpStatusCode.BadRequest) {
-              this.hasReagentSampleError.set(true);
-              this.setSampleRequestError(error.error.details);
-            }
-            this.notificationsService.error({
-              title: 'Error',
-              message: `Failed to create ${
-                this.isSample ? 'sample' : 'reagent'
-              }. Please try again.`,
-              duration: 3000,
-            });
-          },
-        });
-      } else {
-        this.notificationsService.error({
-          title: 'Error',
-          message: 'Expiration date is not defined or invalid',
-          duration: 3000,
-        });
       }
+
+      const formRequest = this.isSample
+        ? this.reagentsService.createSample(formRawValue)
+        : this.reagentsService.createReagent(formRawValue);
+      formRequest.pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => {
+          this.notificationsService.success({
+            title: 'Success',
+            message: `${
+              this.isSample ? 'Sample' : 'Reagent'
+            } created successfully!`,
+            duration: 3000,
+          });
+          this.redirectToReagentList();
+        },
+        error: (error: HttpErrorResponse) => {
+          if (this.isSample && error.status === HttpStatusCode.BadRequest) {
+            this.hasReagentSampleError.set(true);
+            this.setSampleRequestError(error.error.details);
+          }
+          this.notificationsService.error({
+            title: 'Error',
+            message: `Failed to create ${
+              this.isSample ? 'sample' : 'reagent'
+            }. Please try again.`,
+            duration: 3000,
+          });
+        },
+      });
     }
   }
 
@@ -286,11 +258,14 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       minHeight: '600px',
     });
 
-    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.reagentRequestForm.patchValue({ structure: result });
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.reagentRequestForm.patchValue({ structure: result });
+        }
+      });
   }
 
   public redirectToReagentList() {
@@ -298,11 +273,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.storageSubscription) {
-      this.storageSubscription.unsubscribe();
-    }
-    if (this.structureSubscription) {
-      this.structureSubscription.unsubscribe();
-    }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -47,3 +47,18 @@ export interface RoomData {
   description: string;
   storageCount: number;
 }
+
+export interface StorageLocationListQuery {
+  skip: number;
+  take: number;
+  chronologicalDate: string;
+  alphabeticalRoomName: string;
+  alphabeticalStorageName: string;
+  roomName: string;
+  storageName: string;
+}
+
+export interface StorageLocationName {
+  storageId: number;
+  name: string;
+}
