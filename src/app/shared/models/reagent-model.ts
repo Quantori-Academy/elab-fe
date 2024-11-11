@@ -93,7 +93,14 @@ export interface ReagentListFilteredData {
   column: ReagentListColumn;
 }
 
+export interface MoveReagentData {
+  sourceStorageId: number;
+  destinationStorageId: number;
+  reagents: { id: number }[];
+}
+
 export enum ReagentListColumn {
+  CHECKBOX = 'checkbox',
   NAME = 'name',
   CATEGORY = 'category',
   STRUCTURE = 'structure',

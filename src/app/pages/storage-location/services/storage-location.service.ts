@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { StorageLocationColumn } from '../models/storage-location.enum';
+import { MoveReagentData } from '../../../shared/models/reagent-model';
 
 @Injectable({
   providedIn: 'root',
@@ -166,5 +167,13 @@ export class StorageLocationService {
           this.httpParamsSubject.next(this.currentHttpParams);
         })
       );
+  }
+
+  public moveReagentStorageLocation(
+    data: MoveReagentData
+  ): Observable<HttpResponseBase> {
+    return this.http.patch(`${this.apiUrl}/storages/move-items`, data, {
+      observe: 'response',
+    });
   }
 }

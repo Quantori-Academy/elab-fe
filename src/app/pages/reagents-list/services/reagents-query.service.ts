@@ -136,6 +136,10 @@ export class ReagentsQueryService implements OnDestroy {
     });
   }
 
+  reloadReagentList() {
+    this.httpParamsSubject.next(this.currentHttpParams);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

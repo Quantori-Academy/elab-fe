@@ -1,6 +1,9 @@
 .wrapper {
   padding: 1rem;
   margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 mat-cell {
