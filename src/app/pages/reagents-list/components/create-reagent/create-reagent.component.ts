@@ -37,7 +37,10 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { AddStructureComponent } from '../../../../shared/components/structure-editor/add-structure/add-structure.component';
 import { StorageLocationQueryService } from '../../../storage-location/services/storage-location-query.service';
 import { StorageLocationColumn } from '../../../storage-location/models/storage-location.enum';
-import { StorageLocationName } from '../../../storage-location/models/storage-location.interface';
+import {
+  StorageLocationItem,
+  StorageLocationListData,
+} from '../../../storage-location/models/storage-location.interface';
 
 @Component({
   selector: 'app-create-reagent',
@@ -73,7 +76,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public selectedReagentSample = signal<SelectedReagentSample[]>([]);
   public hasReagentSampleError = signal(false);
   public reagentRequestForm!: FormGroup;
-  public storageLocations$?: Observable<StorageLocationName[]>;
+  public storageLocations$?: Observable<StorageLocationListData>;
   public maxStorageLocationOptions = 5;
 
   errorMessage = '';
@@ -145,9 +148,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     };
   }
 
-  displayFn = (option: StorageLocationName): string => {
-    this.reagentRequestForm.get('storageId')?.setValue(option.storageId);
-    return option ? option.name : '';
+  displayFn = (option: StorageLocationItem): string => {
+    this.reagentRequestForm.get('storageId')?.setValue(option.id);
+    return option ? `${option.room.name} ${option.name}` : '';
   };
 
   onRoomNameChange($event: Event) {
@@ -218,8 +221,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.reagentRequestForm.value.storageId);
-
     if (this.isSample) {
       this.setRequiredErrorReagents();
     }
@@ -257,9 +258,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           }
           this.notificationsService.error({
             title: 'Error',
-            message: `Failed to create ${
-              this.isSample ? 'sample' : 'reagent'
-            }. Please try again.`,
+            message: error.error.message,
             duration: 3000,
           });
         },

@@ -6,7 +6,7 @@ import {
   StorageLocationItem,
   StorageLocationListData,
 } from '../models/storage-location.interface';
-import { map, Observable, switchMap, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { StorageLocationQueryService } from './storage-location-query.service';
 
 @Injectable({
@@ -70,7 +70,7 @@ export class StorageLocationService {
 
   public searchStorageLocationByName(
     maxStorageLocationOptions: number
-  ): Observable<{ storageId: number; name: string }[]> {
+  ): Observable<StorageLocationListData> {
     return this.storageLocationQueryService.httpParams$.pipe(
       switchMap((params) => {
         return this.http
@@ -78,12 +78,6 @@ export class StorageLocationService {
             params: params.set('take', maxStorageLocationOptions),
           })
           .pipe(
-            map((response) =>
-              response.storages.map((storage) => ({
-                storageId: storage.id,
-                name: `${storage.room.name} ${storage.name}`,
-              }))
-            ),
             tap(() => this.storageLocationQueryService.isLoading.set(false))
           );
       })

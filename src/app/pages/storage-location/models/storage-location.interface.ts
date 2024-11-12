@@ -57,8 +57,3 @@ export interface StorageLocationListQuery {
   roomName: string;
   storageName: string;
 }
-
-export interface StorageLocationName {
-  storageId: number;
-  name: string;
-}

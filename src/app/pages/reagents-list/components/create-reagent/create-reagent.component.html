@@ -117,9 +117,12 @@
           #auto="matAutocomplete"
           [displayWith]="displayFn"
         >
-          @if (storageInput.value) { @for (option of storageLocations$ | async;
-          track $index) {
-          <mat-option [value]="option">{{ option.name }}</mat-option>
+          @if (storageInput.value && (storageLocations$ | async); as
+          storageLocations) { @for (option of storageLocations.storages; track
+          option.id) {
+          <mat-option [value]="option"
+            >{{ option.room.name }} {{ option.name }}</mat-option
+          >
           } }
         </mat-autocomplete>
         @if (hasError('storageLocation', 'required')) {
