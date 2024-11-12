@@ -44,8 +44,4 @@ export class ReagentRequestDetailComponent implements OnInit {
       });
     }
   }
-
-  goBack() {
-    this.router.navigate(['/reagent-request-page']);
-  }
 }

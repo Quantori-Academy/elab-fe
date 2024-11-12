@@ -27,6 +27,10 @@
         <td class="value">{{ reagentRequest.quantityUnit }}</td>
       </tr>
       <tr>
+        <td class="label">Package:</td>
+        <td class="value">{{ reagentRequest.package }}</td>
+      </tr>
+      <tr>
         <td class="label">CAS Number:</td>
         <td class="value">{{ reagentRequest.casNumber || "N/A" }}</td>
       </tr>
@@ -68,9 +72,6 @@
   </mat-card-content>
 </mat-card>
 
-<div class="actions">
-  <button mat-flat-button color="primary" (click)="goBack()">Done</button>
-</div>
 } @else {
 <app-table-loader-spinner></app-table-loader-spinner>
 }
