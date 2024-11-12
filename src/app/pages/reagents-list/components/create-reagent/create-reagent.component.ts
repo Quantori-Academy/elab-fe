@@ -19,6 +19,9 @@ import {
   Validators,
   ReactiveFormsModule,
   FormGroup,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
@@ -104,8 +107,11 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       quantityUnit: ['', Validators.required],
       totalQuantity: [null, Validators.required],
       quantityLeft: [null, Validators.required],
-      storageLocation: ['', Validators.required],
-      storageId: [null as number | null],
+      storageLocation: [
+        '',
+        [Validators.required, this.storageLocationValidator()],
+      ],
+      storageId: [null as number | null, Validators.required],
       ...(this.isSample
         ? {
             usedReagentSample: [[]],
@@ -130,6 +136,15 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     return this.reagentRequestForm.get(label)?.hasError(error);
   }
 
+  storageLocationValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return value && typeof value === 'string'
+        ? { invalidOption: true }
+        : null;
+    };
+  }
+
   displayFn = (option: StorageLocationName): string => {
     this.reagentRequestForm.get('storageId')?.setValue(option.storageId);
     return option ? option.name : '';
@@ -137,6 +152,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
 
   onRoomNameChange($event: Event) {
     const value = ($event.target as HTMLInputElement).value;
+
     this.storageLocationQueryService.nameFilterSubject.next({
       value,
       column: StorageLocationColumn.Name,
@@ -202,13 +218,14 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    console.log(this.reagentRequestForm.value.storageId);
+
     if (this.isSample) {
       this.setRequiredErrorReagents();
     }
     if (this.reagentRequestForm.valid) {
       let formRawValue = { ...this.reagentRequestForm.value };
       // Validate expirationDate and format it as needed
-      delete formRawValue.storageLocation;
       if (formRawValue.expirationDate) {
         const expirationDateValue = new Date(formRawValue.expirationDate);
         const formattedExpirationDate = expirationDateValue.toISOString();

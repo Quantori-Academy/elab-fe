@@ -106,21 +106,26 @@
         <mat-label>Storage Location</mat-label>
         <input
           matInput
-          formControlName="storageLocation"
           placeholder="e.g: Cabinet1-Shelf1"
           (input)="onRoomNameChange($event)"
+          formControlName="storageLocation"
           [matAutocomplete]="auto"
           #storageInput
         />
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          [displayWith]="displayFn"
+        >
           @if (storageInput.value) { @for (option of storageLocations$ | async;
           track $index) {
           <mat-option [value]="option">{{ option.name }}</mat-option>
           } }
         </mat-autocomplete>
-        @if (reagentRequestForm.get('storageLocation')?.invalid &&
-        reagentRequestForm.get('storageLocation')?.touched) {
+        @if (hasError('storageLocation', 'required')) {
         <mat-error>Storage Location is required.</mat-error>
+        } @if (hasError('storageLocation', 'invalidOption')) {
+        <mat-error>Select correct Storage Location.</mat-error>
         }
       </mat-form-field>
     </mat-card-content>
