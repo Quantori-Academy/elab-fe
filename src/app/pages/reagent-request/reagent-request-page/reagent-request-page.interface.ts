@@ -25,3 +25,8 @@ export interface ReagentRequestCreate {
   package?: string;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined';
 }
+
+export interface ReagentRequestResponse {
+  requests: ReagentRequestList[];
+  size: number;
+}
