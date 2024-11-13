@@ -106,7 +106,7 @@
         <mat-label>Storage Location</mat-label>
         <input
           matInput
-          placeholder="e.g: Cabinet1-Shelf1"
+          placeholder="e.g: Room1 Cabinet1-Shelf1"
           (input)="onRoomNameChange($event)"
           formControlName="storageLocation"
           [matAutocomplete]="auto"
@@ -117,13 +117,13 @@
           #auto="matAutocomplete"
           [displayWith]="displayFn"
         >
-          @if (storageInput.value && (storageLocations$ | async); as
+          @if (storageInput.value) { @if ((storageLocations$ | async); as
           storageLocations) { @for (option of storageLocations.storages; track
           option.id) {
           <mat-option [value]="option"
             >{{ option.room.name }} {{ option.name }}</mat-option
           >
-          } }
+          } } }
         </mat-autocomplete>
         @if (hasError('storageLocation', 'required')) {
         <mat-error>Storage Location is required.</mat-error>

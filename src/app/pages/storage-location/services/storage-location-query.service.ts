@@ -35,6 +35,7 @@ export class StorageLocationQueryService implements OnDestroy {
     alphabeticalStorageName: '',
     roomName: '',
     storageName: '',
+    fullPath: '',
   });
 
   public httpParams$ = this.httpParamsSubject.pipe(
@@ -65,6 +66,7 @@ export class StorageLocationQueryService implements OnDestroy {
       );
       httpParams = setParamIfExists('roomName', params.roomName);
       httpParams = setParamIfExists('storageName', params.storageName);
+      httpParams = setParamIfExists('fullPath', params.fullPath);
 
       return httpParams;
     })
@@ -102,7 +104,7 @@ export class StorageLocationQueryService implements OnDestroy {
 
   public setSortingPageData(sortingData: Sort): void {
     this.isLoading.set(true);
-    const sortingMap = {
+    const sortingMap: Record<string, Record<string, string>> = {
       [StorageLocationColumn.Name]: {
         alphabeticalStorageName: sortingData.direction,
       },
@@ -113,6 +115,7 @@ export class StorageLocationQueryService implements OnDestroy {
         alphabeticalRoomName: sortingData.direction,
       },
     };
+
     const resetSortingParams = {
       alphabeticalStorageName: '',
       chronologicalDate: '',
@@ -136,6 +139,9 @@ export class StorageLocationQueryService implements OnDestroy {
         break;
       case StorageLocationColumn.Name:
         filterColumn = { storageName: value };
+        break;
+      case StorageLocationColumn.FullPath:
+        filterColumn = { fullPath: value };
         break;
     }
     this.httpParamsSubject.next({

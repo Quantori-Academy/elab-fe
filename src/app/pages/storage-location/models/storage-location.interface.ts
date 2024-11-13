@@ -34,6 +34,7 @@ export interface StorageLocationPageData {
   alphabeticalStorageName: string;
   roomName: string;
   storageName: string;
+  fullPath: string;
 }
 
 export interface StorageLocationFilteredData {

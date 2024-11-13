@@ -158,7 +158,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
 
     this.storageLocationQueryService.nameFilterSubject.next({
       value,
-      column: StorageLocationColumn.Name,
+      column: StorageLocationColumn.FullPath,
     });
   }
 
@@ -259,7 +259,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           this.notificationsService.error({
             title: 'Error',
             message: error.error.message,
-            duration: 3000,
+            duration: 4000,
           });
         },
       });

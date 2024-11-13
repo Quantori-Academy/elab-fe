@@ -73,13 +73,12 @@ export class StorageLocationService {
   ): Observable<StorageLocationListData> {
     return this.storageLocationQueryService.httpParams$.pipe(
       switchMap((params) => {
-        return this.http
-          .get<StorageLocationListData>(`${this.apiUrl}/storages`, {
+        return this.http.get<StorageLocationListData>(
+          `${this.apiUrl}/storages`,
+          {
             params: params.set('take', maxStorageLocationOptions),
-          })
-          .pipe(
-            tap(() => this.storageLocationQueryService.isLoading.set(false))
-          );
+          }
+        );
       })
     );
   }
