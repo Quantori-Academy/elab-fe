@@ -158,7 +158,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
 
     this.storageLocationQueryService.nameFilterSubject.next({
       value,
-      column: StorageLocationColumn.Name,
+      column: StorageLocationColumn.FullPath,
     });
   }
 
@@ -236,6 +236,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           expirationDate: finalExpirationDate,
         };
       }
+      console.log(formRawValue);
 
       const formRequest = this.isSample
         ? this.reagentsService.createSample(formRawValue)
@@ -259,7 +260,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           this.notificationsService.error({
             title: 'Error',
             message: error.error.message,
-            duration: 3000,
+            duration: 4000,
           });
         },
       });
