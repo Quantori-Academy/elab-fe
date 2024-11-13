@@ -12,7 +12,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ReagentRequestService } from '../reagent-request-page/reagent-request-page.service';
-import { AsyncPipe } from '@angular/common';
+// import { AsyncPipe } from '@angular/common';
 import { ReagentRequestList } from '../reagent-request-page/reagent-request-page.interface';
 import { take } from 'rxjs/operators';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
@@ -21,7 +21,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-decline-reagent-request',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, AsyncPipe],
+  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule,
+    //  AsyncPipe
+    ],
   templateUrl: './decline-reagent-request.component.html',
   styleUrls: ['./decline-reagent-request.component.scss'],
 })

@@ -19,7 +19,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
 import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
-import { ReagentRequest } from '../../model/reagent-request-model';
 import { AsyncPipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
@@ -97,7 +96,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCheckboxChange(element: ReagentRequest): void {
+  onCheckboxChange(element: ReagentRequestList): void {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
       this.selectedReagentNames = this.selectedReagentNames.filter(
