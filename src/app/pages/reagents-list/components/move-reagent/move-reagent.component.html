@@ -1,7 +1,29 @@
-<div class="container">
-  <mat-form-field>
-    <mat-label>Destination Storage Location</mat-label>
-    <input matInput type="number" [(ngModel)]="destinationStorageId" />
+<form class="container" [formGroup]="moveForm">
+  <mat-form-field subscriptSizing="dynamic" appearance="outline">
+    <mat-label>Storage Location</mat-label>
+    <input
+      matInput
+      placeholder="e.g: Room1 Cabinet1-Shelf1"
+      (input)="onRoomNameChange($event)"
+      formControlName="storageLocation"
+      [matAutocomplete]="auto"
+      #storageInput
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+    >
+      @if (storageInput.value) {
+        @if (storageLocations$ | async; as storageLocations) {
+          @for (option of storageLocations.storages; track option.id) {
+            <mat-option [value]="option">
+              {{ option.room.name }} {{ option.name }}
+            </mat-option>
+          }
+        }
+      }
+    </mat-autocomplete>
   </mat-form-field>
 
   <div class="actions">
@@ -10,4 +32,4 @@
       Move
     </button>
   </div>
-</div>
+</form>
