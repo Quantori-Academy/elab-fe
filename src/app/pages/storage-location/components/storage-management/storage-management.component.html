@@ -1,8 +1,9 @@
-@if(isAdmin){
 <div class="header">
+  @if(isAdmin){
   <button class="add-btn" mat-flat-button (click)="onCreate()">
     Add New Storage Location
   </button>
+  }
   <div class="filter">
     <mat-form-field class="filter__item" appearance="fill">
       <mat-label>Filter by room</mat-label>
@@ -20,7 +21,7 @@
     </mat-form-field>
   </div>
 </div>
-} @if ( storageLocationData$ | async; as storageLocationData ) {
+@if ( storageLocationData$ | async; as storageLocationData ) {
 <div class="mat-elevation-z8">
   <table
     mat-table
