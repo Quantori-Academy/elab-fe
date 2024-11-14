@@ -1,13 +1,10 @@
 :host {
-  padding: 5px;
-  height: 100%;
-  overflow: hidden;
+  padding: 10px;
   box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 10px;
 }
 
 .info {
