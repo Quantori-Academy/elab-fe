@@ -13,6 +13,12 @@ export interface ReagentRequestList {
   updatedAt?: string;
   quantityUnit?: string;
   package?: string;
+  orderId?: number | null;
+  producer?: string | null;
+  catalogId?: string | null;
+  catalogLink?: string | null;
+  pricePerUnit?: number | null;
+  expirationDate?: Date | null;
 }
 
 export interface ReagentRequestCreate {
@@ -24,6 +30,12 @@ export interface ReagentRequestCreate {
   userComments?: string;
   package?: string;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined';
+  orderId?: number | null;
+  producer?: string | null;
+  catalogId?: string | null;
+  catalogLink?: string | null;
+  pricePerUnit?: number | null;
+  expirationDate?: Date | null;
 }
 
 export interface ReagentRequestResponse {
