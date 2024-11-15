@@ -25,3 +25,27 @@ export interface ReagentRequestCreate {
   package?: string;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined';
 }
+
+// had to add, will remove once denis merges his branch
+export interface ReagentRequestQuery {
+  skip: number;
+  take: number;
+  sortByQuantity: string;
+  sortByCreatedDate: string;
+  sortByUpdatedDate: string;
+  status: string;
+  name: string;
+}
+export interface ReagentRequestData {
+  requests: ReagentRequestList[];
+  size: number;
+}
+export enum ReagentRequestTableColumns {
+  name = 'name',
+  status = 'status',
+  createdAt = 'createdAt',
+}
+export interface ReagentRequestFilter {
+  value: string;
+  column: ReagentRequestTableColumns;
+}

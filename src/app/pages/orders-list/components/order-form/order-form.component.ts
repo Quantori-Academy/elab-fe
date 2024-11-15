@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
@@ -18,15 +19,26 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  Subject,
+  takeUntil,
+} from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
-import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Router } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
+import {
+  ReagentRequestData,
+  ReagentRequestFilter,
+  ReagentRequestTableColumns,
+} from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { Sort } from '@angular/material/sort';
+import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 
 @Component({
   selector: 'app-order-form',
@@ -37,6 +49,9 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
     MatAutocompleteModule,
     AsyncPipe,
     MatCheckboxModule,
+    SpinnerDirective,
+    TableLoaderSpinnerComponent,
+    DatePipe,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -47,21 +62,31 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private ordersService = inject(OrdersService);
   private reagentRequestService = inject(ReagentRequestService);
-  private reagentService = inject(ReagentsService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
+  public filterSubject = new Subject<ReagentRequestFilter>();
+  private reagentRequestListSubject = new BehaviorSubject<
+    ReagentRequestData | undefined
+  >(undefined);
+  public isLoading = computed(() => this.reagentRequestService.isLoading());
 
-  dataSource$!: Observable<ReagentRequestList[]>;
+  dataSource$ = this.reagentRequestListSubject.asObservable();
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
   reagentsSelectionError = false;
   selectedReagentNames: string[] = [];
+
+  constructor() {
+    this.dataSource$ = this.reagentRequestService.getReagentRequestList();
+  }
+
   displayedColumns: string[] = [
     'select',
     'name',
     'desiredQuantity',
     'package',
+    'createdAt',
     'userComments',
     'casNumber',
     'actions',
@@ -72,22 +97,25 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
+
   ngOnInit(): void {
-    const pageSize = 1000;
-    const skip = 0;
-    this.dataSource$ = this.reagentRequestService.getReagentRequests(
-      'Pending',
-      undefined,
-      undefined,
-      undefined,
-      skip,
-      pageSize,
-      undefined
-    );
-    this.ordersService
-      .getAllUniqueSellers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((sellers) => this.sellerOptions$.next(sellers));
+    this.filterSubject
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((filterData) => {
+        this.reagentRequestService.filtering(filterData);
+      });
+  }
+
+  onFilterName($event: Event) {
+    const value = ($event.target as HTMLInputElement).value;
+    this.filterSubject.next({
+      value,
+      column: ReagentRequestTableColumns.name,
+    });
+  }
+
+  onSort(sort: Sort): void {
+    this.reagentRequestService.sorting(sort);
   }
 
   openReagentDialog(id: string): void {

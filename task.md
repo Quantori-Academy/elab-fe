@@ -1,0 +1,6 @@
+- warn user when deleting last reagent request from order
+- empty orders will be displayed as empty but ask dimitry how he wants to hendel it
+- add submit button on actions column not inside the editor panel, also remove status pending from form.
+- add filter by name and sort by date to the RR table
+- make for order form have two columns for: general info and RR table.
+- make tables in RR Table and orders list to have same height, make headers and paginator sticky
