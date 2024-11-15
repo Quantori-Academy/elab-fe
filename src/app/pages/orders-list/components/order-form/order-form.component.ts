@@ -39,7 +39,7 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
     MatCheckboxModule,
   ],
   templateUrl: './order-form.component.html',
-  styleUrls: ['./order-form.component.scss'],
+  styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderFormComponent implements OnInit, OnDestroy {
