@@ -203,7 +203,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     this.dialog
       .open(AddReagentSampleComponent, {
         minWidth: '1000px',
-        maxHeight: '700px',
+        maxHeight: '600px',
         data: { selectedReagentSample: this.selectedReagentSample() },
       })
       .afterClosed()
