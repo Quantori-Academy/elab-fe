@@ -104,9 +104,9 @@ export class ReagentsRequestPageComponent implements OnInit {
         this.filterName || undefined
       )
       .pipe(
-        tap((requests) => {
-          this.totalItems = requests.length;
-          this.dataSourceSubject.next(requests);
+        tap((response) => {
+          this.totalItems = response.size;
+          this.dataSourceSubject.next(response.requests);
         }),
         catchError((err) => {
           console.error('Error:', err);
@@ -168,17 +168,3 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.router.navigate(['/reagent-request-page/create-reagent-request']);
   }
 }
-
-// Currently in progress
-
-// openCreateReagentRequestDialog() {
-//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
-//     data: {},
-//   });
-
-//   dialogRef.afterClosed().subscribe((result) => {
-//     if (result) {
-//       this.loadReagentRequests();
-//     }
-//   });
-// }

@@ -13,6 +13,12 @@ export interface ReagentRequestList {
   updatedAt?: string;
   quantityUnit?: string;
   package?: string;
+  orderId?: number | null;
+  producer?: string | null;
+  catalogId?: string | null;
+  catalogLink?: string | null;
+  pricePerUnit?: number | null;
+  expirationDate?: Date | null;
 }
 
 export interface ReagentRequestCreate {
@@ -24,28 +30,15 @@ export interface ReagentRequestCreate {
   userComments?: string;
   package?: string;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined';
+  orderId?: number | null;
+  producer?: string | null;
+  catalogId?: string | null;
+  catalogLink?: string | null;
+  pricePerUnit?: number | null;
+  expirationDate?: Date | null;
 }
 
-// had to add, will remove once denis merges his branch
-export interface ReagentRequestQuery {
-  skip: number;
-  take: number;
-  sortByQuantity: string;
-  sortByCreatedDate: string;
-  sortByUpdatedDate: string;
-  status: string;
-  name: string;
-}
-export interface ReagentRequestData {
+export interface ReagentRequestResponse {
   requests: ReagentRequestList[];
   size: number;
-}
-export enum ReagentRequestTableColumns {
-  name = 'name',
-  status = 'status',
-  createdAt = 'createdAt',
-}
-export interface ReagentRequestFilter {
-  value: string;
-  column: ReagentRequestTableColumns;
 }

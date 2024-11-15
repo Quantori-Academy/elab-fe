@@ -4,7 +4,6 @@ import {
   computed,
   inject,
   OnDestroy,
-  OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { OrderRequest } from '../../model/order-model';
@@ -21,9 +20,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
 import {
   BehaviorSubject,
+  combineLatest,
   distinctUntilChanged,
   Subject,
-  takeUntil,
+  switchMap,
 } from 'rxjs';
 import { ReagentRequest } from '../../model/reagent-request-model';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -31,11 +31,6 @@ import { OrdersService } from '../../service/orders.service';
 import { Router } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  ReagentRequestData,
-  ReagentRequestFilter,
-  ReagentRequestTableColumns,
-} from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { Sort } from '@angular/material/sort';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
@@ -57,7 +52,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
   styleUrl: './order-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrderFormComponent implements OnInit, OnDestroy {
+export class OrderFormComponent implements OnDestroy {
   private notificationPopupService = inject(NotificationPopupService);
   private fb = inject(FormBuilder);
   private ordersService = inject(OrdersService);
@@ -65,21 +60,33 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
-  public filterSubject = new Subject<ReagentRequestFilter>();
-  private reagentRequestListSubject = new BehaviorSubject<
-    ReagentRequestData | undefined
-  >(undefined);
+  public filterSubject = new BehaviorSubject<string | undefined>(undefined);
+  public sortSubject = new BehaviorSubject<Sort | undefined>(undefined);
   public isLoading = computed(() => this.reagentRequestService.isLoading());
 
-  dataSource$ = this.reagentRequestListSubject.asObservable();
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
   reagentsSelectionError = false;
   selectedReagentNames: string[] = [];
 
-  constructor() {
-    this.dataSource$ = this.reagentRequestService.getReagentRequestList();
-  }
+  dataSource$ = combineLatest([
+    this.filterSubject.pipe(distinctUntilChanged()),
+    this.sortSubject.pipe(distinctUntilChanged()),
+  ]).pipe(
+    switchMap(([nameFilter, sort]) =>
+      this.reagentRequestService.getReagentRequests(
+        'Pending',
+        undefined,
+        sort?.active === 'createdAt' && sort.direction
+          ? sort.direction
+          : undefined,
+        undefined,
+        undefined,
+        undefined,
+        nameFilter
+      )
+    )
+  );
 
   displayedColumns: string[] = [
     'select',
@@ -98,24 +105,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     reagents: [[], Validators.required],
   });
 
-  ngOnInit(): void {
-    this.filterSubject
-      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
-      .subscribe((filterData) => {
-        this.reagentRequestService.filtering(filterData);
-      });
-  }
-
-  onFilterName($event: Event) {
-    const value = ($event.target as HTMLInputElement).value;
-    this.filterSubject.next({
-      value,
-      column: ReagentRequestTableColumns.name,
-    });
+  onFilterName(event: Event) {
+    const value = (event.target as HTMLInputElement).value.trim();
+    this.filterSubject.next(value || undefined);
   }
 
   onSort(sort: Sort): void {
-    this.reagentRequestService.sorting(sort);
+    this.sortSubject.next(sort);
   }
 
   openReagentDialog(id: string): void {
