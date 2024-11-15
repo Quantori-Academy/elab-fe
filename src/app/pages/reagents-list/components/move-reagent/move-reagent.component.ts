@@ -7,7 +7,12 @@ import {
 } from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { StorageLocationService } from '../../../storage-location/services/storage-location.service';
 import { MoveReagentData } from '../../../../shared/models/reagent-model';
 import { firstValueFrom, Observable } from 'rxjs';
@@ -40,7 +45,10 @@ export class MoveReagentComponent implements OnInit {
   public movedReagents!: Map<number, Set<number>>;
   public storageLocations$?: Observable<StorageLocationListData>;
   public moveForm = this.fb.group({
-    storageLocation: ['', [Validators.required,storageLocationAutoCompleteValidator()]],
+    storageLocation: [
+      '',
+      [Validators.required, storageLocationAutoCompleteValidator()],
+    ],
     destinationStorageId: [null as number | null, Validators.required],
   });
 
@@ -48,7 +56,7 @@ export class MoveReagentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { movedReagents: Map<number, Set<number>> }
   ) {
-    this.movedReagents = data.movedReagents;
+    this.movedReagents = this.data.movedReagents;
   }
 
   ngOnInit(): void {
@@ -71,18 +79,22 @@ export class MoveReagentComponent implements OnInit {
 
   async moveReagents() {
     if (this.moveForm.valid) {
-      const movePromises = [];
-      for (const [sourceStorageId, reagentSet] of this.movedReagents) {
-        const data: MoveReagentData = {
-          sourceStorageId,
-          destinationStorageId: this.moveForm.value.destinationStorageId!,
-          reagents: Array.from(reagentSet).map((id) => ({ id })),
-        };
-        const movePromise = firstValueFrom(
-          this.storageLocationService.moveReagentStorageLocation(data)
-        );
-        movePromises.push(movePromise);
-      }
+      const destinationStorageId = this.moveForm.value.destinationStorageId!;
+
+      const movePromises = Array.from(this.movedReagents.entries()).map(
+        ([sourceStorageId, reagentSet]) => {
+          const reagents = Array.from(reagentSet).map((id) => ({ id }));
+          const data: MoveReagentData = {
+            sourceStorageId,
+            destinationStorageId,
+            reagents,
+          };
+
+          return firstValueFrom(
+            this.storageLocationService.moveReagentStorageLocation(data)
+          );
+        }
+      );
 
       const httpResponses = await Promise.allSettled(movePromises);
 
@@ -93,7 +105,7 @@ export class MoveReagentComponent implements OnInit {
       if (httpResponses.length === rejectedRes.length) {
         this.notificationPopupService.error({
           title: 'Error',
-          message: "Reagents couldn't move to storages",
+          message: "Reagents couldn't move to storage",
         });
         this.dialogRef.close(false);
       } else {
@@ -103,10 +115,11 @@ export class MoveReagentComponent implements OnInit {
             message: 'Reagents successfully moved',
           });
         } else {
-          console.log(rejectedRes.map(console.log))
-          this.notificationPopupService.success({
+          this.notificationPopupService.warning({
             title: 'Warning',
-            message: rejectedRes.map((res) => res.reason).join(' '),
+            message: rejectedRes
+              .map((res) => res.reason.error.message)
+              .join('\n'),
           });
         }
         this.movedReagents.clear();
