@@ -13,18 +13,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  Observable,
-  Subject,
-  take,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
 import {
   RoomData,
-  StorageLocationFilteredData,
   StorageLocationItem,
   StorageLocationListData,
 } from '../../models/storage-location.interface';
@@ -41,6 +32,7 @@ import { RoomManagementService } from '../../services/room-management.service';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { StorageLocationQueryService } from '../../services/storage-location-query.service';
 
 @Component({
   selector: 'app-storage-management',
@@ -81,51 +73,39 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   public isAdmin = false;
 
   private storageLocationService = inject(StorageLocationService);
+  private storageLocationQueryService = inject(StorageLocationQueryService);
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
-  private filterSubject = new Subject<StorageLocationFilteredData>();
   private destroy$ = new Subject<void>();
 
-  public isLoading = computed(() => this.storageLocationService.isLoading());
+  public isLoading = computed(() =>
+    this.storageLocationQueryService.isLoading()
+  );
 
   constructor() {
     this.storageLocationData$ =
       this.storageLocationService.getListStorageLocation();
     this.listOfRooms$ = this.roomManagementService.roomData$;
-    this.pageSize = this.storageLocationService.pageSize;
+    this.pageSize = this.storageLocationQueryService.pageSize;
   }
 
   ngOnInit(): void {
     this.isAdmin = this.rbcService.isAdmin();
-    this.setFilterStorageName();
   }
 
   public redirectToDetailPage(element: StorageLocationItem) {
     this.router.navigate(['/storage-locations', element.id]);
   }
 
-  private setFilterStorageName() {
-    this.filterSubject
-      .pipe(
-        tap(() => this.storageLocationService.isLoading.set(true)),
-        debounceTime(this.DEBOUNCE_TIME),
-        distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((filterData) => {
-        this.storageLocationService.setFilteringPageData(filterData);
-      });
-  }
-
   onSort(sort: Sort) {
-    this.storageLocationService.setSortingPageData(sort);
+    this.storageLocationQueryService.setSortingPageData(sort);
   }
 
   onFilterRoom(value: string) {
-    this.storageLocationService.setFilteringPageData({
+    this.storageLocationQueryService.setFilteringPageData({
       value,
       column: StorageLocationColumn.Room,
     });
@@ -133,7 +113,10 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
 
   onFilterName($event: Event) {
     const value = ($event.target as HTMLInputElement).value;
-    this.filterSubject.next({ value, column: StorageLocationColumn.Name });
+    this.storageLocationQueryService.nameFilterSubject.next({
+      value,
+      column: StorageLocationColumn.Name,
+    });
   }
 
   public onCreate(): void {
@@ -183,7 +166,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent($event: PageEvent) {
-    this.storageLocationService.setPageData($event);
+    this.storageLocationQueryService.setPageData($event);
   }
 
   ngOnDestroy(): void {

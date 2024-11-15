@@ -34,6 +34,7 @@ export interface StorageLocationPageData {
   alphabeticalStorageName: string;
   roomName: string;
   storageName: string;
+  fullPath: string;
 }
 
 export interface StorageLocationFilteredData {
@@ -46,4 +47,14 @@ export interface RoomData {
   name: string;
   description: string;
   storageCount: number;
+}
+
+export interface StorageLocationListQuery {
+  skip: number;
+  take: number;
+  chronologicalDate: string;
+  alphabeticalRoomName: string;
+  alphabeticalStorageName: string;
+  roomName: string;
+  storageName: string;
 }
