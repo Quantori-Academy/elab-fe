@@ -49,3 +49,17 @@ mat-form-field {
   display: flex;
   gap: 10px;
 }
+
+mat-form-field textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+mat-form-field input[formControlName="orderId"] {
+  min-height: 20px;
+  max-height: 20px;
+}
+
+.full-width {
+  grid-column: span 2;
+}

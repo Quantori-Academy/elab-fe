@@ -72,9 +72,13 @@
       <div class="mat-headline">Additional Information</div>
     </mat-card-header>
     <mat-card-content class="form-grid">
-      <mat-form-field appearance="outline">
+      <mat-form-field class="full-width" appearance="outline">
         <mat-label>User Comments</mat-label>
-        <textarea matInput formControlName="userComments"></textarea>
+        <textarea
+          matInput
+          formControlName="userComments"
+          (input)="adjustTextAreaHeight($event)"
+        ></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
