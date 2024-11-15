@@ -1,8 +1,12 @@
-<mat-tab-group>
+@if (isAdmin) {
+  <mat-tab-group>
   <mat-tab label="Storage Location">
-    <app-storage-management></app-storage-management>
+    <app-storage-management/>
   </mat-tab>
   <mat-tab label="Room">
-    <app-room-management></app-room-management>
+    <app-room-management/>
   </mat-tab>
 </mat-tab-group>
+}@else {
+  <app-storage-management/>
+}
