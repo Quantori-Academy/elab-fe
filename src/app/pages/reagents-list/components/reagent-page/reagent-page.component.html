@@ -9,30 +9,51 @@
   </div>
   <div>
     <h1>Reagent name: {{ reagent.name }}</h1>
-    <h2>
-      Producer: <span>{{ reagent.producer }}</span>
-    </h2>
+
     <div class="structure">
-      <h3>Reagent structure: <span>{{reagent.structure}}</span></h3>
+      <h3>
+        Reagent structure: <span>{{ reagent.structureSmiles }}</span>
+      </h3>
       <app-molecule-structure
-        [structure]="reagent.structure"
-        [width]="200"
-        [height]="200"
+        [structure]="reagent.structureSmiles!"
+        [width]="150"
+        [height]="150"
       ></app-molecule-structure>
     </div>
+    @if (reagent.producer) {
+      <h3>
+        Price per unit: <span>{{ reagent.producer }}</span>
+      </h3>
+      } 
     <h3>
-      Reagent's total quantity:
+      Reagent's desired quantity:
       <span
-        >{{ reagent.totalQuantity }} {{ reagent.quantityUnit }} per @if
+        >{{ reagent.desiredQuantity }} {{ reagent.quantityUnit }} per @if
         (reagent.package) {
         {{ reagent.package }}
         }@else { package }
       </span>
     </h3>
+    @if (reagent.pricePerUnit) {
     <h3>
-      Quantity left:
-      <span>{{ reagent.quantityLeft }} {{ reagent.quantityUnit }}</span>
+      Price per unit: <span>{{ reagent.pricePerUnit }}$</span>
     </h3>
+    } @if (reagent.casNumber) {
+    <h3>
+      Reagent's CAS:
+      <span>{{ reagent.casNumber }} </span>
+    </h3>
+    } @if (reagent.catalogId) {
+    <h3>
+      Reagent's catalog ID:
+      <span>{{ reagent.catalogId }} </span>
+    </h3>
+    }@if (reagent.catalogLink) {
+    <h3>
+      Reagent's catalog link:
+      <span>{{ reagent.catalogLink }} </span>
+    </h3>
+    } 
   </div>
 </div>
 

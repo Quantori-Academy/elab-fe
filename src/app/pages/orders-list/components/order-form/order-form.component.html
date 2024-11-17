@@ -2,7 +2,7 @@
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-header>General</mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="form-grid">
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" />
@@ -11,7 +11,6 @@
         <mat-error>Title is required.</mat-error>
         }
       </mat-form-field>
-
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Seller</mat-label>
         <input
@@ -31,28 +30,9 @@
         <mat-error>Seller is required.</mat-error>
         }
       </mat-form-field>
-      <p>Selected Reagents</p>
-      <ul>
-        @for (name of selectedReagentNames; track $index) {
-        <li>Selected Reagent: {{ name }}</li>
-        }@empty {
-        <div>No reagent selected yet</div>
-        }
-      </ul>
-
-      <div class="actions">
-        <button
-          mat-button
-          color="warn"
-          type="button"
-          (click)="redirectToReagentList()"
-        >
-          Cancel
-        </button>
-        <button mat-flat-button color="primary" type="submit">Submit</button>
-      </div></mat-card-content
-    >
+    </mat-card-content>
   </mat-card>
+
   <mat-card>
     <mat-card-header>Requested Reagents</mat-card-header>
     <mat-card-content>
@@ -117,13 +97,9 @@
           <ng-container matColumnDef="userComments">
             <th mat-header-cell *matHeaderCellDef>Comment</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.userComments }}
+              @if ( element.userComments) {
+              {{ element.userComments }} }@else { N/A }
             </td>
-          </ng-container>
-
-          <ng-container matColumnDef="casNumber">
-            <th mat-header-cell *matHeaderCellDef>casNumber</th>
-            <td mat-cell *matCellDef="let element">{{ element.casNumber }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -150,9 +126,53 @@
           ></tr>
         </table>
       </div>
-      @if (reagentsSelectionError) {
-      <mat-error>Select at least one reagent</mat-error>
-      }}@else {<app-table-loader-spinner />}
+      }@else {<app-table-loader-spinner />}
     </mat-card-content>
   </mat-card>
+  <mat-card>
+    <mat-card-header> Selected Reagents </mat-card-header>
+    <mat-card-content>
+      <div class="reagents-list">
+        @for (item of selectedReagentReq; track $index; let i = $index) {
+        <mat-card>
+          <mat-card-content class="reagent-item">
+            <p class="reagent-item__seq">{{ i + 1 }}.</p>
+            <p class="reagent-item__width">{{ item.name }}</p>
+            <p class="reagent-item__width">
+              {{ item.desiredQuantity }}{{ item.quantityUnit }}
+            </p>
+            @if (item.package) {
+            <p class="reagent-item__width">{{ item.package }}</p>
+
+            }@else { N/A }
+
+            <app-molecule-structure
+              [structure]="item.structureSmiles!"
+              [width]="50"
+              [height]="50"
+            />
+          </mat-card-content>
+        </mat-card>
+        } @empty {
+        <div>No reagent selected yet</div>
+        }
+      </div>
+      <div class="reagent-action">
+        @if (reagentsSelectionError) {
+        <mat-error>Select at least one reagent</mat-error>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div class="actions">
+    <button
+      mat-button
+      color="warn"
+      type="button"
+      (click)="redirectToReagentList()"
+    >
+      Cancel
+    </button>
+    <button mat-flat-button color="primary" type="submit">Submit</button>
+  </div>
 </form>
