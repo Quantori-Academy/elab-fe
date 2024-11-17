@@ -50,6 +50,7 @@ import { StorageLocationQueryService } from '../../services/storage-location-que
     SpinnerDirective,
     TableLoaderSpinnerComponent,
   ],
+  providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './storage-management.component.html',
   styleUrl: './storage-management.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
