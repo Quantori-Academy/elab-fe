@@ -1,4 +1,10 @@
+:host {
+  flex: 1;
+  overflow: hidden;
+}
+
 mat-tab-group {
+  height: 100%;
+  overflow: hidden;
   box-sizing: border-box;
-  padding-bottom: 20px;
 }
