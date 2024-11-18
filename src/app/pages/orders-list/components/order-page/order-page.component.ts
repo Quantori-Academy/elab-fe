@@ -83,7 +83,6 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   }
   onRemove(reagent: ReagentRequestList) {
     const currentOrder = this.orderSubject.getValue();
-
     this.excludeReagents.push({ id: reagent.id });
 
     this.orderService
@@ -97,6 +96,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
             message: 'Reagent has been successfully removed!',
             duration: 3000,
           });
+          this.fetchOrder();
         },
         error: (error: HttpErrorResponse) => {
           this.notificationPopupService.error({
