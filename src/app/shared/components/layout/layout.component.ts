@@ -52,7 +52,7 @@ export class LayoutComponent {
     },
   ]);
 
-  public navbarWidth = computed(() => (collapsed() ? '60px' : '250px'));
+  public navbarWidth = computed(() => (collapsed() ? '250px' : '60px'));
 
   isLinkVisible(link: MenuLink): boolean {
     return (
