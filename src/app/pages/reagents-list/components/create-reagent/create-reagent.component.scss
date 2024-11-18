@@ -92,7 +92,7 @@ mat-card-content,
   }
 
   .reagents-list {
-    height: 160px;
+    max-height: 150px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
