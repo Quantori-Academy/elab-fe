@@ -10,7 +10,6 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Package</mat-label>
-    <!-- <input matInput formControlName="package" /> -->
     <mat-select formControlName="package">
       <mat-option [value]="null">None</mat-option>
       @for (pkg of packages; track pkg.value) {

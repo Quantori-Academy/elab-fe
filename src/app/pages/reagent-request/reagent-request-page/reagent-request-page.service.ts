@@ -123,14 +123,14 @@ export class ReagentRequestService {
       );
   }
 
-  // declineRegent request and this: editReagentRequest functions are doing escentially the same thing
-// but i added it just for the name accuracy, will remove if it's unnecessary
+
+  //added to edit RRs from order
   public editReagentRequest(
     id: number,
     reagentData: Partial<ReagentRequestList>
   ): Observable<ReagentRequestList> {
     return this.httpClient
-      .post<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData)
+      .patch<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData)
       .pipe(
         catchError((error) => {
           console.error('Error:', error);

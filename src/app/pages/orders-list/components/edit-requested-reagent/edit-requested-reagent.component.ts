@@ -40,7 +40,7 @@ export class EditRequestedReagentComponent implements OnInit {
     value: Package[key as keyof typeof Package],
     viewValue: PackageLabels[Package[key as keyof typeof Package]],
   }));
-
+  private initialPackageValue: string | null = null;
   constructor(
     @Inject(MAT_DIALOG_DATA) private ReagentRequest: ReagentRequestList,
     private dialogRef: MatDialogRef<EditRequestedReagentComponent>
@@ -48,24 +48,32 @@ export class EditRequestedReagentComponent implements OnInit {
 
   public reagentRequestForm: FormGroup = this.fb.group({
     desiredQuantity: ['', [Validators.required]],
-    package: ['', [Validators.required]],
+    package: [],
   });
 
   ngOnInit(): void {
     if (this.ReagentRequest) {
+      this.initialPackageValue = this.ReagentRequest.package || null;
       this.reagentRequestForm.patchValue({
         desiredQuantity: this.ReagentRequest.desiredQuantity,
-        package: this.ReagentRequest.package || '',
+        package: this.ReagentRequest.package || this.initialPackageValue,
       });
     }
   }
 
   onEdit() {
     if (this.reagentRequestForm.valid) {
-      const formValue = {
-        ...this.reagentRequestForm.getRawValue(),
+      const currentPackageValue = this.reagentRequestForm.get('package')?.value;
+      const requestPayload: Partial<ReagentRequestList> = {
+        desiredQuantity: this.reagentRequestForm.get('desiredQuantity')?.value,
       };
-      this.editReagentRequest(formValue);
+
+      // Include `package` only if it has changed
+      if (currentPackageValue !== this.initialPackageValue) {
+        requestPayload.package = currentPackageValue;
+      }
+
+      this.editReagentRequest(requestPayload);
     }
   }
 
