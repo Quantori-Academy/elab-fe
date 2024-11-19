@@ -27,7 +27,7 @@ form {
 
 form > mat-card {
   width: 100%;
-  background-color: #faf9fd;
+  background-color: var(--mat-card-background-color);
 }
 
 form > mat-card:not(.reagents-card) {
@@ -105,7 +105,7 @@ mat-card-content,
       justify-content: start;
       align-items: center;
       padding: 0;
-      background-color: #faf9fd;
+      background-color: var(--mat-card-background-color);
 
       &__seq {
         width: 10px;
@@ -133,10 +133,14 @@ mat-card-content,
 }
 
 .actions {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--mat-card-background-color);
   position: sticky;
   bottom: 0;
   padding: 0.5rem;
-  margin-left: auto;
   display: flex;
+  justify-content: flex-end;
   gap: 10px;
+  border-radius: 12px 12px 0 0;
 }
