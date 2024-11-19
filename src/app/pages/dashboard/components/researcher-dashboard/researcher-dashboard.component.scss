@@ -1,0 +1,22 @@
+:host {
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+
+.row {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+mat-card {
+  flex: 1;
+  padding: 20px 0;
+}
