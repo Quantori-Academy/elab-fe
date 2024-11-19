@@ -111,9 +111,25 @@
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </table>
     </div>
-    @if (errorMessage !=='') {
-    <mat-error>{{ errorMessage }}</mat-error>
-    }
+    <!-- <mat-error>{{ errorMessage }}</mat-error> -->
+    @if (showRemoveConfirmation) {
+    <div class="error-message">
+      <p class="error-text">{{ errorMessage }}</p>
+    </div>
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="confirmRemoval()"
+      >
+        proceed
+      </button>
+      <button mat-button color="warn" type="button" (click)="cancelRemoval()">
+        cancel
+      </button>
+    </div>
+    } @if ( showRemoveConfirmation ===false ) {
     <div class="actions">
       <button
         mat-raised-button
@@ -127,6 +143,7 @@
         Close
       </button>
     </div>
+    }
   </form>
 
   } @else {

@@ -7,7 +7,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
-import { Order, RequestedReagents, Status, UpdateOrder } from '../../model/order-model';
+import {
+  Order,
+  RequestedReagents,
+  Status,
+  UpdateOrder,
+} from '../../model/order-model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -37,7 +42,12 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
-  statusOptions: Status[] = [Status.pending, Status.submitted, Status.fulfilled, Status.declined];
+  statusOptions: Status[] = [
+    Status.pending,
+    Status.submitted,
+    Status.fulfilled,
+    Status.declined,
+  ];
 
   displayedColumns = [
     'name',
@@ -53,6 +63,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   initialValues: Partial<Order> = {}; //initial values of order
 
   errorMessage = '';
+  showRemoveConfirmation = false; // Flag to show/hide the confirmation section
+  lastReagentToRemove: RequestedReagents | null = null; // Temporarily store the reagent to remove
   updateForm = this.fb.group({
     title: [''],
     seller: [''],
@@ -110,7 +122,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         this.statusOptions = [];
     }
   }
-  
 
   onSubmit() {
     const modifiedValues: Partial<UpdateOrder> = {};
@@ -151,10 +162,17 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   }
 
   onRemove(reagent: RequestedReagents) {
-    if (this.updateForm.get('status')?.value !== 'Pending') {
-      this.errorMessage = 'Only pending orders can have reagents removed.';
-      return;
+    if (this.reagents$.getValue().length === 1) {
+      this.errorMessage =
+        'Removing the last reagent will cancel the order. Do you want to proceed?';
+      this.showRemoveConfirmation = true;
+      this.lastReagentToRemove = reagent;
+    } else {
+      this.processReagentRemoval(reagent);
     }
+  }
+
+  private processReagentRemoval(reagent: RequestedReagents) {
     this.excludeReagents.push({ id: reagent.id });
 
     this.orderService
@@ -162,21 +180,57 @@ export class EditOrderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          // Get current value of reagents$ and filter out the removed reagent
           const updatedReagents = this.reagents$
             .getValue()
-            .filter((r: RequestedReagents) => r.id !== reagent.id);
-          this.excludeReagents = [];
+            .filter((r) => r.id !== reagent.id);
+
           this.reagents$.next(updatedReagents);
+          this.excludeReagents = [];
 
           this.notificationPopupService.success({
             title: 'Success',
-            message: 'Reagent has been successfully removed!',
+            message: 'Reagent removed successfully!',
             duration: 3000,
           });
         },
         error: (err) => this.notificationPopupService.error(err),
       });
+  }
+
+  confirmRemoval() {
+    if (this.lastReagentToRemove) {
+      this.processReagentRemoval(this.lastReagentToRemove);
+
+      // first set order status to submitted, because of BE specifications
+      this.orderService
+        .updateOrder(this.orderId, { status: Status.submitted })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe();
+      // after that set status to canceled
+      this.orderService
+        .updateOrder(this.orderId, { status: Status.declined })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.reagents$.next([]); // Clear reagents
+            this.showRemoveConfirmation = false;
+            this.lastReagentToRemove = null;
+
+            this.notificationPopupService.success({
+              title: 'Success',
+              message: 'Order canceled successfully!',
+              duration: 3000,
+            });
+          },
+          error: (err) => this.notificationPopupService.error(err),
+        });
+    }
+  }
+
+  cancelRemoval() {
+    this.showRemoveConfirmation = false;
+    this.lastReagentToRemove = null;
+    this.errorMessage = '';
   }
 
   onClose() {
