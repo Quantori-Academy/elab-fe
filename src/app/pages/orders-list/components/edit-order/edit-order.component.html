@@ -111,8 +111,11 @@
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </table>
     </div>
-    <!-- <mat-error>{{ errorMessage }}</mat-error> -->
-    @if (showRemoveConfirmation) {
+    @if (showRemoveConfirmation===false&& errorMessage !=="") {
+    <div class="error-message">
+      <mat-error class="error-text">{{ errorMessage }}</mat-error>
+    </div>
+    } @if (showRemoveConfirmation) {
     <div class="error-message">
       <p class="error-text">{{ errorMessage }}</p>
     </div>

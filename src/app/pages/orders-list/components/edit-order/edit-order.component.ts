@@ -49,22 +49,30 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     Status.declined,
   ];
 
-  displayedColumns = [
+  baseColumns = [
     'name',
     'casNumber',
     'desiredQuantity',
     'structureSmiles',
     'userComments',
-    'actions',
   ];
+  actionColumn = 'actions';
+
+
+// Exclude actions when removing last RR
+  get displayedColumns(): string[] {
+    return this.showRemoveConfirmation
+      ? this.baseColumns 
+      : [...this.baseColumns, this.actionColumn];
+  }
   reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
   excludeReagents: { id: number }[] = [];
 
   initialValues: Partial<Order> = {}; //initial values of order
 
   errorMessage = '';
-  showRemoveConfirmation = false; // Flag to show/hide the confirmation section
-  lastReagentToRemove: RequestedReagents | null = null; // Temporarily store the reagent to remove
+  showRemoveConfirmation = false; 
+  lastReagentToRemove: RequestedReagents | null = null; 
   updateForm = this.fb.group({
     title: [''],
     seller: [''],
@@ -201,18 +209,19 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     if (this.lastReagentToRemove) {
       this.processReagentRemoval(this.lastReagentToRemove);
 
-      // first set order status to submitted, because of BE specifications
+      // first set order status to submitted, because of BE/requirements specifications
       this.orderService
         .updateOrder(this.orderId, { status: Status.submitted })
         .pipe(takeUntil(this.destroy$))
         .subscribe();
-      // after that set status to canceled
+
+      // after that, set status to canceled
       this.orderService
         .updateOrder(this.orderId, { status: Status.declined })
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
-            this.reagents$.next([]); // Clear reagents
+            this.dialogRef.close(true);
             this.showRemoveConfirmation = false;
             this.lastReagentToRemove = null;
 
