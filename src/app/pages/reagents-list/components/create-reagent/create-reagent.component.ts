@@ -13,7 +13,7 @@ import {
   SelectedReagentSample,
   SampleRequestError,
 } from '../../../../shared/models/reagent-model';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   Validators,
@@ -55,8 +55,7 @@ import {
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-    NgClass,
-  ],
+],
   templateUrl: './create-reagent.component.html',
   styleUrl: './create-reagent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -78,6 +77,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public reagentRequestForm!: FormGroup;
   public storageLocations$?: Observable<StorageLocationListData>;
   public maxStorageLocationOptions = 5;
+  readonly panelOpenState = signal(false);
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
