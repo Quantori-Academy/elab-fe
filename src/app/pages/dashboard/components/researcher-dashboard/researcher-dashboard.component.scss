@@ -10,13 +10,26 @@
 }
 
 .row {
+  padding: 10px 0;
   display: flex;
   gap: 30px;
   align-items: center;
   box-sizing: border-box;
 }
 
+.row2 {
+  height: 100%;
+  overflow: hidden;
+}
+
 mat-card {
   flex: 1;
-  padding: 20px 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.table-content {
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
