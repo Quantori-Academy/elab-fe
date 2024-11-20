@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment';
 import {
   ReagentRequestList,
   ReagentRequestCreate,
+  ReagentRequestResponse,
 } from './reagent-request-page.interface';
 
 @Injectable({
@@ -23,7 +24,7 @@ export class ReagentRequestService {
     skip?: number,
     take?: number,
     name?: string
-  ): Observable<ReagentRequestList[]> {
+  ): Observable<ReagentRequestResponse> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -54,7 +55,10 @@ export class ReagentRequestService {
     this.isLoading.set(true);
 
     return this.httpClient
-      .get<ReagentRequestList[]>(this.apiUrl, { headers, params })
+      .get<ReagentRequestResponse>(this.apiUrl, {
+        headers,
+        params,
+      })
       .pipe(
         tap(() => this.isLoading.set(false)),
         catchError((error) => {
@@ -112,7 +116,7 @@ export class ReagentRequestService {
     });
 
     return this.httpClient
-      .post<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
+      .patch<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
         headers,
       })
       .pipe(

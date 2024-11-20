@@ -1,70 +1,113 @@
 :host {
-  max-width: 800px;
-  margin: 0 auto 20px;
+  max-width: 1300px;
+  margin: 0 auto;
   box-sizing: border-box;
-
   display: flex;
   flex-direction: column;
-
   position: relative;
+  padding: 20px;
 }
 
 .header {
   margin: 0;
   text-align: center;
-  font-size: 2rem;
   color: var(--primary-color-dark);
+  margin-bottom: 40px;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 50px;
+}
+
+.general-info-card {
+  flex: 2;
+  min-width: 700px;
+}
+
+.structure-card {
+  flex: 1;
+  min-width: 350px;
 }
 
 mat-card {
   width: 100%;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  color: var(--primary-color-dark);
+  margin-bottom: 25px;
+}
+
+.mat-headline {
+  font-weight: bold;
+  font-size: initial;
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+.detail-columns {
+  display: flex;
+  gap: 80px;
+  justify-content: space-between;
+}
+
+.detail-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   margin-bottom: 20px;
+  word-spacing: 2px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
 
-  mat-card-header {
-    display: flex;
-    justify-content: center;
-    color: var(--primary-color-dark);
-    margin-bottom: 10px;
+.label {
+  font-weight: bold;
+  flex: 0 0 40%;
+}
 
-    .mat-headline {
-      font-weight: bold;
-    }
-  }
+.value {
+  text-align: right;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  mat-card-content {
-    .detail-table {
-      width: 100%;
-      border-collapse: collapse;
+.value.truncated {
+  display: -webkit-box;
+  display: box; 
+  -webkit-line-clamp: 2;
+  line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  text-align: left;
+  word-break: break-word;
+}
 
-      tr {
-        border-bottom: 1px solid #e0e0e0;
-      }
-
-      td {
-        width: 50%;
-        padding: 8px;
-        text-align: center;
-        vertical-align: middle;
-      }
-
-      .label {
-        font-weight: bold;
-        border-right: 1px solid #e0e0e0;
-      }
-    }
-
-    .structure-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+.structure-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
 }
 
 .actions {
-  margin-bottom: 20px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 100px;
 }
-

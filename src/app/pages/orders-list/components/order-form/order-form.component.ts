@@ -18,8 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
-import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
-import { ReagentRequest } from '../../model/reagent-request-model';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
@@ -72,18 +72,21 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
+
   ngOnInit(): void {
     const pageSize = 1000;
     const skip = 0;
-    this.dataSource$ = this.reagentRequestService.getReagentRequests(
-      'Pending',
-      undefined,
-      undefined,
-      undefined,
-      skip,
-      pageSize,
-      undefined
-    );
+    this.dataSource$ = this.reagentRequestService
+      .getReagentRequests(
+        'Pending',
+        undefined,
+        undefined,
+        undefined,
+        skip,
+        pageSize,
+        undefined
+      )
+      .pipe(map((response) => response.requests));
     this.ordersService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
@@ -97,7 +100,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCheckboxChange(element: ReagentRequest): void {
+  onCheckboxChange(element: ReagentRequestList): void {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
       this.selectedReagentNames = this.selectedReagentNames.filter(
@@ -143,6 +146,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   redirectToReagentList() {
     return this.router.navigate(['orders']);
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
