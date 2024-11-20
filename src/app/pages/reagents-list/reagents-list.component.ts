@@ -65,7 +65,7 @@ export class ReagentsListComponent implements OnInit {
   });
 
   public displayedColumns: ReagentListColumn[] = [
-    ReagentListColumn.CHECKBOX,
+    ...(this.isResearcher ? [ReagentListColumn.CHECKBOX] : []),
     ReagentListColumn.NAME,
     ReagentListColumn.CATEGORY,
     ReagentListColumn.STRUCTURE,
