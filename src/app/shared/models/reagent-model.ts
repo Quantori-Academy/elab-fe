@@ -1,17 +1,5 @@
 import { OrderEntity } from './order-entity.model';
 
-// this interface was based on requirments in issue's description, not on current mock data, if we switch back to those requiremnts we will uncomment this
-// export interface Reagent {
-//   id: number;
-//   name: string;
-//   category: Category;
-//   description: string;
-//   quantity: number | string;
-//   storageLocation: string;
-//   structure: string;
-//   dateOfCreation: string;
-// }
-
 export interface Reagent {
   id?: number;
   name: string;
@@ -81,6 +69,8 @@ export interface ReagentListQuery {
   name: string;
   category: string;
   storageId: string;
+  structure: string;
+  isFullStructure: boolean;
   sortByName: string;
   sortByCreationDate: string;
   sortByUpdatedDate: string;
@@ -91,9 +81,17 @@ export interface ReagentListQuery {
 export interface ReagentListFilteredData {
   value: string;
   column: ReagentListColumn;
+  isFullStructure?: boolean;
+}
+
+export interface MoveReagentData {
+  sourceStorageId: number;
+  destinationStorageId: number;
+  reagents: { id: number }[];
 }
 
 export enum ReagentListColumn {
+  CHECKBOX = 'checkbox',
   NAME = 'name',
   CATEGORY = 'category',
   STRUCTURE = 'structure',

@@ -42,16 +42,16 @@
           <input
             matInput
             (input)="onFilterName($event)"
-            placeholder="Enter a name"
+            placeholder="Enter reagent name"
           />
         </mat-form-field>
       </div>
-      @if (dataSource$ |async; as ReagentRequestData) {
+      @if (dataSource$ | async; as ReagentRequestResponse) {
 
       <div class="table-wrapper mat-elevation-z8">
         <table
           mat-table
-          [dataSource]="ReagentRequestData.requests"
+          [dataSource]="ReagentRequestResponse.requests"
           matSort
           class="mat-elevation-z8"
           (matSortChange)="onSort($event)"
@@ -68,7 +68,7 @@
           </ng-container>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element" mat-cell>
+            <td mat-cell *matCellDef="let element" mat-cell class="createdAt">
               {{ element.name }}
             </td>
           </ng-container>
@@ -90,7 +90,7 @@
           </ng-container>
           <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="createdAt">
               {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
             </td>
           </ng-container>
@@ -131,7 +131,8 @@
   </mat-card>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title>{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title
+      <mat-panel-title
+        >{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title
       >
     </mat-expansion-panel-header>
     <div class="reagents-list">
@@ -148,7 +149,8 @@
 
           }@else { N/A }
 
-          <app-molecule-structure class="reagent-item__structure"
+          <app-molecule-structure
+            class="reagent-item__structure"
             [structure]="item.structureSmiles!"
             [width]="50"
             [height]="50"

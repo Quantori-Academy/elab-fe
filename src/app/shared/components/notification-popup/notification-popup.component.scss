@@ -30,7 +30,7 @@
   border-radius: 0;
   box-sizing: border-box;
   background-color: var(--light-color);
-  z-index: 1000;
+  z-index: 9999;
   box-shadow: 0 0 10px #00000050;
 
   &.top-left {
@@ -79,6 +79,7 @@
     .card__message {
       margin: 0;
       font-size: 12px;
+      white-space: pre-wrap;
     }
     .close-btn {
       position: absolute;

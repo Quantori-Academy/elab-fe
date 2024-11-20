@@ -6,6 +6,7 @@
   position: relative;
   padding: 0;
 }
+
 .close-button {
   position: absolute;
   top: 10px;
@@ -39,20 +40,22 @@ form {
 .filter-container {
   display: flex;
   align-items: flex-end;
-  max-width: fit-content;
+  justify-content: end;
 }
 
 mat-card {
   width: 100%;
   background-color: var(--mat-card-background-color);
 }
+
 mat-card-header,
 mat-panel-title {
   color: var(--primary-color-dark);
   font-weight: 400;
 }
-mat-form-field {
-  width: 100%;
+
+.createdAt {
+  width: 11rem;
 }
 
 mat-card-header,
@@ -60,9 +63,11 @@ mat-expansion-panel mat-expansion-panel-header {
   padding: 0.5rem 1.5rem;
   height: 1.5rem;
 }
+
 mat-expansion-panel {
   min-width: 100%;
 }
+
 .actions {
   box-sizing: border-box;
   width: 100%;
@@ -77,12 +82,12 @@ mat-expansion-panel {
 }
 
 .table-wrapper {
-  max-height: 17rem;
+  max-height: 14.4rem !important;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
-table {
-  width: 100%;
-}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

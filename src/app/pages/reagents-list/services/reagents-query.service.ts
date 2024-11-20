@@ -25,11 +25,14 @@ export class ReagentsQueryService implements OnDestroy {
   public readonly pageSize = 10;
   public isLoading = signal(false);
   public nameFilterSubject = new Subject<ReagentListFilteredData>();
+  public structureFilterSubject = new Subject<ReagentListFilteredData>();
   private destroy$ = new Subject<void>();
   private httpParamsSubject = new BehaviorSubject<ReagentListQuery>({
     name: '',
     category: '',
     storageId: '',
+    structure: '',
+    isFullStructure: false,
     sortByName: '',
     sortByCreationDate: '',
     sortByUpdatedDate: '',
@@ -45,7 +48,7 @@ export class ReagentsQueryService implements OnDestroy {
 
       const setParamIfExists = (
         param: keyof ReagentListQuery,
-        value: string | number
+        value: string | number | boolean
       ) => {
         return value ? httpParams.set(param, value) : httpParams;
       };
@@ -53,6 +56,8 @@ export class ReagentsQueryService implements OnDestroy {
       httpParams = setParamIfExists('name', params.name);
       httpParams = setParamIfExists('category', params.category);
       httpParams = setParamIfExists('storageId', params.storageId);
+      httpParams = setParamIfExists('structure', params.structure);
+      httpParams = setParamIfExists('isFullStructure', params.isFullStructure);
       httpParams = setParamIfExists('sortByName', params.sortByName);
       httpParams = setParamIfExists(
         'sortByCreationDate',
@@ -69,6 +74,7 @@ export class ReagentsQueryService implements OnDestroy {
 
   constructor() {
     this.setFilterName();
+    this.setFilterStructure();
   }
 
   public get currentHttpParams() {
@@ -90,11 +96,15 @@ export class ReagentsQueryService implements OnDestroy {
       [ReagentListColumn.NAME]: {
         sortByName: sortingData.direction,
       },
+      [ReagentListColumn.STRUCTURE]: {
+        sortByStructure: sortingData.direction,
+      },
     };
     const resetSortingParams = {
       sortByName: '',
       sortByCreationDate: '',
       sortByUpdatedDate: '',
+      sortByStructure: '',
     };
     const updatedParams = {
       ...this.currentHttpParams,
@@ -117,9 +127,22 @@ export class ReagentsQueryService implements OnDestroy {
       });
   }
 
+  private setFilterStructure() {
+    this.structureFilterSubject
+      .pipe(
+        tap(() => this.isLoading.set(true)),
+        debounceTime(this.DEBOUNCE_TIME),
+        distinctUntilChanged(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((filterData) => {
+        this.setFilteringPageData(filterData);
+      });
+  }
+
   public setFilteringPageData(filterData: ReagentListFilteredData): void {
     this.isLoading.set(true);
-    const { value, column } = filterData;
+    const { value, column, isFullStructure } = filterData;
     let filterColumn = {};
     switch (column) {
       case ReagentListColumn.NAME:
@@ -128,12 +151,19 @@ export class ReagentsQueryService implements OnDestroy {
       case ReagentListColumn.CATEGORY:
         filterColumn = { category: value };
         break;
+      case ReagentListColumn.STRUCTURE:
+        filterColumn = { structure: value, isFullStructure: isFullStructure ?? this.currentHttpParams.isFullStructure };
+        break;
     }
     this.httpParamsSubject.next({
       ...this.currentHttpParams,
       skip: 0,
       ...filterColumn,
     });
+  }
+
+  reloadReagentList() {
+    this.httpParamsSubject.next(this.currentHttpParams);
   }
 
   ngOnDestroy(): void {

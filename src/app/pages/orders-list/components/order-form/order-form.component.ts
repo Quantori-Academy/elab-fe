@@ -19,14 +19,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 import {
-  BehaviorSubject,
-  combineLatest,
+  debounceTime,
   distinctUntilChanged,
-  Subject,
   switchMap,
   takeUntil,
-} from 'rxjs';
+} from 'rxjs/operators';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
 import { Router } from '@angular/router';
@@ -46,10 +45,10 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
     ReactiveFormsModule,
     MatAutocompleteModule,
     AsyncPipe,
+    DatePipe,
     MatCheckboxModule,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
-    DatePipe,
     MoleculeStructureComponent,
   ],
   templateUrl: './order-form.component.html',
@@ -64,33 +63,36 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
-  public filterSubject = new BehaviorSubject<string | undefined>(undefined);
-  public sortSubject = new BehaviorSubject<Sort | undefined>(undefined);
   public isLoading = computed(() => this.reagentRequestService.isLoading());
-
+  private paramsSubject = new BehaviorSubject<{ filter?: string; sort?: Sort }>(
+    {}
+  );
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
 
-  dataSource$ = combineLatest([
-    this.filterSubject.pipe(distinctUntilChanged()),
-    this.sortSubject.pipe(distinctUntilChanged()),
-  ]).pipe(
-    switchMap(([nameFilter, sort]) =>
+  dataSource$ = this.paramsSubject.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    switchMap((params) =>
       this.reagentRequestService.getReagentRequests(
         'Pending',
         undefined,
-        sort?.active === 'createdAt' && sort.direction
-          ? sort.direction
+        params.sort?.active === 'createdAt' && params.sort.direction
+          ? params.sort.direction
           : undefined,
         undefined,
         undefined,
         undefined,
-        nameFilter
+        params.filter
       )
     )
   );
+
+  updateParams(params: { filter?: string; sort?: Sort }) {
+    this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
+  }
 
   displayedColumns: string[] = [
     'select',
@@ -107,19 +109,21 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     seller: ['', Validators.required],
     reagents: [[], Validators.required],
   });
+
   ngOnInit(): void {
     this.ordersService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
   }
+
   onFilterName(event: Event) {
     const value = (event.target as HTMLInputElement).value.trim();
-    this.filterSubject.next(value || undefined);
+    this.updateParams({ filter: value || undefined });
   }
 
   onSort(sort: Sort): void {
-    this.sortSubject.next(sort);
+    this.updateParams({ sort });
   }
 
   openReagentDialog(id: string): void {
@@ -175,6 +179,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   redirectToReagentList() {
     return this.router.navigate(['orders']);
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

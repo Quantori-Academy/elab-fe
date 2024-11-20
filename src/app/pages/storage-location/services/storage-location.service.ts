@@ -6,6 +6,7 @@ import {
   StorageLocationItem,
   StorageLocationListData,
 } from '../models/storage-location.interface';
+import { MoveReagentData } from '../../../shared/models/reagent-model';
 import { Observable, switchMap, tap } from 'rxjs';
 import { StorageLocationQueryService } from './storage-location-query.service';
 
@@ -13,6 +14,7 @@ import { StorageLocationQueryService } from './storage-location-query.service';
   providedIn: 'root',
 })
 export class StorageLocationService {
+  private readonly maxStorageLocationOptions = 5;
   private url = environment.apiUrl;
   private apiUrl = `${this.url}/api/v1`;
   private storageLocationQueryService = inject(StorageLocationQueryService);
@@ -68,15 +70,21 @@ export class StorageLocationService {
       );
   }
 
-  public searchStorageLocationByName(
-    maxStorageLocationOptions: number
-  ): Observable<StorageLocationListData> {
+  public moveReagentStorageLocation(
+    data: MoveReagentData
+  ): Observable<HttpResponseBase> {
+    return this.http.patch(`${this.apiUrl}/storages/move-items`, data, {
+      observe: 'response',
+    });
+  }
+
+  public searchStorageLocationByName(): Observable<StorageLocationListData> {
     return this.storageLocationQueryService.httpParams$.pipe(
       switchMap((params) => {
         return this.http.get<StorageLocationListData>(
           `${this.apiUrl}/storages`,
           {
-            params: params.set('take', maxStorageLocationOptions),
+            params: params.set('take', this.maxStorageLocationOptions),
           }
         );
       })
