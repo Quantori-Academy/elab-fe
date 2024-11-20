@@ -123,12 +123,6 @@ export class CreateReagentRequestComponent {
     this.router.navigate(['/reagent-request-page']);
   }
 
-  adjustTextAreaHeight(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  }
-
   openStructureEditor() {
     const dialogRef = this.dialog.open(AddStructureComponent, {
       width: '650px',
