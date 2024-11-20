@@ -1,9 +1,10 @@
 :host {
-  margin: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  box-sizing: border-box;
+  position: relative;
 }
 
 .info {
@@ -23,6 +24,10 @@
 }
 
 .storage-icon {
-  width: 256px;
-  height: 256px;
+  width: 164px;
+  height: 164px;
+}
+
+app-reagents-list {
+  height: 600px;
 }

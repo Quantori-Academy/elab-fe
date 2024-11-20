@@ -1,9 +1,12 @@
-.wrapper {
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+:host {
+  padding: 20px;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  position: relative;
 }
 
 mat-cell {

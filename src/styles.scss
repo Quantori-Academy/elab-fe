@@ -44,6 +44,7 @@ $elab-fe-theme: mat.define-theme(
   --info-progress-bg-color: #82bfd3;
 
   --header-height: 60px;
+  --mat-card-background-color: #faf9fd;
 }
 
 html,
@@ -55,6 +56,27 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.table-container {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .table-content {
+    overflow-y: auto;
+    flex: 1;
+    position: relative;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+  }
+}
+
 .loader {
   font-size: 6px;
   width: 8px;
@@ -150,4 +172,8 @@ body {
   .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: white !important;
   }
+}
+
+.mat-mdc-tab-body-wrapper {
+  flex: 1;
 }
