@@ -1,51 +1,107 @@
 :host {
-    max-width: 600px;
-    margin: 0 auto 20px;
-    box-sizing: border-box;
-  
-    display: flex;
-    flex-direction: column;
-  
-    position: relative;
-  }
-  
-  .header {
-    margin: 0;
-    text-align: center;
-    font-size: 2rem;
-    color: var(--primary-color-dark);
-  }
-  
-  form {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: baseline;
-  }
-  
-  mat-card {
-    width: 100%;
-  
-    mat-card-header {
-      color: var(--primary-color-dark);
-      margin-bottom: 10px;
-    }
-  
-    mat-card-content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-  }
-  
-  mat-form-field {
-    width: 100%;
-  }
-  
-  .actions {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-  }
-  
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0;
+}
+
+.header {
+  margin: 0;
+  text-align: center;
+  color: var(--primary-color-dark);
+}
+
+form {
+  min-width: 300px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: baseline;
+  position: relative;
+  margin-bottom: 5rem;
+}
+
+form > mat-card {
+  width: 100%;
+  background-color: var(--mat-card-background-color);
+}
+
+form > mat-card:not(.reagents-card) {
+  min-height: 200px;
+}
+
+mat-accordion {
+  width: 100%;
+}
+
+mat-form-field {
+  width: calc((100% - 28px) / 2);
+  min-width: 280px;
+  height: 50px;
+}
+
+mat-form-field.full-width {
+  width: 100%;
+}
+
+mat-card-header,
+mat-panel-title {
+  color: var(--primary-color-dark);
+  font-weight: 400;
+}
+
+mat-card-header,
+mat-expansion-panel mat-expansion-panel-header {
+  padding: 0.5rem 1.5rem;
+  height: 1.5rem;
+}
+
+mat-card-content {
+  padding: 0 1.5rem;
+}
+
+mat-card-content,
+.expansion-panel-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.actions {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--mat-card-background-color);
+  position: sticky;
+  bottom: 0;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-radius: 12px 12px 0 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field textarea {
+  resize: none;
+  overflow: auto;
+  height: 50px; 
+}
+
+.expansion-panel-body {
+  position: relative;
+}
+
+mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 28px; 
+}
+

@@ -81,6 +81,8 @@ export interface ReagentListQuery {
   name: string;
   category: string;
   storageId: string;
+  structure: string;
+  isFullStructure: boolean;
   sortByName: string;
   sortByCreationDate: string;
   sortByUpdatedDate: string;
@@ -91,9 +93,17 @@ export interface ReagentListQuery {
 export interface ReagentListFilteredData {
   value: string;
   column: ReagentListColumn;
+  isFullStructure?: boolean;
+}
+
+export interface MoveReagentData {
+  sourceStorageId: number;
+  destinationStorageId: number;
+  reagents: { id: number }[];
 }
 
 export enum ReagentListColumn {
+  CHECKBOX = 'checkbox',
   NAME = 'name',
   CATEGORY = 'category',
   STRUCTURE = 'structure',

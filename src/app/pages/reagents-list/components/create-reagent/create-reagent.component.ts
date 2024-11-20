@@ -13,15 +13,13 @@ import {
   SelectedReagentSample,
   SampleRequestError,
 } from '../../../../shared/models/reagent-model';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   Validators,
   ReactiveFormsModule,
   FormGroup,
-  AbstractControl,
-  ValidationErrors,
-  ValidatorFn,
+
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
@@ -41,6 +39,7 @@ import {
   StorageLocationItem,
   StorageLocationListData,
 } from '../../../storage-location/models/storage-location.interface';
+import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
 
 @Component({
   selector: 'app-create-reagent',
@@ -55,8 +54,7 @@ import {
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-    NgClass,
-  ],
+],
   templateUrl: './create-reagent.component.html',
   styleUrl: './create-reagent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,7 +75,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public hasReagentSampleError = signal(false);
   public reagentRequestForm!: FormGroup;
   public storageLocations$?: Observable<StorageLocationListData>;
-  public maxStorageLocationOptions = 5;
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -97,7 +94,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     this.initializeForm();
     this.storageLocations$ =
       this.storageLocationService.searchStorageLocationByName(
-        this.maxStorageLocationOptions
       );
   }
 
@@ -112,7 +108,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       quantityLeft: [null, Validators.required],
       storageLocation: [
         '',
-        [Validators.required, this.storageLocationValidator()],
+        [Validators.required, storageLocationAutoCompleteValidator()],
       ],
       storageId: [null as number | null, Validators.required],
       ...(this.isSample
@@ -137,15 +133,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
 
   public hasError(label: string, error: string): boolean | undefined {
     return this.reagentRequestForm.get(label)?.hasError(error);
-  }
-
-  storageLocationValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
-      return value && typeof value === 'string'
-        ? { invalidOption: true }
-        : null;
-    };
   }
 
   displayFn = (option: StorageLocationItem): string => {
