@@ -60,8 +60,7 @@ export class MoveReagentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storageLocations$ =
-      this.storageLocationService.searchStorageLocationByName();
+    this.storageLocations$ = this.storageLocationService.searchStorageLocationByName();
   }
 
   displayFn = (option: StorageLocationItem): string => {
@@ -98,9 +97,7 @@ export class MoveReagentComponent implements OnInit {
 
       const httpResponses = await Promise.allSettled(movePromises);
 
-      const rejectedRes = httpResponses.filter(
-        (res) => res.status === 'rejected'
-      );
+      const rejectedRes = httpResponses.filter((res) => res.status === 'rejected');
 
       if (httpResponses.length === rejectedRes.length) {
         this.notificationPopupService.error({

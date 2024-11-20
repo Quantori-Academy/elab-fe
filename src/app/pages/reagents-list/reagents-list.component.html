@@ -17,7 +17,12 @@
       >
         Create Sample</button
       >}
-      <button mat-flat-button color="primary" (click)="openMoveReagentDialog()">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="openMoveReagentDialog()"
+        [disabled]="!isReagentsSelected()"
+      >
         Move Reagent
       </button>
     </div>

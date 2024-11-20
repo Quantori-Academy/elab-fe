@@ -26,7 +26,6 @@ import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
-import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-reagents-list',
@@ -49,7 +48,6 @@ export class ReagentsListComponent implements OnInit {
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
   private reagentsQueryService = inject(ReagentsQueryService);
-  private notificationPopupService = inject(NotificationPopupService);
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
@@ -86,6 +84,10 @@ export class ReagentsListComponent implements OnInit {
       : this.reagentsService.getReagents();
   }
 
+  isReagentsSelected(): boolean {
+    return this.movedReagents.size !== 0;
+  }
+
   selectMovedReagents(element: Reagent) {
     if (this.movedReagents.has(element.storageId)) {
       const movedReagentStorage = this.movedReagents.get(element.storageId);
@@ -117,11 +119,6 @@ export class ReagentsListComponent implements OnInit {
             this.reagentsQueryService.reloadReagentList();
           }
         });
-    } else {
-      this.notificationPopupService.warning({
-        title: 'Warning',
-        message: 'Select Reagents',
-      });
     }
   }
 
