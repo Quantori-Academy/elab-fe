@@ -116,7 +116,7 @@ export class ReagentRequestService {
     });
 
     return this.httpClient
-      .post<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
+      .patch<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData, {
         headers,
       })
       .pipe(
