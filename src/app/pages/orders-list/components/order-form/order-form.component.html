@@ -129,42 +129,41 @@
       }@else {<app-table-loader-spinner />}
     </mat-card-content>
   </mat-card>
-  <mat-card>
-    <mat-card-header> Selected Reagents </mat-card-header>
-    <mat-card-content>
-      <div class="reagents-list">
-        @for (item of selectedReagentReq; track $index; let i = $index) {
-        <mat-card>
-          <mat-card-content class="reagent-item">
-            <p class="reagent-item__seq">{{ i + 1 }}.</p>
-            <p class="reagent-item__width">{{ item.name }}</p>
-            <p class="reagent-item__width">
-              {{ item.desiredQuantity }}{{ item.quantityUnit }}
-            </p>
-            @if (item.package) {
-            <p class="reagent-item__width">{{ item.package }}</p>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <div class="reagents-list">
+      @for (item of selectedReagentReq; track $index; let i = $index) {
+      <mat-card>
+        <mat-card-content class="reagent-item">
+          <p class="reagent-item__seq">{{ i + 1 }}.</p>
+          <p class="reagent-item__width">{{ item.name }}</p>
+          <p class="reagent-item__width">
+            {{ item.desiredQuantity }}{{ item.quantityUnit }}
+          </p>
+          @if (item.package) {
+          <p class="reagent-item__width">{{ item.package }}</p>
 
-            }@else { N/A }
+          }@else { N/A }
 
-            <app-molecule-structure
-              [structure]="item.structureSmiles!"
-              [width]="50"
-              [height]="50"
-            />
-          </mat-card-content>
-        </mat-card>
-        } @empty {
-        <div>No reagent selected yet</div>
-        }
-      </div>
-      <div class="reagent-action">
-        @if (reagentsSelectionError) {
-        <mat-error>Select at least one reagent</mat-error>
-        }
-      </div>
-    </mat-card-content>
-  </mat-card>
-  <div class="actions">
+          <app-molecule-structure class="reagent-item__structure"
+            [structure]="item.structureSmiles!"
+            [width]="50"
+            [height]="50"
+          />
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+    <div class="reagent-action">
+      @if (reagentsSelectionError) {
+      <mat-error>Select at least one reagent</mat-error>
+      }
+    </div>
+  </mat-expansion-panel>
+  <div class="actions mat-elevation-z6">
     <button
       mat-button
       color="warn"
