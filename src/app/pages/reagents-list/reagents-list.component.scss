@@ -9,8 +9,12 @@
   position: relative;
 }
 
-mat-cell {
-  height: 120px;
+[mat-cell] {
+  height: 110px;
+}
+
+[mat-cell].structure-container {
+  width: 130px;
 }
 
 .name-column {
@@ -20,7 +24,9 @@ mat-cell {
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .create-btns {
@@ -39,6 +45,24 @@ img:hover {
 
 .filter-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin-left: auto;
+}
+
+.search-structure-field-icon {
+  opacity: 0.6;
+  color: var(--primary-color-dark);
+}
+
+button[disabled] mat-icon {
+  opacity: 0.2;
+  color: var(--neutral-color-dark);
+}
+
+.no-reagents-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }

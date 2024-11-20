@@ -20,11 +20,12 @@ import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
-import { Observable, take } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { ReagentsQueryService } from './services/reagents-query.service';
 import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
+import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
 
 @Component({
@@ -51,6 +52,9 @@ export class ReagentsListComponent implements OnInit {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private structureSubscription: Subscription | null = null;
+  filterStructureValue = '';
+  isFullStructure = false;
 
   public currentPage = 0;
   public pageSize = this.reagentsQueryService.pageSize;
@@ -122,12 +126,26 @@ export class ReagentsListComponent implements OnInit {
     }
   }
 
+  private updateStructureFilter(value: string): void {
+    this.reagentsQueryService.structureFilterSubject.next({
+      value: value,
+      column: ReagentListColumn.STRUCTURE,
+      isFullStructure: this.isFullStructure,
+    });
+  }
+
   onFilterName($event: Event) {
     const value = ($event.target as HTMLInputElement).value;
     this.reagentsQueryService.nameFilterSubject.next({
       value,
       column: ReagentListColumn.NAME,
     });
+  }
+
+  onFilterStructure(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.filterStructureValue = value;
+    this.updateStructureFilter(value);
   }
 
   onFilterCategory(value: string) {
@@ -146,6 +164,27 @@ export class ReagentsListComponent implements OnInit {
       data: { structure },
       panelClass: 'image-dialog',
     });
+  }
+
+  openStructureEditor() {
+    const dialogRef = this.dialog.open(AddStructureComponent, {
+      width: '650px',
+      height: '600px',
+      minWidth: '650px',
+      minHeight: '600px',
+    });
+
+    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.filterStructureValue = result;
+        this.updateStructureFilter(result);
+      }
+    });
+  }
+
+  toggleFullStructureSearch(): void {
+    this.isFullStructure = !this.isFullStructure;
+    this.updateStructureFilter(this.filterStructureValue);
   }
 
   redirectToCreatePage(page: 'reagent' | 'sample') {
