@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
@@ -19,7 +19,7 @@ import { Reagent } from '../../../../shared/models/reagent-model';
   imports: [
     AsyncPipe,
     MaterialModule,
-    DatePipe,
+    // DatePipe,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
   ],
@@ -39,7 +39,6 @@ export class ReagentPageComponent {
       this.reagent$ = this.ReagentsService.getReagentById(data.id);
     }
   }
-
   onClose() {
     this.dialogRef.close();
   }

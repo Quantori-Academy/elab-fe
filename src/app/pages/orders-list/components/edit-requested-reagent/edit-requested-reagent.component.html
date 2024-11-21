@@ -1,0 +1,33 @@
+<h3>Edit Requested Reagent</h3>
+<form action="" [formGroup]="reagentRequestForm" (ngSubmit)="onEdit()">
+  <mat-form-field appearance="outline">
+    <mat-label>Desired Quantity</mat-label>
+    <input matInput formControlName="desiredQuantity" />
+    @if (hasError('desiredQuantity', 'required')) {
+    <mat-error>Desired quantity is required</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Package</mat-label>
+    <mat-select formControlName="package">
+      <mat-option [value]="null">None</mat-option>
+      @for (pkg of packages; track pkg.value) {
+      <mat-option [value]="pkg.value">
+        {{ pkg.viewValue }}
+      </mat-option>
+      }
+    </mat-select>
+    @if (hasError('package', 'required')) {
+    <mat-error>Package is required</mat-error>
+    }
+  </mat-form-field>
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit" (click)="onEdit()">
+      Update
+    </button>
+    <button mat-button color="warn" type="button" (click)="onClose()">
+      Close
+    </button>
+  </div>
+</form>

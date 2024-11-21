@@ -5,7 +5,7 @@ import { ReagentRequestList } from '../reagent-request-page/reagent-request-page
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { MoleculeStructureComponent } from '../../../shared/components/molecule-structure/molecule-structure.component';
-import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
+// import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -16,7 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CommonModule,
     MaterialModule,
     MoleculeStructureComponent,
-    SpinnerDirective,
+    // SpinnerDirective,
     TableLoaderSpinnerComponent,
     MatTooltipModule, // Убедитесь, что MatTooltipModule импортирован
   ],
