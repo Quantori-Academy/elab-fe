@@ -35,7 +35,6 @@ export class ReagentPageComponent {
     private dialogRef: MatDialogRef<ReagentPageComponent>
   ) {
     if (data && data.id) {
-      console.log(data.id)
       this.reagent$ = this.ReagentsService.getReagentRequestById(data.id);
     }
   }

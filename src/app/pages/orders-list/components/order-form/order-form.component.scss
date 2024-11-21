@@ -78,12 +78,14 @@ mat-expansion-panel {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
 }
 
 .table-wrapper {
   max-height: 14.4rem !important;
+  min-height: 14.4rem;
   overflow-y: auto;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -120,7 +122,7 @@ mat-expansion-panel {
       width: 50px;
     }
 
-    &_width {
+    &_attribute {
       flex-grow: 1;
     }
     &__structure {
@@ -133,4 +135,12 @@ mat-expansion-panel {
 .reagent-action {
   display: flex;
   align-items: center;
+}
+
+.no-reagents-container {
+  position: absolute;
+  top:45%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }

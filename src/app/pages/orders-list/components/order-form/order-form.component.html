@@ -1,4 +1,4 @@
-<h3 class="header">Create New Order</h3>
+<h5 class="header">Create New Order</h5>
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-header>General</mat-card-header>
@@ -53,7 +53,6 @@
           mat-table
           [dataSource]="ReagentRequestResponse.requests"
           matSort
-          class="mat-elevation-z8"
           (matSortChange)="onSort($event)"
           [appSpinner]="isLoading()"
         >
@@ -125,6 +124,14 @@
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>
+        @if(!ReagentRequestResponse.requests.length){
+        <div class="no-reagents-container">
+          <div>
+            <img src="/assets/icons/no_data.svg" alt="no_data" />
+          </div>
+          <p>No pending requests found</p>
+        </div>
+        }
       </div>
       }@else {<app-table-loader-spinner />}
     </mat-card-content>
@@ -140,12 +147,12 @@
       <mat-card>
         <mat-card-content class="reagent-item">
           <p class="reagent-item__seq">{{ i + 1 }}.</p>
-          <p class="reagent-item__width">{{ item.name }}</p>
-          <p class="reagent-item__width">
+          <p class="reagent-item__attribute">{{ item.name }}</p>
+          <p class="reagent-item__attribute">
             {{ item.desiredQuantity }}{{ item.quantityUnit }}
           </p>
           @if (item.package) {
-          <p class="reagent-item__width">{{ item.package }}</p>
+          <p class="reagent-item__attribute">{{ item.package }}</p>
 
           }@else { N/A }
 
