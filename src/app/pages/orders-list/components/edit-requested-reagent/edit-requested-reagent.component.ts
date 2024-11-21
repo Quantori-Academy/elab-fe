@@ -56,7 +56,7 @@ export class EditRequestedReagentComponent implements OnInit {
       this.initialPackageValue = this.ReagentRequest.package || null;
       this.reagentRequestForm.patchValue({
         desiredQuantity: this.ReagentRequest.desiredQuantity,
-        package: this.ReagentRequest.package || this.initialPackageValue,
+        package: this.initialPackageValue,
       });
     }
   }

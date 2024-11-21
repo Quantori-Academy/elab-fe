@@ -59,16 +59,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     this.fetchOrder();
   }
 
-  private fetchOrder() {
+  private fetchOrder(): void {
     this.activatedRoutes.paramMap
       .pipe(
-        switchMap((paramMap) => {
-          const id = Number(paramMap.get('id'));
-          return this.orderService.getReagentById(id);
-        })
+        takeUntil(this.destroy$),
+        switchMap((params) =>
+          this.orderService.getReagentById(Number(params.get('id')))
+        )
       )
       .subscribe((order) => this.orderSubject.next(order));
   }
+
   onOpen(ReagentRequest: ReagentRequestList) {
     const dialogRef = this.dialog.open(EditRequestedReagentComponent, {
       data: ReagentRequest,
@@ -81,12 +82,11 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onRemove(reagent: ReagentRequestList) {
-    const currentOrder = this.orderSubject.getValue();
+  onRemove(OrderId: number, reagent: ReagentRequestList) {
     this.excludeReagents.push({ id: reagent.id });
 
     this.orderService
-      .updateOrder(currentOrder!.id, { excludeReagents: this.excludeReagents })
+      .updateOrder(OrderId, { excludeReagents: this.excludeReagents })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
