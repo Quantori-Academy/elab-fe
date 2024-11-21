@@ -21,6 +21,7 @@ import { RbacService } from '../../../../auth/services/authentication/rbac.servi
 import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-room-management',
@@ -33,6 +34,7 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     AsyncPipe,
     DatePipe,
     TableLoaderSpinnerComponent,
+    NoDataComponent
   ],
   templateUrl: './room-management.component.html',
   styleUrl: './room-management.component.scss',

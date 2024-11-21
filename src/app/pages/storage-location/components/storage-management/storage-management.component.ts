@@ -33,6 +33,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { StorageLocationQueryService } from '../../services/storage-location-query.service';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-storage-management',
@@ -49,6 +50,7 @@ import { StorageLocationQueryService } from '../../services/storage-location-que
     MatDialogModule,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
+    NoDataComponent,
   ],
   providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './storage-management.component.html',

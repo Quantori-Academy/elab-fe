@@ -124,13 +124,8 @@
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>
-        @if(!ReagentRequestResponse.requests.length){
-        <div class="no-reagents-container">
-          <div>
-            <img src="/assets/icons/no_data.svg" alt="no_data" />
-          </div>
-          <p>No pending requests found</p>
-        </div>
+        @if(!ReagentRequestResponse.requests.length && !isLoading()){
+          <app-no-data text="No pending requests found" size="small"/>
         }
       </div>
       }@else {<app-table-loader-spinner />}

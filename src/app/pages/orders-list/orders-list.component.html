@@ -111,6 +111,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if (!OrdersListData.size && !isLoading()) {
+      <app-no-data text="No Orders"/>
+    }
   </div>
 
   <mat-paginator

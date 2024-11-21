@@ -1,10 +1,11 @@
 @if (isAdmin) {
-<div class="control-bar-wrapper">
-  <button class="add-btn" mat-flat-button (click)="openDialog()">
-    Add New Room
-  </button>
-</div>
-} @if (roomList$ | async; as roomList){
+  <div class="control-bar-wrapper">
+    <button class="add-btn" mat-flat-button (click)="openDialog()">
+      Add New Room
+    </button>
+  </div>
+}
+@if (roomList$ | async; as roomList){
 <div class="mat-elevation-z8 table-container">
   <div class="table-content">
     <table mat-table [dataSource]="roomList">
@@ -48,6 +49,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if (!roomList.length) {
+      <app-no-data text="No rooms"/>
+    }
   </div>
 
   <mat-paginator

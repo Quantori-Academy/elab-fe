@@ -1,8 +1,8 @@
 <div class="control-bar-wrapper">
   @if(isAdmin){
-  <button class="add-btn" mat-flat-button (click)="onCreate()">
-    Add New Storage Location
-  </button>
+    <button class="add-btn" mat-flat-button (click)="onCreate()">
+      Add New Storage Location
+    </button>
   }
   <div class="filter-container">
     <mat-form-field class="filter__item" appearance="fill" subscriptSizing="dynamic">
@@ -10,7 +10,7 @@
       <mat-select (selectionChange)="onFilterRoom($event.value)">
         <mat-option value="">All Rooms</mat-option>
         @for (room of listOfRooms$ | async; track $index) {
-        <mat-option [value]="room.name">{{ room.name }}</mat-option>
+          <mat-option [value]="room.name">{{ room.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -85,6 +85,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if (!storageLocationData.size && !isLoading()) {
+      <app-no-data text="No storages"/>
+    }
   </div>
 
   <mat-paginator

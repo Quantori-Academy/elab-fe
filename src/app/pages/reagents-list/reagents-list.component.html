@@ -123,13 +123,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    @if(!reagentsResponse.reagents.length){
-    <div class="no-reagents-container">
-      <div>
-        <img src="/assets/icons/no_data.svg" alt="no_data" />
-      </div>
-      <p>No reagents data available</p>
-    </div>
+    @if(!reagentsResponse.reagents.length && !isLoading()){
+      <app-no-data text="No Reagents"/>
     }
   </div>
 

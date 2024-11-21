@@ -27,6 +27,7 @@ import { SpinnerDirective } from '../../shared/directives/spinner/spinner.direct
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
+import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -39,6 +40,7 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
+    NoDataComponent
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',

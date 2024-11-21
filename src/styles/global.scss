@@ -5,6 +5,8 @@
   align-items: center;
   column-gap: 20px;
   row-gap: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
 .filter-container {
@@ -12,7 +14,6 @@
   display: flex;
   column-gap: 20px;
   row-gap: 10px;
-  margin-bottom: 10px;
   justify-content: flex-end;
 
   .mat-mdc-form-field-icon-suffix {
@@ -30,6 +31,9 @@
     overflow-y: auto;
     flex: 1;
     position: relative;
+
+    display: flex;
+    flex-direction: column;
   }
 
   thead {

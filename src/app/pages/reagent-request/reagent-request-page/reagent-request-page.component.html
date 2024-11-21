@@ -135,6 +135,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if (!dataSource.length && !isLoading()) {
+      <app-no-data text="No Reagent Request"/>
+    }
   </div>
 
   <mat-paginator
