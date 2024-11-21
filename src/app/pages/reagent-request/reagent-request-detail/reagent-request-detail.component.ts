@@ -5,8 +5,9 @@ import { ReagentRequestList } from '../reagent-request-page/reagent-request-page
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { MoleculeStructureComponent } from '../../../shared/components/molecule-structure/molecule-structure.component';
-import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
+// import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-reagent-request-detail',
@@ -15,8 +16,9 @@ import { TableLoaderSpinnerComponent } from '../../../shared/components/table-lo
     CommonModule,
     MaterialModule,
     MoleculeStructureComponent,
-    SpinnerDirective,
+    // SpinnerDirective,
     TableLoaderSpinnerComponent,
+    MatTooltipModule, // Убедитесь, что MatTooltipModule импортирован
   ],
   templateUrl: './reagent-request-detail.component.html',
   styleUrls: ['./reagent-request-detail.component.scss'],
@@ -43,9 +45,5 @@ export class ReagentRequestDetailComponent implements OnInit {
         },
       });
     }
-  }
-
-  goBack() {
-    this.router.navigate(['/reagent-request-page']);
   }
 }

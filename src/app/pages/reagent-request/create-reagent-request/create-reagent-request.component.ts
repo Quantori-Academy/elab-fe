@@ -14,11 +14,19 @@ import {
   Package,
   PackageLabels,
 } from '../../../shared/models/reagent-model';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-create-reagent-request',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
   templateUrl: './create-reagent-request.component.html',
   styleUrls: ['./create-reagent-request.component.scss'],
 })
@@ -37,6 +45,12 @@ export class CreateReagentRequestComponent {
     casNumber: [null],
     userComments: [null],
     packageType: [null],
+    orderId: [null],
+    producer: [null],
+    catalogId: [null],
+    catalogLink: [null],
+    pricePerUnit: [null],
+    expirationDate: [null],
   });
 
   units = Object.keys(Unit).map((key) => ({
@@ -65,6 +79,18 @@ export class CreateReagentRequestComponent {
         ...(formValue.casNumber ? { casNumber: formValue.casNumber } : {}),
         ...(formValue.userComments
           ? { userComments: formValue.userComments }
+          : {}),
+        ...(formValue.orderId ? { orderId: Number(formValue.orderId) } : {}),
+        ...(formValue.producer ? { producer: formValue.producer } : {}),
+        ...(formValue.catalogId ? { catalogId: formValue.catalogId } : {}),
+        ...(formValue.catalogLink
+          ? { catalogLink: formValue.catalogLink }
+          : {}),
+        ...(formValue.pricePerUnit
+          ? { pricePerUnit: Number(formValue.pricePerUnit) }
+          : {}),
+        ...(formValue.expirationDate
+          ? { expirationDate: formValue.expirationDate }
           : {}),
       };
 

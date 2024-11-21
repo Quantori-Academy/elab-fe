@@ -1,75 +1,97 @@
-<h1 class="header">Reagent Request Details</h1>
+<h5 class="header">Reagent Request Details</h5>
 @if (reagentRequest) {
-<mat-card>
-  <mat-card-header>
-    <div class="mat-headline">General Information</div>
-  </mat-card-header>
-  <mat-card-content>
-    <table class="detail-table">
-      <tr>
-        <td class="label">ID:</td>
-        <td class="value">{{ reagentRequest.id }}</td>
-      </tr>
-      <tr>
-        <td class="label">Name:</td>
-        <td class="value">{{ reagentRequest.name }}</td>
-      </tr>
-      <tr>
-        <td class="label">Status:</td>
-        <td class="value">{{ reagentRequest.status }}</td>
-      </tr>
-      <tr>
-        <td class="label">Desired Quantity:</td>
-        <td class="value">{{ reagentRequest.desiredQuantity }}</td>
-      </tr>
-      <tr>
-        <td class="label">Quantity Unit:</td>
-        <td class="value">{{ reagentRequest.quantityUnit }}</td>
-      </tr>
-      <tr>
-        <td class="label">CAS Number:</td>
-        <td class="value">{{ reagentRequest.casNumber || "N/A" }}</td>
-      </tr>
-      <tr>
-        <td class="label">User Comments:</td>
-        <td class="value">{{ reagentRequest.userComments || "N/A" }}</td>
-      </tr>
-      <tr>
-        <td class="label">Procurement Comments:</td>
-        <td class="value">{{ reagentRequest.procurementComments || "N/A" }}</td>
-      </tr>
-      <tr>
-        <td class="label">Created At:</td>
-        <td class="value">{{ reagentRequest.createdAt | date : "short" }}</td>
-      </tr>
-      <tr>
-        <td class="label">Updated At:</td>
-        <td class="value">{{ reagentRequest.updatedAt | date : "short" }}</td>
-      </tr>
-    </table>
-  </mat-card-content>
-</mat-card>
+<div class="content-wrapper">
+  <mat-card class="general-info-card">
+    <mat-card-header>
+      <div class="mat-headline">General Information</div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="detail-columns">
+        <div class="detail-column">
+          <div class="detail-item">
+            <span class="label">ID:</span>
+            <span class="value">{{ reagentRequest.id }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Name:</span>
+            <span class="value">{{ reagentRequest.name }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Status:</span>
+            <span class="value">{{ reagentRequest.status }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Desired Quantity:</span>
+            <span class="value">{{ reagentRequest.desiredQuantity }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Quantity Unit:</span>
+            <span class="value">{{ reagentRequest.quantityUnit }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Package:</span>
+            <span class="value">{{ reagentRequest.package }}</span>
+          </div>
+        </div>
+        <div class="detail-column">
+          <div class="detail-item">
+            <span class="label">CAS Number:</span>
+            <span class="value">{{ reagentRequest.casNumber || "N/A" }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">User Comments:</span>
+            <span
+              class="value truncated"
+              [matTooltip]="reagentRequest.userComments || 'N/A'"
+              matTooltipClass="tooltip-text"
+            >
+              {{ reagentRequest.userComments || "N/A" }}
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Procurement Comments:</span>
+            <span
+              class="value truncated"
+              [matTooltip]="reagentRequest.procurementComments || 'N/A'"
+              matTooltipClass="tooltip-text"
+            >
+              {{ reagentRequest.procurementComments || "N/A" }}
+            </span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Created At:</span>
+            <span class="value">{{
+              reagentRequest.createdAt | date : "short"
+            }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Updated At:</span>
+            <span class="value">{{
+              reagentRequest.updatedAt | date : "short"
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-<mat-card>
-  <mat-card-header>
-    <div class="mat-headline">Structure</div>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="structure-container">
-      <app-molecule-structure
-        [structure]="reagentRequest.structureSmiles || ''"
-        [width]="300"
-        [height]="300"
-      ></app-molecule-structure>
-      <p>
-        <strong>SMILES:</strong> {{ reagentRequest.structureSmiles || "N/A" }}
-      </p>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<div class="actions">
-  <button mat-flat-button color="primary" (click)="goBack()">Done</button>
+  <mat-card class="structure-card">
+    <mat-card-header>
+      <div class="mat-headline">Structure</div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="structure-container">
+        <app-molecule-structure
+          [structure]="reagentRequest.structureSmiles || ''"
+          [width]="200"
+          [height]="200"
+        ></app-molecule-structure>
+        <p>
+          <strong>SMILES:</strong> {{ reagentRequest.structureSmiles || "N/A" }}
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 } @else {
 <app-table-loader-spinner></app-table-loader-spinner>

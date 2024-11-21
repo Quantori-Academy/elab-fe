@@ -49,6 +49,9 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     Status.declined,
   ];
 
+  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
+  excludeReagents: { id: number }[] = [];
+
   baseColumns = [
     'name',
     'casNumber',
@@ -57,22 +60,23 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     'userComments',
   ];
   actionColumn = 'actions';
-
-
-// Exclude actions when removing last RR
-  get displayedColumns(): string[] {
-    return this.showRemoveConfirmation
-      ? this.baseColumns 
-      : [...this.baseColumns, this.actionColumn];
-  }
-  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
-  excludeReagents: { id: number }[] = [];
-
   initialValues: Partial<Order> = {}; //initial values of order
+  showRemoveConfirmation = false;
 
+  get displayedColumns(): string[] {
+    if (this.showRemoveConfirmation) {
+      return this.baseColumns;
+    }
+    const status = this.updateForm.get('status')?.value;
+
+    if (status === Status.pending) {
+      return [...this.baseColumns, this.actionColumn];
+    }
+    return this.baseColumns;
+  }
   errorMessage = '';
-  showRemoveConfirmation = false; 
-  lastReagentToRemove: RequestedReagents | null = null; 
+
+  lastReagentToRemove: RequestedReagents | null = null;
   updateForm = this.fb.group({
     title: [''],
     seller: [''],
@@ -227,7 +231,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
             this.notificationPopupService.success({
               title: 'Success',
-              message: 'Order canceled successfully!',
+              message: 'Order Declined successfully!',
               duration: 3000,
             });
           },
