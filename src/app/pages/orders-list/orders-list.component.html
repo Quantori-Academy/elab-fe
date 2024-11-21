@@ -1,9 +1,9 @@
-<div class="header">
+<div class="control-bar-wrapper">
   <button class="add-btn" mat-flat-button (click)="onCreate()">
     Create new order
   </button>
-  <div class="filter">
-    <mat-form-field class="filter__item" appearance="fill">
+  <div class="filter-container">
+    <mat-form-field class="filter__item" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by status</mat-label>
       <mat-select (selectionChange)="onFilterByStatus($event.value)">
         <mat-option value="">All Orders</mat-option>
@@ -12,12 +12,12 @@
         }
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Title</mat-label>
       <input matInput (input)="onFilterByTitle($event)" />
     </mat-form-field>
 
-    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Seller</mat-label>
       <input matInput (input)="onFilterBySeller($event)" />
     </mat-form-field>
@@ -29,7 +29,6 @@
   <div class="table-content">
     <table
       mat-table
-      class="mat-elevation-z8"
       [dataSource]="OrdersListData.orders"
       matSort
       (matSortChange)="onSort($event)"

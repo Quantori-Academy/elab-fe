@@ -26,3 +26,37 @@ h3 {
 span {
   color: var(--primary-color);
 }
+
+.table-container {
+  height: 600px;
+}
+
+@media screen and (max-width: 768px) {
+  .info {
+    margin: 0 50px;
+    gap: 30px;
+  }
+
+  h1 {
+    font-size: large;
+  }
+  h2,
+  h3 {
+    font-size: medium;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .info {
+    margin: 0;
+    gap: 20px;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+
+}
+
