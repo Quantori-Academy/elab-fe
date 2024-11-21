@@ -4,7 +4,7 @@
     <img src="/assets/icons/order.svg" alt="Order list" />
   </div>
   <div>
-    <h1>Order Title: {{ order.title }}</h1>
+    <h2>Order Title: {{ order.title }}</h2>
     <h2>
       Seller: <span>{{ order.seller }}</span>
     </h2>
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<h4>Ordered Reagents</h4>
+<h3>Ordered Reagents</h3>
 <div class="mat-elevation-z8">
   <mat-table class="table" [dataSource]="order.reagents">
     <ng-container matColumnDef="name">
@@ -102,10 +102,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button aria-label="edit">
+        <button mat-icon-button aria-label="edit" (click)="onOpen(element)">
           <mat-icon color="primary">edit</mat-icon>
         </button>
-        <button mat-icon-button aria-label="delete">
+        <button mat-icon-button aria-label="delete" (click)="onRemove(order.id, element)">
           <mat-icon color="warn">delete</mat-icon>
         </button>
       </mat-cell>

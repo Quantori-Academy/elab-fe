@@ -168,17 +168,3 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.router.navigate(['/reagent-request-page/create-reagent-request']);
   }
 }
-
-// Currently in progress
-
-// openCreateReagentRequestDialog() {
-//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
-//     data: {},
-//   });
-
-//   dialogRef.afterClosed().subscribe((result) => {
-//     if (result) {
-//       this.loadReagentRequests();
-//     }
-//   });
-// }

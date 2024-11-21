@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnDestroy,
   OnInit,
@@ -18,15 +19,23 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
-import { AsyncPipe } from '@angular/common';
+import { BehaviorSubject, Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { OrdersService } from '../../service/orders.service';
-import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { Router } from '@angular/router';
 import { ReagentPageComponent } from '../../../reagents-list/components/reagent-page/reagent-page.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { Sort } from '@angular/material/sort';
+import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
+import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 
 @Component({
   selector: 'app-order-form',
@@ -36,7 +45,11 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
     ReactiveFormsModule,
     MatAutocompleteModule,
     AsyncPipe,
+    DatePipe,
     MatCheckboxModule,
+    SpinnerDirective,
+    TableLoaderSpinnerComponent,
+    MoleculeStructureComponent,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -47,23 +60,47 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private ordersService = inject(OrdersService);
   private reagentRequestService = inject(ReagentRequestService);
-  private reagentService = inject(ReagentsService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
-
-  dataSource$!: Observable<ReagentRequestList[]>;
+  public isLoading = computed(() => this.reagentRequestService.isLoading());
+  private paramsSubject = new BehaviorSubject<{ filter?: string; sort?: Sort }>(
+    {}
+  );
   sellerOptions$ = new BehaviorSubject<string[]>([]);
   selectedReagents = new Set<number>();
   reagentsSelectionError = false;
-  selectedReagentNames: string[] = [];
+  selectedReagentReq: ReagentRequestList[] = [];
+
+  dataSource$ = this.paramsSubject.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    switchMap((params) =>
+      this.reagentRequestService.getReagentRequests(
+        'Pending',
+        undefined,
+        params.sort?.active === 'createdAt' && params.sort.direction
+          ? params.sort.direction
+          : undefined,
+        undefined,
+        undefined,
+        undefined,
+        params.filter
+      )
+    )
+  );
+
+  updateParams(params: { filter?: string; sort?: Sort }) {
+    this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
+  }
+
   displayedColumns: string[] = [
     'select',
     'name',
     'desiredQuantity',
     'package',
+    'createdAt',
     'userComments',
-    'casNumber',
     'actions',
   ];
 
@@ -74,23 +111,19 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    const pageSize = 1000;
-    const skip = 0;
-    this.dataSource$ = this.reagentRequestService
-      .getReagentRequests(
-        'Pending',
-        undefined,
-        undefined,
-        undefined,
-        skip,
-        pageSize,
-        undefined
-      )
-      .pipe(map((response) => response.requests));
     this.ordersService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
+  }
+
+  onFilterName(event: Event) {
+    const value = (event.target as HTMLInputElement).value.trim();
+    this.updateParams({ filter: value || undefined });
+  }
+
+  onSort(sort: Sort): void {
+    this.updateParams({ sort });
   }
 
   openReagentDialog(id: string): void {
@@ -103,12 +136,12 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   onCheckboxChange(element: ReagentRequestList): void {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
-      this.selectedReagentNames = this.selectedReagentNames.filter(
-        (name) => name !== element.name
+      this.selectedReagentReq = this.selectedReagentReq.filter(
+        (name) => name !== element
       );
     } else {
       this.selectedReagents.add(element.id);
-      this.selectedReagentNames.push(element.name);
+      this.selectedReagentReq.push(element);
     }
     this.updateOrdersFormControl();
   }
@@ -137,7 +170,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         },
         error: (err) => this.notificationPopupService.error(err),
       });
-    } else {
+    } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;
       this.orderForm.markAllAsTouched();
     }

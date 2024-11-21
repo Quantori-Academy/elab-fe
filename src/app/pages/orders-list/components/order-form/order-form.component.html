@@ -1,8 +1,8 @@
-<h1 class="header">Create New Order</h1>
+<h5 class="header">Create New Order</h5>
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <mat-card>
     <mat-card-header>General</mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="form-grid">
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" />
@@ -11,7 +11,6 @@
         <mat-error>Title is required.</mat-error>
         }
       </mat-form-field>
-
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Seller</mat-label>
         <input
@@ -33,17 +32,32 @@
       </mat-form-field>
     </mat-card-content>
   </mat-card>
+
   <mat-card>
-    <mat-card-header>Quantity</mat-card-header>
+    <mat-card-header>Requested Reagents</mat-card-header>
     <mat-card-content>
-      <div class="table-container">
+      <div class="filter-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Search by name</mat-label>
+          <input
+            matInput
+            (input)="onFilterName($event)"
+            placeholder="Enter reagent name"
+          />
+        </mat-form-field>
+      </div>
+      @if (dataSource$ | async; as ReagentRequestResponse) {
+
+      <div class="table-wrapper mat-elevation-z8">
         <table
           mat-table
-          [dataSource]="dataSource$"
-          class="mat-elevation-z8 demo-table"
+          [dataSource]="ReagentRequestResponse.requests"
+          matSort
+          (matSortChange)="onSort($event)"
+          [appSpinner]="isLoading()"
         >
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef>Select</th>
             <td mat-cell *matCellDef="let element" class="clickable-cell">
               <mat-checkbox
                 [checked]="selectedReagents.has(element.id)"
@@ -53,7 +67,7 @@
           </ng-container>
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element" mat-cell>
+            <td mat-cell *matCellDef="let element" mat-cell class="createdAt">
               {{ element.name }}
             </td>
           </ng-container>
@@ -73,17 +87,18 @@
               }
             </td>
           </ng-container>
-
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+            <td mat-cell *matCellDef="let element" class="createdAt">
+              {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+            </td>
+          </ng-container>
           <ng-container matColumnDef="userComments">
             <th mat-header-cell *matHeaderCellDef>Comment</th>
             <td mat-cell *matCellDef="let element">
-              {{ element.userComments }}
+              @if ( element.userComments) {
+              {{ element.userComments }} }@else { N/A }
             </td>
-          </ng-container>
-
-          <ng-container matColumnDef="casNumber">
-            <th mat-header-cell *matHeaderCellDef>casNumber</th>
-            <td mat-cell *matCellDef="let element">{{ element.casNumber }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
@@ -99,27 +114,65 @@
               </button>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
           <tr
             mat-row
             [class.demo-row-is-clicked]="selectedReagents.has(row.id)"
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>
-      </div>
-      @if (!selectedReagents.size && !reagentsSelectionError) {
-      <div>No reagent choosen yet</div>
-      } @else if (reagentsSelectionError) {
-      <mat-error>Select at least one reagent</mat-error>
-      }
-      <ul>
-        @for (name of selectedReagentNames; track $index) {
-        <li>Selected Reagent: {{ name }}</li>
+        @if(!ReagentRequestResponse.requests.length){
+        <div class="no-reagents-container">
+          <div>
+            <img src="/assets/icons/no_data.svg" alt="no_data" />
+          </div>
+          <p>No pending requests found</p>
+        </div>
         }
-      </ul>
+      </div>
+      }@else {<app-table-loader-spinner />}
     </mat-card-content>
   </mat-card>
-  <div class="actions">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        >{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title
+      >
+    </mat-expansion-panel-header>
+    <div class="reagents-list">
+      @for (item of selectedReagentReq; track $index; let i = $index) {
+      <mat-card>
+        <mat-card-content class="reagent-item">
+          <p class="reagent-item__seq">{{ i + 1 }}.</p>
+          <p class="reagent-item__attribute">{{ item.name }}</p>
+          <p class="reagent-item__attribute">
+            {{ item.desiredQuantity }}{{ item.quantityUnit }}
+          </p>
+          @if (item.package) {
+          <p class="reagent-item__attribute">{{ item.package }}</p>
+
+          }@else { N/A }
+
+          <app-molecule-structure
+            class="reagent-item__structure"
+            [structure]="item.structureSmiles!"
+            [width]="50"
+            [height]="50"
+          />
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+    <div class="reagent-action">
+      @if (reagentsSelectionError) {
+      <mat-error>Select at least one reagent</mat-error>
+      }
+    </div>
+  </mat-expansion-panel>
+  <div class="actions mat-elevation-z6">
     <button
       mat-button
       color="warn"

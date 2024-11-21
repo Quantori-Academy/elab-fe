@@ -39,16 +39,25 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private notificationPopupService = inject(NotificationPopupService);
   statusOptions: Status[] = [Status.pending, Status.submitted, Status.fulfilled, Status.declined];
 
-  displayedColumns = [
+  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
+  excludeReagents: { id: number }[] = [];
+
+  baseColumns = [
     'name',
     'casNumber',
     'desiredQuantity',
     'structureSmiles',
     'userComments',
-    'actions',
   ];
-  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
-  excludeReagents: { id: number }[] = [];
+  actionColumn = 'actions';
+
+// Excluding actions when status is Submitted
+get displayedColumns(): string[] {
+  const status = this.updateForm.get('status')?.value;
+  return status === Status.pending
+    ? [...this.baseColumns, this.actionColumn]
+    : this.baseColumns;
+}
 
   initialValues: Partial<Order> = {}; //initial values of order
 

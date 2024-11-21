@@ -126,4 +126,20 @@ export class ReagentRequestService {
         })
       );
   }
+
+
+  //added to edit RRs from order
+  public editReagentRequest(
+    id: number,
+    reagentData: Partial<ReagentRequestList>
+  ): Observable<ReagentRequestList> {
+    return this.httpClient
+      .patch<ReagentRequestList>(`${this.apiUrl}/${id}`, reagentData)
+      .pipe(
+        catchError((error) => {
+          console.error('Error:', error);
+          return throwError(() => new Error('Error'));
+        })
+      );
+  }
 }
