@@ -1,5 +1,5 @@
 :host {
-  padding: 20px;
+  padding: 10px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -7,18 +7,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.control-bar-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-}
-
-.filter-container {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
 }
 
 table {

@@ -1,0 +1,32 @@
+@use '@angular/material' as mat;
+
+@media screen and (max-width: 768px) {
+  mat-sidenav-content {
+    padding: 10px 10px 0 !important;
+  }
+
+
+  .filter-container {
+    mat-form-field {
+      flex: 1;
+      min-width: 150px;
+      @include mat.form-field-density(-1)
+    }
+
+    mat-label, mat-select, input {
+      font-size: 12px;
+    }
+  }
+
+  .structure-form {
+    .mat-mdc-form-field-flex {
+      label {
+        width: 100px;
+      }
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+      display: flex;
+    }
+  }
+}
