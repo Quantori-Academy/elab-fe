@@ -21,9 +21,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-decline-reagent-request',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule,
-    //  AsyncPipe
-    ],
+  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, 
+    // AsyncPipe
+  ],
   templateUrl: './decline-reagent-request.component.html',
   styleUrls: ['./decline-reagent-request.component.scss'],
 })

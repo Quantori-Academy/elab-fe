@@ -4,14 +4,14 @@ import {
   inject,
   Inject,
 } from '@angular/core';
-import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AsyncPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
-import { Reagent } from '../../../../shared/models/reagent-model';
+import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
+import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 
 @Component({
   selector: 'app-reagent-page',
@@ -19,7 +19,6 @@ import { Reagent } from '../../../../shared/models/reagent-model';
   imports: [
     AsyncPipe,
     MaterialModule,
-    // DatePipe,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
   ],
@@ -28,18 +27,18 @@ import { Reagent } from '../../../../shared/models/reagent-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReagentPageComponent {
-  private ReagentsService = inject(ReagentsService);
-  reagent$: Observable<Reagent | null> = of(null);
+  private ReagentsService = inject(ReagentRequestService);
+  reagent$: Observable<ReagentRequestList | null> = of(null);
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id: string },
+    @Inject(MAT_DIALOG_DATA) public data: { id: number },
     private dialogRef: MatDialogRef<ReagentPageComponent>
   ) {
     if (data && data.id) {
-      this.reagent$ = this.ReagentsService.getReagentById(data.id);
+      this.reagent$ = this.ReagentsService.getReagentRequestById(data.id);
     }
   }
-  onClose() {
+    onClose() {
     this.dialogRef.close();
   }
 }

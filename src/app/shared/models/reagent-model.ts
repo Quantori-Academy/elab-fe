@@ -1,17 +1,5 @@
 import { OrderEntity } from './order-entity.model';
 
-// this interface was based on requirments in issue's description, not on current mock data, if we switch back to those requiremnts we will uncomment this
-// export interface Reagent {
-//   id: number;
-//   name: string;
-//   category: Category;
-//   description: string;
-//   quantity: number | string;
-//   storageLocation: string;
-//   structure: string;
-//   dateOfCreation: string;
-// }
-
 export interface Reagent {
   id?: number;
   name: string;
