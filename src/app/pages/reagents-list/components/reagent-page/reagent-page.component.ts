@@ -38,8 +38,7 @@ export class ReagentPageComponent {
       this.reagent$ = this.ReagentsService.getReagentRequestById(data.id);
     }
   }
-
-  onClose() {
+    onClose() {
     this.dialogRef.close();
   }
 }
