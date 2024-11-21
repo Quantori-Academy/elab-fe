@@ -31,3 +31,32 @@
 app-reagents-list {
   height: 600px;
 }
+
+@media screen and (max-width: 768px) {
+  .info {
+    margin: 50px;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .info {
+    margin: 0;
+    gap: 20px;
+  }
+
+  .storage-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .title {
+    font-size: large;
+  }
+
+  .description {
+    font-size: medium;
+  }
+
+}
+

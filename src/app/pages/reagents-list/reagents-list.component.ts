@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -43,8 +43,9 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReagentsListComponent implements OnInit {
+export class ReagentsListComponent implements OnInit, OnDestroy {
   @Input() storageLocationId?: number;
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
@@ -77,7 +78,7 @@ export class ReagentsListComponent implements OnInit {
     ReagentListColumn.QUANTITYLEFT,
     ReagentListColumn.CAS,
     ReagentListColumn.LOCATION,
-    ReagentListColumn.ACTIONS,
+    ...(this.isResearcher ? [ReagentListColumn.ACTIONS] : []),
   ];
 
   public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
@@ -174,7 +175,7 @@ export class ReagentsListComponent implements OnInit {
       minHeight: '600px',
     });
 
-    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe((result) => {
       if (result) {
         this.filterStructureValue = result;
         this.updateStructureFilter(result);
@@ -197,5 +198,9 @@ export class ReagentsListComponent implements OnInit {
 
   handlePageEvent($event: PageEvent) {
     this.reagentsQueryService.setPageData($event);
+  }
+
+  ngOnDestroy(): void {
+    this.structureSubscription?.unsubscribe()
   }
 }

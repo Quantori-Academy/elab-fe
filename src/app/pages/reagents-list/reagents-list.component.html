@@ -1,4 +1,4 @@
-<div class="actions">
+<div class="control-bar-wrapper">
   @if (isResearcher) {
   <div class="create-btns">
     @if (!storageLocationId) {
@@ -16,12 +16,12 @@
   }
 
   <div class="filter-container">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Search by name</mat-label>
       <input matInput (input)="onFilterName($event)" placeholder="Enter a name" />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="structure-form" subscriptSizing="dynamic">
       <mat-label>Search by structure</mat-label>
       <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" />
       <button mat-icon-button matSuffix (click)="openStructureEditor()">
@@ -35,7 +35,7 @@
       </button>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Category</mat-label>
       <mat-select (selectionChange)="onFilterCategory($event.value)">
         <mat-option value="">All Categories</mat-option>
