@@ -145,8 +145,8 @@ mat-card-content,
   border-radius: 12px 12px 0 0;
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 768px) {
   mat-form-field {
-    width: 100%;
+    flex-grow: 1;
   }
 }

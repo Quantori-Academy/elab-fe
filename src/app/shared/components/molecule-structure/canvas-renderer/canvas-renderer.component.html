@@ -1,1 +1,1 @@
-<canvas #molCanvas [title]="this.structure" [width]="drawingDetails.width" [height]="drawingDetails.height"></canvas>
+<canvas #molCanvas [title]="this.structure" [width]="drawingDetails ? drawingDetails.width : 600" [height]="drawingDetails ? drawingDetails.height : 400"></canvas>

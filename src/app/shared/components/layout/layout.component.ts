@@ -11,8 +11,9 @@ import { MenuLink } from '../../models/menu-link.interface';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { collapsed } from '../header/header.component';
 import { MaterialModule } from '../../../material.module';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { Display } from '../../models/display.interface';
+import { DISPLAY_EXTENSION } from '../../units/display.units';
 
 @Component({
   selector: 'app-layout',
@@ -28,7 +29,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   readonly rbacService = inject(RbacService);
-  private breakpointObserver = inject(BreakpointObserver);
+  private displayExtension: Observable<Display> = inject(DISPLAY_EXTENSION);
   public isMobile = signal(false);
   private destroy$ = new Subject<void>();
 
@@ -81,10 +82,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   public sideNavMode = computed(() => this.isMobile() ? 'over' : 'side')
 
   ngOnInit(): void {
-    this.breakpointObserver
-      .observe(['(max-width: 426px)'])
+    this.displayExtension
       .pipe(takeUntil(this.destroy$))
-      .subscribe((breakpoint) => this.isMobile.set(breakpoint.matches));
+      .subscribe((display) => this.isMobile.set(display.isMobile));
   }
 
   isOpenedSideNav() {

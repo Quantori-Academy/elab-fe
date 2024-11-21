@@ -54,13 +54,9 @@ button[disabled] mat-icon {
   text-align: center;
 }
 
-@media screen and (max-width: 769px) {
-  .create-btns {
-    flex: 1;
-
-    .btn {
-      font-size: 12px;
-    }
+@media screen and (max-width: 768px) {
+  .btn {
+    font-size: 12px;
   }
 }
 

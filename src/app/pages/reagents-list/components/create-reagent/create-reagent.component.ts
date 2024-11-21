@@ -40,6 +40,7 @@ import {
   StorageLocationListData,
 } from '../../../storage-location/models/storage-location.interface';
 import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
+import { DISPLAY_EXTENSION } from '../../../../shared/units/display.units';
 
 @Component({
   selector: 'app-create-reagent',
@@ -68,6 +69,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private displayExtension = inject(DISPLAY_EXTENSION);
   private destroy$ = new Subject<void>();
 
   public isSample = false;
@@ -75,6 +77,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public hasReagentSampleError = signal(false);
   public reagentRequestForm!: FormGroup;
   public storageLocations$?: Observable<StorageLocationListData>;
+  public isTablet = signal(false);
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -95,6 +98,8 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     this.storageLocations$ =
       this.storageLocationService.searchStorageLocationByName(
       );
+    this.displayExtension.pipe(takeUntil(this.destroy$))
+      .subscribe((display) => this.isTablet.set(display.isTablet))
   }
 
   public initializeForm(): void {
@@ -189,7 +194,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public openAddReagentDialog() {
     this.dialog
       .open(AddReagentSampleComponent, {
-        minWidth: '800px',
+        height: '600px',
+        width: this.isTablet() ? '600px' : '800px',
+        maxWidth: this.isTablet() ? '600px' : '800px',
         maxHeight: '600px',
         data: { selectedReagentSample: this.selectedReagentSample() },
       })
