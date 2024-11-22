@@ -29,9 +29,8 @@
     }
   </div>
 </div>
-
 <h3>Ordered Reagents</h3>
-<div class="mat-elevation-z8 table-content">
+<div class="mat-elevation-z8 table-content table">
   <mat-table [dataSource]="order.reagents">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -41,7 +40,7 @@
     <ng-container matColumnDef="casNumber">
       <mat-header-cell *matHeaderCellDef> casNumber </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        @if (element.casNumber === '') {
+        @if (element.casNumber === null || element.casNumber === '' ) {
         <span>N/A</span>
         }@else { {{ element.casNumber }} }
       </mat-cell>
@@ -104,7 +103,7 @@
     <ng-container matColumnDef="userComments">
       <mat-header-cell *matHeaderCellDef> Creator's comment </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        @if (element.userComments === '') {
+        @if (element.userComments === null|| element.userComments === '') {
         <span>N/A</span>
         } @else{
         {{ element.userComments }}
@@ -153,7 +152,6 @@
   </div>
   }
 </div>
-
 } @else {
 <app-table-loader-spinner />
 }

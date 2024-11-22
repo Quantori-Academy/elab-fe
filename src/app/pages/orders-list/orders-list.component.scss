@@ -32,33 +32,35 @@ th {
 }
 
 .status-pending {
-  background-color: rgba(240, 173, 78, 0.1); 
+  background-color: rgba(240, 173, 78, 0.1);
   color: #e68d11;
   border: 1px solid #e68d11;
   padding: 8px;
-
 }
 
 .status-fulfilled {
-  background-color: rgba(92, 184, 92, 0.3); 
-  color: #098109; 
-  border: 1px solid #098109; 
+  background-color: rgba(92, 184, 92, 0.3);
+  color: #098109;
+  border: 1px solid #098109;
   padding: 8px;
-
 }
-
-.status-declined {
-  background-color: rgba(244, 67, 54, 0.1); 
-  color: #F44336; 
-  border: 1px solid #F44336; 
+.status-compeleted {
+  background-color: rgba(92, 184, 92, 0.3);
+  color: #098109;
+  border: 1px solid #098109;
   padding: 8px;
-
+}
+.status-declined {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  border: 1px solid #f44336;
+  padding: 8px;
 }
 
 .status-submitted {
   background-color: rgba(147, 112, 219, 0.1);
-  color: #4B0082;
-  border: 1px solid rgba(75, 0, 130, 0.8); 
+  color: #4b0082;
+  border: 1px solid rgba(75, 0, 130, 0.8);
   padding: 8px;
 }
 .no-order-container {

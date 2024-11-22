@@ -16,7 +16,12 @@
     height: auto;
   }
 }
-
+.table{
+  position: relative;
+  min-height: 70%;
+  max-height: 70%;
+  overflow-y: scroll;
+}
 h2,
 h3 {
   font-size: large;
