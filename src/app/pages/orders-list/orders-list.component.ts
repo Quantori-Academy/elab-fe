@@ -145,6 +145,13 @@ export class OrdersListComponent implements OnInit, OnDestroy {
     this.orderService.setPageData($event);
   }
 
+  showIconAttention(element: Order): boolean {
+    return (
+      element.status === Status.fulfilled &&
+      element.reagents.some((reagent) => reagent.status !== 'Completed')
+    );
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
