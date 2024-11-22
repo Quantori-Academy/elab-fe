@@ -14,6 +14,8 @@ import { MaterialModule } from '../../../material.module';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Display } from '../../models/display.interface';
 import { DISPLAY_EXTENSION } from '../../units/display.units';
+import { Profile } from '../../../auth/roles/types';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-layout',
@@ -23,12 +25,15 @@ import { DISPLAY_EXTENSION } from '../../units/display.units';
     RouterLink,
     RouterLinkActive,
     MaterialModule,
+    AsyncPipe,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit, OnDestroy {
   readonly rbacService = inject(RbacService);
+  public currentUser$: Observable<Profile | null> =
+    this.rbacService.authenticatedUser$;
   private displayExtension: Observable<Display> = inject(DISPLAY_EXTENSION);
   public isMobile = signal(false);
   private destroy$ = new Subject<void>();

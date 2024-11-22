@@ -16,6 +16,19 @@
         <span matListItemTitle>{{ link.label }}</span>
       </a>
       } }
+      @if (isMobile() && (currentUser$ | async); as currentUser) {
+        <a
+          mat-list-item
+          class="username"
+          routerLink="profile"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+          (click)="closeSideNav()"
+        >
+          {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+        </a>
+      }
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="content" [style.margin-left]="navbarWidth()">
