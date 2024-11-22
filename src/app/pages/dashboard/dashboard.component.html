@@ -1,7 +1,11 @@
-@switch (userRole) { @case ('Admin') {
-<app-admin-dashboard />
-} @case ('Researcher') {
-<app-researcher-dashboard />
-} @case ('ProcurementOfficer') {
-<app-po-dashboard />
-} }
+@switch (userRole) {
+  @case ('Admin') {
+    <app-admin-dashboard />
+  }
+  @case ('Researcher') {
+    <app-researcher-dashboard />
+  }
+  @case ('ProcurementOfficer') {
+    <app-po-dashboard />
+  }
+}

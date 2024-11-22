@@ -1,10 +1,10 @@
 import { ChartOptions } from '../models/chart.model';
 
-export const chartOptions: Partial<ChartOptions> = {
+export const chartOptions = (data: number[], categories: string[]): Partial<ChartOptions> => ({
   series: [
     {
-      name: 'Storage Quantity',
-      data: [40, 43, 44, 47],
+      name: 'Number of Storages',
+      data,
     },
   ],
   chart: {
@@ -32,7 +32,7 @@ export const chartOptions: Partial<ChartOptions> = {
     enabled: false,
   },
   xaxis: {
-    categories: ['Room1', 'Room2', 'Room3', 'Room4'],
+    categories,
     axisBorder: {
       show: false,
     },
@@ -69,4 +69,4 @@ export const chartOptions: Partial<ChartOptions> = {
       stops: [50, 0, 100, 100],
     },
   },
-};
+});

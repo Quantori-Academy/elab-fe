@@ -1,24 +1,20 @@
 import { ChartOptions } from '../models/chart.model';
 
-// const pieColors: Record<string, string> = {
-//   Admin: 'var(--neutral-color-dark2)',
-//   Researcher: 'var(--neutral-color-dark1)',
-//   'Procurement Officer': 'var(--neutral-color-light1)',
-// };
+const pieColors: Record<string, string> = {
+  Admin: 'var(--neutral-color-dark2)',
+  Researcher: 'var(--neutral-color-dark1)',
+  'Procurement Officer': 'var(--neutral-color-light1)',
+};
 
-export const chartOptions: Partial<ChartOptions> = {
-  series: [2, 3, 6],
+export const chartOptions = (series: number[], labels: string[]): Partial<ChartOptions> => ({
+  series,
   chart: {
     width: '100%',
     height: '300px',
     type: 'pie',
   },
-  labels: ['Admin', 'Researcher', 'Procurement Officer'],
-  colors: [
-    'var(--neutral-color-dark2)',
-    'var(--neutral-color-dark1)',
-    'var(--neutral-color-light1)',
-  ],
+  labels,
+  colors: labels.map((label) => pieColors[label]),
   title: {
     text: 'Number of Users',
     style: {
@@ -39,4 +35,4 @@ export const chartOptions: Partial<ChartOptions> = {
       },
     },
   ],
-};
+});

@@ -13,8 +13,8 @@ import { chartOptions as userChartOptions } from '../../charts/user-role.chart';
   styleUrl: './admin-dashboard.component.scss',
 })
 export class AdminDashboardComponent {
-  public roomChartOptions: Partial<ChartOptions> = roomChartOptions;
-  public userChartOptions: Partial<ChartOptions> = userChartOptions;
+  public roomChartOptions: Partial<ChartOptions> = roomChartOptions([40, 43, 44, 47], ['Room1', 'Room2', 'Room3', 'Room4']);
+  public userChartOptions: Partial<ChartOptions> = userChartOptions([2, 3, 6], ['Admin', 'Researcher', 'Procurement Officer']);
   public kpiCards = [
     {
       title: 'Number of Rooms',
