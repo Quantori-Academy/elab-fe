@@ -1,4 +1,4 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { inject, InjectionToken, Provider } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Display } from '../models/display.interface';
@@ -12,12 +12,12 @@ function displayExtension(): Observable<Display> {
 
 
   return breakpointObserver
-      .observe(['(max-width: 426px)', '(max-width: 768px)'])
+      .observe([Breakpoints.HandsetPortrait, Breakpoints.TabletPortrait])
       .pipe(
         map((state: BreakpointState) => ({
-          isMobile: state.breakpoints['(max-width: 426px)'] ?? false,
-          isTablet: state.breakpoints['(max-width: 768px)'] && !state.breakpoints['(max-width: 426px)']
-        }))
+          isMobile: state.breakpoints[Breakpoints.HandsetPortrait],
+          isTablet: state.breakpoints[Breakpoints.TabletPortrait] && !state.breakpoints[Breakpoints.HandsetPortrait]
+        })),
       );
 }
 

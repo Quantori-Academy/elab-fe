@@ -18,6 +18,7 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../model/order-model';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-order-page',
@@ -28,6 +29,7 @@ import { Order } from '../../model/order-model';
     DatePipe,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
+    NoDataComponent,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',

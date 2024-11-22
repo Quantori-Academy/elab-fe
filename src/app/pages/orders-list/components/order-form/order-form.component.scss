@@ -136,3 +136,9 @@ mat-expansion-panel {
   display: flex;
   align-items: center;
 }
+
+@media screen and (max-width: 426px) {
+  form {
+    width: 100%;
+  }
+}
