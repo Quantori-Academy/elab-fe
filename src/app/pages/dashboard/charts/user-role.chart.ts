@@ -24,10 +24,21 @@ export const chartOptions = (series: number[], labels: string[]): Partial<ChartO
   },
   responsive: [
     {
-      breakpoint: 480,
+      breakpoint: 426,
       options: {
         chart: {
-          width: 200,
+          width: 300,
+        },
+        legend: {
+          position: 'bottom',
+        },
+      },
+    },
+    {
+      breakpoint: 350,
+      options: {
+        chart: {
+          width: 240,
         },
         legend: {
           position: 'bottom',

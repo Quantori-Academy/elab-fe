@@ -10,6 +10,7 @@
 }
 
 .col {
+  padding: 10px;
   display: flex;
   gap: 30px;
   align-items: start;
@@ -18,6 +19,7 @@
 
 .col1 {
   width: 70%;
+  box-sizing: border-box;
 
   mat-card {
     display: flex;
@@ -69,4 +71,26 @@ mat-card-footer {
   color: #e68d11;
   border: 1px solid #e68d11;
   padding: 8px;
+}
+
+
+@media screen and (max-width: 768px) {
+  :host {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .col {
+    width: 100%;
+  }
+
+  .col1 {
+    order: 2;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .col2 {
+    order: 1;
+  }
 }
