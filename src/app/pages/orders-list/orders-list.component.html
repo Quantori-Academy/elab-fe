@@ -29,7 +29,6 @@
   <div class="table-content">
     <table
       mat-table
-      class="mat-elevation-z8"
       [dataSource]="OrdersListData.orders"
       matSort
       (matSortChange)="onSort($event)"
@@ -112,6 +111,14 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if(!OrdersListData.orders.length){
+      <div class="no-order-container">
+        <div>
+          <img src="/assets/icons/no_data.svg" alt="no_data" />
+        </div>
+        <p>No order found</p>
+      </div>
+      }
   </div>
 
   <mat-paginator

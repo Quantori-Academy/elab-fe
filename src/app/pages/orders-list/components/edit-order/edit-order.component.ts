@@ -7,7 +7,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
-import { Order, RequestedReagents, Status, UpdateOrder } from '../../model/order-model';
+import { Order, Status, UpdateOrder } from '../../model/order-model';
+import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -39,7 +40,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private notificationPopupService = inject(NotificationPopupService);
   statusOptions: Status[] = [Status.pending, Status.submitted, Status.fulfilled, Status.declined];
 
-  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
+  reagents$ = new BehaviorSubject<ReagentRequestList[]>([]);
   excludeReagents: { id: number }[] = [];
 
   baseColumns = [
@@ -159,7 +160,7 @@ get displayedColumns(): string[] {
       });
   }
 
-  onRemove(reagent: RequestedReagents) {
+  onRemove(reagent: ReagentRequestList) {
     if (this.updateForm.get('status')?.value !== 'Pending') {
       this.errorMessage = 'Only pending orders can have reagents removed.';
       return;
@@ -174,7 +175,7 @@ get displayedColumns(): string[] {
           // Get current value of reagents$ and filter out the removed reagent
           const updatedReagents = this.reagents$
             .getValue()
-            .filter((r: RequestedReagents) => r.id !== reagent.id);
+            .filter((r: ReagentRequestList) => r.id !== reagent.id);
           this.excludeReagents = [];
           this.reagents$.next(updatedReagents);
 

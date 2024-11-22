@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
 import {
   Reagent,
+  ReagentFromFulfilledOrder,
   ReagentListResponse,
   ReagentRequest,
   SampleRequest,
@@ -47,5 +48,15 @@ export class ReagentsService {
 
   public getReagentById(id: string): Observable<Reagent> {
     return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
+  }
+
+  public createReagentFromOrder(
+    reagentId: number,
+    storageId: number
+  ): Observable<ReagentFromFulfilledOrder> {
+    return this.httpClient.post<ReagentFromFulfilledOrder>(
+      `${this.apiUrl}/reagent-request/${reagentId}/${storageId}`,
+      null
+    );
   }
 }

@@ -20,6 +20,27 @@ export interface Reagent {
   };
 }
 
+export interface ReagentFromFulfilledOrder {
+  id: number;
+  name: string;
+  casNumber: string;
+  producer: string;
+  catalogId: string;
+  catalogLink: string;
+  pricePerUnit: number;
+  quantityUnit: string;
+  totalQuantity: number;
+  description: string;
+  quantityLeft: number;
+  expirationDate: string;
+  storageId: number;
+  category: string;
+  structure: string | null;
+  package: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface ReagentListResponse {
   reagents: Reagent[];
   size: number;

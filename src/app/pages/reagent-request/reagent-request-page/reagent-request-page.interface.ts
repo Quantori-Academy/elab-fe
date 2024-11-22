@@ -8,7 +8,7 @@ export interface ReagentRequestList {
   structureImage: string | null;
   userComments: string | null;
   procurementComments: string | null;
-  status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined';
+  status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined' | 'Completed';
   createdAt?: string;
   updatedAt?: string;
   quantityUnit?: string;
