@@ -121,6 +121,7 @@ export enum ReagentListColumn {
   CAS = 'cas',
   LOCATION = 'location',
   ACTIONS = 'actions',
+  EXPIREDDATE = 'expiredDate',
 }
 
 export enum Unit {
