@@ -7,12 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
-import {
-  Order,
-  RequestedReagents,
-  Status,
-  UpdateOrder,
-} from '../../model/order-model';
+import { Order, Status, UpdateOrder } from '../../model/order-model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil, BehaviorSubject } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
@@ -21,6 +16,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
+import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 
 @Component({
   selector: 'app-edit-order',
@@ -49,7 +45,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     Status.declined,
   ];
 
-  reagents$ = new BehaviorSubject<RequestedReagents[]>([]);
+  reagents$ = new BehaviorSubject<ReagentRequestList[]>([]);
   excludeReagents: { id: number }[] = [];
 
   baseColumns = [
@@ -76,7 +72,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   }
   errorMessage = '';
 
-  lastReagentToRemove: RequestedReagents | null = null;
+  lastReagentToRemove: ReagentRequestList | null = null;
   updateForm = this.fb.group({
     title: [''],
     seller: [''],
@@ -173,7 +169,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
       });
   }
 
-  onRemove(reagent: RequestedReagents) {
+  onRemove(reagent: ReagentRequestList) {
     if (this.reagents$.getValue().length === 1) {
       this.errorMessage =
         'Removing the last reagent will cancel the order. Do you want to proceed?';
@@ -184,7 +180,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     }
   }
 
-  private processReagentRemoval(reagent: RequestedReagents) {
+  private processReagentRemoval(reagent: ReagentRequestList) {
     this.excludeReagents.push({ id: reagent.id });
 
     this.orderService
@@ -194,8 +190,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         next: () => {
           const updatedReagents = this.reagents$
             .getValue()
-            .filter((r) => r.id !== reagent.id);
-
+            .filter((r: ReagentRequestList) => r.id !== reagent.id);
+          this.excludeReagents = [];
           this.reagents$.next(updatedReagents);
           this.excludeReagents = [];
 

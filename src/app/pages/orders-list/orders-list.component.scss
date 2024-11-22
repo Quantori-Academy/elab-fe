@@ -63,3 +63,10 @@ th {
   border: 1px solid rgba(75, 0, 130, 0.8);
   padding: 8px;
 }
+.no-order-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}

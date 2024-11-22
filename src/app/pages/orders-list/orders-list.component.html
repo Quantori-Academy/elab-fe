@@ -76,7 +76,6 @@
               'status-fulfilled': element.status === 'Fulfilled',
               'status-declined': element.status === 'Declined',
               'status-submitted': element.status === 'Submitted',
-              'status-completed': element.status === 'Completed'
             }"
           >
             {{ element.status }}
@@ -112,6 +111,14 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if(!OrdersListData.orders.length){
+      <div class="no-order-container">
+        <div>
+          <img src="/assets/icons/no_data.svg" alt="no_data" />
+        </div>
+        <p>No order found</p>
+      </div>
+      }
   </div>
 
   <mat-paginator

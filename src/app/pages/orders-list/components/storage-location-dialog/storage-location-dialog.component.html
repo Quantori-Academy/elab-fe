@@ -1,0 +1,89 @@
+<div class="content">
+  <h5>Add Reagent to Storage Location</h5>
+
+  <div class="filter">
+    <mat-form-field class="filter__item" appearance="fill">
+      <mat-label>Filter by room</mat-label>
+      <mat-select (selectionChange)="onFilterRoom($event.value)">
+        <mat-option value="">All Rooms</mat-option>
+        @for (room of listOfRooms$ | async; track $index) {
+        <mat-option [value]="room.name">{{ room.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+      <mat-label>Filter by name</mat-label>
+      <input matInput (input)="onFilterName($event)" />
+    </mat-form-field>
+  </div>
+  <div class="table-container mat-elevation-z8">
+    @if ( storageLocationData$ | async; as storageLocationData ) {
+    <div class="table-content">
+      <table
+        mat-table
+        [dataSource]="storageLocationData.storages"
+        [appSpinner]="isLoading()"
+      >
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="room">
+          <mat-header-cell *matHeaderCellDef> room </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.room.name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="reagents">
+          <mat-header-cell *matHeaderCellDef> Reagents </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="align-center">
+            {{ element.reagentCount }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              aria-label="add"
+              (click)="onAdd(element.id)"
+            >
+              <mat-icon color="primary">add</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </table>
+      @if(!storageLocationData.storages.length){
+      <div class="no-storage-container">
+        <div>
+          <img src="/assets/icons/no_data.svg" alt="no_data" />
+        </div>
+        <p>No location found</p>
+      </div>
+      }
+    </div>
+    @if(storageLocationData.storages.length){
+      <mat-paginator
+      #paginator
+      class="paginator"
+      (page)="handlePageEvent($event)"
+      [length]="storageLocationData.size"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+    }
+    } @else {
+    <app-table-loader-spinner />
+    }
+  </div>
+</div>

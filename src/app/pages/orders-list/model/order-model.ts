@@ -1,3 +1,5 @@
+import { ReagentRequestList } from "../../reagent-request/reagent-request-page/reagent-request-page.interface";
+
 export interface Order {
   id: number;
   userId: number;
@@ -6,29 +8,14 @@ export interface Order {
   status: 'Pending' | 'Fulfilled' | 'Cancelled' | string;
   createdAt: string;
   updatedAt: string;
-  reagents: RequestedReagents[];
+  reagents: ReagentRequestList[];
 }
-export interface RequestedReagents {
-  id: number;
-  userId: number;
-  name: string;
-  structureSmiles: string;
-  casNumber: string;
-  desiredQuantity: number;
-  quantityUnit: string;
-  userComments: string | null;
-  procurementComments: string | null;
-  status: 'Pending' | 'Fulfilled' | 'Cancelled' | string;
-  createdAt: string;
-  updatedAt: string;
-  orderId: number;
-}
+
 export enum Status {
   pending = 'Pending',
   submitted = 'Submitted',
   fulfilled = 'Fulfilled',
   declined = 'Declined',
-  completed = 'Completed'
 }
 export interface OrderQuery {
   skip: number;

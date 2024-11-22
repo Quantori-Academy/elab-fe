@@ -4,7 +4,9 @@
     <img src="/assets/icons/order.svg" alt="Order list" />
   </div>
   <div>
-    <h2>Order Title: {{ order.title }}</h2>
+    <h2>
+      Order Title: <span>{{ order.title }}</span>
+    </h2>
     <h2>
       Seller: <span>{{ order.seller }}</span>
     </h2>
@@ -27,10 +29,9 @@
     }
   </div>
 </div>
-
 <h3>Ordered Reagents</h3>
-<div class="mat-elevation-z8">
-  <mat-table class="table" [dataSource]="order.reagents">
+<div class="mat-elevation-z8 table-content table">
+  <mat-table [dataSource]="order.reagents">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
@@ -38,14 +39,18 @@
 
     <ng-container matColumnDef="casNumber">
       <mat-header-cell *matHeaderCellDef> casNumber </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.casNumber }} </mat-cell>
+      <mat-cell *matCellDef="let element">
+        @if (element.casNumber === null || element.casNumber === '' ) {
+        <span>N/A</span>
+        }@else { {{ element.casNumber }} }
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="updatedAt">
       <mat-header-cell *matHeaderCellDef>Modification Date</mat-header-cell>
       <mat-cell *matCellDef="let element">
         @if (element.updatedAt === '') {
-        <span>______</span>
+        <span>N/A</span>
         }@else { {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}}
       </mat-cell>
     </ng-container>
@@ -61,7 +66,7 @@
       <mat-header-cell *matHeaderCellDef> Package </mat-header-cell>
       <mat-cell *matCellDef="let element">
         @if (element.package === null) {
-        <span>______</span>
+        <span>N/A</span>
         }@else { {{ element.package }} }
       </mat-cell>
     </ng-container>
@@ -69,15 +74,18 @@
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef> status </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        {{ element.status }}
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="quantityLeft">
-      <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.quantityLeft }}
-        {{ element.quantityUnit }}
+        <span
+          class="status-label"
+          [ngClass]="{
+            'status-pending': element.status === 'Pending',
+            'status-fulfilled': element.status === 'Fulfilled',
+            'status-declined': element.status === 'Declined',
+            'status-submitted': element.status === 'Ordered',
+            'status-completed': element.status === 'Completed'
+          }"
+        >
+          {{ element.status }}
+        </span>
       </mat-cell>
     </ng-container>
 
@@ -95,27 +103,55 @@
     <ng-container matColumnDef="userComments">
       <mat-header-cell *matHeaderCellDef> Creator's comment </mat-header-cell>
       <mat-cell *matCellDef="let element">
+        @if (element.userComments === null|| element.userComments === '') {
+        <span>N/A</span>
+        } @else{
         {{ element.userComments }}
+        }
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
       <mat-cell *matCellDef="let element">
+        @if (element.status ==='Completed'){
+        <button class="add-btn" mat-flat-button disabled="true">
+          completed
+        </button>
+        } @else if (element.status === 'Fulfilled') {
+        <button
+          class="add-btn"
+          mat-flat-button
+          (click)="onCompleted(element.id)"
+        >
+          complete
+        </button>
+        }@else if (element.status === 'Ordered') {
         <button mat-icon-button aria-label="edit" (click)="onOpen(element)">
           <mat-icon color="primary">edit</mat-icon>
         </button>
-        <button mat-icon-button aria-label="delete" (click)="onRemove(order.id, element)">
-          <mat-icon color="warn">delete</mat-icon>
-        </button>
+        <button
+          mat-icon-button
+          aria-label="delete"
+          (click)="onRemove(order.id, element)"
+        >
+          <mat-icon color="warn">delete</mat-icon></button
+        >}
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
+  @if(!order.reagents.length){
+  <div class="no-reagents-container">
+    <div>
+      <img src="/assets/icons/no_data.svg" alt="no_data" />
+    </div>
+    <p>Order Empty</p>
+  </div>
+  }
 </div>
-
 } @else {
 <app-table-loader-spinner />
 }
