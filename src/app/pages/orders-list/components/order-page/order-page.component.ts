@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
@@ -19,6 +19,7 @@ import { NotificationPopupService } from '../../../../shared/services/notificati
 import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 
 @Component({
   selector: 'app-order-page',
@@ -30,6 +31,7 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     NoDataComponent,
+    NgClass,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -46,12 +48,13 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   order$ = this.orderSubject.asObservable();
 
   excludeReagents: { id: number }[] = [];
+
   displayedColumns = [
     'name',
+    'structureSmiles',
     'casNumber',
     'desiredQuantity',
     'package',
-    'structureSmiles',
     'status',
     'userComments',
     'actions',
@@ -61,7 +64,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     this.fetchOrder();
   }
 
-  private fetchOrder(): void {
+  fetchOrder(): void {
     this.activatedRoutes.paramMap
       .pipe(
         takeUntil(this.destroy$),
@@ -84,6 +87,18 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       }
     });
   }
+  onCompleted(id: number) {
+    const dialog = this.dialog.open(StorageLocationDialogComponent, {
+      data: id,
+      minWidth: '600px',
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchOrder();
+      }
+    });
+  }
+
   onRemove(OrderId: number, reagent: ReagentRequestList) {
     this.excludeReagents.push({ id: reagent.id });
 
@@ -108,6 +123,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

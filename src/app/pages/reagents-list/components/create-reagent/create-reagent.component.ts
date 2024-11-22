@@ -220,6 +220,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
     }
     if (this.reagentRequestForm.valid) {
       let formRawValue = { ...this.reagentRequestForm.value };
+      delete formRawValue.storageLocation;
       // Validate expirationDate and format it as needed
       if (formRawValue.expirationDate) {
         const expirationDateValue = new Date(formRawValue.expirationDate);

@@ -1,0 +1,44 @@
+:host {
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.content {
+  padding: 1.5rem;
+  max-height: 50%;
+}
+
+.filter {
+  display: flex;
+  gap: 20px;
+}
+
+h5 {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.mat-elevation-z8 {
+  max-height: 400px;
+  overflow-x: auto;
+  min-height: 14.4rem;
+}
+
+mat-header-cell,
+mat-cell {
+  min-width: fit-content;
+  word-wrap: break-word;
+}
+.no-storage-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.more-btn {
+  margin: auto;
+  padding: 5px 0;
+}

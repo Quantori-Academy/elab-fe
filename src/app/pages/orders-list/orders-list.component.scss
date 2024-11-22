@@ -28,7 +28,6 @@ th {
   color: #e68d11;
   border: 1px solid #e68d11;
   padding: 8px;
-
 }
 
 .status-fulfilled {
@@ -36,7 +35,12 @@ th {
   color: #098109;
   border: 1px solid #098109;
   padding: 8px;
-
+}
+.status-compeleted {
+  background-color: rgba(92, 184, 92, 0.3);
+  color: #098109;
+  border: 1px solid #098109;
+  padding: 8px;
 }
 
 .status-declined {
@@ -44,7 +48,6 @@ th {
   color: #F44336;
   border: 1px solid #F44336;
   padding: 8px;
-
 }
 
 .status-submitted {

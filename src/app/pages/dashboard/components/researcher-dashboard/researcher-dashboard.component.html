@@ -1,0 +1,102 @@
+<div class="row">
+  <mat-card>
+    <apx-chart
+      [series]="reagentSampleChartOptions.series"
+      [chart]="reagentSampleChartOptions.chart"
+      [labels]="reagentSampleChartOptions.labels"
+      [title]="reagentSampleChartOptions.title"
+      [responsive]="reagentSampleChartOptions.responsive"
+      [colors]="reagentSampleChartOptions.colors"
+    ></apx-chart>
+  </mat-card>
+  <mat-card>
+    <apx-chart
+      [series]="expiredReagentSampleChartOptions.series"
+      [chart]="expiredReagentSampleChartOptions.chart"
+      [labels]="expiredReagentSampleChartOptions.labels"
+      [title]="expiredReagentSampleChartOptions.title"
+      [responsive]="expiredReagentSampleChartOptions.responsive"
+      [colors]="expiredReagentSampleChartOptions.colors"
+    ></apx-chart>
+  </mat-card>
+  <mat-card>
+    <apx-chart
+      [series]="emptyReagentSampleChartOptions.series"
+      [chart]="emptyReagentSampleChartOptions.chart"
+      [labels]="emptyReagentSampleChartOptions.labels"
+      [title]="emptyReagentSampleChartOptions.title"
+      [responsive]="emptyReagentSampleChartOptions.responsive"
+      [colors]="emptyReagentSampleChartOptions.colors"
+    ></apx-chart>
+  </mat-card>
+</div>
+<div class="row row2">
+  <mat-card>
+    <div class="table-container">
+      <div class="table-content">
+        <table mat-table [dataSource]="reagentsResponse.reagents" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+          </ng-container>
+          <ng-container matColumnDef="expiredDate">
+            <th mat-header-cell *matHeaderCellDef>Expired Date</th>
+            <td mat-cell *matCellDef="let element">
+              <span
+                [appExpiredDate]="element.expiredDate"
+                class="expired-date-span"
+              >
+                {{ element.expiredDate }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsExpired"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsExpired"
+          ></tr>
+        </table>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card>
+    <div class="table-container">
+      <div class="table-content">
+        <table mat-table [dataSource]="reagentsResponse.reagents" matSort>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef>Category</th>
+            <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+          </ng-container>
+          <ng-container matColumnDef="quantityLeft">
+            <th mat-header-cell *matHeaderCellDef>Quantity Left</th>
+            <td mat-cell *matCellDef="let element">
+              <span
+                [appQuantityLeft]="element.quantityLeft"
+                [appQuantity]="element.quantity"
+                class="quantity-left-span"
+                >{{ element.quantityLeft }}</span
+              >
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsEmpty"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsEmpty"></tr>
+        </table>
+      </div></div
+  ></mat-card>
+</div>
