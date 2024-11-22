@@ -88,13 +88,10 @@
           </mat-cell>
         </ng-container>
 
-        @if (updateForm.get('status')?.value ==='Pending') {
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <button
-              mat-icon-button
-              aria-label="close"
               mat-icon-button
               aria-label="close"
               (click)="onRemove(element)"
@@ -105,15 +102,35 @@
             </button>
           </mat-cell>
         </ng-container>
-        }
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </table>
     </div>
-    @if (errorMessage !=='') {
-    <mat-error>{{ errorMessage }}</mat-error>
-    }
+    @if (showRemoveConfirmation===false&& errorMessage !=="") {
+    <div class="error-message">
+      <mat-error class="error-text">{{ errorMessage }}</mat-error>
+    </div>
+    } @if (showRemoveConfirmation) {
+    <div class="error-message">
+      <p class="error-text">{{ errorMessage }}</p>
+    </div>
+    <div class="actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="confirmRemoval()"
+      >
+        proceed
+      </button>
+      <button mat-button color="warn" type="button" (click)="cancelRemoval()">
+        cancel
+      </button>
+    </div>
+    } @if ( showRemoveConfirmation ===false ) {
     <div class="actions">
       <button
         mat-raised-button
@@ -127,6 +144,7 @@
         Close
       </button>
     </div>
+    }
   </form>
 
   } @else {

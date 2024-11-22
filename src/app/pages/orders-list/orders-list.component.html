@@ -29,7 +29,6 @@
   <div class="table-content">
     <table
       mat-table
-      class="mat-elevation-z8"
       [dataSource]="OrdersListData.orders"
       matSort
       (matSortChange)="onSort($event)"
@@ -76,7 +75,8 @@
               'status-pending': element.status === 'Pending',
               'status-fulfilled': element.status === 'Fulfilled',
               'status-declined': element.status === 'Declined',
-              'status-submitted': element.status === 'Submitted'
+              'status-submitted': element.status === 'Submitted',
+              'status-completed': element.status === 'Completed'
             }"
           >
             {{ element.status }}

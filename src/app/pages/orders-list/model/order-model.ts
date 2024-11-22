@@ -28,6 +28,7 @@ export enum Status {
   submitted = 'Submitted',
   fulfilled = 'Fulfilled',
   declined = 'Declined',
+  completed = 'Completed'
 }
 export interface OrderQuery {
   skip: number;
