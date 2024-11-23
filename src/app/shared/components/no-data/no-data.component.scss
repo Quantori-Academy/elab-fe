@@ -20,17 +20,6 @@ div {
 
 .large {
   img {
-    height: 96px;
-    width: 96px;
-  }
-
-  p {
-    font-size: 36px;
-  }
-}
-
-.medium {
-  img {
     height: 64px;
     width: 64px;
   }
@@ -40,7 +29,7 @@ div {
   }
 }
 
-.small {
+.medium {
   img {
     height: 48px;
     width: 48px;
@@ -51,43 +40,19 @@ div {
   }
 }
 
-
-@media screen and (max-width: 768px) {
-  .large {
-    img {
-      height: 64px;
-      width: 64px;
-    }
-
-    p {
-      font-size: 24px;
-    }
+.small {
+  img {
+    height: 36px;
+    width: 36px;
   }
 
-  .medium {
-    img {
-      height: 48px;
-      width: 48px;
-    }
-
-    p {
-      font-size: 16px;
-    }
-  }
-
-  .small {
-    img {
-      height: 36px;
-      width: 36px;
-    }
-
-    p {
-      font-size: 14px;
-    }
+  p {
+    font-size: 14px;
   }
 }
 
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 426px) {
   .large {
     img {
       height: 48px;

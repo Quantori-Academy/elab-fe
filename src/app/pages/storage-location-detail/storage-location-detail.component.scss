@@ -16,6 +16,7 @@
 
   .title {
     color: var(--primary-color-dark);
+    margin: 0;
   }
 
   .description {
@@ -24,8 +25,8 @@
 }
 
 .storage-icon {
-  width: 164px;
-  height: 164px;
+  width: 128px;
+  height: 128px;
 }
 
 app-reagents-list {
@@ -34,7 +35,7 @@ app-reagents-list {
 
 @media screen and (max-width: 768px) {
   .info {
-    margin: 50px;
+    margin: 0 50px;
     gap: 30px;
   }
 }

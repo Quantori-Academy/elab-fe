@@ -54,8 +54,8 @@
           <div class="image-container">
             <app-molecule-structure
               [structure]="element.structureSmiles"
-              [width]="100"
-              [height]="100"
+              [width]="50"
+              [height]="50"
             ></app-molecule-structure>
           </div>
         </td>
@@ -86,7 +86,8 @@
               'status-pending': element.status === 'Pending',
               'status-fulfilled': element.status === 'Fulfilled',
               'status-declined': element.status === 'Declined',
-              'status-ordered': element.status === 'Ordered'
+              'status-ordered': element.status === 'Ordered',
+              'status-completed': element.status === 'Completed'
             }"
           >
             {{ element.status }}
