@@ -7,7 +7,7 @@ import { chartOptions as userChartOptions } from '../../charts/user-role.chart';
 import {
   AdminDashboardDataResponse,
   AdminKpiCard,
-} from '../../model/dashboard.model';
+} from '../../models/dashboard.model';
 import { map, Observable } from 'rxjs';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AsyncPipe } from '@angular/common';

@@ -34,7 +34,11 @@ mat-card {
   }
 }
 
-@media screen and (max-width: 426px) {
+.mat-column-expiredDate {
+  min-width: 200px;
+}
+
+@media screen and (max-width: 768px) {
   :host {
     overflow-y: auto;
 

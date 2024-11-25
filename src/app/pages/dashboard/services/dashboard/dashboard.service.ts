@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AdminDashboardDataResponse } from '../../model/dashboard.model';
+import {
+  AdminDashboardDataResponse,
+  ResearcherDashboardDataResponse,
+} from '../../models/dashboard.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,5 +17,11 @@ export class DashboardService {
 
   public getAdminDashboardData(): Observable<AdminDashboardDataResponse> {
     return this.http.get<AdminDashboardDataResponse>(`${this.apiUrl}/admin`);
+  }
+
+  public getResearcherDashboardData(): Observable<ResearcherDashboardDataResponse> {
+    return this.http.get<ResearcherDashboardDataResponse>(
+      `${this.apiUrl}/researcher`
+    );
   }
 }

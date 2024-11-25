@@ -1,32 +1,37 @@
+@if (researcherDashboardData$ | async; as researcherDashboardData) {
 <div class="row">
   <mat-card>
     <apx-chart
-      [series]="reagentSampleChartOptions.series"
-      [chart]="reagentSampleChartOptions.chart"
-      [labels]="reagentSampleChartOptions.labels"
-      [title]="reagentSampleChartOptions.title"
-      [responsive]="reagentSampleChartOptions.responsive"
-      [colors]="reagentSampleChartOptions.colors"
+      [series]="researcherDashboardData.reagentSampleChartOption.series"
+      [chart]="researcherDashboardData.reagentSampleChartOption.chart"
+      [labels]="researcherDashboardData.reagentSampleChartOption.labels"
+      [title]="researcherDashboardData.reagentSampleChartOption.title"
+      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive"
+      [colors]="researcherDashboardData.reagentSampleChartOption.colors"
     ></apx-chart>
   </mat-card>
   <mat-card>
     <apx-chart
-      [series]="expiredReagentSampleChartOptions.series"
-      [chart]="expiredReagentSampleChartOptions.chart"
-      [labels]="expiredReagentSampleChartOptions.labels"
-      [title]="expiredReagentSampleChartOptions.title"
-      [responsive]="expiredReagentSampleChartOptions.responsive"
-      [colors]="expiredReagentSampleChartOptions.colors"
+      [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
+      [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
+      [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
+      [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
+      [responsive]="
+        researcherDashboardData.expiredReagentSampleChartOption.responsive
+      "
+      [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
     ></apx-chart>
   </mat-card>
   <mat-card>
     <apx-chart
-      [series]="emptyReagentSampleChartOptions.series"
-      [chart]="emptyReagentSampleChartOptions.chart"
-      [labels]="emptyReagentSampleChartOptions.labels"
-      [title]="emptyReagentSampleChartOptions.title"
-      [responsive]="emptyReagentSampleChartOptions.responsive"
-      [colors]="emptyReagentSampleChartOptions.colors"
+      [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
+      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"
+      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels"
+      [title]="researcherDashboardData.emptyReagentSampleChartOption.title"
+      [responsive]="
+        researcherDashboardData.emptyReagentSampleChartOption.responsive
+      "
+      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors"
     ></apx-chart>
   </mat-card>
 </div>
@@ -34,7 +39,11 @@
   <mat-card>
     <div class="table-container">
       <div class="table-content">
-        <table mat-table [dataSource]="reagentsResponse.reagents" matSort>
+        <table
+          mat-table
+          [dataSource]="researcherDashboardData.expiredList"
+          matSort
+        >
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -50,10 +59,10 @@
             <th mat-header-cell *matHeaderCellDef>Expired Date</th>
             <td mat-cell *matCellDef="let element">
               <span
-                [appExpiredDate]="element.expiredDate"
+                [appExpiredDate]="element.expirationDate"
                 class="expired-date-span"
               >
-                {{ element.expiredDate }}
+                {{ element.expirationDate | date : "HH:mm:ss  dd-MM-yyyy" }}
               </span>
             </td>
           </ng-container>
@@ -70,7 +79,11 @@
   <mat-card>
     <div class="table-container">
       <div class="table-content">
-        <table mat-table [dataSource]="reagentsResponse.reagents" matSort>
+        <table
+          mat-table
+          [dataSource]="researcherDashboardData.emptyList"
+          matSort
+        >
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -87,8 +100,11 @@
             <td mat-cell *matCellDef="let element">
               <span
                 [appQuantityLeft]="element.quantityLeft"
-                [appQuantity]="element.quantity"
+                [appQuantity]="element.totalQuantity"
                 class="quantity-left-span"
+                [matTooltip]="
+                  quantityTooltip(element.totalQuantity, element.quantityLeft)
+                "
                 >{{ element.quantityLeft }}</span
               >
             </td>
@@ -100,3 +116,4 @@
       </div></div
   ></mat-card>
 </div>
+}

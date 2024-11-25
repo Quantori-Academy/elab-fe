@@ -1,11 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ChartOptions } from '../../models/chart.model';
 import { chartOptions as donutChartOptions } from '../../charts/donut.chart';
 import { ChartComponent } from 'ng-apexcharts';
 import { MaterialModule } from '../../../../material.module';
-import { ReagentListColumn } from '../../../../shared/models/reagent-model';
+import {
+  Reagent,
+  ReagentListColumn,
+} from '../../../../shared/models/reagent-model';
 import { QuantityLeftDirective } from '../../../../shared/directives/quantityLeft/quantity-left.directive';
 import { ExpiredDateDirective } from '../../../../shared/directives/expired-date/expired-date.directive';
+import { DashboardService } from '../../services/dashboard/dashboard.service';
+import { map, Observable } from 'rxjs';
+import { ResearcherDashboardDataResponse } from '../../models/dashboard.model';
+import { AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-researcher-dashboard',
@@ -15,29 +27,74 @@ import { ExpiredDateDirective } from '../../../../shared/directives/expired-date
     ChartComponent,
     QuantityLeftDirective,
     ExpiredDateDirective,
+    AsyncPipe,
+    DatePipe,
   ],
   templateUrl: './researcher-dashboard.component.html',
   styleUrl: './researcher-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResearcherDashboardComponent {
-  public reagentSampleChartOptions: Partial<ChartOptions> = donutChartOptions(
-    [30, 40],
-    ['Reagent', 'Sample'],
-    'Reagent vs Sample'
-  );
-  public expiredReagentSampleChartOptions: Partial<ChartOptions> =
-    donutChartOptions(
-      [34, 41],
-      ['Reagent', 'Sample'],
+export class ResearcherDashboardComponent implements OnInit {
+  private dashboardService = inject(DashboardService);
+  public researcherDashboardData$!: Observable<{
+    reagentSampleChartOption: Partial<ChartOptions>;
+    expiredReagentSampleChartOption: Partial<ChartOptions>;
+    emptyReagentSampleChartOption: Partial<ChartOptions>;
+    expiredList: Reagent[];
+    emptyList: Reagent[];
+  }>;
+
+  ngOnInit(): void {
+    this.researcherDashboardData$ = this.dashboardService
+      .getResearcherDashboardData()
+      .pipe(map(this.setChartOptions));
+  }
+
+  private setChartOptions(data: ResearcherDashboardDataResponse) {
+    const reagentSampleSeries = data.reagentsVsSampleNumber.map(
+      (reagent) => reagent._count.id
+    );
+    const reagentSampleLabels = data.reagentsVsSampleNumber.map(
+      (reagent) => reagent.category
+    );
+    const reagentSampleChartOption = donutChartOptions(
+      reagentSampleSeries,
+      reagentSampleLabels,
+      'Reagent vs Sample'
+    );
+
+    const expiredReagentSampleSeries = data.reagentsVsSampleExpiredNumber.map(
+      (reagent) => reagent._count.id
+    );
+    const expiredReagentSampleLabels = data.reagentsVsSampleExpiredNumber.map(
+      (reagent) => reagent.category
+    );
+    const expiredReagentSampleChartOption = donutChartOptions(
+      expiredReagentSampleSeries,
+      expiredReagentSampleLabels,
       'Expired: Reagent vs Sample'
     );
-  public emptyReagentSampleChartOptions: Partial<ChartOptions> =
-    donutChartOptions(
-      [24, 35],
-      ['Reagent', 'Sample'],
-      'Empty: Reagent vs Sample'
+
+    const emptyReagentSampleSeries = data.reagentsVsSampleEmptyNumber.map(
+      (reagent) => reagent._count.id
     );
+    const emptyReagentSampleLabels = data.reagentsVsSampleEmptyNumber.map(
+      (reagent) => reagent.category
+    );
+    const emptyReagentSampleChartOption = donutChartOptions(
+      emptyReagentSampleSeries,
+      emptyReagentSampleLabels,
+      'Expired: Reagent vs Sample'
+    );
+
+    return {
+      reagentSampleChartOption,
+      expiredReagentSampleChartOption,
+      emptyReagentSampleChartOption,
+      expiredList: data.expiredList,
+      emptyList: data.emptyList,
+    };
+  }
 
   public displayedColumnsExpired: ReagentListColumn[] = [
     ReagentListColumn.NAME,
@@ -50,53 +107,7 @@ export class ResearcherDashboardComponent {
     ReagentListColumn.QUANTITYLEFT,
   ];
 
-  public reagentsResponse = {
-    reagents: [
-      {
-        id: 31,
-        name: 'Name',
-        category: 'Sample',
-        expiredDate: '11.12.2024',
-        quantityLeft: 0,
-      },
-      {
-        id: 33,
-        name: 'Azulene',
-        category: 'Reagent',
-        expiredDate: '11.22.2024',
-        quantityLeft: 4,
-        quantity: 10,
-      },
-      {
-        id: 14,
-        name: 'string',
-        category: 'Sample',
-        expiredDate: '11.29.2024',
-        quantityLeft: 6,
-        quantity: 10,
-      },
-      {
-        id: 31,
-        name: 'Name',
-        category: 'Sample',
-        expiredDate: '11.12.2024',
-        quantityLeft: 0,
-      },
-      {
-        id: 33,
-        name: 'Azulene',
-        category: 'Reagent',
-        expiredDate: '11.12.2024',
-        quantityLeft: 0,
-      },
-      {
-        id: 14,
-        name: 'string',
-        category: 'Sample',
-        expiredDate: '11.12.2024',
-        quantityLeft: 0,
-      },
-    ],
-    size: '1',
-  };
+  public quantityTooltip(quantity: number, quantityLeft: number): string {
+    return quantityLeft && quantity / 2 > quantityLeft ? 'Less than half' : '';
+  }
 }
