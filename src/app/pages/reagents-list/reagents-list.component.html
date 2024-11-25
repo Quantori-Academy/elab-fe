@@ -18,18 +18,18 @@
   <div class="filter-container">
     <mat-form-field appearance="fill">
       <mat-label>Search by name</mat-label>
-      <input matInput (input)="onFilterName($event)" placeholder="Enter a name" />
+      <input matInput (input)="onFilterName($event)" placeholder="Enter a name"/>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Search by structure</mat-label>
-      <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" />
-      <button mat-icon-button matSuffix (click)="openStructureEditor()">
-        <mat-icon class="search-structure-field-icon">draw</mat-icon>
+      <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" [value]="filterStructureValue"/>
+      <button mat-icon-button matSuffix (click)="openStructureEditor('1000ms', '500ms')">
+        <mat-icon class="search-structure-field-icon" autofocus="false">draw</mat-icon>
       </button>
       <button mat-icon-button matSuffix [disabled]="!filterStructureValue" (click)="toggleFullStructureSearch()"
         matTooltip="Exact match" matTooltipPosition="above">
-        <mat-icon class="search-structure-field-icon">
+        <mat-icon class="search-structure-field-icon" autoFocus="false">
           {{ isFullStructure ? 'check_box' : 'check_box_outline_blank' }}
         </mat-icon>
       </button>
