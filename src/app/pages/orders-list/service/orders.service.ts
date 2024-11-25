@@ -166,6 +166,20 @@ export class OrdersService {
     });
   }
 
+  resetQueryParams(): void {
+    this.querySubject.next({
+      skip: 0,
+      take: this.pagesize,
+      title: '',
+      seller: '',
+      status: '',
+      titleOrder: '',
+      sellerOrder: '',
+      createdAt: '',
+      updatedAt: '',
+    });
+  }
+
   public createOrder(order: OrderRequest): Observable<OrderRequest> {
     return this.httpClient.post<OrderRequest>(this.apiUrl, order);
   }
