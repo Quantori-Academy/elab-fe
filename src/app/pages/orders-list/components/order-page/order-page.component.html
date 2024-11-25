@@ -29,7 +29,13 @@
     }
   </div>
 </div>
-<h3>Ordered Reagents</h3>
+<div class="filter">
+  <h3>Ordered Reagents</h3>
+  <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
+    Add reagent request
+  </button>
+</div>
+
 <div class="mat-elevation-z8 table-content table">
   <mat-table [dataSource]="order.reagents">
     <ng-container matColumnDef="name">

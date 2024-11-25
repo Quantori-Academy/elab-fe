@@ -19,6 +19,7 @@ import { NotificationPopupService } from '../../../../shared/services/notificati
 import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../model/order-model';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
+import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 
 @Component({
   selector: 'app-order-page',
@@ -120,6 +121,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
           });
         },
       });
+  }
+  onAdd(id: number) {
+    const dialog = this.dialog.open(ReagentRequestsDialogComponent, {
+      data: id,
+      minWidth: '700px',
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchOrder();
+      }
+    });
   }
 
   ngOnDestroy(): void {
