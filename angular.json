@@ -40,6 +40,11 @@
                 "glob": "**/*",
                 "input": "rdkit",
                 "output": "rdkit"
+              },
+              {
+                "glob": "**/*",
+                "input": "i18n",
+                "output": "i18n"
               }
             ],
             "styles": [

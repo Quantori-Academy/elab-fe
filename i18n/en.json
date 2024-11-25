@@ -1,0 +1,20 @@
+{
+    "LOGIN": {
+      "TITLE": "Login",
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "FORGOT_PASSWORD": "Forgot Password?",
+      "LOGIN_BUTTON": "Login",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Please enter a valid email address",
+      "PASSWORD_REQUIRED": "Password is required",
+      "PASSWORD_INVALID": "Please enter a valid password (must be at least 8 characters long)",
+      "ERROR_INCORRECT": "Incorrect password or email"
+    },
+    "HEADER": {
+      "LOGOUT": "Logout",
+      "PROFILE": "Profile",
+      "LANGUAGE": "Language"
+    }
+  }
+  
