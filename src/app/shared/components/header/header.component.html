@@ -6,6 +6,7 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
+
   <div
     class="logo"
     (click)="navigateToDashboard()"
@@ -16,6 +17,7 @@
     <div>E-LAB</div>
   </div>
 </div>
+
 <div class="user-section" *ngIf="currentUser$ | async as currentUser">
   <span
     class="username"
