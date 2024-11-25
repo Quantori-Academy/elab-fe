@@ -48,6 +48,11 @@
     background: #fff;
     z-index: 10;
   }
+
+  table {
+    @include mat.table-density(-2);
+    line-height: 1rem;
+  }
 }
 
 .mat-column-actions {

@@ -1,7 +1,7 @@
 :host {
-  max-width: 1300px;
-  margin: 0 auto;
+  height: 100%;
   box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -22,12 +22,10 @@
 
 .general-info-card {
   flex: 2;
-  min-width: 700px;
 }
 
 .structure-card {
   flex: 1;
-  min-width: 350px;
 }
 
 mat-card {
@@ -87,9 +85,9 @@ mat-card-content {
 
 .value.truncated {
   display: -webkit-box;
-  display: box; 
+  display: box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; 
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -110,4 +108,45 @@ mat-card-content {
   display: flex;
   justify-content: center;
   gap: 100px;
+}
+
+@media screen and (max-width: 1025px) {
+  .content-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .structure-card {
+    order: 1;
+    mat-card-header {
+      margin: 0;
+    }
+
+    mat-card-content {
+      padding: 0;
+    }
+  }
+
+  .structure-container {
+    gap: 10px;
+  }
+
+  .general-info-card {
+    order: 2;
+    margin-bottom: 10px;
+  }
+
+  .detail-columns {
+    gap: 20px;
+  }
+
+  .value.truncated {
+    text-align: end;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .detail-columns {
+    flex-direction: column;
+  }
 }

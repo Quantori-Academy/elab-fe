@@ -33,6 +33,17 @@ app-reagents-list {
   height: 600px;
 }
 
+@media screen and (min-height: 800px) {
+  :host {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  app-reagents-list {
+    flex: 1;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .info {
     margin: 0 50px;

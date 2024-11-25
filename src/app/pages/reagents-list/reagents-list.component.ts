@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -45,7 +45,6 @@ import { NoDataComponent } from '../../shared/components/no-data/no-data.compone
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReagentsListComponent implements OnInit, OnDestroy {
   @Input() storageLocationId?: number;

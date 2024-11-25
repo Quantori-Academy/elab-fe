@@ -4,10 +4,10 @@
       Add New Storage Location
     </button>
   }
-  <div class="filter-container">
+  <div class="filter-container" >
     <mat-form-field class="filter__item" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by room</mat-label>
-      <mat-select (selectionChange)="onFilterRoom($event.value)">
+      <mat-select #roomFilter (selectionChange)="onFilterRoom($event.value)">
         <mat-option value="">All Rooms</mat-option>
         @for (room of listOfRooms$ | async; track $index) {
           <mat-option [value]="room.name">{{ room.name }}</mat-option>
@@ -17,7 +17,7 @@
 
     <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by name</mat-label>
-      <input matInput (input)="onFilterName($event)" />
+      <input #nameFilter matInput (input)="onFilterName($event)" />
     </mat-form-field>
   </div>
 </div>

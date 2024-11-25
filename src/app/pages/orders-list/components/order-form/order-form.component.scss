@@ -54,6 +54,11 @@ mat-panel-title {
   font-weight: 400;
 }
 
+.reagent-request-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .createdAt {
   width: 11rem;
 }

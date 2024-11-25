@@ -33,7 +33,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="reagent-request-card">
     <mat-card-header>Requested Reagents</mat-card-header>
     <mat-card-content>
       <div class="filter-container">
@@ -131,7 +131,7 @@
       }@else {<app-table-loader-spinner />}
     </mat-card-content>
   </mat-card>
-  <mat-expansion-panel>
+  <mat-expansion-panel [hideToggle]="!selectedReagentReq.length" [disabled]="!selectedReagentReq.length">
     <mat-expansion-panel-header>
       <mat-panel-title
         >{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title

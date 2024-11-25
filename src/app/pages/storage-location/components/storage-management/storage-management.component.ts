@@ -58,7 +58,6 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StorageManagementComponent implements OnInit, OnDestroy {
-  private readonly DEBOUNCE_TIME = 1000;
   public displayedColumns: string[] = [
     'room',
     'name',

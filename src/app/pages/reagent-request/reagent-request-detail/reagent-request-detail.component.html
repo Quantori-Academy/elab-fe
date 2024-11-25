@@ -80,16 +80,18 @@
       <div class="mat-headline">Structure</div>
     </mat-card-header>
     <mat-card-content>
+      @if ((display$ | async); as display) {
       <div class="structure-container">
         <app-molecule-structure
           [structure]="reagentRequest.structureSmiles || ''"
-          [width]="200"
-          [height]="200"
+          [width]="display.isTablet ? 100 : 200"
+          [height]="display.isTablet ? 100 : 200"
         ></app-molecule-structure>
         <p>
           <strong>SMILES:</strong> {{ reagentRequest.structureSmiles || "N/A" }}
         </p>
       </div>
+      }
     </mat-card-content>
   </mat-card>
 </div>
