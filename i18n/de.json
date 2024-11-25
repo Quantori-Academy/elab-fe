@@ -1,0 +1,20 @@
+{
+    "LOGIN": {
+      "TITLE": "Anmelden",
+      "EMAIL": "E-Mail",
+      "PASSWORD": "Passwort",
+      "FORGOT_PASSWORD": "Passwort vergessen?",
+      "LOGIN_BUTTON": "Anmelden",
+      "EMAIL_REQUIRED": "E-Mail ist erforderlich",
+      "EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "PASSWORD_REQUIRED": "Passwort ist erforderlich",
+      "PASSWORD_INVALID": "Bitte geben Sie ein gültiges Passwort ein (mindestens 8 Zeichen)",
+      "ERROR_INCORRECT": "Falsches Passwort oder E-Mail"
+    },
+    "HEADER": {
+      "LOGOUT": "Abmelden",
+      "PROFILE": "Profil",
+      "LANGUAGE": "Sprache"
+    }
+  }
+  

@@ -6,6 +6,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { MatIcon } from '@angular/material/icon';
 import { GlobalErrorHandler } from './shared/services/error-handling/global-error-handling.component';
 import { ErrorHandler } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -24,4 +25,9 @@ import { ErrorHandler } from '@angular/core';
 export class AppComponent {
   title = 'E-LAB';
   errorMessage: string | null = null;
+
+  constructor(private translate: TranslateService) {
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.use(browserLang?.match(/en|de|fr/) ? browserLang : 'en');
+  }
 }

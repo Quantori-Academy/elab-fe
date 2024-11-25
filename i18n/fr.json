@@ -1,0 +1,20 @@
+{
+    "LOGIN": {
+      "TITLE": "Connexion",
+      "EMAIL": "E-mail",
+      "PASSWORD": "Mot de passe",
+      "FORGOT_PASSWORD": "Mot de passe oublié?",
+      "LOGIN_BUTTON": "Connexion",
+      "EMAIL_REQUIRED": "L'e-mail est requis",
+      "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "PASSWORD_INVALID": "Veuillez entrer un mot de passe valide (au moins 8 caractères)",
+      "ERROR_INCORRECT": "Mot de passe ou e-mail incorrect"
+    },
+    "HEADER": {
+      "LOGOUT": "Déconnexion",
+      "PROFILE": "Profil",
+      "LANGUAGE": "Langue"
+    }
+  }
+  
