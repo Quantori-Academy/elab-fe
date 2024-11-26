@@ -18,13 +18,13 @@
   <div class="filter-container">
     <mat-form-field appearance="fill">
       <mat-label>Search by name</mat-label>
-      <input matInput (input)="onFilterName($event)" placeholder="Enter a name" />
+      <input matInput (input)="onFilterName($event)" placeholder="Enter a name"/>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Search by structure</mat-label>
-      <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" />
-      <button mat-icon-button matSuffix (click)="openStructureEditor()">
+      <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" [value]="filterStructureValue"/>
+      <button mat-icon-button matSuffix (click)="openStructureEditor('1000ms', '500ms')">
         <mat-icon class="search-structure-field-icon">draw</mat-icon>
       </button>
       <button mat-icon-button matSuffix [disabled]="!filterStructureValue" (click)="toggleFullStructureSearch()"
