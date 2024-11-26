@@ -153,6 +153,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.orderService.resetQueryParams();
     this.destroy$.next();
     this.destroy$.complete();
   }
