@@ -48,7 +48,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
 
   excludeReagents: { id: number }[] = [];
 
-  displayedColumns = [
+  baseColumns = [
     'name',
     'structureSmiles',
     'casNumber',
@@ -56,8 +56,16 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     'package',
     'status',
     'userComments',
-    'actions',
   ];
+  actionColumn = 'actions';
+
+  get displayedColumns(): string[] {
+    const order = this.orderSubject.getValue();
+    if (order?.status === 'Pending') {
+      return [...this.baseColumns, this.actionColumn];
+    }
+    return this.baseColumns.filter((column) => column !== this.actionColumn);
+  }
 
   ngOnInit(): void {
     this.fetchOrder();

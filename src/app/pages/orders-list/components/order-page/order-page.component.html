@@ -31,9 +31,11 @@
 </div>
 <div class="filter">
   <h3>Ordered Reagents</h3>
+  @if (order.status === 'Pending') {
   <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
     Add reagent request
   </button>
+  }
 </div>
 
 <div class="mat-elevation-z8 table-content table">
