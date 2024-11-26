@@ -11,7 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { RoomManagementService } from '../../services/room-management.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RoomData } from '../../models/storage-location.interface';
 import { first, take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
@@ -31,7 +31,7 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     MatSortModule,
     MatSelectModule,
     AsyncPipe,
-    DatePipe,
+    // DatePipe,
     TableLoaderSpinnerComponent,
   ],
   templateUrl: './room-management.component.html',

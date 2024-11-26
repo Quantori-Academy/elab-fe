@@ -166,12 +166,15 @@ export class ReagentsListComponent implements OnInit {
     });
   }
 
-  openStructureEditor() {
+  openStructureEditor(enterAnimationDuration: string, exitAnimationDuration: string) {
     const dialogRef = this.dialog.open(AddStructureComponent, {
       width: '650px',
       height: '600px',
       minWidth: '650px',
       minHeight: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      restoreFocus: false
     });
 
     this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
