@@ -8,6 +8,7 @@ const pieColors: Record<string, string> = {
   Ordered: '#4B0082',
   Fulfilled: '#098109',
   Declined: '#F44336',
+  Completed: '#0056b3',
 };
 
 export const chartOptions = (
