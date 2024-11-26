@@ -53,7 +53,7 @@ export class StorageLocationDialogComponent implements OnDestroy {
   ) {
     this.storageLocationData$ =
       this.storageLocationService.getListStorageLocation();
-    this.listOfRooms$ = this.roomManagementService.roomData$;
+    this.listOfRooms$ = this.roomManagementService.getListOfRooms();
     this.pageSize = this.storageQueryService.pageSize;
   }
   public isLoading = computed(() => this.storageQueryService.isLoading());
