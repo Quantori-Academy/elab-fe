@@ -109,7 +109,7 @@ export class ReagentRequestsDialogComponent {
           this.includedReagents = [];
           this.notificationPopupService.success({
             title: 'Success',
-            message: 'Reagent has been successfully removed!',
+            message: 'Reagent Request has been successfully added!',
             duration: 3000,
           });
           this.dialogRef.close(true);
