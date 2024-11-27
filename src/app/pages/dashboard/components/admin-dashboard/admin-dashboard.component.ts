@@ -35,11 +35,11 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   private setChartOptions(data: AdminDashboardDataResponse) {
-    const storageCounts = data.storageNumberInRoom.map(
-      (room) => room._count.id
+    const storageCounts = data.storageCountWithRoomNames.map(
+      (room) => room.storageCount
     );
-    const rooms = data.storageNumberInRoom.map((room) =>
-      room.roomId.toString()
+    const rooms = data.storageCountWithRoomNames.map((room) =>
+      room.roomName
     );
     const roomChartOption = roomChartOptions(storageCounts, rooms);
 

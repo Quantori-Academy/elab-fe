@@ -6,11 +6,9 @@ export interface AdminDashboardDataResponse {
   roomNumber: number;
   storageNumber: number;
   userNumber: number;
-  storageNumberInRoom: {
-    _count: {
-      id: number;
-    };
-    roomId: number;
+  storageCountWithRoomNames: {
+    storageCount: number;
+    roomName: string;
   }[];
   userNumberInRoles: {
     _count: {

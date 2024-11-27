@@ -1,19 +1,15 @@
-<div class="actions">
-  <div class="create-btn">
-    @if (isResearcher) {
-    <div class="button-container">
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="redirectToCreateReagentRequest()"
-      >
-        Create Reagent Request
-      </button>
-    </div>
-    }
-  </div>
+<div class="control-bar-wrapper">
+  @if (isResearcher) {
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="redirectToCreateReagentRequest()"
+  >
+    Create Reagent Request
+  </button>
+  }
   <div class="filter-container">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Name</mat-label>
       <input
         matInput
@@ -21,7 +17,7 @@
         placeholder="Enter name"
       />
     </mat-form-field>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Status</mat-label>
       <mat-select
         [(ngModel)]="selectedStatus"
@@ -58,8 +54,8 @@
           <div class="image-container">
             <app-molecule-structure
               [structure]="element.structureSmiles"
-              [width]="100"
-              [height]="100"
+              [width]="50"
+              [height]="50"
             ></app-molecule-structure>
           </div>
         </td>
@@ -90,7 +86,8 @@
               'status-pending': element.status === 'Pending',
               'status-fulfilled': element.status === 'Fulfilled',
               'status-declined': element.status === 'Declined',
-              'status-ordered': element.status === 'Ordered'
+              'status-ordered': element.status === 'Ordered',
+              'status-completed': element.status === 'Completed'
             }"
           >
             {{ element.status }}
@@ -139,6 +136,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+    @if (!dataSource.length && !isLoading()) {
+    <!-- <app-no-data text="No Reagent Request"/> -->
+    }
   </div>
 
   <mat-paginator
@@ -149,5 +149,5 @@
   ></mat-paginator>
 </div>
 } @else {
-<app-table-loader-spinner></app-table-loader-spinner>
+<app-table-loader-spinner />
 }
