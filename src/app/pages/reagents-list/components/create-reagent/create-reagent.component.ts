@@ -261,6 +261,8 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       height: '600px',
       minWidth: '650px',
       minHeight: '600px',
+      restoreFocus: false,
+      data: { smiles:  this.reagentRequestForm.get('structure')?.value }
     });
 
     dialogRef

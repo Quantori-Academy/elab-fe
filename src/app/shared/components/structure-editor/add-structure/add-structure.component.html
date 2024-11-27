@@ -1,6 +1,6 @@
 <p class="header">Structure drawing</p>
 <form class="form" (submit)="getSmilesFromEditor($event)">
-  <app-structure-editor></app-structure-editor>
+  <app-structure-editor [initialSmiles]="data.smiles"></app-structure-editor>
   <div class="actions">
     <button class="cancel-btn" type="button" mat-button mat-dialog-close color="warn">
       Cancel

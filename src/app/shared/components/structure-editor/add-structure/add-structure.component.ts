@@ -1,10 +1,11 @@
 import {
   Component,
+  Inject,
   ViewChild,
 } from '@angular/core';
 import { StructureEditorComponent } from '../structure-editor.component';
 import {
-  MatDialogRef,
+  MatDialogRef,  MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { MaterialModule } from '../../../../material.module';
 
@@ -20,7 +21,8 @@ export class AddStructureComponent {
   private structureEditor!: StructureEditorComponent;
 
   constructor(
-    public dialogRef: MatDialogRef<AddStructureComponent>
+    public dialogRef: MatDialogRef<AddStructureComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { smiles: string }
   ) {}
 
   async getSmilesFromEditor(event: Event): Promise<void> {
