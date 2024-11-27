@@ -35,8 +35,7 @@ export interface ResearcherDashboardDataResponse {
   reagentsVsSampleNumber: ReagentVsSampleKpiData[];
   reagentsVsSampleExpiredNumber: ReagentVsSampleKpiData[];
   reagentsVsSampleEmptyNumber: ReagentVsSampleKpiData[];
-  expiredList: Reagent[];
-  emptyList: Reagent[];
+  emptyOrExpiredList: Reagent[];
 }
 
 export interface ProcurementOfficerDashboardDataResponse {

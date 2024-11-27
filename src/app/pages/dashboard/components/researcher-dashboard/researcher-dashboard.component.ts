@@ -40,8 +40,7 @@ export class ResearcherDashboardComponent implements OnInit {
     reagentSampleChartOption: Partial<ChartOptions>;
     expiredReagentSampleChartOption: Partial<ChartOptions>;
     emptyReagentSampleChartOption: Partial<ChartOptions>;
-    expiredList: Reagent[];
-    emptyList: Reagent[];
+    emptyOrExpiredList: Reagent[];
   }>;
 
   ngOnInit(): void {
@@ -91,19 +90,14 @@ export class ResearcherDashboardComponent implements OnInit {
       reagentSampleChartOption,
       expiredReagentSampleChartOption,
       emptyReagentSampleChartOption,
-      expiredList: data.expiredList,
-      emptyList: data.emptyList,
+      emptyOrExpiredList: data.emptyOrExpiredList,
     };
   }
 
-  public displayedColumnsExpired: ReagentListColumn[] = [
+  public displayedColumnsExpiredEmpty: ReagentListColumn[] = [
     ReagentListColumn.NAME,
     ReagentListColumn.CATEGORY,
     ReagentListColumn.EXPIREDDATE,
-  ];
-  public displayedColumnsEmpty: ReagentListColumn[] = [
-    ReagentListColumn.NAME,
-    ReagentListColumn.CATEGORY,
     ReagentListColumn.QUANTITYLEFT,
   ];
 
