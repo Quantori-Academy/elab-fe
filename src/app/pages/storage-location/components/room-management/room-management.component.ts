@@ -11,9 +11,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { RoomManagementService } from '../../services/room-management.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RoomData } from '../../models/storage-location.interface';
-import { first, take } from 'rxjs';
+import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
@@ -31,7 +31,6 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     MatSortModule,
     MatSelectModule,
     AsyncPipe,
-    DatePipe,
     TableLoaderSpinnerComponent,
   ],
   templateUrl: './room-management.component.html',
@@ -50,7 +49,6 @@ export class RoomManagementComponent implements OnInit {
   public isAdmin = false;
 
   ngOnInit(): void {
-    this.roomManagementService.getListOfRooms().pipe(first()).subscribe();
     this.defineIsAdmin();
   }
   private defineIsAdmin() {
@@ -79,11 +77,10 @@ export class RoomManagementComponent implements OnInit {
     });
   }
 
-  public deleteHandler(roomId: number) {
-    this.roomManagementService
-      .deleteRoom(roomId)
-      .pipe(take(1))
-      .subscribe({
+  public deleteHandler(roomId: number): Observable<boolean> {
+    return this.roomManagementService.deleteRoom(roomId).pipe(
+      take(1),
+      tap({
         next: () => {
           this.notificationPopupService.success({
             title: 'Success',
@@ -105,7 +102,10 @@ export class RoomManagementComponent implements OnInit {
             });
           }
         },
-      });
+      }),
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 
   handlePageEvent($event: PageEvent) {
