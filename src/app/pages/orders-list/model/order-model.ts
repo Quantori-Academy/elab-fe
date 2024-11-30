@@ -1,4 +1,4 @@
-import { ReagentRequestList } from "../../reagent-request/reagent-request-page/reagent-request-page.interface";
+import { ReagentRequestList } from '../../reagent-request/reagent-request-page/reagent-request-page.interface';
 
 export interface Order {
   id: number;
@@ -28,15 +28,17 @@ export interface OrderQuery {
   createdAt: string;
   updatedAt: string;
 }
+
 export interface OrderRequest {
   title: string;
   seller: string;
-  reagents: { id: number }[];
+  reagents: { id: number; packageAmount: number }[];
 }
 export interface OrdersListData {
   orders: Order[];
   size: number;
 }
+
 export enum OrdersTableColumns {
   title = 'title',
   seller = 'seller',

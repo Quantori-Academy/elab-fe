@@ -68,7 +68,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     {}
   );
   sellerOptions$ = new BehaviorSubject<string[]>([]);
-  selectedReagents = new Set<number>();
+  selectedReagents = new Map<number, { id: number; packageAmount: number }>();
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
 
@@ -99,6 +99,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     'name',
     'desiredQuantity',
     'package',
+    'amount',
     'createdAt',
     'userComments',
     'actions',
@@ -137,19 +138,31 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
       this.selectedReagentReq = this.selectedReagentReq.filter(
-        (name) => name !== element
+        (reagent) => reagent.id !== element.id
       );
     } else {
-      this.selectedReagents.add(element.id);
+      this.selectedReagents.set(element.id, {
+        id: element.id,
+        packageAmount: 1,
+      });
       this.selectedReagentReq.push(element);
     }
     this.updateOrdersFormControl();
   }
 
+  getReagentPackageAmount(id: number): number {
+    return this.selectedReagents.get(id)?.packageAmount || 1;
+  }
+
+  onPackageAmountChange(id: number, event: Event): void {
+    const amount = +(event.target as HTMLInputElement).value || 1;
+    if (this.selectedReagents.has(id)) {
+      this.selectedReagents.set(id, { id, packageAmount: amount });
+      this.updateOrdersFormControl();
+    }
+  }
   updateOrdersFormControl() {
-    const selectedReagentArray = Array.from(this.selectedReagents).map(
-      (id) => ({ id })
-    );
+    const selectedReagentArray = Array.from(this.selectedReagents.values());
     this.orderForm.patchValue({ reagents: selectedReagentArray });
     this.reagentsSelectionError = this.selectedReagents.size === 0;
   }
