@@ -63,12 +63,13 @@ export class RoomManagementComponent implements OnInit {
   }
 
   public openDialog() {
-    this.dialog.open(AddEditRoomComponent);
+    this.dialog.open(AddEditRoomComponent, {width: '400px'});
   }
 
   public onEdit(element: RoomData) {
     this.dialog.open(AddEditRoomComponent, {
       data: element,
+      width: '400px'
     });
   }
 
@@ -78,6 +79,7 @@ export class RoomManagementComponent implements OnInit {
         message: 'Are you sure you want to delete the room?',
         deleteHandler: () => this.deleteHandler(element.id!),
       },
+      width: '400px',
     });
   }
 

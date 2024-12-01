@@ -12,11 +12,11 @@ function displayExtension(): Observable<Display> {
 
 
   return breakpointObserver
-      .observe([Breakpoints.HandsetPortrait, Breakpoints.TabletPortrait])
+      .observe([Breakpoints.Handset, Breakpoints.Tablet])
       .pipe(
         map((state: BreakpointState) => ({
-          isMobile: state.breakpoints[Breakpoints.HandsetPortrait],
-          isTablet: state.breakpoints[Breakpoints.TabletPortrait] && !state.breakpoints[Breakpoints.HandsetPortrait]
+          isMobile: state.breakpoints[Breakpoints.HandsetPortrait] || state.breakpoints[Breakpoints.HandsetLandscape],
+          isTablet: state.breakpoints[Breakpoints.TabletPortrait] || state.breakpoints[Breakpoints.TabletLandscape]
         })),
       );
 }

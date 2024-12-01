@@ -142,8 +142,15 @@ mat-expansion-panel {
   align-items: center;
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 900px) {
   form {
     width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 }

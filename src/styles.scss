@@ -46,6 +46,25 @@ $elab-fe-theme: mat.define-theme(
 
   --header-height: 60px;
   --mat-card-background-color: #faf9fd;
+
+
+  --pending-background-color: rgba(240, 173, 78, 0.1);
+  --pending-color: #e68d11;
+
+  --fulfilled-background-color: rgba(92, 184, 92, 0.3);
+  --fulfilled-color: #098109;
+
+  --completed-background-color: rgba(0, 123, 255, 0.1);
+  --completed-color: #0056b3;
+
+  --declined-background-color: rgba(244, 67, 54, 0.1);
+  --declined-color: #F44336;
+
+  --submitted-background-color: rgba(147, 112, 219, 0.1);
+  --submitted-color: #4B0082;
+
+  --ordered-background-color: rgba(147, 112, 219, 0.1);
+  --ordered-color: #4B0082;
 }
 
 html,

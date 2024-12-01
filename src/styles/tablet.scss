@@ -1,4 +1,4 @@
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   mat-sidenav-content {
     padding: 10px 10px 0 !important;
   }
@@ -8,7 +8,6 @@
   }
 
   .filter-container {
-    flex-wrap: wrap;
     mat-form-field {
       flex: 1;
       min-width: 150px;

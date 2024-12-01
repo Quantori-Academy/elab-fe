@@ -116,7 +116,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       this.dialog
         .open(MoveReagentComponent, {
           data: { movedReagents: this.movedReagents },
-          minWidth: '400px',
+          width: '400px',
         })
         .afterClosed()
         .pipe(take(1))

@@ -122,11 +122,11 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   public onCreate(): void {
-    this.dialog.open(AddEditStorageComponent);
+    this.dialog.open(AddEditStorageComponent, { width: '400px' });
   }
 
   public onEdit(element: StorageLocationItem) {
-    this.dialog.open(AddEditStorageComponent, { data: element });
+    this.dialog.open(AddEditStorageComponent, { data: element, width: '400px' });
   }
 
   public onDelete(element: StorageLocationItem) {

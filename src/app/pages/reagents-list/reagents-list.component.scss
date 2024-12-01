@@ -59,3 +59,16 @@ button[disabled] mat-icon {
     column-gap: 5px;
   }
 }
+
+
+@media (max-width: 1200px) {
+  .control-bar-wrapper {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 850px) {
+  .filter-container {
+    flex-wrap: wrap;
+  }
+}
