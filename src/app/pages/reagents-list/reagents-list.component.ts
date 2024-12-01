@@ -20,13 +20,14 @@ import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
-import { Observable, Subscription, take } from 'rxjs';
+import { first, Observable, Subscription, take } from 'rxjs';
 import { ReagentsQueryService } from './services/reagents-query.service';
 import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
+import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -132,6 +133,17 @@ export class ReagentsListComponent implements OnInit {
       column: ReagentListColumn.STRUCTURE,
       isFullStructure: this.isFullStructure,
     });
+  }
+
+  onEditReagent(element: Reagent) {
+    this.dialog.open(EditReagentComponent, {data: element, width: '400px'})
+      .afterClosed()
+      .pipe(first())
+      .subscribe((isEdited) => {
+        if (isEdited) {
+          this.reagentsQueryService.reloadReagentList()
+        }
+      })
   }
 
   onFilterName($event: Event) {

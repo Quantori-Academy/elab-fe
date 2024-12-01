@@ -1,0 +1,42 @@
+<h5 class="header">Edit {{ editionData.category }}</h5>
+<form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
+  <mat-form-field subscriptSizing="dynamic" appearance="outline">
+    <mat-label>Quantity Left</mat-label>
+    <input matInput formControlName="quantityLeft" type="number" />
+    @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
+    reagentRequestForm.get('quantityLeft')?.touched) {
+    <mat-error>Quantity Left is required.</mat-error>
+    } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
+    <mat-error>Quantity Left must be a valid number.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field subscriptSizing="dynamic" appearance="outline">
+    <mat-label>Storage Location</mat-label>
+    <input matInput placeholder="e.g: Room1 Cabinet1-Shelf1" (input)="onRoomNameChange($event)"
+      formControlName="storageLocation" [matAutocomplete]="auto" #storageInput />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      @if (storageInput.value) {
+        @if (storageLocations$ | async; as storageLocations) {
+          @if (storageLocations.size) {
+            @for (option of storageLocations.storages; track option.id) {
+            <mat-option [value]="option">
+              {{ option.room.name }} {{ option.name }}
+            </mat-option>
+            }
+          }
+        }
+      }
+    </mat-autocomplete>
+    @if (hasError('storageLocation', 'required')) {
+    <mat-error>Storage Location is required.</mat-error>
+    } @if (hasError('storageLocation', 'invalidOption')) {
+    <mat-error>Select correct Storage Location.</mat-error>
+    }
+  </mat-form-field>
+  <div class="actions">
+    <button mat-button color="warn" type="button" mat-dialog-close>
+      Cancel
+    </button>
+    <button mat-flat-button color="primary" type="submit">Submit</button>
+  </div>
+</form>

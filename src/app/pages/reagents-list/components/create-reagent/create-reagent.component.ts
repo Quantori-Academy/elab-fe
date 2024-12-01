@@ -92,9 +92,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((data) => (this.isSample = data['isSample']));
     this.initializeForm();
-    this.storageLocations$ =
-      this.storageLocationService.searchStorageLocationByName(
-      );
+    this.storageLocations$ = this.storageLocationService.searchStorageLocationByName();
   }
 
   public initializeForm(): void {
