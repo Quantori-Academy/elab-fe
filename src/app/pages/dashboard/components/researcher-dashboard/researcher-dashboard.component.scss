@@ -4,7 +4,6 @@
   box-sizing: border-box;
 
   display: flex;
-  flex-direction: column;
   gap: 30px;
   position: relative;
 }
@@ -12,14 +11,18 @@
 .row {
   padding: 10px 0;
   display: flex;
-  gap: 30px;
-  align-items: center;
   box-sizing: border-box;
 }
 
-.row2 {
+.row1 {
+  flex: 1;
   height: 100%;
   overflow: hidden;
+}
+
+.row2 {
+  flex-direction: column;
+  gap: 10px;
 }
 
 mat-card {
@@ -38,25 +41,30 @@ mat-card {
   min-width: 200px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   :host {
     overflow-y: auto;
+    flex-direction: column;
 
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
-  .row {
-    flex-direction: column;
+  mat-card {
+    width: 100%;
     align-items: center;
+  }
 
-    mat-card {
+  .row1 {
+    order: 2;
+
+    .table-container {
       width: 100%;
     }
   }
 
   .row2 {
-    overflow: unset;
+    order: 1;
   }
 }

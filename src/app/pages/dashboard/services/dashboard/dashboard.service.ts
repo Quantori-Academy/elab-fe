@@ -29,9 +29,11 @@ export class DashboardService {
   }
 
   public getResearcherDashboardData(): Observable<ResearcherDashboardDataResponse> {
-    return this.http.get<ResearcherDashboardDataResponse>(
-      `${this.apiUrl}/researcher`
-    );
+    return this.httpParams.pipe(
+      switchMap((params) => this.http.get<ResearcherDashboardDataResponse>(
+        `${this.apiUrl}/researcher`, { params })
+      )
+    )
   }
 
   public getProcurementOfficerDashboardData(): Observable<ProcurementOfficerDashboardDataResponse> {

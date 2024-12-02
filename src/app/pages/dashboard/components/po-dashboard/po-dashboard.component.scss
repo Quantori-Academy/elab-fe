@@ -45,7 +45,9 @@
 }
 
 .col2 {
-  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
   mat-form-field {
     width: 100%;
@@ -53,6 +55,7 @@
   }
 
   mat-card {
+    min-width: 400px;
     width: 100%;
   }
 }
@@ -90,6 +93,10 @@ mat-card-header {
 
   .col2 {
     order: 1;
+  }
+
+  mat-card {
+    align-items: center;
   }
 }
 

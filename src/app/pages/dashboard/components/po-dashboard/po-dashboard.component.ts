@@ -58,7 +58,8 @@ export class PoDashboardComponent implements OnInit {
     const statusChartOption = statusChartOptions(
       orderStatusSeries,
       orderStatusLabels,
-      'Order status'
+      'Order status',
+      '200px'
     );
 
     return { requestList: data.requestList, statusChartOption };

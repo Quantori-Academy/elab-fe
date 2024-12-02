@@ -18,6 +18,9 @@ import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { map, Observable } from 'rxjs';
 import { ResearcherDashboardDataResponse } from '../../models/dashboard.model';
 import { AsyncPipe, DatePipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-researcher-dashboard',
@@ -29,7 +32,9 @@ import { AsyncPipe, DatePipe } from '@angular/common';
     ExpiredDateDirective,
     AsyncPipe,
     DatePipe,
+    ReactiveFormsModule
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './researcher-dashboard.component.html',
   styleUrl: './researcher-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,6 +47,7 @@ export class ResearcherDashboardComponent implements OnInit {
     emptyReagentSampleChartOption: Partial<ChartOptions>;
     emptyOrExpiredList: Reagent[];
   }>;
+  public filteredDate = new FormControl(this.dashboardService.filteredDate.value);
 
   ngOnInit(): void {
     this.researcherDashboardData$ = this.dashboardService
@@ -59,7 +65,8 @@ export class ResearcherDashboardComponent implements OnInit {
     const reagentSampleChartOption = donutChartOptions(
       reagentSampleSeries,
       reagentSampleLabels,
-      'Reagent vs Sample'
+      'Reagent vs Sample',
+      '100%'
     );
 
     const expiredReagentSampleSeries = data.reagentsVsSampleExpiredNumber.map(
@@ -71,7 +78,8 @@ export class ResearcherDashboardComponent implements OnInit {
     const expiredReagentSampleChartOption = donutChartOptions(
       expiredReagentSampleSeries,
       expiredReagentSampleLabels,
-      'Expired: Reagent vs Sample'
+      'Expired: Reagent vs Sample',
+      '100%'
     );
 
     const emptyReagentSampleSeries = data.reagentsVsSampleEmptyNumber.map(
@@ -83,7 +91,8 @@ export class ResearcherDashboardComponent implements OnInit {
     const emptyReagentSampleChartOption = donutChartOptions(
       emptyReagentSampleSeries,
       emptyReagentSampleLabels,
-      'Expired: Reagent vs Sample'
+      'Expired: Reagent vs Sample',
+      '100%'
     );
 
     return {
@@ -103,5 +112,19 @@ export class ResearcherDashboardComponent implements OnInit {
 
   public quantityTooltip(quantity: number, quantityLeft: number): string {
     return quantityLeft && quantity / 2 > quantityLeft ? 'Less than half' : '';
+  }
+
+  formatMonthYear(): string {
+    if (!this.filteredDate) return '';
+    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(this.filteredDate.value as Date);
+  }
+
+
+  setMonthAndYear(normalizedMonthAndYear: Date, datepicker: MatDatepicker<Date>) {
+    const ctrlValue = this.filteredDate.value as Date;
+    ctrlValue.setMonth(normalizedMonthAndYear.getMonth());
+    ctrlValue.setFullYear(normalizedMonthAndYear.getFullYear());
+    this.dashboardService.filteredDate.next(ctrlValue);
+    datepicker.close();
   }
 }
