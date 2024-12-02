@@ -15,6 +15,9 @@ mat-sidenav {
 
 mat-nav-list {
   padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .mdc-list-item__primary-text {
@@ -25,8 +28,13 @@ mat-nav-list {
 
 mat-sidenav-content {
   height: calc(100vh - var(--header-height));
-  padding: 30px 30px 0;
+  padding: 10px 30px 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+}
+
+.username {
+  margin-top: auto;
+  text-align: center;
 }

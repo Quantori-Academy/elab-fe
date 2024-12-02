@@ -1,0 +1,32 @@
+@media screen and (max-width: 900px) {
+  mat-sidenav-content {
+    padding: 10px 10px 0 !important;
+  }
+
+  .control-bar-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .filter-container {
+    mat-form-field {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    mat-label, mat-select, input {
+      font-size: 12px;
+    }
+  }
+
+  .structure-form {
+    .mat-mdc-form-field-flex {
+      label {
+        width: 100px;
+      }
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+      display: flex;
+    }
+  }
+}

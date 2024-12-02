@@ -16,6 +16,7 @@
 
   .title {
     color: var(--primary-color-dark);
+    margin: 0;
   }
 
   .description {
@@ -24,10 +25,50 @@
 }
 
 .storage-icon {
-  width: 164px;
-  height: 164px;
+  width: 128px;
+  height: 128px;
 }
 
 app-reagents-list {
   height: 600px;
 }
+
+@media screen and (min-height: 800px) {
+  :host {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  app-reagents-list {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .info {
+    margin: 0 50px;
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .info {
+    margin: 0;
+    gap: 20px;
+  }
+
+  .storage-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .title {
+    font-size: large;
+  }
+
+  .description {
+    font-size: medium;
+  }
+
+}
+

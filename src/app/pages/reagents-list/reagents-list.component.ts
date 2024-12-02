@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -27,6 +27,7 @@ import { SpinnerDirective } from '../../shared/directives/spinner/spinner.direct
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
+import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -39,12 +40,13 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
+    NoDataComponent
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
-export class ReagentsListComponent implements OnInit {
+export class ReagentsListComponent implements OnInit, OnDestroy {
   @Input() storageLocationId?: number;
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
@@ -77,7 +79,7 @@ export class ReagentsListComponent implements OnInit {
     ReagentListColumn.QUANTITYLEFT,
     ReagentListColumn.CAS,
     ReagentListColumn.LOCATION,
-    ReagentListColumn.ACTIONS,
+    ...(this.isResearcher ? [ReagentListColumn.ACTIONS] : []),
   ];
 
   public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
@@ -114,7 +116,7 @@ export class ReagentsListComponent implements OnInit {
       this.dialog
         .open(MoveReagentComponent, {
           data: { movedReagents: this.movedReagents },
-          minWidth: '400px',
+          width: '400px',
         })
         .afterClosed()
         .pipe(take(1))
@@ -178,7 +180,7 @@ export class ReagentsListComponent implements OnInit {
       data: { smiles: this.filterStructureValue }
     });
 
-    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().pipe(take(1)).subscribe((result) => {
       if (result) {
         this.filterStructureValue = result;
         this.updateStructureFilter(result);
@@ -201,5 +203,9 @@ export class ReagentsListComponent implements OnInit {
 
   handlePageEvent($event: PageEvent) {
     this.reagentsQueryService.setPageData($event);
+  }
+
+  ngOnDestroy(): void {
+    this.structureSubscription?.unsubscribe()
   }
 }

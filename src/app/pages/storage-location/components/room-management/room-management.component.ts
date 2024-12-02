@@ -21,6 +21,7 @@ import { RbacService } from '../../../../auth/services/authentication/rbac.servi
 import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-room-management',
@@ -32,6 +33,7 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     MatSelectModule,
     AsyncPipe,
     TableLoaderSpinnerComponent,
+    NoDataComponent
   ],
   templateUrl: './room-management.component.html',
   styleUrl: './room-management.component.scss',
@@ -59,12 +61,13 @@ export class RoomManagementComponent implements OnInit {
   }
 
   public openDialog() {
-    this.dialog.open(AddEditRoomComponent);
+    this.dialog.open(AddEditRoomComponent, {width: '400px'});
   }
 
   public onEdit(element: RoomData) {
     this.dialog.open(AddEditRoomComponent, {
       data: element,
+      width: '400px'
     });
   }
 
@@ -74,6 +77,7 @@ export class RoomManagementComponent implements OnInit {
         message: 'Are you sure you want to delete the room?',
         deleteHandler: () => this.deleteHandler(element.id!),
       },
+      width: '400px',
     });
   }
 

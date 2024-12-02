@@ -36,6 +36,7 @@ import { Sort } from '@angular/material/sort';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-order-form',
@@ -50,6 +51,7 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     MoleculeStructureComponent,
+    NoDataComponent
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',

@@ -1,11 +1,9 @@
 <div class="control-bar-wrapper">
-  <div>
-    <button mat-flat-button color="primary" (click)="openCreateUserDialog()">
-      Create New User
-    </button>
-  </div>
+  <button mat-flat-button color="primary" (click)="openCreateUserDialog()">
+    Create New User
+  </button>
   <div class="filter-container">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Search by name</mat-label>
       <input
         matInput
@@ -14,7 +12,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by role</mat-label>
       <mat-select (selectionChange)="applyRoleFilter($event.value)">
         <mat-option value="">All Roles</mat-option>
