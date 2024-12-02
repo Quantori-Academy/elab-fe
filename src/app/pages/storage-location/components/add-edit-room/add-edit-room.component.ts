@@ -44,7 +44,9 @@ export class AddEditRoomComponent implements OnInit {
   });
   public originalValues: RoomData | undefined;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public editionData?: RoomData) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public editionData?: RoomData) {
+    this.originalValues = editionData
+  }
 
   ngOnInit(): void {
     if (this.editionData) {

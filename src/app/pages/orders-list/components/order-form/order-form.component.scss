@@ -57,6 +57,11 @@ mat-panel-title {
   font-weight: 400;
 }
 
+.reagent-request-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .createdAt {
   width: 11rem;
 }
@@ -146,4 +151,16 @@ mat-expansion-panel {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+  form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }

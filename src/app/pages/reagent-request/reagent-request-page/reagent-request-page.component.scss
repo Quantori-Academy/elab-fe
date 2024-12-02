@@ -1,5 +1,5 @@
 :host {
-  padding: 20px;
+  padding: 10px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -7,17 +7,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.filter-container {
-  display: flex;
-  gap: 1rem;
 }
 
 .name-column {
@@ -66,29 +55,36 @@ img:hover {
 }
 
 .status-pending {
-  background-color: rgba(240, 173, 78, 0.1);
-  color: #e68d11;
-  border: 1px solid #e68d11;
+  background-color: var(--pending-background-color);
+  color: var(--pending-color);
+  border: 1px solid var(--pending-color);
   padding: 8px;
 }
 
 .status-fulfilled {
-  background-color: rgba(92, 184, 92, 0.3);
-  color: #098109;
-  border: 1px solid #098109;
+  background-color: var(--fulfilled-background-color);
+  color: var(--fulfilled-color);
+  border: 1px solid var(--fulfilled-color);
+  padding: 8px;
+}
+
+.status-completed {
+  background-color: var(--completed-background-color);
+  color: var(--completed-color);
+  border: 1px solid var(--completed-color);
   padding: 8px;
 }
 
 .status-declined {
-  background-color: rgba(244, 67, 54, 0.1);
-  color: #F44336;
-  border: 1px solid #F44336;
+  background-color: var(--declined-background-color);
+  color: var(--declined-color);
+  border: 1px solid var(--declined-color);
   padding: 8px;
 }
 
 .status-ordered {
-  background-color: rgba(147, 112, 219, 0.1);
-  color: #4B0082;
-  border: 1px solid rgba(75, 0, 130, 0.8);
+  background-color: var(-ordered-background-color);
+  color: var(--ordered-color);
+  border: 1px solid var(--ordered-color);
   padding: 8px;
 }

@@ -129,6 +129,8 @@ export class CreateReagentRequestComponent {
       height: '600px',
       minWidth: '650px',
       minHeight: '600px',
+      restoreFocus: false,
+      data: { smiles:  this.reagentRequestForm.get('structureSmiles')?.value }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
