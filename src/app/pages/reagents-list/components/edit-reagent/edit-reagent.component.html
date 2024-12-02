@@ -37,6 +37,12 @@
     <button mat-button color="warn" type="button" mat-dialog-close>
       Cancel
     </button>
-    <button mat-flat-button color="primary" type="submit">Submit</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="reagentRequestForm.pristine || reagentRequestForm.invalid">
+      Edit
+    </button>
   </div>
 </form>
