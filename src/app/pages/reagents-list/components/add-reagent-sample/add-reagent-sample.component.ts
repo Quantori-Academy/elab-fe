@@ -193,7 +193,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   public onSave(): void {
     this.setSelectedReagentSample()
     if (this.formSelection.valid) {
-      this.dialogRef.close();
+      this.dialogRef.close(this.selectedReagentSample);
     } else {
       this.formSelection.markAllAsTouched();
     }
