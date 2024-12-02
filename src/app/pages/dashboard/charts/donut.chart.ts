@@ -20,6 +20,7 @@ export const chartOptions = (
   chart: {
     type: 'donut',
     height: '200px',
+    width: '350px',
   },
   labels,
   colors: labels?.map((label) => pieColors[label]),
@@ -28,6 +29,20 @@ export const chartOptions = (
     style: {
       color: 'var(--neutral-color-light1)',
       fontWeight: 500,
+    },
+  },
+  dataLabels: {
+    enabled: true,
+    style: {
+      colors: labels?.map((label) => pieColors[label]),
+      fontSize: '14px',
+    }
+  },
+  plotOptions: {
+    pie: {
+      dataLabels: {
+        offset: 30,
+      },
     },
   },
   responsive: [

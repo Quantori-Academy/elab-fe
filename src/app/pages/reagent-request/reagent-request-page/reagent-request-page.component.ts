@@ -22,6 +22,7 @@ import { TableLoaderSpinnerComponent } from '../../../shared/components/table-lo
 import { DeclineReagentRequestComponent } from '../decline-reagent-request/decline-reagent-request.component';
 import { Router } from '@angular/router';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
+import { NoDataComponent } from '../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -34,6 +35,7 @@ import { RbacService } from '../../../auth/services/authentication/rbac.service'
     MoleculeStructureComponent,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
+    NoDataComponent,
   ],
   templateUrl: './reagent-request-page.component.html',
   styleUrls: ['./reagent-request-page.component.scss'],
@@ -168,17 +170,3 @@ export class ReagentsRequestPageComponent implements OnInit {
     this.router.navigate(['/reagent-request-page/create-reagent-request']);
   }
 }
-
-// Currently in progress
-
-// openCreateReagentRequestDialog() {
-//   const dialogRef = this.dialog.open(NewReagentFormComponent, {
-//     data: {},
-//   });
-
-//   dialogRef.afterClosed().subscribe((result) => {
-//     if (result) {
-//       this.loadReagentRequests();
-//     }
-//   });
-// }
