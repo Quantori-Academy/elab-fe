@@ -81,6 +81,7 @@ mat-card-header {
     gap: 10px;
   }
 
+
   .col {
     width: 100%;
   }
@@ -88,7 +89,16 @@ mat-card-header {
   .col1 {
     order: 2;
     height: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
+
+    mat-card-content {
+      width: 100%;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
   }
 
   .col2 {
@@ -107,5 +117,10 @@ mat-card-header {
 
   .col1 mat-card {
     max-height: 70vh;
+  }
+
+  .col2 mat-card {
+    min-width: auto;
+    width: 100%;
   }
 }

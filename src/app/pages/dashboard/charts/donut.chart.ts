@@ -49,7 +49,7 @@ export const chartOptions = (
   },
   responsive: [
     {
-      breakpoint: 426,
+      breakpoint: 500,
       options: {
         chart: {
           width: 300,
