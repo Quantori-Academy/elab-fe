@@ -22,6 +22,7 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
   ],
+  providers: [ReagentRequestService],
   templateUrl: './reagent-page.component.html',
   styleUrl: './reagent-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
