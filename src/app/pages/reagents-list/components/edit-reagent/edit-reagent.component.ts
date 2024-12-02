@@ -71,7 +71,6 @@ export class EditReagentComponent {
   }
 
   onSubmit() {
-    console.log(this.reagentRequestForm.value)
     if (this.reagentRequestForm.valid) {
       const { quantityLeft, storageId }  = this.reagentRequestForm.value as {quantityLeft: number, storageId: number};
       const editedValue = { quantityLeft, storageId}
