@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit, Input, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TableLoaderSpinnerComponent } from "../table-loader-spinner/table-loader-spinner.component";
 
 interface Ketcher {
   getSmiles(): Promise<string>;
+  setMolecule(molecule: string): void;
 }
 
 declare global {
@@ -22,9 +23,10 @@ declare global {
 export class StructureEditorComponent implements OnInit, AfterViewInit {
   @ViewChild('ketcherFrame', { static: false })
   ketcherFrame!: ElementRef<HTMLIFrameElement>;
+  @Input() initialSmiles: string | null = null;
 
   ketcherUrl!: SafeResourceUrl;
-  loading = true;
+  loading = signal(true);
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -46,7 +48,14 @@ export class StructureEditorComponent implements OnInit, AfterViewInit {
       return await this.ketcher!.getSmiles();
   }
 
+  private async loadPreviousSmiles(): Promise<void> {
+    if (this.ketcher && this.initialSmiles) {
+      this.ketcher.setMolecule(this.initialSmiles);
+    }
+  }
+
   onLoaded() {
-    this.loading = false;
+    this.loading.set(false);
+    this.loadPreviousSmiles();
   }
 }

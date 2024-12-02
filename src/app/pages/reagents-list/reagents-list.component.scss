@@ -1,5 +1,5 @@
 :host {
-  padding: 20px;
+  padding: 10px;
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -9,24 +9,11 @@
   position: relative;
 }
 
-[mat-cell] {
-  height: 110px;
-}
 
-[mat-cell].structure-container {
-  width: 130px;
-}
 
 .name-column {
   max-width: 10rem;
   padding: 1rem;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 .create-btns {
@@ -41,12 +28,6 @@ img:hover {
 .table-wrapper {
   overflow-x: scroll;
   padding: 15px;
-}
-
-.filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .search-structure-field-icon {
@@ -65,4 +46,29 @@ button[disabled] mat-icon {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .btn {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 321px) {
+  .create-btns {
+    column-gap: 5px;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .control-bar-wrapper {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 850px) {
+  .filter-container {
+    flex-wrap: wrap;
+  }
 }

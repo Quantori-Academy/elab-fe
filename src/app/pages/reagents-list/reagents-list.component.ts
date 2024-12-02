@@ -27,6 +27,7 @@ import { SpinnerDirective } from '../../shared/directives/spinner/spinner.direct
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
+import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
 
 @Component({
@@ -40,6 +41,7 @@ import { EditReagentComponent } from './components/edit-reagent/edit-reagent.com
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
+    NoDataComponent
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
@@ -78,7 +80,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     ReagentListColumn.QUANTITYLEFT,
     ReagentListColumn.CAS,
     ReagentListColumn.LOCATION,
-    ReagentListColumn.ACTIONS,
+    ...(this.isResearcher ? [ReagentListColumn.ACTIONS] : []),
   ];
 
   public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
@@ -115,7 +117,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       this.dialog
         .open(MoveReagentComponent, {
           data: { movedReagents: this.movedReagents },
-          minWidth: '400px',
+          width: '400px',
         })
         .afterClosed()
         .pipe(takeUntil(this.destroy$))
@@ -186,7 +188,8 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       minHeight: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
-      restoreFocus: false
+      restoreFocus: false,
+      data: { smiles: this.filterStructureValue }
     });
 
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$))

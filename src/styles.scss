@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
-
+@use "./styles/tablet.scss";
+@use "./styles/global.scss";
 @include mat.core();
 
 $elab-fe-theme: mat.define-theme(
@@ -45,6 +46,25 @@ $elab-fe-theme: mat.define-theme(
 
   --header-height: 60px;
   --mat-card-background-color: #faf9fd;
+
+
+  --pending-background-color: rgba(240, 173, 78, 0.1);
+  --pending-color: #e68d11;
+
+  --fulfilled-background-color: rgba(92, 184, 92, 0.3);
+  --fulfilled-color: #098109;
+
+  --completed-background-color: rgba(0, 123, 255, 0.1);
+  --completed-color: #0056b3;
+
+  --declined-background-color: rgba(244, 67, 54, 0.1);
+  --declined-color: #F44336;
+
+  --submitted-background-color: rgba(147, 112, 219, 0.1);
+  --submitted-color: #4B0082;
+
+  --ordered-background-color: rgba(147, 112, 219, 0.1);
+  --ordered-color: #4B0082;
 }
 
 html,
@@ -55,131 +75,4 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.table-container {
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  .table-content {
-    overflow-y: auto;
-    flex: 1;
-    position: relative;
-  }
-
-  thead {
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 10;
-  }
-}
-
-.quantity-left-span,
-.expired-date-span {
-  padding: 5px 10px;
-  border-radius: 10px;
-}
-
-.loader {
-  font-size: 6px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-indent: -9999em;
-  animation: mulShdSpin 1.1s infinite ease;
-  transform: translateZ(0);
-}
-
-@keyframes mulShdSpin {
-  0%,
-  100% {
-    box-shadow: 0em -2.6em 0em 0em #06417d,
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.2),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.2),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.2),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.5),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.7);
-  }
-  12.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.7),
-      1.8em -1.8em 0 0em #06417d, 2.5em 0em 0 0em rgba(6, 65, 125, 0.2),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.2),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.2),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.5);
-  }
-  25% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.5),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.7), 2.5em 0em 0 0em #06417d,
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.2),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.2),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2);
-  }
-  37.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.2),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.5),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.7), 1.75em 1.75em 0 0em #06417d,
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.2),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2);
-  }
-  50% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.2),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.5),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.7), 0em 2.5em 0 0em #06417d,
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.2),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2);
-  }
-  62.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.2),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.2),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.5),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.7), -1.8em 1.8em 0 0em #06417d,
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2);
-  }
-  75% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.2),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.2),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.2),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.5),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.7), -2.6em 0em 0 0em #06417d,
-      -1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2);
-  }
-  87.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(6, 65, 125, 0.2),
-      1.8em -1.8em 0 0em rgba(6, 65, 125, 0.2),
-      2.5em 0em 0 0em rgba(6, 65, 125, 0.2),
-      1.75em 1.75em 0 0em rgba(6, 65, 125, 0.2),
-      0em 2.5em 0 0em rgba(6, 65, 125, 0.2),
-      -1.8em 1.8em 0 0em rgba(6, 65, 125, 0.5),
-      -2.6em 0em 0 0em rgba(6, 65, 125, 0.7), -1.8em -1.8em 0 0em #06417d;
-  }
-}
-
-.select-quantity-input {
-  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: white !important;
-  }
-}
-
-.mat-mdc-tab-body-wrapper {
-  flex: 1;
 }

@@ -11,9 +11,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { RoomManagementService } from '../../services/room-management.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RoomData } from '../../models/storage-location.interface';
-import { first, take } from 'rxjs';
+import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { DeleteConfirmComponent } from '../../../../shared/components/delete-confirm/delete-confirm.component';
@@ -21,6 +21,7 @@ import { RbacService } from '../../../../auth/services/authentication/rbac.servi
 import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-room-management',
@@ -31,8 +32,8 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     MatSortModule,
     MatSelectModule,
     AsyncPipe,
-    DatePipe,
     TableLoaderSpinnerComponent,
+    NoDataComponent
   ],
   templateUrl: './room-management.component.html',
   styleUrl: './room-management.component.scss',
@@ -50,7 +51,6 @@ export class RoomManagementComponent implements OnInit {
   public isAdmin = false;
 
   ngOnInit(): void {
-    this.roomManagementService.getListOfRooms().pipe(first()).subscribe();
     this.defineIsAdmin();
   }
   private defineIsAdmin() {
@@ -61,12 +61,13 @@ export class RoomManagementComponent implements OnInit {
   }
 
   public openDialog() {
-    this.dialog.open(AddEditRoomComponent);
+    this.dialog.open(AddEditRoomComponent, {width: '400px'});
   }
 
   public onEdit(element: RoomData) {
     this.dialog.open(AddEditRoomComponent, {
       data: element,
+      width: '400px'
     });
   }
 
@@ -76,14 +77,14 @@ export class RoomManagementComponent implements OnInit {
         message: 'Are you sure you want to delete the room?',
         deleteHandler: () => this.deleteHandler(element.id!),
       },
+      width: '400px',
     });
   }
 
-  public deleteHandler(roomId: number) {
-    this.roomManagementService
-      .deleteRoom(roomId)
-      .pipe(take(1))
-      .subscribe({
+  public deleteHandler(roomId: number): Observable<boolean> {
+    return this.roomManagementService.deleteRoom(roomId).pipe(
+      take(1),
+      tap({
         next: () => {
           this.notificationPopupService.success({
             title: 'Success',
@@ -105,7 +106,10 @@ export class RoomManagementComponent implements OnInit {
             });
           }
         },
-      });
+      }),
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 
   handlePageEvent($event: PageEvent) {

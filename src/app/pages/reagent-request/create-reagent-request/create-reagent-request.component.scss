@@ -93,7 +93,7 @@ mat-card-content,
 mat-form-field textarea {
   resize: none;
   overflow: auto;
-  height: 50px; 
+  height: 50px;
 }
 
 .expansion-panel-body {
@@ -102,6 +102,11 @@ mat-form-field textarea {
 
 mat-form-field.full-width {
   width: 100%;
-  margin-bottom: 28px; 
+  margin-bottom: 28px;
 }
 
+@media screen and (max-width: 768px) {
+  mat-form-field {
+    flex-grow: 1;
+  }
+}

@@ -30,6 +30,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ReagentsQueryService } from '../../services/reagents-query.service';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 
 @Component({
   selector: 'app-add-reagent-sample',
@@ -40,6 +42,8 @@ import { TableLoaderSpinnerComponent } from '../../../../shared/components/table
     MoleculeStructureComponent,
     ReactiveFormsModule,
     TableLoaderSpinnerComponent,
+    NoDataComponent,
+    SpinnerDirective
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './add-reagent-sample.component.html',
@@ -58,7 +62,6 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
     'category',
     'structure',
     'quantity',
-    'quantityLeft',
     'isSelect',
     'selectQuantity',
   ];

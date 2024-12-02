@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { OrdersService } from '../../service/orders.service';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { BehaviorSubject, Subject, switchMap, takeUntil } from 'rxjs';
 import { MaterialModule } from '../../../../material.module';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
@@ -18,6 +18,7 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../model/order-model';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 
 @Component({
@@ -29,7 +30,8 @@ import { StorageLocationDialogComponent } from '../storage-location-dialog/stora
     DatePipe,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
-    CommonModule,
+    NoDataComponent,
+    NgClass,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',

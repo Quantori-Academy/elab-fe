@@ -40,22 +40,14 @@ export class StorageLocationService {
   }
 
   public addNewStorageLocation(newData: NewStorageLocation) {
-    return this.http.post(`${this.apiUrl}/storages`, newData).pipe(
-      tap(() => {
-        this.storageLocationQueryService.reloadStorageLocation();
-      })
-    );
+    return this.http.post(`${this.apiUrl}/storages`, newData);
   }
 
   public editStorageLocation(
     id: number,
     newData: Omit<NewStorageLocation, 'roomName'>
   ) {
-    return this.http.patch(`${this.apiUrl}/storages/${id}`, newData).pipe(
-      tap(() => {
-        this.storageLocationQueryService.reloadStorageLocation();
-      })
-    );
+    return this.http.patch(`${this.apiUrl}/storages/${id}`, newData);
   }
 
   public deleteStorageLocation(id: number): Observable<HttpResponseBase> {
@@ -63,11 +55,6 @@ export class StorageLocationService {
       .delete<HttpResponseBase>(`${this.apiUrl}/storages/${id}`, {
         observe: 'response',
       })
-      .pipe(
-        tap(() => {
-          this.storageLocationQueryService.reloadStorageLocation();
-        })
-      );
   }
 
   public moveReagentStorageLocation(

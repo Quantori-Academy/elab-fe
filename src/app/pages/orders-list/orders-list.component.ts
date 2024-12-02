@@ -33,6 +33,7 @@ import {
 } from 'rxjs';
 import { EditOrderComponent } from './components/edit-order/edit-order.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-orders-list',
@@ -44,6 +45,7 @@ import { ChangeDetectorRef } from '@angular/core';
     AsyncPipe,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
+    NoDataComponent
   ],
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss'],
