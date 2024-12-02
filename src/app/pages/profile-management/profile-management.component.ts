@@ -25,6 +25,8 @@ import { AuthService } from '../../auth/services/authentication/auth.service';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { NotificationPopupComponent } from '../../shared/components/notification-popup/notification-popup.component';
 import { catchError, of } from 'rxjs';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile-management',
@@ -37,6 +39,8 @@ import { catchError, of } from 'rxjs';
     MatIconModule,
     ReactiveFormsModule,
     NotificationPopupComponent,
+    TranslateModule,
+    CommonModule,
   ],
   templateUrl: './profile-management.component.html',
   styleUrl: './profile-management.component.scss',
@@ -71,6 +75,7 @@ export class ProfilePageComponent implements OnInit {
   private authService = inject(AuthService);
   private rbacService = inject(RbacService);
   private fb: FormBuilder = inject(FormBuilder);
+  private translate = inject(TranslateService);
 
   public get user(): Profile | null {
     return this.rbacService.getAuthenticatedUser() ?? null;

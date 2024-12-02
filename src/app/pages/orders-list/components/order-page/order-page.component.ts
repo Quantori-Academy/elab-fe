@@ -23,6 +23,8 @@ import { StorageLocationDialogComponent } from '../storage-location-dialog/stora
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-page',
@@ -35,6 +37,8 @@ import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm
     TableLoaderSpinnerComponent,
     NoDataComponent,
     NgClass,
+    TranslateModule,
+    CommonModule,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -46,6 +50,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private notificationPopupService = inject(NotificationPopupService);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   private orderSubject = new BehaviorSubject<Order | null>(null);
   order$ = this.orderSubject.asObservable();
@@ -145,12 +150,12 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   }
   onRemove(orderId: number, reagent: ReagentRequestList) {
     const order = this.orderSubject.getValue();
-  
+
     if (order && order.reagents.length === 1) {
       const dialogRef = this.dialog.open(ConfirmDeclineDialogComponent, {
         data: { orderId, reagentId: reagent.id },
       });
-  
+
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.fetchOrder();
@@ -158,7 +163,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       });
     } else {
       this.excludeReagents.push({ id: reagent.id });
-  
+
       this.orderService
         .updateOrder(orderId, { excludeReagents: this.excludeReagents })
         .pipe(takeUntil(this.destroy$))
@@ -181,8 +186,6 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         });
     }
   }
-  
-  
 
   onAdd(id: number) {
     const dialog = this.dialog.open(ReagentRequestsDialogComponent, {

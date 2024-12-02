@@ -24,6 +24,7 @@ import { UserManagementService } from '../../../../auth/services/user-management
 import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-management-form',
@@ -37,6 +38,7 @@ import { NotificationPopupService } from '../../../../shared/services/notificati
     MatSelectModule,
     MatGridListModule,
     MatOptionModule,
+    TranslateModule,
   ],
   templateUrl: './user-management-form.component.html',
   styleUrl: './user-management-form.component.scss',
@@ -52,6 +54,7 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription(); // Observable subscriptions collections
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +64,9 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
     public dialogData: { userData: IUserInfo; formTitle: string }
   ) {
     this.userData = this.dialogData?.userData || this.generateInitialUser();
-    this.formTitle = this.dialogData?.formTitle || 'Create New User';
+    this.formTitle =
+      this.dialogData?.formTitle ||
+      this.translate.instant('USER_MANAGEMENT_FORM.CREATE_NEW_USER');
   }
 
   ngOnInit(): void {
@@ -131,20 +136,30 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
   }
 
   onDeleteUser(): void {
-    if (!confirm('Confirm action -> Delete user:')) return;
+    if (
+      !confirm(
+        this.translate.instant('USER_MANAGEMENT_FORM.DELETE_CONFIRMATION')
+      )
+    )
+      return;
     const deleteSub = this.userManagementService
       .deleteUser(this.userData.id)
       .subscribe({
         next: (res) => {
           this.notificationPopupService.info({
             title: '',
-            message: 'User deleted successfully!',
+            message: this.translate.instant(
+              'USER_MANAGEMENT_FORM.DELETE_SUCCESS'
+            ),
             duration: 3000,
           });
           this.dialogRef.close(res);
         },
         error: (error: Error) => {
-          console.error('Delete user failed', error);
+          console.error(
+            this.translate.instant('USER_MANAGEMENT_FORM.DELETE_FAILED'),
+            error
+          );
         },
       });
     this.subscriptions.add(deleteSub);
@@ -165,8 +180,12 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
           .subscribe({
             next: () => {
               this.notificationPopupService.success({
-                title: 'Success',
-                message: 'User has been created successfully!',
+                title: this.translate.instant(
+                  'USER_MANAGEMENT_FORM.SUCCESS_TITLE'
+                ),
+                message: this.translate.instant(
+                  'USER_MANAGEMENT_FORM.CREATE_SUCCESS'
+                ),
                 duration: 3000,
               });
               this.userForm.reset();
@@ -185,7 +204,9 @@ export class UserManagementFormComponent implements OnInit, OnDestroy {
             next: () => {
               this.notificationPopupService.success({
                 title: '',
-                message: 'User updated successfully!',
+                message: this.translate.instant(
+                  'USER_MANAGEMENT_FORM.UPDATE_SUCCESS'
+                ),
                 duration: 3000,
               });
               this.dialogRef.close(this.userForm.value);

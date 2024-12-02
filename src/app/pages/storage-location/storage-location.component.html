@@ -1,12 +1,12 @@
 @if (isAdmin) {
-  <mat-tab-group>
-  <mat-tab label="Storage Location">
-    <app-storage-management/>
+<mat-tab-group>
+  <mat-tab label="{{ 'STORAGE_LOCATION.TAB.STORAGE_LOCATION' | translate }}">
+    <app-storage-management />
   </mat-tab>
-  <mat-tab label="Room">
-    <app-room-management/>
+  <mat-tab label="{{ 'STORAGE_LOCATION.TAB.ROOM' | translate }}">
+    <app-room-management />
   </mat-tab>
 </mat-tab-group>
-}@else {
-  <app-storage-management/>
+} @else {
+<app-storage-management />
 }

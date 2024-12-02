@@ -36,8 +36,8 @@ export class HeaderComponent implements OnInit {
 
   public languages = [
     { code: 'en', label: 'English' },
-    { code: 'de', label: 'German' },
-    { code: 'fr', label: 'French' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'fr', label: 'Français' },
   ];
 
   constructor(public translate: TranslateService) {}
@@ -74,5 +74,6 @@ export class HeaderComponent implements OnInit {
 
   changeLanguage(lang: string) {
     this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 }

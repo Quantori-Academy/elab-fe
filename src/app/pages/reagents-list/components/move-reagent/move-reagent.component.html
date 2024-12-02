@@ -1,9 +1,13 @@
 <form class="container" [formGroup]="moveForm">
   <mat-form-field subscriptSizing="dynamic" appearance="outline">
-    <mat-label>Storage Location</mat-label>
+    <mat-label>{{
+      "MOVE_REAGENT.STORAGE_LOCATION_LABEL" | translate
+    }}</mat-label>
     <input
       matInput
-      placeholder="e.g: Room1 Cabinet1-Shelf1"
+      placeholder="{{
+        'MOVE_REAGENT.STORAGE_LOCATION_PLACEHOLDER' | translate
+      }}"
       (input)="onRoomNameChange($event)"
       formControlName="storageLocation"
       [matAutocomplete]="auto"
@@ -14,22 +18,22 @@
       #auto="matAutocomplete"
       [displayWith]="displayFn"
     >
-      @if (storageInput.value) {
-        @if (storageLocations$ | async; as storageLocations) {
-          @for (option of storageLocations.storages; track option.id) {
-            <mat-option [value]="option">
-              {{ option.room.name }} {{ option.name }}
-            </mat-option>
-          }
-        }
-      }
+      @if (storageInput.value) { @if (storageLocations$ | async; as
+      storageLocations) { @for (option of storageLocations.storages; track
+      option.id) {
+      <mat-option [value]="option">
+        {{ option.room.name }} {{ option.name }}
+      </mat-option>
+      } } }
     </mat-autocomplete>
   </mat-form-field>
 
   <div class="actions">
-    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-button mat-dialog-close color="warn">
+      {{ "MOVE_REAGENT.CANCEL" | translate }}
+    </button>
     <button mat-flat-button color="primary" (click)="moveReagents()">
-      Move
+      {{ "MOVE_REAGENT.MOVE" | translate }}
     </button>
   </div>
 </form>

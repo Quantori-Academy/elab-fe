@@ -32,6 +32,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-reagent-sample',
@@ -44,6 +45,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
     TableLoaderSpinnerComponent,
     NoDataComponent,
     SpinnerDirective
+    TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './add-reagent-sample.component.html',
@@ -56,6 +58,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<AddReagentSampleComponent>);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   public displayedColumns: string[] = [
     'name',

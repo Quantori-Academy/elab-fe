@@ -6,27 +6,35 @@
 
     <!-- First Name Field -->
     <mat-form-field appearance="outline">
-      <mat-label>First Name</mat-label>
+      <mat-label>{{
+        "USER_MANAGEMENT_FORM.FIRST_NAME_LABEL" | translate
+      }}</mat-label>
       <input
         matInput
         (input)="capitalizeValue($event)"
         formControlName="firstName"
       />
       @if (userForm.get('firstName')?.hasError('required')) {
-      <mat-error> First Name is <strong>required</strong> </mat-error>
+      <mat-error>
+        {{ "USER_MANAGEMENT_FORM.ERRORS.FIRST_NAME_REQUIRED" | translate }}
+      </mat-error>
       }
     </mat-form-field>
 
     <!-- Last Name Field -->
     <mat-form-field appearance="outline">
-      <mat-label>Last Name</mat-label>
+      <mat-label>{{
+        "USER_MANAGEMENT_FORM.LAST_NAME_LABEL" | translate
+      }}</mat-label>
       <input
         matInput
         (input)="capitalizeValue($event)"
         formControlName="lastName"
       />
       @if (userForm.get('lastName')?.hasError('required')) {
-      <mat-error> Last Name is <strong>required</strong> </mat-error>
+      <mat-error>
+        {{ "USER_MANAGEMENT_FORM.ERRORS.LAST_NAME_REQUIRED" | translate }}
+      </mat-error>
       }
     </mat-form-field>
 
@@ -35,13 +43,18 @@
       style="display: flex; justify-content: flex-start; column-gap: 0.75rem"
     >
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>{{
+          "USER_MANAGEMENT_FORM.EMAIL_LABEL" | translate
+        }}</mat-label>
         <input matInput formControlName="email" [readonly]="!emailEditable" />
         @if (userForm.get('email')?.hasError('required')) {
-
-        <mat-error> Email is <strong>required</strong> </mat-error>
+        <mat-error>
+          {{ "USER_MANAGEMENT_FORM.ERRORS.EMAIL_REQUIRED" | translate }}
+        </mat-error>
         } @if (userForm.get('email')?.hasError('email')) {
-        <mat-error> <strong>Invalid</strong> email </mat-error>
+        <mat-error>
+          {{ "USER_MANAGEMENT_FORM.ERRORS.EMAIL_INVALID" | translate }}
+        </mat-error>
         }
       </mat-form-field>
 
@@ -61,7 +74,7 @@
 
     <!-- Role Field -->
     <mat-form-field appearance="outline">
-      <mat-label>Role</mat-label>
+      <mat-label>{{ "USER_MANAGEMENT_FORM.ROLE_LABEL" | translate }}</mat-label>
       <mat-select formControlName="role">
         @for (role of roles; track role) {
         <mat-option [value]="role">
@@ -70,7 +83,9 @@
         }
       </mat-select>
       @if (userForm.get('role')?.hasError('required')) {
-      <mat-error> Role is <strong>required</strong> </mat-error>
+      <mat-error>
+        {{ "USER_MANAGEMENT_FORM.ERRORS.ROLE_REQUIRED" | translate }}
+      </mat-error>
       }
     </mat-form-field>
 
@@ -108,7 +123,9 @@
 
     <div class="form-actions">
       <!-- Submit Button (Always Enabled) -->
-      <button mat-flat-button color="primary" type="submit">Submit</button>
+      <button mat-flat-button color="primary" type="submit">
+        {{ "USER_MANAGEMENT_FORM.SUBMIT_BUTTON" | translate }}
+      </button>
 
       <!-- Delete User button (Enabled only in modification mode, when userData is provided) -->
       @if (!userCreation) {
@@ -118,7 +135,7 @@
         color="warn"
         (click)="onDeleteUser()"
       >
-        Delete User
+        {{ "USER_MANAGEMENT_FORM.DELETE_USER_BUTTON" | translate }}
       </button>
       }
     </div>

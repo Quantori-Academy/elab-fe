@@ -22,11 +22,12 @@ import {
   Package,
   PackageLabels,
 } from '../../../../shared/models/reagent-model';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-requested-reagent',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './edit-requested-reagent.component.html',
   styleUrl: './edit-requested-reagent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +36,7 @@ export class EditRequestedReagentComponent implements OnInit {
   private fb = inject(FormBuilder);
   private reagentRequestService = inject(ReagentRequestService);
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
 
   packages = Object.keys(Package).map((key) => ({
     value: Package[key as keyof typeof Package],
@@ -87,14 +89,18 @@ export class EditRequestedReagentComponent implements OnInit {
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent Request has been updated',
+            title: this.translate.instant(
+              'EDIT_REQUESTED_REAGENT.SUCCESS_TITLE'
+            ),
+            message: this.translate.instant(
+              'EDIT_REQUESTED_REAGENT.SUCCESS_MESSAGE'
+            ),
           });
           this.dialogRef.close(true);
         },
         error: (error: HttpErrorResponse) => {
           this.notificationPopupService.error({
-            title: 'Error',
+            title: this.translate.instant('EDIT_REQUESTED_REAGENT.ERROR_TITLE'),
             message: error.error.message,
           });
         },

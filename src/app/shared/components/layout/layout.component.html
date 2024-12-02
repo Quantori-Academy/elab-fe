@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav [opened]="isOpenedSideNav()" [mode]="sideNavMode()" [style.width]="navbarWidth()">
     <mat-nav-list>
-      @for (link of menuLinks(); track link.label){ @if (isLinkVisible(link)) {
+      @for (link of menuLinks(); track link.label) { @if (isLinkVisible(link)) {
       <a
         mat-list-item
         [routerLink]="link.route"
@@ -10,10 +10,10 @@
         [activated]="rla.isActive"
         (click)="closeSideNav()"
       >
-        <mat-icon aria-hidden="false" aria-label="Link icon" matListItemIcon>{{
-          link.icon
-        }}</mat-icon>
-        <span matListItemTitle>{{ link.label }}</span>
+        <mat-icon aria-hidden="false" aria-label="Link icon" matListItemIcon>
+          {{ link.icon }}
+        </mat-icon>
+        <span matListItemTitle>{{ link.label | translate }}</span>
       </a>
       } }
       @if (isMobile() && (currentUser$ | async); as currentUser) {

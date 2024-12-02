@@ -1,45 +1,65 @@
-<h5 class="header">Reagent Request Details</h5>
+<h5 class="header">{{ "REAGENT_REQUEST_DETAIL.HEADER" | translate }}</h5>
 @if (reagentRequest) {
 <div class="content-wrapper">
   <mat-card class="general-info-card">
     <mat-card-header>
-      <div class="mat-headline">General Information</div>
+      <div class="mat-headline">
+        {{ "REAGENT_REQUEST_DETAIL.GENERAL_INFO" | translate }}
+      </div>
     </mat-card-header>
     <mat-card-content>
       <div class="detail-columns">
         <div class="detail-column">
           <div class="detail-item">
-            <span class="label">ID:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.ID" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.id }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Name:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.NAME" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.name }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Status:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.STATUS" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.status }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Desired Quantity:</span>
+            <span class="label"
+              >{{
+                "REAGENT_REQUEST_DETAIL.DESIRED_QUANTITY" | translate
+              }}:</span
+            >
             <span class="value">{{ reagentRequest.desiredQuantity }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Quantity Unit:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.QUANTITY_UNIT" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.quantityUnit }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Package:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.PACKAGE" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.package }}</span>
           </div>
         </div>
         <div class="detail-column">
           <div class="detail-item">
-            <span class="label">CAS Number:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.CAS_NUMBER" | translate }}:</span
+            >
             <span class="value">{{ reagentRequest.casNumber || "N/A" }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">User Comments:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.USER_COMMENTS" | translate }}:</span
+            >
             <span
               class="value truncated"
               [matTooltip]="reagentRequest.userComments || 'N/A'"
@@ -49,7 +69,11 @@
             </span>
           </div>
           <div class="detail-item">
-            <span class="label">Procurement Comments:</span>
+            <span class="label"
+              >{{
+                "REAGENT_REQUEST_DETAIL.PROCUREMENT_COMMENTS" | translate
+              }}:</span
+            >
             <span
               class="value truncated"
               [matTooltip]="reagentRequest.procurementComments || 'N/A'"
@@ -59,13 +83,17 @@
             </span>
           </div>
           <div class="detail-item">
-            <span class="label">Created At:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.CREATED_AT" | translate }}:</span
+            >
             <span class="value">{{
               reagentRequest.createdAt | date : "short"
             }}</span>
           </div>
           <div class="detail-item">
-            <span class="label">Updated At:</span>
+            <span class="label"
+              >{{ "REAGENT_REQUEST_DETAIL.UPDATED_AT" | translate }}:</span
+            >
             <span class="value">{{
               reagentRequest.updatedAt | date : "short"
             }}</span>
@@ -77,7 +105,9 @@
 
   <mat-card class="structure-card">
     <mat-card-header>
-      <div class="mat-headline">Structure</div>
+      <div class="mat-headline">
+        {{ "REAGENT_REQUEST_DETAIL.STRUCTURE" | translate }}
+      </div>
     </mat-card-header>
     <mat-card-content>
       @if ((display$ | async); as display) {
@@ -88,7 +118,8 @@
           [height]="display.isTablet ? 100 : 200"
         ></app-molecule-structure>
         <p>
-          <strong>SMILES:</strong> {{ reagentRequest.structureSmiles || "N/A" }}
+          <strong>{{ "REAGENT_REQUEST_DETAIL.SMILES" | translate }}:</strong>
+          {{ reagentRequest.structureSmiles || "N/A" }}
         </p>
       </div>
       }

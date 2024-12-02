@@ -2,7 +2,11 @@
 <div class="profile-details">
   <div>
     <h3>{{ user.firstName }} {{ user.lastName }}</h3>
-    <h4>Role: {{ user.role }}</h4>
+    <h4>
+      {{ "PROFILE.ROLE" | translate }}:
+      {{ "PROFILE.ROLE_NAME." + (user.role | uppercase) | translate }}
+    </h4>
+
     <p>Email: {{ user.email }}</p>
     <button
       mat-stroked-button
@@ -11,7 +15,8 @@
       tabindex="0"
       (keydown.enter)="togglePasswordChange()"
     >
-      Change Password <i class="bi bi-pencil-fill"></i>
+      {{ "PROFILE.CHANGE_PASSWORD" | translate }}
+      <i class="bi bi-pencil-fill"></i>
     </button>
     @if (changePassword===true) {
     <form
@@ -25,37 +30,21 @@
         appearance="outline"
         class="primary-outline-box-shadow"
       >
-        <mat-label>Current Password</mat-label>
+        <mat-label>{{ "PROFILE.CURRENT_PASSWORD" | translate }}</mat-label>
         <input
           matInput
-          placeholder="Current Password"
+          placeholder="{{ 'PROFILE.CURRENT_PASSWORD' | translate }}"
           type="password"
           formControlName="currentPassword"
         />
 
         @if (controls.currentPassword.hasError('required')) {
-        <mat-error> Current password is required. </mat-error>
-        } @if (controls.currentPassword.hasError('currentPasswordMismatch')) {
-        <mat-error> Password is not correct. </mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field
-        subscriptSizing="dynamic"
-        appearance="outline"
-        class="primary-outline-box-shadow"
-      >
-        <mat-label>New Password</mat-label>
-        <input
-          matInput
-          placeholder="New Password"
-          type="password"
-          formControlName="newPassword"
-        />
-        @if(controls.newPassword.hasError('required')){
-        <mat-error> New password is required. </mat-error>
-        } @if(controls['newPassword'].errors?.['pattern']){
         <mat-error>
-          Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*
+          {{ "PROFILE.ERRORS.CURRENT_PASSWORD_REQUIRED" | translate }}
+        </mat-error>
+        } @if (controls.currentPassword.hasError('currentPasswordMismatch')) {
+        <mat-error>
+          {{ "PROFILE.ERRORS.PASSWORD_INCORRECT" | translate }}
         </mat-error>
         }
       </mat-form-field>
@@ -64,17 +53,43 @@
         appearance="outline"
         class="primary-outline-box-shadow"
       >
-        <mat-label>Confirm Password</mat-label>
+        <mat-label>{{ "PROFILE.NEW_PASSWORD" | translate }}</mat-label>
         <input
           matInput
-          placeholder="Confirm Password"
+          placeholder="{{ 'PROFILE.NEW_PASSWORD' | translate }}"
+          type="password"
+          formControlName="newPassword"
+        />
+        @if(controls.newPassword.hasError('required')){
+        <mat-error>
+          {{ "PROFILE.ERRORS.NEW_PASSWORD_REQUIRED" | translate }}
+        </mat-error>
+        } @if(controls['newPassword'].errors?.['pattern']){
+        <mat-error>
+          {{ "PROFILE.ERRORS.PASSWORD_PATTERN" | translate }}
+        </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field
+        subscriptSizing="dynamic"
+        appearance="outline"
+        class="primary-outline-box-shadow"
+      >
+        <mat-label>{{ "PROFILE.CONFIRM_PASSWORD" | translate }}</mat-label>
+        <input
+          matInput
+          placeholder="{{ 'PROFILE.CONFIRM_PASSWORD' | translate }}"
           type="password"
           formControlName="confirmPassword"
         />
         @if (controls.confirmPassword.hasError('required')) {
-        <mat-error> Confirm password is required. </mat-error>
+        <mat-error>
+          {{ "PROFILE.ERRORS.CONFIRM_PASSWORD_REQUIRED" | translate }}
+        </mat-error>
         } @if (controls.confirmPassword.hasError('passwordsMatching')) {
-        <mat-error> Passwords do not match! </mat-error>
+        <mat-error>
+          {{ "PROFILE.ERRORS.PASSWORDS_NOT_MATCH" | translate }}
+        </mat-error>
         }
       </mat-form-field>
       <div class="submit-buttons">
@@ -83,14 +98,14 @@
           [disabled]="changePasswordForm.invalid"
           type="submit"
         >
-          Change
+          {{ "PROFILE.CHANGE" | translate }}
         </button>
         <button
           mat-stroked-button
           (click)="togglePasswordChange()"
           type="button"
         >
-          Cancel
+          {{ "PROFILE.CANCEL" | translate }}
         </button>
       </div>
     </form>

@@ -35,6 +35,7 @@ import { EditOrderComponent } from './components/edit-order/edit-order.component
 import { ChangeDetectorRef } from '@angular/core';
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-orders-list',
@@ -47,6 +48,7 @@ import { NotificationPopupService } from '../../shared/services/notification-pop
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     NoDataComponent,
+    TranslateModule,
   ],
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss'],
@@ -71,11 +73,17 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   statusOptions = Object.values(Status);
   private cdr = inject(ChangeDetectorRef);
   public isLoading = computed(() => this.orderService.isLoading());
+  private translate = inject(TranslateService);
 
   constructor() {
     this.ordersList$ = this.orderService.getOrdersList();
     this.pageSize = this.orderService.pagesize;
   }
+
+  // getStatusTranslation(elementStatus: string): string {
+  //   const key = 'ORDERS_LIST.STATUS.' + elementStatus.toUpperCase();
+  //   return this.translate.instant(key);
+  // }
 
   displayedColumns: string[] = [
     'title',

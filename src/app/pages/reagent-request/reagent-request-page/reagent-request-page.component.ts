@@ -23,6 +23,7 @@ import { DeclineReagentRequestComponent } from '../decline-reagent-request/decli
 import { Router } from '@angular/router';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { NoDataComponent } from '../../../shared/components/no-data/no-data.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagents-request-page',
@@ -36,15 +37,17 @@ import { NoDataComponent } from '../../../shared/components/no-data/no-data.comp
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     NoDataComponent,
+    TranslateModule,
   ],
   templateUrl: './reagent-request-page.component.html',
-  styleUrls: ['./reagent-request-page.component.scss'],
+  styleUrl: './reagent-request-page.component.scss',
 })
 export class ReagentsRequestPageComponent implements OnInit {
   public dialog = inject(MatDialog);
   private reagentRequestService = inject(ReagentRequestService);
   private router = inject(Router);
   private rbacService = inject(RbacService);
+  private translate = inject(TranslateService);
 
   public isLoading = computed(() => this.reagentRequestService.isLoading());
   private dataSourceSubject = new BehaviorSubject<ReagentRequestList[] | null>(

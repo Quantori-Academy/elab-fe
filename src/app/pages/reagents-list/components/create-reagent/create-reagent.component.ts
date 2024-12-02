@@ -19,7 +19,6 @@ import {
   Validators,
   ReactiveFormsModule,
   FormGroup,
-
 } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
@@ -41,6 +40,7 @@ import {
 } from '../../../storage-location/models/storage-location.interface';
 import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
 import { DISPLAY_EXTENSION } from '../../../../shared/units/display.units';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-reagent',
@@ -55,7 +55,8 @@ import { DISPLAY_EXTENSION } from '../../../../shared/units/display.units';
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-],
+    TranslateModule,
+  ],
   templateUrl: './create-reagent.component.html',
   styleUrl: './create-reagent.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -71,6 +72,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private displayExtension = inject(DISPLAY_EXTENSION);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   public isSample = false;
   public selectedReagentSample = signal<SelectedReagentSample[]>([]);
@@ -78,6 +80,12 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public reagentRequestForm!: FormGroup;
   public storageLocations$?: Observable<StorageLocationListData>;
   public isTablet = signal(false);
+
+  get itemType(): string {
+    return this.isSample
+      ? this.translate.instant('CREATE_REAGENT.SAMPLE')
+      : this.translate.instant('CREATE_REAGENT.REAGENT');
+  }
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -96,10 +104,10 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       .subscribe((data) => (this.isSample = data['isSample']));
     this.initializeForm();
     this.storageLocations$ =
-      this.storageLocationService.searchStorageLocationByName(
-      );
-    this.displayExtension.pipe(takeUntil(this.destroy$))
-      .subscribe((display) => this.isTablet.set(display.isTablet))
+      this.storageLocationService.searchStorageLocationByName();
+    this.displayExtension
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((display) => this.isTablet.set(display.isTablet));
   }
 
   public initializeForm(): void {
@@ -241,10 +249,12 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       formRequest.pipe(takeUntil(this.destroy$)).subscribe({
         next: () => {
           this.notificationsService.success({
-            title: 'Success',
-            message: `${
-              this.isSample ? 'Sample' : 'Reagent'
-            } created successfully!`,
+            title: this.translate.instant('CREATE_REAGENT.SUCCESS_TITLE'),
+            message: this.translate.instant('CREATE_REAGENT.SUCCESS_MESSAGE', {
+              item: this.isSample
+                ? this.translate.instant('CREATE_REAGENT.SAMPLE')
+                : this.translate.instant('CREATE_REAGENT.REAGENT'),
+            }),
             duration: 3000,
           });
           this.redirectToReagentList();
@@ -255,7 +265,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
             this.setSampleRequestError(error.error.details);
           }
           this.notificationsService.error({
-            title: 'Error',
+            title: this.translate.instant('CREATE_REAGENT.ERROR_TITLE'),
             message: error.error.message,
             duration: 4000,
           });
@@ -271,7 +281,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       minWidth: '650px',
       minHeight: '600px',
       restoreFocus: false,
-      data: { smiles:  this.reagentRequestForm.get('structure')?.value }
+      data: { smiles: this.reagentRequestForm.get('structure')?.value },
     });
 
     dialogRef

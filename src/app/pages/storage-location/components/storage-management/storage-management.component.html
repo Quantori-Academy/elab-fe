@@ -1,22 +1,36 @@
 <div class="control-bar-wrapper">
   @if(isAdmin){
-    <button class="add-btn" mat-flat-button (click)="onCreate()">
-      Add New Storage Location
-    </button>
+  <button class="add-btn" mat-flat-button (click)="onCreate()">
+    {{ "STORAGE_MANAGEMENT.ADD_NEW_STORAGE" | translate }}
+  </button>
   }
-  <div class="filter-container" >
-    <mat-form-field class="filter__item" appearance="fill" subscriptSizing="dynamic">
-      <mat-label>Filter by room</mat-label>
+  <div class="filter-container">
+    <mat-form-field
+      class="filter__item"
+      appearance="fill"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>{{
+        "STORAGE_MANAGEMENT.FILTER_BY_ROOM" | translate
+      }}</mat-label>
       <mat-select #roomFilter (selectionChange)="onFilterRoom($event.value)">
-        <mat-option value="">All Rooms</mat-option>
+        <mat-option value="">{{
+          "STORAGE_MANAGEMENT.ALL_ROOMS" | translate
+        }}</mat-option>
         @for (room of listOfRooms$ | async; track $index) {
-          <mat-option [value]="room.name">{{ room.name }}</mat-option>
+        <mat-option [value]="room.name">{{ room.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
-      <mat-label>Filter by name</mat-label>
+    <mat-form-field
+      class="mat-form-field-with-loader"
+      appearance="fill"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>{{
+        "STORAGE_MANAGEMENT.FILTER_BY_NAME" | translate
+      }}</mat-label>
       <input #nameFilter matInput (input)="onFilterName($event)" />
     </mat-form-field>
   </div>
@@ -32,37 +46,44 @@
       [appSpinner]="isLoading()"
     >
       <ng-container matColumnDef="room">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Room</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "STORAGE_MANAGEMENT.TABLE.ROOM" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.room.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "STORAGE_MANAGEMENT.TABLE.NAME" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "STORAGE_MANAGEMENT.TABLE.DATE" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="reagents">
-        <th mat-header-cell *matHeaderCellDef>Reagents</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "STORAGE_MANAGEMENT.TABLE.REAGENTS" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.reagentCount }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "STORAGE_MANAGEMENT.TABLE.ACTIONS" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
-          @if(isAdmin){<button
-            mat-icon-button
-            aria-label="edit"
-            (click)="onEdit(element)"
-          >
+          @if(isAdmin){
+          <button mat-icon-button aria-label="edit" (click)="onEdit(element)">
             <mat-icon color="primary">edit</mat-icon>
           </button>
           <button
@@ -70,8 +91,9 @@
             aria-label="delete"
             (click)="onDelete(element)"
           >
-            <mat-icon color="warn">delete</mat-icon></button
-          >}
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+          }
           <button
             mat-icon-button
             aria-label="delete"
@@ -86,7 +108,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!storageLocationData.size && !isLoading()) {
-      <app-no-data text="No storages"/>
+    <app-no-data text="No storages" />
     }
   </div>
 

@@ -11,11 +11,12 @@ import { ReagentsListComponent } from '../reagents-list/reagents-list.component'
 import { AsyncPipe } from '@angular/common';
 import { Observable, take } from 'rxjs';
 import { StorageLocationService } from '../storage-location/services/storage-location.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-storage-location-detail',
   standalone: true,
-  imports: [MaterialModule, ReagentsListComponent, AsyncPipe],
+  imports: [MaterialModule, ReagentsListComponent, AsyncPipe, TranslateModule],
   templateUrl: './storage-location-detail.component.html',
   styleUrl: './storage-location-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
