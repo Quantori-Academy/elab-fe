@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit, Input, signal } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { TableLoaderSpinnerComponent } from "../table-loader-spinner/table-loader-spinner.component";
 
@@ -26,7 +26,7 @@ export class StructureEditorComponent implements OnInit, AfterViewInit {
   @Input() initialSmiles: string | null = null;
 
   ketcherUrl!: SafeResourceUrl;
-  loading = true;
+  loading = signal(true);
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -55,7 +55,7 @@ export class StructureEditorComponent implements OnInit, AfterViewInit {
   }
 
   onLoaded() {
-    this.loading = false;
+    this.loading.set(false);
     this.loadPreviousSmiles();
   }
 }
