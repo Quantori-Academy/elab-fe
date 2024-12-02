@@ -17,6 +17,8 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-order',
@@ -28,6 +30,8 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
     ReactiveFormsModule,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
+    TranslateModule,
+    CommonModule,
   ],
   templateUrl: './edit-order.component.html',
   styleUrls: ['./edit-order.component.scss'],
@@ -38,6 +42,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
+
   statusOptions: Status[] = [
     Status.pending,
     Status.submitted,
@@ -142,7 +148,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
 
     // If no modifications notify user
     if (Object.keys(modifiedValues).length === 0) {
-      this.errorMessage = 'No changes to update';
+      this.errorMessage = this.translate.instant('EDIT_ORDER.NO_CHANGES');
       return;
     }
 
@@ -153,19 +159,24 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         next: () => {
           this.dialogRef.close(true);
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Order updated successfully',
+            title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
+            message: this.translate.instant('EDIT_ORDER.SUCCESS_MESSAGE'),
             duration: 3000,
           });
         },
-        error: (err) => this.notificationPopupService.error(err),
+        error: (err) =>
+          this.notificationPopupService.error({
+            title: this.translate.instant('EDIT_ORDER.ERROR_TITLE'),
+            message: err.error.message,
+          }),
       });
   }
 
   onRemove(reagent: ReagentRequestList) {
     if (this.reagents$.getValue().length === 1) {
-      this.errorMessage =
-        'Removing the last reagent will cancel the order. Do you want to proceed?';
+      this.errorMessage = this.translate.instant(
+        'EDIT_ORDER.REMOVE_LAST_REAGENT_CONFIRM'
+      );
       this.showRemoveConfirmation = true;
       this.lastReagentToRemove = reagent;
     } else {
@@ -189,8 +200,10 @@ export class EditOrderComponent implements OnInit, OnDestroy {
           this.excludeReagents = [];
 
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent removed successfully!',
+            title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
+            message: this.translate.instant(
+              'EDIT_ORDER.REAGENT_REMOVED_SUCCESS'
+            ),
             duration: 3000,
           });
         },
@@ -219,8 +232,10 @@ export class EditOrderComponent implements OnInit, OnDestroy {
             this.lastReagentToRemove = null;
 
             this.notificationPopupService.success({
-              title: 'Success',
-              message: 'Order Declined successfully!',
+              title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
+              message: this.translate.instant(
+                'EDIT_ORDER.ORDER_DECLINED_SUCCESS'
+              ),
               duration: 3000,
             });
           },
@@ -242,5 +257,12 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  get translatedStatus(): string {
+    const status = this.updateForm.get('status')?.value;
+    return status
+      ? this.translate.instant('ORDERS_LIST.STATUS.' + status.toUpperCase())
+      : '';
   }
 }

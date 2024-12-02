@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
 
   public languages = [
     { code: 'en', label: 'English' },
-    { code: 'de', label: 'German' },
-    { code: 'fr', label: 'French' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'fr', label: 'Français' },
   ];
 
   constructor(
@@ -166,5 +166,6 @@ export class LoginComponent implements OnInit {
 
   changeLanguage(lang: string) {
     this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 }

@@ -16,7 +16,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -39,6 +38,7 @@ import { ReagentRequestList } from '../../../reagent-request/reagent-request-pag
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-form',
@@ -54,6 +54,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     TableLoaderSpinnerComponent,
     MoleculeStructureComponent,
     NoDataComponent
+    TranslateModule,
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -75,7 +76,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   selectedReagents = new Map<number, { id: number; packageAmount: number }>();
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
-
   // dataSource$ = this.paramsSubject.pipe(
   //   debounceTime(500),
   //   distinctUntilChanged(),
@@ -199,8 +199,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.ordersService.createOrder(orderData).subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Order created successfully!',
+            title: this.translate.instant('ORDER_FORM.SUCCESS_TITLE'),
+            message: this.translate.instant('ORDER_FORM.SUCCESS_MESSAGE'),
             duration: 3000,
           });
           this.redirectToReagentList();
@@ -214,6 +214,11 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           });
         },
         
+        error: (err) =>
+          this.notificationPopupService.error({
+            title: this.translate.instant('ORDER_FORM.ERROR_TITLE'),
+            message: err.error.message,
+          }),
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;

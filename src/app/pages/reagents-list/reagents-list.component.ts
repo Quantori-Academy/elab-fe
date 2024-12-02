@@ -29,6 +29,7 @@ import { AddStructureComponent } from '../../shared/components/structure-editor/
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagents-list',
@@ -42,6 +43,7 @@ import { EditReagentComponent } from './components/edit-reagent/edit-reagent.com
     TableLoaderSpinnerComponent,
     SpinnerDirective,
     NoDataComponent
+    TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
@@ -55,6 +57,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private translate = inject(TranslateService);
   private destroy$ = new Subject<void>()
   filterStructureValue = '';
   isFullStructure = false;

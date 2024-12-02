@@ -1,59 +1,74 @@
 <div class="content">
-  <h3>Edit Order</h3>
-  @if (reagents$ |async) {
+  <h3>{{ "EDIT_ORDER.TITLE" | translate }}</h3>
+  @if (reagents$ | async) {
   <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
     <!-- Title Field -->
     <div class="fields">
       <mat-form-field appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>{{ "EDIT_ORDER.FORM.TITLE_LABEL" | translate }}</mat-label>
         <input matInput formControlName="title" />
       </mat-form-field>
 
       <!-- Seller Field -->
       <mat-form-field appearance="outline">
-        <mat-label>Seller</mat-label>
+        <mat-label>{{ "EDIT_ORDER.FORM.SELLER_LABEL" | translate }}</mat-label>
         <input matInput formControlName="seller" />
       </mat-form-field>
 
       <!-- Status Field -->
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Status</mat-label>
-        <input matInput formControlName="status" [matAutocomplete]="auto" />
+        <mat-label>{{ "EDIT_ORDER.FORM.STATUS_LABEL" | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="status"
+          [value]="translatedStatus"
+          [matAutocomplete]="auto"
+        />
         <mat-autocomplete #auto="matAutocomplete">
           @for (option of statusOptions; track option) {
-          <mat-option [value]="option">{{ option }}</mat-option>
+          <mat-option [value]="option">{{
+            "ORDERS_LIST.STATUS." + (option | uppercase) | translate
+          }}</mat-option>
           }
         </mat-autocomplete>
       </mat-form-field>
     </div>
 
-    <h4>Ordered Reagents</h4>
+    <h4>{{ "EDIT_ORDER.ORDERED_REAGENTS" | translate }}</h4>
     <div class="mat-elevation-z8 table-container">
       <table mat-table class="mat-elevation-z8" [dataSource]="reagents$">
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.NAME" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="casNumber">
-          <mat-header-cell *matHeaderCellDef> casNumber </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.CAS_NUMBER" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.casNumber }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="modification date">
-          <mat-header-cell *matHeaderCellDef>Modification Date</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.MODIFICATION_DATE" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             @if (element.updatedAt === '') {
             <span>______</span>
-            }@else { {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}}
+            } @else {
+            {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+            }
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="desiredQuantity">
           <mat-header-cell *matHeaderCellDef>
-            Desired Quantity
+            {{ "EDIT_ORDER.TABLE_HEADERS.DESIRED_QUANTITY" | translate }}
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.desiredQuantity }} {{ element.quantityUnit }}
@@ -61,15 +76,18 @@
         </ng-container>
 
         <ng-container matColumnDef="quantityLeft">
-          <mat-header-cell *matHeaderCellDef> Quantity Left </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.QUANTITY_LEFT" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.quantityLeft }}
-            {{ element.quantityUnit }}
+            {{ element.quantityLeft }} {{ element.quantityUnit }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="structureSmiles">
-          <mat-header-cell *matHeaderCellDef>Structure</mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.STRUCTURE" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element" class="structure-container">
             <app-molecule-structure
               [structure]="element.structureSmiles"
@@ -81,7 +99,7 @@
 
         <ng-container matColumnDef="userComments">
           <mat-header-cell *matHeaderCellDef>
-            Creator's comment
+            {{ "EDIT_ORDER.TABLE_HEADERS.CREATOR_COMMENT" | translate }}
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.userComments }}
@@ -89,7 +107,9 @@
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "EDIT_ORDER.TABLE_HEADERS.ACTIONS" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <button
               mat-icon-button
@@ -109,7 +129,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </table>
     </div>
-    @if (showRemoveConfirmation===false&& errorMessage !=="") {
+    @if (showRemoveConfirmation === false && errorMessage !== "") {
     <div class="error-message">
       <mat-error class="error-text">{{ errorMessage }}</mat-error>
     </div>
@@ -124,13 +144,13 @@
         type="button"
         (click)="confirmRemoval()"
       >
-        proceed
+        {{ "EDIT_ORDER.PROCEED_BUTTON" | translate }}
       </button>
       <button mat-button color="warn" type="button" (click)="cancelRemoval()">
-        cancel
+        {{ "EDIT_ORDER.CANCEL_BUTTON" | translate }}
       </button>
     </div>
-    } @if ( showRemoveConfirmation ===false ) {
+    } @if (showRemoveConfirmation === false) {
     <div class="actions">
       <button
         mat-raised-button
@@ -138,15 +158,14 @@
         type="submit"
         [disabled]="updateForm.invalid"
       >
-        Update
+        {{ "EDIT_ORDER.UPDATE_BUTTON" | translate }}
       </button>
       <button mat-button color="warn" type="button" (click)="onClose()">
-        Close
+        {{ "EDIT_ORDER.CLOSE_BUTTON" | translate }}
       </button>
     </div>
     }
   </form>
-
   } @else {
   <app-table-loader-spinner />
   }

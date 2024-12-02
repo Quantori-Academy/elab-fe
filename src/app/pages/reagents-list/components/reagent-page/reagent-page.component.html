@@ -1,5 +1,5 @@
 @if (reagent$ | async; as reagent) {
-<h1 class="header">Reagent's Details</h1>
+<h1 class="header">{{ "REAGENT_PAGE.DETAILS_HEADER" | translate }}</h1>
 <button mat-icon-button class="close-button" (click)="onClose()">
   <mat-icon>close</mat-icon>
 </button>
@@ -8,11 +8,12 @@
     <img src="/assets/icons/reagent.svg" alt="reagent" />
   </div>
   <div>
-    <h1>Reagent name: {{ reagent.name }}</h1>
+    <h1>{{ "REAGENT_PAGE.NAME" | translate }}: {{ reagent.name }}</h1>
 
     <div class="structure">
       <h3>
-        Reagent structure: <span>{{ reagent.structureSmiles }}</span>
+        {{ "REAGENT_PAGE.STRUCTURE" | translate }}:
+        <span>{{ reagent.structureSmiles }}</span>
       </h3>
       <app-molecule-structure
         [structure]="reagent.structureSmiles!"
@@ -21,42 +22,43 @@
       ></app-molecule-structure>
     </div>
     @if (reagent.producer) {
-      <h3>
-        Price per unit: <span>{{ reagent.producer }}</span>
-      </h3>
-      }
     <h3>
-      Reagent's desired quantity:
-      <span
-        >{{ reagent.desiredQuantity }} {{ reagent.quantityUnit }} per @if
-        (reagent.package) {
+      Price per unit: <span>{{ reagent.producer }}</span>
+    </h3>
+    }
+    <h3>
+      {{ "REAGENT_PAGE.DESIRED_QUANTITY" | translate }}:
+      <span>
+        {{ reagent.desiredQuantity }} {{ reagent.quantityUnit }}
+        {{ "REAGENT_PAGE.PER" | translate }}
+        @if (reagent.package) {
         {{ reagent.package }}
-        }@else { package }
+        } @else { {{ "REAGENT_PAGE.PACKAGE" | translate }} }
       </span>
     </h3>
     @if (reagent.pricePerUnit) {
     <h3>
-      Price per unit: <span>{{ reagent.pricePerUnit }}$</span>
+      {{ "REAGENT_PAGE.PRICE_PER_UNIT" | translate }}:
+      <span>{{ reagent.pricePerUnit }}$</span>
     </h3>
     } @if (reagent.casNumber) {
     <h3>
-      Reagent's CAS:
+      {{ "REAGENT_PAGE.CAS_NUMBER" | translate }}:
       <span>{{ reagent.casNumber }} </span>
     </h3>
     } @if (reagent.catalogId) {
     <h3>
-      Reagent's catalog ID:
+      {{ "REAGENT_PAGE.CATALOG_ID" | translate }}:
       <span>{{ reagent.catalogId }} </span>
     </h3>
-    }@if (reagent.catalogLink) {
+    } @if (reagent.catalogLink) {
     <h3>
-      Reagent's catalog link:
+      {{ "REAGENT_PAGE.CATALOG_LINK" | translate }}:
       <span>{{ reagent.catalogLink }} </span>
     </h3>
     }
   </div>
 </div>
-
 } @else {
 <app-table-loader-spinner />
 }

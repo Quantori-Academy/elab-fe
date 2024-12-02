@@ -21,11 +21,18 @@ import { take } from 'rxjs';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { RoomManagementService } from '../../services/room-management.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-edit-storage',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, AsyncPipe],
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    AsyncPipe,
+    TranslateModule,
+  ],
   templateUrl: './add-edit-storage.component.html',
   styleUrl: './add-edit-storage.component.scss',
 })
@@ -38,6 +45,7 @@ export class AddEditStorageComponent implements OnInit {
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<AddEditStorageComponent>);
+  private translate = inject(TranslateService);
 
   public storageForm: FormGroup = this.fb.group({
     roomName: ['', [Validators.required]],
@@ -101,8 +109,8 @@ export class AddEditStorageComponent implements OnInit {
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Storage Location added',
+            title: this.translate.instant('ADD_EDIT_STORAGE.SUCCESS_TITLE'),
+            message: this.translate.instant('ADD_EDIT_STORAGE.SUCCESS_ADD'),
           });
           this.dialogRef.close(true);
         },
@@ -125,7 +133,7 @@ export class AddEditStorageComponent implements OnInit {
               break;
             default:
               this.notificationPopupService.error({
-                title: 'Error',
+                title: this.translate.instant('ADD_EDIT_STORAGE.ERROR_TITLE'),
                 message: error.error.message,
               });
               break;
@@ -142,8 +150,8 @@ export class AddEditStorageComponent implements OnInit {
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Storage Location edited',
+            title: this.translate.instant('ADD_EDIT_STORAGE.SUCCESS_TITLE'),
+            message: this.translate.instant('ADD_EDIT_STORAGE.SUCCESS_EDIT'),
           });
           this.dialogRef.close(true);
         },
@@ -161,7 +169,7 @@ export class AddEditStorageComponent implements OnInit {
               break;
             default:
               this.notificationPopupService.error({
-                title: 'Error',
+                title: this.translate.instant('ADD_EDIT_STORAGE.ERROR_TITLE'),
                 message: error.error.message,
               });
               break;

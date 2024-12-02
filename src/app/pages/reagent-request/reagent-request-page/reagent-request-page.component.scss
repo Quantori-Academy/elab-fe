@@ -75,6 +75,13 @@ img:hover {
   padding: 8px;
 }
 
+.status-completed {
+  background-color: rgba(112, 140, 219, 0.1);
+  color: #090082;
+  border: 1px solid rgba(20, 0, 130, 0.8);
+  padding: 8px;
+}
+
 .status-declined {
   background-color: var(--declined-background-color);
   color: var(--declined-color);

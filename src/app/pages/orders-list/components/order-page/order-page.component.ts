@@ -21,6 +21,8 @@ import { Order } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-page',
@@ -33,6 +35,8 @@ import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reage
     TableLoaderSpinnerComponent,
     NoDataComponent,
     NgClass,
+    TranslateModule,
+    CommonModule,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -44,6 +48,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private notificationPopupService = inject(NotificationPopupService);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   private orderSubject = new BehaviorSubject<Order | null>(null);
   order$ = this.orderSubject.asObservable();
@@ -118,15 +123,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         next: () => {
           this.excludeReagents = [];
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent has been successfully removed!',
+            title: this.translate.instant('ORDER_PAGE.SUCCESS_TITLE'),
+            message: this.translate.instant(
+              'ORDER_PAGE.REAGENT_REMOVED_SUCCESS'
+            ),
             duration: 3000,
           });
           this.fetchOrder();
         },
         error: (error: HttpErrorResponse) => {
           this.notificationPopupService.error({
-            title: 'Error',
+            title: this.translate.instant('ORDER_PAGE.ERROR_TITLE'),
             message: error.error.message,
           });
         },
