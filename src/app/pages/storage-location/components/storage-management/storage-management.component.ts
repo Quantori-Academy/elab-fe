@@ -13,7 +13,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject, take } from 'rxjs';
+import { catchError, first, map, Observable, of, Subject, take, tap } from 'rxjs';
 import {
   RoomData,
   StorageLocationItem,
@@ -89,6 +89,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   constructor() {
     this.storageLocationData$ =
       this.storageLocationService.getListStorageLocation();
+    this.roomManagementService.loadListOfRooms();
     this.listOfRooms$ = this.roomManagementService.roomData$;
     this.pageSize = this.storageLocationQueryService.pageSize;
   }
@@ -121,11 +122,26 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   public onCreate(): void {
-    this.dialog.open(AddEditStorageComponent);
+    this.dialog.open(AddEditStorageComponent)
+      .afterClosed()
+      .pipe(first())
+      .subscribe(value => {
+        if(value) {
+          this.storageLocationQueryService.reloadStorageLocation()
+          this.roomManagementService.loadListOfRooms();
+        }
+      });;
   }
 
   public onEdit(element: StorageLocationItem) {
-    this.dialog.open(AddEditStorageComponent, { data: element });
+    this.dialog.open(AddEditStorageComponent, { data: element })
+      .afterClosed()
+      .pipe(first())
+      .subscribe(value => {
+        if(value) {
+          this.storageLocationQueryService.reloadStorageLocation()
+        }
+      });
   }
 
   public onDelete(element: StorageLocationItem) {
@@ -134,14 +150,20 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
         message: 'Are you sure you want to delete the storage location?',
         deleteHandler: () => this.deleteHandler(element.id),
       },
-    });
+    }).afterClosed()
+      .pipe(first())
+      .subscribe(value => {
+        if(value) {
+          this.storageLocationQueryService.reloadStorageLocation()
+          this.roomManagementService.loadListOfRooms();
+        }
+      });;
   }
 
-  public deleteHandler(storageId: number) {
-    this.storageLocationService
-      .deleteStorageLocation(storageId)
-      .pipe(take(1))
-      .subscribe({
+  public deleteHandler(storageId: number): Observable<boolean> {
+    return this.storageLocationService.deleteStorageLocation(storageId).pipe(
+      take(1),
+      tap({
         next: () => {
           this.notificationPopupService.success({
             title: 'Success',
@@ -163,7 +185,10 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
             });
           }
         },
-      });
+      }),
+      map(() => true),
+      catchError(() => of(false))
+    );
   }
 
   handlePageEvent($event: PageEvent) {
