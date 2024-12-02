@@ -1,4 +1,11 @@
-import { Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -42,7 +49,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
-    NoDataComponent
+    NoDataComponent,
     TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],
@@ -58,7 +65,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private translate = inject(TranslateService);
-  private destroy$ = new Subject<void>()
+  private destroy$ = new Subject<void>();
   filterStructureValue = '';
   isFullStructure = false;
 
@@ -141,14 +148,15 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   }
 
   onEditReagent(element: Reagent) {
-    this.dialog.open(EditReagentComponent, {data: element, width: '400px'})
+    this.dialog
+      .open(EditReagentComponent, { data: element, width: '400px' })
       .afterClosed()
       .pipe(first())
       .subscribe((isEdited) => {
         if (isEdited) {
-          this.reagentsQueryService.reloadReagentList()
+          this.reagentsQueryService.reloadReagentList();
         }
-      })
+      });
   }
 
   onFilterName($event: Event) {
@@ -183,7 +191,10 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openStructureEditor(enterAnimationDuration: string, exitAnimationDuration: string) {
+  openStructureEditor(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
     const dialogRef = this.dialog.open(AddStructureComponent, {
       width: '650px',
       height: '600px',
@@ -192,10 +203,12 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       enterAnimationDuration,
       exitAnimationDuration,
       restoreFocus: false,
-      data: { smiles: this.filterStructureValue }
+      data: { smiles: this.filterStructureValue },
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
         if (result) {
           this.filterStructureValue = result;

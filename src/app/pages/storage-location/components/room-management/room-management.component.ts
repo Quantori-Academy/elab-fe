@@ -35,7 +35,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     AsyncPipe,
     // DatePipe,
     TableLoaderSpinnerComponent,
-    NoDataComponent
+    NoDataComponent,
     TranslateModule,
   ],
   templateUrl: './room-management.component.html',
@@ -65,13 +65,13 @@ export class RoomManagementComponent implements OnInit {
   }
 
   public openDialog() {
-    this.dialog.open(AddEditRoomComponent, {width: '400px'});
+    this.dialog.open(AddEditRoomComponent, { width: '400px' });
   }
 
   public onEdit(element: RoomData) {
     this.dialog.open(AddEditRoomComponent, {
       data: element,
-      width: '400px'
+      width: '400px',
     });
   }
 
