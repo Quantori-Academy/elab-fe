@@ -53,7 +53,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     MoleculeStructureComponent,
-    NoDataComponent
+    NoDataComponent,
     TranslateModule,
   ],
   templateUrl: './order-form.component.html',

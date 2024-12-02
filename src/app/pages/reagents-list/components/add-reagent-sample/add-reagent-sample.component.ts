@@ -44,7 +44,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     TableLoaderSpinnerComponent,
     NoDataComponent,
-    SpinnerDirective
+    SpinnerDirective,
     TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],

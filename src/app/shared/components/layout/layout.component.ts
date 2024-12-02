@@ -23,14 +23,10 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [
     RouterOutlet,
-
     RouterLink,
-
     RouterLinkActive,
-
     MaterialModule,
     AsyncPipe,
-    ,
     TranslateModule,
   ],
   templateUrl: './layout.component.html',
