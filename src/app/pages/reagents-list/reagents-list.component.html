@@ -24,7 +24,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Search by structure</mat-label>
       <input matInput placeholder="Enter a structure" (input)="onFilterStructure($event)" [value]="filterStructureValue"/>
-      <button mat-icon-button matSuffix (click)="openStructureEditor('1000ms', '500ms')">
+      <button mat-icon-button matSuffix (click)="openStructureEditor('500ms', '500ms')">
         <mat-icon class="search-structure-field-icon">draw</mat-icon>
       </button>
       <button mat-icon-button matSuffix [disabled]="!filterStructureValue" (click)="toggleFullStructureSearch()"

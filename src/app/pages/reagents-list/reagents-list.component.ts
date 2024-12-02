@@ -174,7 +174,8 @@ export class ReagentsListComponent implements OnInit {
       minHeight: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
-      restoreFocus: false
+      restoreFocus: false,
+      data: { smiles: this.filterStructureValue }
     });
 
     this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
