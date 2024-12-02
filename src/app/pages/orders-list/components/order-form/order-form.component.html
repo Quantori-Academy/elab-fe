@@ -96,7 +96,8 @@
                   type="number"
                   min="1"
                   step="1"
-                  [value]="getReagentPackageAmount(element.id)"
+                  [disabled]="true"
+                  [value]="element.amount"
                   (input)="onPackageAmountChange(element.id, $event)"
                 />
               </mat-form-field>
@@ -167,8 +168,7 @@
             {{ item.desiredQuantity }}{{ item.quantityUnit }}
           </p>
           @if (item.package) {
-          <p class="reagent-item__attribute">{{ item.package }}</p>
-
+          <p class="reagent-item__attribute">{{ item.amount }}  {{ item.package }}</p>
           }@else { N/A }
 
           <app-molecule-structure

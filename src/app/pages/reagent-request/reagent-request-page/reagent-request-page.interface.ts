@@ -6,7 +6,7 @@ export interface ReagentRequestList {
   desiredQuantity: string | null;
   structureSmiles: string | null;
   structureImage: string | null;
-  packageAmount:number;
+  amount:number;
   userComments: string | null;
   procurementComments: string | null;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined' | 'Completed';

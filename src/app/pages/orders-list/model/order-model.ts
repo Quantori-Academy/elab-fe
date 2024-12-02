@@ -32,7 +32,7 @@ export interface OrderQuery {
 export interface OrderRequest {
   title: string;
   seller: string;
-  reagents: { id: number; packageAmount: number }[];
+  reagents: { id: number;}[];
 }
 export interface OrdersListData {
   orders: Order[];
