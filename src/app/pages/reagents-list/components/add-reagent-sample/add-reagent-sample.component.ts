@@ -152,7 +152,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
     return this.formSelection.get('reagents') as FormArray;
   }
 
-  public get getSelectedReagentSample(): SelectedReagentSample[] {
+  public setSelectedReagentSample() {
     const reagents = this.reagentsFormArray.value as SelectedReagentSample[];
 
     reagents.forEach((reagent) => {
@@ -172,7 +172,6 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
         }
       }
     });
-    return this.selectedReagentSample;
   }
 
   public hasSelectedReagent(
@@ -192,8 +191,9 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
+    this.setSelectedReagentSample()
     if (this.formSelection.valid) {
-      this.dialogRef.close(this.getSelectedReagentSample);
+      this.dialogRef.close();
     } else {
       this.formSelection.markAllAsTouched();
     }
@@ -219,6 +219,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   handlePageEvent($event: PageEvent) {
+    this.setSelectedReagentSample()
     this.reagentsQueryService.setPageData($event);
   }
 
