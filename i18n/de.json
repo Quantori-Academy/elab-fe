@@ -555,7 +555,30 @@
                                                                 "FIRST_PAGE_LABEL": "Erste Seite",
                                                                 "LAST_PAGE_LABEL": "Letzte Seite",
                                                                 "RANGE_PAGE_LABEL": "von"
-                                                              }
+                                                              },
+                                                              "NO_DATA": {
+                                                                "NO_ORDERED_REAGENTS": "Keine bestellten Reagenzien",
+                                                                "NO_ORDERS": "Keine Bestellungen"
+                                                              },
+                                                                "ADMIN_DASHBOARD": {
+                                                                  "NUMBER_OF_ROOMS": "Anzahl der Räume",
+                                                                  "NUMBER_OF_STORAGES": "Anzahl der Lagerorte",
+                                                                  "NUMBER_OF_USERS": "Anzahl der Benutzer",
+                                                                  "ROOM1": "Raum1",
+                                                                  "ROOM2": "Raum2",
+                                                                  "ROOM3": "Raum3",
+                                                                  "ROOM4": "Raum4",
+                                                                  "KPI_ICON_ALT": "KPI-Symbol",
+                                                                  "USER_CHART_TITLE": "Verteilung der Benutzerrollen",
+                                                                  "ROOM_CHART_TITLE": "Raumübersicht"
+                                                                },
+                                                                "USER_ROLES": {
+                                                                  "ADMIN": "Administrator",
+                                                                  "RESEARCHER": "Forscher",
+                                                                  "PROCUREMENT_OFFICER": "Einkaufsleiter"
+                                                                }
+                                                              
+                                                              
                                                             
                                                           
                                                         

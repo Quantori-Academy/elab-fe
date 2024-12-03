@@ -98,38 +98,36 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="status"
-        ><ng-container matColumnDef="status">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "ORDER_PAGE.TABLE.STATUS" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <span
-              class="status-label"
-              [ngClass]="{
-                'status-pending': element.status === 'Pending',
-                'status-fulfilled': element.status === 'Fulfilled',
-                'status-declined': element.status === 'Declined',
-                'status-ordered': element.status === 'Ordered',
-                'status-completed': element.status === 'Completed'
-              }"
-            >
-              {{
-                "ORDERS_LIST.STATUS." + (element.status | uppercase) | translate
-              }}
-            </span>
-          </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "ORDER_PAGE.TABLE.STATUS" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            class="status-label"
+            [ngClass]="{
+              'status-pending': element.status === 'Pending',
+              'status-fulfilled': element.status === 'Fulfilled',
+              'status-declined': element.status === 'Declined',
+              'status-ordered': element.status === 'Ordered',
+              'status-completed': element.status === 'Completed'
+            }"
+          >
+            {{
+              "ORDERS_LIST.STATUS." + (element.status | uppercase) | translate
+            }}
+          </span>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="quantityLeft">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "ORDER_PAGE.TABLE.QUANTITY_LEFT" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.quantityLeft }}
-            {{ element.quantityUnit }}
-          </mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="quantityLeft">
+        <mat-header-cell *matHeaderCellDef>
+          {{ "ORDER_PAGE.TABLE.QUANTITY_LEFT" | translate }}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.quantityLeft }}
+          {{ element.quantityUnit }}
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="structureSmiles">
@@ -193,7 +191,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!order.reagents.length) {
-    <app-no-data text="No Ordered Reagents" />
+    <app-no-data [text]="'NO_DATA.NO_ORDERED_REAGENTS' | translate" />
     }
   </div>
 </div>
