@@ -198,13 +198,13 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
         width: this.isTablet() ? '600px' : '800px',
         maxWidth: this.isTablet() ? '600px' : '800px',
         maxHeight: '600px',
-        data: { selectedReagentSample: this.selectedReagentSample() },
+        data: { selectedReagentSample: [...this.selectedReagentSample()] },
       })
       .afterClosed()
       .pipe(take(1))
       .subscribe((result: SelectedReagentSample[]) => {
         if (result) {
-          this.selectedReagentSample.set([...result]);
+          this.selectedReagentSample.set(result);
           this.reagentRequestForm
             .get('usedReagentSample')
             ?.setValue(result.map(this.asSelectedReagentSample));
