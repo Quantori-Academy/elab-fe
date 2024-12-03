@@ -176,7 +176,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!OrdersListData.size && !isLoading()) {
-    <app-no-data text="No Orders" />
+    <app-no-data [text]="'NO_DATA.NO_ORDERS' | translate" />
     }
   </div>
 

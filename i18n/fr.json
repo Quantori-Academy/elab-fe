@@ -556,7 +556,30 @@
                                                                 "FIRST_PAGE_LABEL": "Première page",
                                                                 "LAST_PAGE_LABEL": "Dernière page",
                                                                 "RANGE_PAGE_LABEL": "sur"
-                                                              }
+                                                              },
+                                                              "NO_DATA": {
+                                                                "NO_ORDERED_REAGENTS": "Aucun réactif commandé",
+                                                                "NO_ORDERS": "Aucune commande"
+                                                              },
+                                                                "ADMIN_DASHBOARD": {
+                                                                  "NUMBER_OF_ROOMS": "Nombre de salles",
+                                                                  "NUMBER_OF_STORAGES": "Nombre de stockages",
+                                                                  "NUMBER_OF_USERS": "Nombre d'utilisateurs",
+                                                                  "ROOM1": "Salle1",
+                                                                  "ROOM2": "Salle2",
+                                                                  "ROOM3": "Salle3",
+                                                                  "ROOM4": "Salle4",
+                                                                  "KPI_ICON_ALT": "Icône KPI",
+                                                                  "USER_CHART_TITLE": "Répartition des rôles des utilisateurs",
+                                                                  "ROOM_CHART_TITLE": "Aperçu des salles"
+                                                                },
+                                                                "USER_ROLES": {
+                                                                  "ADMIN": "Administrateur",
+                                                                  "RESEARCHER": "Chercheur",
+                                                                  "PROCUREMENT_OFFICER": "Responsable des achats"
+                                                                }
+                                                              
+                                                              
                                                             
                                                           
                                                         

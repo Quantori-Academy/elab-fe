@@ -191,7 +191,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!order.reagents.length) {
-    <app-no-data text="No Ordered Reagents" />
+    <app-no-data [text]="'NO_DATA.NO_ORDERED_REAGENTS' | translate" />
     }
   </div>
 </div>
