@@ -27,14 +27,12 @@ export class SpinnerDirective implements OnChanges {
     const element = this.elementRef.nativeElement as HTMLTableElement;
     const tbody = element.querySelector('tbody');
 
-    if (tbody?.children.length) {
+    if (tbody) {
       if (this.appSpinner) {
         this.renderer2.setStyle(tbody, 'opacity', '0.5');
-        this.renderer2.setStyle(tbody, 'position', 'relative');
         this.renderer2.appendChild(tbody, this.spinnerElement);
       } else {
         this.renderer2.removeStyle(tbody, 'opacity');
-        this.renderer2.removeStyle(tbody, 'position');
         this.renderer2.removeChild(tbody, this.spinnerElement);
       }
     }

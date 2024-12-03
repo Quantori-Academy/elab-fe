@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -20,13 +20,15 @@ import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
 import { Router } from '@angular/router';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
-import { Observable, Subscription, take } from 'rxjs';
+import { first, Observable, Subject, takeUntil } from 'rxjs';
 import { ReagentsQueryService } from './services/reagents-query.service';
 import { PAGE_SIZE_OPTIONS } from '../../shared/units/variables.units';
 import { SpinnerDirective } from '../../shared/directives/spinner/spinner.directive';
 import { RbacService } from '../../auth/services/authentication/rbac.service';
 import { AddStructureComponent } from '../../shared/components/structure-editor/add-structure/add-structure.component';
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
+import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
+import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -39,12 +41,13 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
+    NoDataComponent
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
   styleUrl: './reagents-list.component.scss',
 })
-export class ReagentsListComponent implements OnInit {
+export class ReagentsListComponent implements OnInit, OnDestroy {
   @Input() storageLocationId?: number;
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
@@ -52,7 +55,7 @@ export class ReagentsListComponent implements OnInit {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private structureSubscription: Subscription | null = null;
+  private destroy$ = new Subject<void>()
   filterStructureValue = '';
   isFullStructure = false;
 
@@ -77,7 +80,7 @@ export class ReagentsListComponent implements OnInit {
     ReagentListColumn.QUANTITYLEFT,
     ReagentListColumn.CAS,
     ReagentListColumn.LOCATION,
-    ReagentListColumn.ACTIONS,
+    ...(this.isResearcher ? [ReagentListColumn.ACTIONS] : []),
   ];
 
   public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
@@ -114,10 +117,10 @@ export class ReagentsListComponent implements OnInit {
       this.dialog
         .open(MoveReagentComponent, {
           data: { movedReagents: this.movedReagents },
-          minWidth: '400px',
+          width: '400px',
         })
         .afterClosed()
-        .pipe(take(1))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((value) => {
           if (value) {
             this.reagentsQueryService.reloadReagentList();
@@ -132,6 +135,17 @@ export class ReagentsListComponent implements OnInit {
       column: ReagentListColumn.STRUCTURE,
       isFullStructure: this.isFullStructure,
     });
+  }
+
+  onEditReagent(element: Reagent) {
+    this.dialog.open(EditReagentComponent, {data: element, width: '400px'})
+      .afterClosed()
+      .pipe(first())
+      .subscribe((isEdited) => {
+        if (isEdited) {
+          this.reagentsQueryService.reloadReagentList()
+        }
+      })
   }
 
   onFilterName($event: Event) {
@@ -174,15 +188,17 @@ export class ReagentsListComponent implements OnInit {
       minHeight: '600px',
       enterAnimationDuration,
       exitAnimationDuration,
-      restoreFocus: false
+      restoreFocus: false,
+      data: { smiles: this.filterStructureValue }
     });
 
-    this.structureSubscription = dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.filterStructureValue = result;
-        this.updateStructureFilter(result);
-      }
-    });
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result) {
+          this.filterStructureValue = result;
+          this.updateStructureFilter(result);
+        }
+      });
   }
 
   toggleFullStructureSearch(): void {
@@ -200,5 +216,10 @@ export class ReagentsListComponent implements OnInit {
 
   handlePageEvent($event: PageEvent) {
     this.reagentsQueryService.setPageData($event);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -10,6 +10,7 @@ import {
 } from '@angular/common/http';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { provideVariables } from './shared/units/variables.units';
+import { provideDisplayExtension } from './shared/units/display.units';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
       useClass: TokenInterceptor,
       multi: true,
     },
-    ...provideVariables,
+    provideVariables,
+    provideDisplayExtension,
   ],
 };

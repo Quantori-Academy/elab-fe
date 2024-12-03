@@ -36,6 +36,8 @@ import { Sort } from '@angular/material/sort';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-order-form',
@@ -50,6 +52,7 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     MoleculeStructureComponent,
+    NoDataComponent
   ],
   templateUrl: './order-form.component.html',
   styleUrl: './order-form.component.scss',
@@ -168,7 +171,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           });
           this.redirectToReagentList();
         },
-        error: (err) => this.notificationPopupService.error(err),
+        error: (error: HttpErrorResponse) => {
+          this.notificationPopupService.error({
+            title: 'Error',
+            message: `Reagent request already in use, select different reagent request:
+             ${error.error.message}`,
+            duration: 15000,
+          });
+        },
+        
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;

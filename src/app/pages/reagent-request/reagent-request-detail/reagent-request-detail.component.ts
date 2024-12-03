@@ -8,6 +8,7 @@ import { MoleculeStructureComponent } from '../../../shared/components/molecule-
 // import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DISPLAY_EXTENSION } from '../../../shared/units/display.units';
 
 @Component({
   selector: 'app-reagent-request-detail',
@@ -30,6 +31,7 @@ export class ReagentRequestDetailComponent implements OnInit {
 
   reagentRequest: ReagentRequestList | null = null;
   isLoading = true;
+  display$ = inject(DISPLAY_EXTENSION);
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

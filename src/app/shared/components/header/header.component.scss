@@ -47,3 +47,23 @@
 .username {
   margin-right: 10px;
 }
+
+@media (orientation: portrait) and (max-width: 500px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  .username {
+    display: none;
+  }
+
+  .logout-btn {
+    font-size: 12px;
+  }
+}

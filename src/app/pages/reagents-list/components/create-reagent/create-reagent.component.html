@@ -51,11 +51,12 @@
     <mat-card-content>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
         <mat-label>Quantity Unit</mat-label>
-        <mat-select formControlName="quantityUnit">
+        <input matInput formControlName="quantityUnit"/>
+        <!-- <mat-select formControlName="quantityUnit">
           @for (unit of units; track unit) {
           <mat-option [value]="unit.value">{{ unit.viewValue }}</mat-option>
           }
-        </mat-select>
+        </mat-select> -->
         @if (reagentRequestForm.get('quantityUnit')?.invalid &&
         reagentRequestForm.get('quantityUnit')?.touched) {
         <mat-error>Quantity Unit is required.</mat-error>
