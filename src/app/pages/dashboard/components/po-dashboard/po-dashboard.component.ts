@@ -18,11 +18,21 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { StatusLabelColorDirective } from '../../../../shared/directives/status-label-color/status-label-color.directive';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-po-dashboard',
   standalone: true,
-  imports: [MaterialModule, ChartComponent, DatePipe, RouterLink, AsyncPipe, StatusLabelColorDirective, ReactiveFormsModule],
+  imports: [
+    MaterialModule,
+    ChartComponent,
+    DatePipe,
+    RouterLink,
+    AsyncPipe,
+    StatusLabelColorDirective,
+    ReactiveFormsModule,
+    NoDataComponent
+  ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './po-dashboard.component.html',
   styleUrl: './po-dashboard.component.scss',
@@ -44,7 +54,7 @@ export class PoDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.procurementOfficerDashboardData$ = this.dashboardService
-      .getProcurementOfficerDashboardData()
+      .getProcurementOfficerDashboardData$()
       .pipe(map(this.setChartOptions));
   }
 

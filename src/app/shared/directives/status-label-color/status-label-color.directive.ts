@@ -1,12 +1,13 @@
 import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { Status } from '../../../pages/orders-list/model/order-model';
 
-const colors: Record<string, { color: string; backgroundColor: string }> = {
-  Pending: { color: '#e68d11', backgroundColor: 'rgba(240, 173, 78, 0.1)' },
-  Ordered: { color: '#4B0082', backgroundColor: 'rgba(147, 112, 219, 0.1)' },
-  Fulfilled: { color: '#098109', backgroundColor: 'rgba(92, 184, 92, 0.3)' },
-  Declined: { color: '#F44336', backgroundColor: 'rgba(244, 67, 54, 0.1)' },
-  Completed: { color: '#0056b3', backgroundColor: 'rgba(0, 123, 255, 0.1)' },
+const colors: Record<Status, { color: string; backgroundColor: string }> = {
+  [Status.pending]: { color: 'var(--pending-color)', backgroundColor: 'var(--pending-background-color)' },
+  [Status.ordered]: { color: 'var(--ordered-color)', backgroundColor: 'var(--ordered-background-color)' },
+  [Status.fulfilled]: { color: 'var(--fulfilled-color)', backgroundColor: 'var(--fulfilled-background-color)' },
+  [Status.declined]: { color: 'var(--declined-color)', backgroundColor: 'var(--declined-background-color)' },
+  [Status.completed]: { color: 'var(--completed-color)', backgroundColor: 'var(--completed-background-color)' },
+  [Status.submitted]: { color: 'var(--submitted-color)', backgroundColor: 'var(--submitted-background-color)' },
 }
 
 @Directive({

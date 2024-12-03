@@ -1,58 +1,62 @@
 @if (researcherDashboardData$ | async; as researcherDashboardData) {
 <div class="row row1">
   <mat-card>
-    <div class="table-container">
-      <div class="table-content">
-        <table
-          mat-table
-          [dataSource]="researcherDashboardData.emptyOrExpiredList"
-          matSort
-        >
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.name }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef>Category</th>
-            <td mat-cell *matCellDef="let element">{{ element.category }}</td>
-          </ng-container>
-          <ng-container matColumnDef="expiredDate">
-            <th mat-header-cell *matHeaderCellDef>Expired Date</th>
-            <td mat-cell *matCellDef="let element">
-              <span
-                [appExpiredDate]="element.expirationDate"
-                class="expired-date-span"
-              >
-                {{ element.expirationDate | date : "HH:mm:ss  dd-MM-yyyy" }}
-              </span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="quantityLeft">
-            <th mat-header-cell *matHeaderCellDef>Quantity Left</th>
-            <td mat-cell *matCellDef="let element">
-              <span
-                [appQuantityLeft]="element.quantityLeft"
-                [appQuantity]="element.totalQuantity"
-                class="quantity-left-span"
-                [matTooltip]="
-                  quantityTooltip(element.totalQuantity, element.quantityLeft)
-                "
-                >{{ element.quantityLeft }}</span
-              >
-            </td>
-          </ng-container>
+    @if (researcherDashboardData.emptyOrExpiredList.length) {
+      <div class="table-container">
+        <div class="table-content">
+          <table
+            mat-table
+            [dataSource]="researcherDashboardData.emptyOrExpiredList"
+            matSort
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.name }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="category">
+              <th mat-header-cell *matHeaderCellDef>Category</th>
+              <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+            </ng-container>
+            <ng-container matColumnDef="expiredDate">
+              <th mat-header-cell *matHeaderCellDef>Expired Date</th>
+              <td mat-cell *matCellDef="let element">
+                <span
+                  [appExpiredDate]="element.expirationDate"
+                  class="expired-date-span"
+                >
+                  {{ element.expirationDate | date : "HH:mm:ss  dd-MM-yyyy" }}
+                </span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="quantityLeft">
+              <th mat-header-cell *matHeaderCellDef>Quantity Left</th>
+              <td mat-cell *matCellDef="let element">
+                <span
+                  [appQuantityLeft]="element.quantityLeft"
+                  [appQuantity]="element.totalQuantity"
+                  class="quantity-left-span"
+                  [matTooltip]="
+                    quantityTooltip(element.totalQuantity, element.quantityLeft)
+                  "
+                  >{{ element.quantityLeft }}</span
+                >
+              </td>
+            </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumnsExpiredEmpty"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumnsExpiredEmpty"
-          ></tr>
-        </table>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsExpiredEmpty"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumnsExpiredEmpty"
+            ></tr>
+          </table>
+        </div>
       </div>
-    </div>
+    } @else {
+      <app-no-data text="No data found" size="medium"/>
+    }
   </mat-card>
 </div>
 <div class="row row2">
@@ -66,40 +70,54 @@
     </mat-datepicker>
   </mat-form-field>
   <mat-card>
-    <apx-chart
-      [series]="researcherDashboardData.reagentSampleChartOption.series"
-      [chart]="researcherDashboardData.reagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.reagentSampleChartOption.labels"
-      [title]="researcherDashboardData.reagentSampleChartOption.title"
-      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive"
-      [colors]="researcherDashboardData.reagentSampleChartOption.colors"
-      [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels"
-      [plotOptions]="researcherDashboardData.reagentSampleChartOption.plotOptions"
-    ></apx-chart>
+    @if (researcherDashboardData.reagentSampleChartOption.series?.length) {
+      <apx-chart
+        [series]="researcherDashboardData.reagentSampleChartOption.series"
+        [chart]="researcherDashboardData.reagentSampleChartOption.chart"
+        [labels]="researcherDashboardData.reagentSampleChartOption.labels"
+        [title]="researcherDashboardData.reagentSampleChartOption.title"
+        [responsive]="researcherDashboardData.reagentSampleChartOption.responsive"
+        [colors]="researcherDashboardData.reagentSampleChartOption.colors"
+        [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels"
+        [plotOptions]="researcherDashboardData.reagentSampleChartOption.plotOptions"
+      ></apx-chart>
+    } @else {
+      <app-no-data text="No data found" size="small" style="min-height: 150px;"/>
+    }
   </mat-card>
   <mat-card>
-    <apx-chart
-      [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
-      [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
-      [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
-      [responsive]="researcherDashboardData.expiredReagentSampleChartOption.responsive"
-      [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
-      [dataLabels]="researcherDashboardData.expiredReagentSampleChartOption.dataLabels"
-      [plotOptions]="researcherDashboardData.expiredReagentSampleChartOption.plotOptions"
-    ></apx-chart>
+    @if (researcherDashboardData.expiredReagentSampleChartOption.series?.length) {
+      <apx-chart
+        [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
+        [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
+        [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
+        [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
+        [responsive]="researcherDashboardData.expiredReagentSampleChartOption.responsive"
+        [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
+        [dataLabels]="researcherDashboardData.expiredReagentSampleChartOption.dataLabels"
+        [plotOptions]="researcherDashboardData.expiredReagentSampleChartOption.plotOptions"
+      ></apx-chart>
+    }@else {
+      <app-no-data text="No data found" size="small" style="min-height: 150px;"/>
+    }
   </mat-card>
   <mat-card>
-    <apx-chart
-      [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
-      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels"
-      [title]="researcherDashboardData.emptyReagentSampleChartOption.title"
-      [responsive]="researcherDashboardData.emptyReagentSampleChartOption.responsive"
-      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors"
-      [dataLabels]="researcherDashboardData.emptyReagentSampleChartOption.dataLabels"
-      [plotOptions]="researcherDashboardData.emptyReagentSampleChartOption.plotOptions"
-    ></apx-chart>
+    @if (researcherDashboardData.emptyReagentSampleChartOption.series?.length) {
+      <apx-chart
+        [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
+        [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"
+        [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels"
+        [title]="researcherDashboardData.emptyReagentSampleChartOption.title"
+        [responsive]="researcherDashboardData.emptyReagentSampleChartOption.responsive"
+        [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors"
+        [dataLabels]="researcherDashboardData.emptyReagentSampleChartOption.dataLabels"
+        [plotOptions]="researcherDashboardData.emptyReagentSampleChartOption.plotOptions"
+      ></apx-chart>
+    } @else {
+      <app-no-data text="No data found" size="small" style="min-height: 150px;"/>
+    }
   </mat-card>
 </div>
+} @else {
+  <app-no-data/>
 }

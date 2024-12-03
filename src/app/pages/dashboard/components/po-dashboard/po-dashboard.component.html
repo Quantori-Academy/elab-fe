@@ -1,55 +1,59 @@
 @if (procurementOfficerDashboardData$ | async; as procurementOfficerDashboardData ) {
   <div class="col col1">
     <mat-card>
-      <mat-card-header> New incoming reagent request </mat-card-header>
-      <mat-card-content>
-        <div class="table-container">
-          <div class="table-content">
-            <table mat-table [dataSource]="procurementOfficerDashboardData.requestList">
-              <ng-container matColumnDef="reagent">
-                <th mat-header-cell *matHeaderCellDef>Reagent</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.name }}
-                </td>
-              </ng-container>
+      @if (procurementOfficerDashboardData.requestList.length) {
+        <mat-card-header> New incoming reagent request </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <div class="table-content">
+              <table mat-table [dataSource]="procurementOfficerDashboardData.requestList">
+                <ng-container matColumnDef="reagent">
+                  <th mat-header-cell *matHeaderCellDef>Reagent</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.name }}
+                  </td>
+                </ng-container>
 
-              <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef>Date</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.updatedAt || element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
-                </td>
-              </ng-container>
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef>Date</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.updatedAt || element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+                  </td>
+                </ng-container>
 
-              <ng-container matColumnDef="desiredQuantity">
-                <th mat-header-cell *matHeaderCellDef>Desired Quantity</th>
-                <td mat-cell *matCellDef="let element">{{ element.desiredQuantity }}</td>
-              </ng-container>
+                <ng-container matColumnDef="desiredQuantity">
+                  <th mat-header-cell *matHeaderCellDef>Desired Quantity</th>
+                  <td mat-cell *matCellDef="let element">{{ element.desiredQuantity }}</td>
+                </ng-container>
 
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status</th>
-                <td mat-cell *matCellDef="let element">
-                  <span class="status-label" [appStatusLabelColor]="element.status">
-                    {{ element.status }}
-                  </span>
-                </td>
-              </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span class="status-label" [appStatusLabelColor]="element.status">
+                      {{ element.status }}
+                    </span>
+                  </td>
+                </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
           </div>
-        </div>
-      </mat-card-content>
-      <mat-card-footer>
-        <button
-          mat-flat-button
-          color="primary"
-          class="order-btn"
-          routerLink="/orders"
-        >
-          Orders
-        </button>
-      </mat-card-footer>
+        </mat-card-content>
+        <mat-card-footer>
+          <button
+            mat-flat-button
+            color="primary"
+            class="order-btn"
+            routerLink="/orders"
+          >
+            Orders
+          </button>
+        </mat-card-footer>
+      } @else {
+        <app-no-data text="No data found" size="medium"/>
+      }
     </mat-card>
   </div>
   <div class="col col2">
@@ -64,16 +68,22 @@
     </mat-form-field>
 
     <mat-card>
-      <apx-chart
-        [series]="procurementOfficerDashboardData.statusChartOption.series"
-        [chart]="procurementOfficerDashboardData.statusChartOption.chart"
-        [labels]="procurementOfficerDashboardData.statusChartOption.labels"
-        [title]="procurementOfficerDashboardData.statusChartOption.title"
-        [responsive]="procurementOfficerDashboardData.statusChartOption.responsive"
-        [colors]="procurementOfficerDashboardData.statusChartOption.colors"
-        [dataLabels]="procurementOfficerDashboardData.statusChartOption.dataLabels"
-        [plotOptions]="procurementOfficerDashboardData.statusChartOption.plotOptions"
-      ></apx-chart>
+      @if (procurementOfficerDashboardData.statusChartOption.series?.length) {
+        <apx-chart
+          [series]="procurementOfficerDashboardData.statusChartOption.series"
+          [chart]="procurementOfficerDashboardData.statusChartOption.chart"
+          [labels]="procurementOfficerDashboardData.statusChartOption.labels"
+          [title]="procurementOfficerDashboardData.statusChartOption.title"
+          [responsive]="procurementOfficerDashboardData.statusChartOption.responsive"
+          [colors]="procurementOfficerDashboardData.statusChartOption.colors"
+          [dataLabels]="procurementOfficerDashboardData.statusChartOption.dataLabels"
+          [plotOptions]="procurementOfficerDashboardData.statusChartOption.plotOptions"
+        ></apx-chart>
+      } @else {
+        <app-no-data text="No data found" size="small" style="min-height: 200px;"/>
+      }
     </mat-card>
   </div>
+} @else {
+  <app-no-data/>
 }

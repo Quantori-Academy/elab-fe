@@ -24,11 +24,11 @@ export class DashboardService {
     return httpParams;
   }))
 
-  public getAdminDashboardData(): Observable<AdminDashboardDataResponse> {
+  public getAdminDashboardData$(): Observable<AdminDashboardDataResponse> {
     return this.http.get<AdminDashboardDataResponse>(`${this.apiUrl}/admin`);
   }
 
-  public getResearcherDashboardData(): Observable<ResearcherDashboardDataResponse> {
+  public getResearcherDashboardData$(): Observable<ResearcherDashboardDataResponse> {
     return this.httpParams.pipe(
       switchMap((params) => this.http.get<ResearcherDashboardDataResponse>(
         `${this.apiUrl}/researcher`, { params })
@@ -36,7 +36,7 @@ export class DashboardService {
     )
   }
 
-  public getProcurementOfficerDashboardData(): Observable<ProcurementOfficerDashboardDataResponse> {
+  public getProcurementOfficerDashboardData$(): Observable<ProcurementOfficerDashboardDataResponse> {
     return this.httpParams.pipe(
       switchMap((params) => this.http.get<ProcurementOfficerDashboardDataResponse>(
         `${this.apiUrl}/procurement_officer`, { params })

@@ -11,11 +11,12 @@ import {
 import { map, Observable } from 'rxjs';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AsyncPipe } from '@angular/common';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [MaterialModule, ChartComponent, AsyncPipe],
+  imports: [MaterialModule, ChartComponent, AsyncPipe, NoDataComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,7 +31,7 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminDashboardData$ = this.dashboardService
-      .getAdminDashboardData()
+      .getAdminDashboardData$()
       .pipe(map(this.setChartOptions))
   }
 

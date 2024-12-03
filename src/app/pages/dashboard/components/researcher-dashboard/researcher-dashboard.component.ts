@@ -21,6 +21,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-researcher-dashboard',
@@ -32,7 +33,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ExpiredDateDirective,
     AsyncPipe,
     DatePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NoDataComponent,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './researcher-dashboard.component.html',
@@ -51,7 +53,7 @@ export class ResearcherDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.researcherDashboardData$ = this.dashboardService
-      .getResearcherDashboardData()
+      .getResearcherDashboardData$()
       .pipe(map(this.setChartOptions));
   }
 
