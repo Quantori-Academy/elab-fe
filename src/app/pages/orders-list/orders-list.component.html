@@ -1,9 +1,9 @@
-<div class="header">
+<div class="control-bar-wrapper">
   <button class="add-btn" mat-flat-button (click)="onCreate()">
     Create new order
   </button>
-  <div class="filter">
-    <mat-form-field class="filter__item" appearance="fill">
+  <div class="filter-container">
+    <mat-form-field class="filter__item" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by status</mat-label>
       <mat-select (selectionChange)="onFilterByStatus($event.value)">
         <mat-option value="">All Orders</mat-option>
@@ -12,12 +12,12 @@
         }
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Title</mat-label>
       <input matInput (input)="onFilterByTitle($event)" />
     </mat-form-field>
 
-    <mat-form-field class="mat-form-field-with-loader" appearance="fill">
+    <mat-form-field class="mat-form-field-with-loader" appearance="fill" subscriptSizing="dynamic">
       <mat-label>Filter by Seller</mat-label>
       <input matInput (input)="onFilterBySeller($event)" />
     </mat-form-field>
@@ -37,11 +37,15 @@
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Title</th>
         <td mat-cell *matCellDef="let element">
-        @if (showIconAttention(element)){
-          <span><mat-icon>notification_important</mat-icon></span>
-        }
+          @if (showIconAttention(element)){
+            <mat-icon
+              matTooltip="Add Storage"
+              style="color: var(--warning-color);">
+              notification_important
+            </mat-icon>
+          }
           {{ element.title }}
-        </td>
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="createdAt">
@@ -79,6 +83,7 @@
               'status-fulfilled': element.status === 'Fulfilled',
               'status-declined': element.status === 'Declined',
               'status-submitted': element.status === 'Submitted',
+              'status-completed': element.status === 'Completed',
             }"
           >
             {{ element.status }}
@@ -114,14 +119,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    @if(!OrdersListData.orders.length){
-      <div class="no-order-container">
-        <div>
-          <img src="/assets/icons/no_data.svg" alt="no_data" />
-        </div>
-        <p>No order found</p>
-      </div>
-      }
+    @if (!OrdersListData.size && !isLoading()) {
+      <app-no-data text="No Orders"/>
+    }
   </div>
 
   <mat-paginator

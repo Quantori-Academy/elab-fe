@@ -27,8 +27,6 @@ export class ExpiredDateDirective implements OnChanges {
     const warningDate = new Date();
     warningDate.setDate(warningDate.getDate() + 3);
 
-    console.log(currentDate, warningDate, expiredDate);
-
     if (expiredDate < currentDate) {
       this.renderer2.setStyle(element, 'backgroundColor', 'var(--error-color)');
       this.renderer2.setStyle(element, 'color', '#fff');

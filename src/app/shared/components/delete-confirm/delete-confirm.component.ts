@@ -4,9 +4,9 @@ import {
   inject,
   Inject,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '../../../material.module';
-import { DialogRef } from '@angular/cdk/dialog';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-delete-confirm',
@@ -17,15 +17,16 @@ import { DialogRef } from '@angular/cdk/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeleteConfirmComponent {
-  private dialogRef = inject(DialogRef<DeleteConfirmComponent>);
+  private dialogRef = inject(MatDialogRef<DeleteConfirmComponent>);
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { message: string; deleteHandler: () => void } | undefined
+    public data: { message: string; deleteHandler: () => Observable<boolean>  }
   ) {}
 
   public onDelete(): void {
-    this.data?.deleteHandler();
-    this.dialogRef.close();
+    this.data?.deleteHandler()?.subscribe((isDeleted) => {
+      this.dialogRef.close(isDeleted);
+    });
   }
 }

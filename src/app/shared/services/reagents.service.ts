@@ -35,7 +35,7 @@ export class ReagentsService {
     );
   }
 
-  createReagent(reagentData?: ReagentRequest): Observable<ReagentRequest> {
+  createReagent(reagentData: ReagentRequest): Observable<ReagentRequest> {
     return this.httpClient.post<ReagentRequest>(this.apiUrl, reagentData);
   }
 
@@ -44,6 +44,10 @@ export class ReagentsService {
       `${this.apiUrl}/create/sample`,
       sampleData
     );
+  }
+
+  editReagent(id: number, reagentData: {quantityLeft: number, storageId: number}): Observable<Reagent[]> {
+    return this.httpClient.patch<Reagent[]>(`${this.apiUrl}/${id}`, reagentData)
   }
 
   public getReagentById(id: string): Observable<Reagent> {
