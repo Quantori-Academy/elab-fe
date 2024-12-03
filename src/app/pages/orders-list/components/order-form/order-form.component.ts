@@ -170,19 +170,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.reagentsSelectionError = false;
 
       const orderData: OrderRequest = this.orderForm.value;
-
-      // this commented code part was the only way i could think of, to allow user change package amount directly in order form, since BE isn't supporting multiple RR amount update currently, but since i now know using forkjoin and this approach itself is not a good practice, commented it. I'll be remove this, and make inputs in order form disabled, to not lead user think they can updated it in form dirctly.
-
-      // const updateRequests = Array.from(this.selectedReagents.values()).map(
-      //   (reagent) =>
-      //     this.reagentRequestService.editReagentRequest(reagent.id, {
-      //       amount: reagent.packageAmount,
-      //     })
-      // );
-
-      // forkJoin(updateRequests).subscribe({
-      //   next: () => {
-
       this.ordersService.createOrder(orderData).subscribe({
         next: () => {
           this.notificationPopupService.success({
@@ -193,17 +180,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           this.redirectToReagentList();
         },
         error: (err) => this.notificationPopupService.error(err),
-
-        //   });
-        // },
-        // error: (err) => {
-        //   this.notificationPopupService.error({
-        //     title: 'Error',
-        //     message: 'Failed to update reagents. Please try again.',
-        //   });
-        //   console.error('Error updating reagents:', err);
-        // },
-        
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;
