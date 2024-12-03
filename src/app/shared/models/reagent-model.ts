@@ -13,11 +13,12 @@ export interface Reagent {
   quantityLeft: number | null;
   storageId: number;
   structure: string;
-  room: {
-    id: number;
-    name: string;
-    description: string | null;
-  };
+  storage: {
+    name: string,
+    room: {
+      name: string;
+    }
+  }
 }
 
 export interface ReagentFromFulfilledOrder {
