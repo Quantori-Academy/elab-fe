@@ -1,0 +1,46 @@
+@if (reagent$ | async; as reagent) { <div class="header">
+  <!-- <button class="close-button" (click)="onClose()">
+    <div>Go to reagents list</div>
+  </button> -->
+  <h5>{{ reagent.category }} details</h5>
+</div>
+<div class="reagent-info-wrapper">
+  <mat-card class="reagent-structure">
+    <mat-card-header>
+      <div>Structure</div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <button class="copy-button" mat-icon-button onclick="this.blur()" (click)="onCopyStructure()"
+        matTooltip="Copy structure">
+        <mat-icon>content_copy</mat-icon>
+      </button>
+      <app-molecule-structure [structure]="reagent.structure!" [width]="300" [height]="300"></app-molecule-structure>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="reagent-details">
+    <mat-card-header>
+      <div>General Information</div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p><span>ID:</span> {{ reagent.id }}</p>
+      <p><span>Name:</span> {{ reagent.name }}</p>
+      <p><span>Category:</span> {{ reagent.category || "-" }}</p>
+      <p><span>Quantity:</span> {{ reagent.quantityLeft }} {{ reagent.quantityUnit }}</p>
+      <p><span>Description:</span> {{ reagent.description || "-"}}</p>
+      <p><span>CAS:</span> {{ reagent.casNumber || "-" }}</p>
+      <p><span>Producer:</span> {{ reagent.producer || "-" }}</p>
+      <p><span>Catalog ID:</span> {{ reagent.catalogId|| "-" }}</p>
+      <p><span>Price:</span> @if(reagent.pricePerUnit){ {{ reagent.pricePerUnit }}$ per {{ reagent.quantityUnit }}}
+        @else{-} </p>
+        <p><span>Catalog link: </span> @if(reagent.catalogLink){ <a [href]="reagent.catalogLink">{{ reagent.catalogLink }}</a> } @else {-}
+        </p>
+    </mat-card-content>
+    <div class="actions">
+        <button mat-stroked-button class="actions_edit">Edit</button>
+        <button mat-stroked-button color="warn" class="actions_delete">Delete</button>
+    </div>
+  </mat-card>
+</div> } @else { <app-table-loader-spinner /> }

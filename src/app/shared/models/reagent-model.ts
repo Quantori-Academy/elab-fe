@@ -4,7 +4,7 @@ export interface Reagent {
   id?: number;
   name: string;
   smiles: string;
-  cas: string;
+  casNumber: string;
   category: Category;
   producer: string;
   totalQuantity: number | null;
@@ -14,11 +14,15 @@ export interface Reagent {
   storageId: number;
   structure: string;
   storage: {
-    name: string,
+    name: string;
     room: {
       name: string;
-    }
-  }
+    };
+  };
+  catalogId?: string;
+  catalogLink?: string;
+  pricePerUnit?: number;
+  description?: string;
 }
 
 export interface ReagentFromFulfilledOrder {

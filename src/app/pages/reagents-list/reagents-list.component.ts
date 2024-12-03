@@ -214,6 +214,10 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     }
   }
 
+  redirectToReagentPage(reagent: Reagent) {
+    this.router.navigate([`/reagents`, reagent.id]);
+  }
+
   handlePageEvent($event: PageEvent) {
     this.reagentsQueryService.setPageData($event);
   }

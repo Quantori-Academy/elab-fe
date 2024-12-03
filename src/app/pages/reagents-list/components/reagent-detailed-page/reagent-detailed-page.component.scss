@@ -1,0 +1,90 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.header {
+  margin: 0;
+  text-align: center;
+  color: var(--primary-color-dark);
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.reagent-info-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: center;
+  gap: 50px;
+}
+
+mat-card{
+  // min-height: 350px;
+  min-width: 300px;
+  padding-bottom: 1rem;
+  display: flex;
+}
+
+
+mat-card-content{
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  color: var(--primary-color-dark);
+  font-weight: bold;
+  font-size: initial;
+}
+
+.copy-button{
+  position: absolute;
+  top: 0;
+  right: 1rem;
+}
+
+.reagent-details {
+  width: 50%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:20px;
+}
+
+.reagent-details mat-card-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+}
+
+.reagent-details span {
+  font-weight: bold;
+}
+
+.actions{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .reagent-details mat-card-content {
+    grid-template-columns: 1fr;
+  }
+
+  .reagent-details  mat-card{
+    width: 100%;
+  }
+}
+

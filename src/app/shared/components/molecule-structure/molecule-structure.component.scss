@@ -1,0 +1,20 @@
+.invalid-structure{
+  position: relative;
+}
+
+.invalid-structure img{
+  width: 100%;
+  max-width: 50px;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+.invalid-structure span{
+  position: absolute;
+  font-size: 12px;
+  display: block;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
