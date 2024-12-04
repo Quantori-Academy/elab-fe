@@ -3,7 +3,7 @@ import { ChartOptions } from '../models/chart.model';
 const pieColors: Record<string, string> = {
   Admin: 'var(--neutral-color-dark2)',
   Researcher: 'var(--neutral-color-dark1)',
-  'Procurement Officer': 'var(--neutral-color-light1)',
+  ProcurementOfficer: 'var(--neutral-color-light1)',
 };
 
 export const chartOptions = (series: number[], labels: string[]): Partial<ChartOptions> => ({

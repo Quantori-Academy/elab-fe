@@ -69,6 +69,13 @@
   text-wrap: nowrap;
 }
 
+.expired-date-directive,
+.quantity-left-directive {
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
 
 .loader {
   font-size: 6px;
