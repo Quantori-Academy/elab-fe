@@ -8,6 +8,7 @@ import {
   BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
 } from 'rxjs';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
@@ -72,7 +73,14 @@ export class ReagentRequestsDialogComponent {
         undefined,
         params.filter
       )
-    )
+    ),
+    map((response) => {
+      // Filter out items where inOrder is true
+      const filteredRequests = response.requests.filter(
+        (request) => !request.inOrder
+      );
+      return { ...response, requests: filteredRequests };
+    })
   );
 
   updateParams(params: { filter?: string; sort?: Sort }) {
