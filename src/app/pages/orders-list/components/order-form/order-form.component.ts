@@ -23,6 +23,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -75,6 +76,23 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
 
+  // dataSource$ = this.paramsSubject.pipe(
+  //   debounceTime(500),
+  //   distinctUntilChanged(),
+  //   switchMap((params) =>
+  //     this.reagentRequestService.getReagentRequests(
+  //       'Pending',
+  //       undefined,
+  //       params.sort?.active === 'createdAt' && params.sort.direction
+  //         ? params.sort.direction
+  //         : undefined,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       params.filter
+  //     )
+  //   )
+  // );
   dataSource$ = this.paramsSubject.pipe(
     debounceTime(500),
     distinctUntilChanged(),
@@ -90,9 +108,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         undefined,
         params.filter
       )
-    )
+    ),
+    map((response) => {
+      // Filter out items where inOrder is true
+      const filteredRequests = response.requests.filter(
+        (request) => !request.inOrder
+      );
+      return { ...response, requests: filteredRequests };
+    })
   );
-
+  
   updateParams(params: { filter?: string; sort?: Sort }) {
     this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
   }

@@ -13,6 +13,7 @@ export interface ReagentRequestList {
   updatedAt?: string;
   quantityUnit?: string;
   package?: string;
+  inOrder:boolean;
   orderId?: number | null;
   producer?: string | null;
   catalogId?: string | null;
