@@ -23,6 +23,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -37,6 +38,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-order-form',
@@ -74,6 +76,23 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
 
+  // dataSource$ = this.paramsSubject.pipe(
+  //   debounceTime(500),
+  //   distinctUntilChanged(),
+  //   switchMap((params) =>
+  //     this.reagentRequestService.getReagentRequests(
+  //       'Pending',
+  //       undefined,
+  //       params.sort?.active === 'createdAt' && params.sort.direction
+  //         ? params.sort.direction
+  //         : undefined,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       params.filter
+  //     )
+  //   )
+  // );
   dataSource$ = this.paramsSubject.pipe(
     debounceTime(500),
     distinctUntilChanged(),
@@ -89,9 +108,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         undefined,
         params.filter
       )
-    )
+    ),
+    map((response) => {
+      // Filter out items where inOrder is true
+      const filteredRequests = response.requests.filter(
+        (request) => !request.inOrder
+      );
+      return { ...response, requests: filteredRequests };
+    })
   );
-
+  
   updateParams(params: { filter?: string; sort?: Sort }) {
     this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
   }
@@ -179,7 +205,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           });
           this.redirectToReagentList();
         },
-        error: (err) => this.notificationPopupService.error(err),
+        error: (error: HttpErrorResponse) => {
+          this.notificationPopupService.error({
+            title: 'Error',
+            message: `Reagent request already in use, select different reagent request:
+             ${error.error.message}`,
+            duration: 15000,
+          });
+        },
+        
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;

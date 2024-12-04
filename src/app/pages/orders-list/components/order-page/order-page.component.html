@@ -3,7 +3,7 @@
   <div>
     <img src="/assets/icons/order.svg" alt="Order list" />
   </div>
-  <div>
+  <div class="details">
     <h2>
       Order Title: <span>{{ order.title }}</span>
     </h2>
@@ -29,7 +29,14 @@
     }
   </div>
 </div>
-<h3>Ordered Reagents</h3>
+<div class="filter">
+  <h3>Ordered Reagents</h3>
+  @if (order.status === 'Pending') {
+  <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
+    Add reagent request
+  </button>
+  }
+</div>
 <div class="table-container mat-elevation-z8">
   <div class="table-content">
     <table mat-table [dataSource]="order.reagents">
@@ -127,7 +134,7 @@
         >
           complete
         </button>
-        }@else if (element.status === 'Ordered') {
+        }@else if (element.status === 'Pending') {
         <button mat-icon-button aria-label="edit" (click)="onOpen(element)">
           <mat-icon color="primary">edit</mat-icon>
         </button>

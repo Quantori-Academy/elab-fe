@@ -1,0 +1,87 @@
+<div class="content">
+  <div class="filter-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Search by name</mat-label>
+      <input
+        matInput
+        (input)="onFilterName($event)"
+        placeholder="Enter reagent name"
+      />
+    </mat-form-field>
+  </div>
+  @if (dataSource$ | async; as ReagentRequestResponse) {
+
+  <div class="table-wrapper mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="ReagentRequestResponse.requests"
+      matSort
+      (matSortChange)="onSort($event)"
+      [appSpinner]="isLoading()"
+    >
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>Select</th>
+        <td mat-cell *matCellDef="let element" class="clickable-cell">
+          <mat-checkbox
+            [checked]="selectedReagents.has(element.id)"
+            (change)="onCheckboxChange(element)"
+          ></mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element" mat-cell class="createdAt">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="desiredQuantity">
+        <th mat-header-cell *matHeaderCellDef>Desired quantity</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.desiredQuantity }} {{ element.quantityUnit }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="package">
+        <th mat-header-cell *matHeaderCellDef>Package</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.package === null) {<span>N/A</span>}@else {
+          {{ element.package }}
+          }
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <td mat-cell *matCellDef="let element" class="createdAt">
+          {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="userComments">
+        <th mat-header-cell *matHeaderCellDef>Comment</th>
+        <td mat-cell *matCellDef="let element">
+          @if ( element.userComments) {
+          {{ element.userComments }} }@else { N/A }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        [class.demo-row-is-clicked]="selectedReagents.has(row.id)"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+    @if(!ReagentRequestResponse.requests.length){
+    <div class="no-reagents-container">
+      <div>
+        <img src="/assets/icons/no_data.svg" alt="no_data" />
+      </div>
+      <p>No pending requests found</p>
+    </div>
+    }
+  </div>
+  }@else {<app-table-loader-spinner />}
+  <div class="filter">
+    <button class="add-btn" mat-flat-button (click)="add()">Add</button>
+  </div>
+</div>
