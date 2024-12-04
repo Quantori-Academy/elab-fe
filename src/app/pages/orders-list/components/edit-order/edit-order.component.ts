@@ -119,17 +119,10 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   }
 
   private setStatusOptions(status: string) {
-    switch (status) {
-      case Status.pending:
-        this.statusOptions = [Status.pending, Status.submitted];
-        break;
-      case Status.submitted:
-        this.statusOptions = [Status.declined, Status.fulfilled];
-        break;
-      default:
-        this.statusOptions = [];
-    }
-  }
+    this.statusOptions = status === Status.pending 
+      ? [Status.pending, Status.submitted] 
+      : [];
+  }  
 
   onSubmit() {
     const modifiedValues: Partial<UpdateOrder> = {};
