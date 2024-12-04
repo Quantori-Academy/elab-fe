@@ -48,7 +48,8 @@ export class EditRequestedReagentComponent implements OnInit {
 
   public reagentRequestForm: FormGroup = this.fb.group({
     desiredQuantity: ['', [Validators.required]],
-    package: [],
+    package: [null, [Validators.required]],
+    amount: [null, [Validators.required, Validators.min(1)]],
   });
 
   ngOnInit(): void {
@@ -57,6 +58,7 @@ export class EditRequestedReagentComponent implements OnInit {
       this.reagentRequestForm.patchValue({
         desiredQuantity: this.ReagentRequest.desiredQuantity,
         package: this.initialPackageValue,
+        amount: this.ReagentRequest.amount,
       });
     }
   }
@@ -66,6 +68,7 @@ export class EditRequestedReagentComponent implements OnInit {
       const currentPackageValue = this.reagentRequestForm.get('package')?.value;
       const requestPayload: Partial<ReagentRequestList> = {
         desiredQuantity: this.reagentRequestForm.get('desiredQuantity')?.value,
+        amount: this.reagentRequestForm.get('amount')?.value,
       };
 
       // Include `package` only if it has changed
