@@ -1,23 +1,31 @@
 <div class="content">
-  <h5>Add Reagent to Storage Location</h5>
+  <h5>
+    {{ "STORAGE_LOCATION_DIALOG.ADD_REAGENT_TO_STORAGE_LOCATION" | translate }}
+  </h5>
 
   <div class="filter">
     <mat-form-field class="filter__item" appearance="fill">
-      <mat-label>Filter by room</mat-label>
+      <mat-label>{{
+        "STORAGE_LOCATION_DIALOG.FILTER_BY_ROOM" | translate
+      }}</mat-label>
       <mat-select (selectionChange)="onFilterRoom($event.value)">
-        <mat-option value="">All Rooms</mat-option>
+        <mat-option value="">{{
+          "STORAGE_LOCATION_DIALOG.ALL_ROOMS" | translate
+        }}</mat-option>
         @for (room of listOfRooms$ | async; track $index) {
         <mat-option [value]="room.name">{{ room.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
     <mat-form-field class="mat-form-field-with-loader" appearance="fill">
-      <mat-label>Filter by name</mat-label>
+      <mat-label>{{
+        "STORAGE_LOCATION_DIALOG.FILTER_BY_NAME" | translate
+      }}</mat-label>
       <input matInput (input)="onFilterName($event)" />
     </mat-form-field>
   </div>
   <div class="table-container mat-elevation-z8">
-    @if ( storageLocationData$ | async; as storageLocationData ) {
+    @if (storageLocationData$ | async; as storageLocationData) {
     <div class="table-content">
       <table
         mat-table
@@ -25,26 +33,34 @@
         [appSpinner]="isLoading()"
       >
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "STORAGE_LOCATION_DIALOG.TABLE.NAME" | translate }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="room">
-          <mat-header-cell *matHeaderCellDef> room </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "STORAGE_LOCATION_DIALOG.TABLE.ROOM" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             {{ element.room.name }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="reagents">
-          <mat-header-cell *matHeaderCellDef> Reagents </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "STORAGE_LOCATION_DIALOG.TABLE.REAGENTS" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element" class="align-center">
             {{ element.reagentCount }}
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef>
+            {{ "STORAGE_LOCATION_DIALOG.TABLE.ACTIONS" | translate }}
+          </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <button
               mat-icon-button
@@ -60,17 +76,20 @@
         ></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
       </table>
-      @if(!storageLocationData.storages.length){
+      @if (!storageLocationData.storages.length) {
       <div class="no-storage-container">
         <div>
-          <img src="/assets/icons/no_data.svg" alt="no_data" />
+          <img
+            src="/assets/icons/no_data.svg"
+            alt="{{ 'STORAGE_LOCATION_DIALOG.NO_DATA_ALT' | translate }}"
+          />
         </div>
-        <p>No location found</p>
+        <p>{{ "STORAGE_LOCATION_DIALOG.NO_LOCATION_FOUND" | translate }}</p>
       </div>
       }
     </div>
-    @if(storageLocationData.storages.length){
-      <mat-paginator
+    @if (storageLocationData.storages.length) {
+    <mat-paginator
       #paginator
       class="paginator"
       (page)="handlePageEvent($event)"
@@ -81,9 +100,8 @@
       aria-label="Select page"
     >
     </mat-paginator>
-    }
-    } @else {
-    <app-table-loader-spinner />
+    } } @else {
+    <app-table-loader-spinner></app-table-loader-spinner>
     }
   </div>
 </div>

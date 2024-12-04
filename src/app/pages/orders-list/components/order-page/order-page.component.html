@@ -8,7 +8,7 @@
   </div>
   <div class="details">
     <h2>
-      Order title: {{ "ORDER_PAGE.ORDER_TITLE" | translate }}:
+      {{ "ORDER_PAGE.ORDER_TITLE" | translate }}:
       <span>{{ order.title }}</span>
     </h2>
     <h2>
@@ -164,7 +164,7 @@
         <td mat-cell *matCellDef="let element">
           @if (element.status ==='Completed'){
           <button class="add-btn" mat-flat-button disabled="true">
-            completed
+            {{ "ORDERS_LIST.STATUS.COMPLETED" | translate }}
           </button>
           } @else if (element.status === 'Fulfilled') {
           <button

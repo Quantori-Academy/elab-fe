@@ -577,7 +577,58 @@
                                                                   "ADMIN": "Administrateur",
                                                                   "RESEARCHER": "Chercheur",
                                                                   "PROCUREMENT_OFFICER": "Responsable des achats"
-                                                                }
+                                                                },
+                                                                  "ADD_STRUCTURE": {
+                                                                    "HEADER": "Dessiner la structure",
+                                                                    "ADD_STRUCTURE_BUTTON": "Ajouter la structure"
+                                                                  },
+                                                                  "BUTTONS": {
+                                                                    "CANCEL": "Annuler"
+                                                                  },
+                                                                    "STORAGE_LOCATION_DIALOG": {
+                                                                      "ADD_REAGENT_TO_STORAGE_LOCATION": "Ajouter le réactif à l'emplacement de stockage",
+                                                                      "FILTER_BY_ROOM": "Filtrer par salle",
+                                                                      "ALL_ROOMS": "Toutes les salles",
+                                                                      "FILTER_BY_NAME": "Filtrer par nom",
+                                                                      "TABLE": {
+                                                                        "NAME": "Nom",
+                                                                        "ROOM": "Salle",
+                                                                        "REAGENTS": "Réactifs",
+                                                                        "ACTIONS": "Actions"
+                                                                      },
+                                                                      
+                                                                      "NO_LOCATION_FOUND": "Aucun emplacement trouvé",
+                                                                      "NO_DATA_ALT": "Pas de données"
+                                                                      
+                                                                    },
+                                                                    "NOTIFICATIONS": {
+                                                                      "SUCCESS_TITLE": "Succès",
+                                                                      "REAGENT_CREATED_SUCCESS": "Le réactif a été créé avec succès !"
+                                                                    },
+                                                                      "EDIT_REAGENT": {
+                                                                        "HEADER": "Modifier",
+                                                                        "QUANTITY_LEFT": "Quantité restante",
+                                                                        "STORAGE_LOCATION": "Emplacement de stockage",
+                                                                        "STORAGE_LOCATION_PLACEHOLDER": "ex : Salle1 Armoire1-Étagère1",
+                                                                        "ERRORS": {
+                                                                          "QUANTITY_LEFT_REQUIRED": "La quantité restante est requise.",
+                                                                          "QUANTITY_LEFT_INVALID": "La quantité restante doit être un nombre valide.",
+                                                                          "STORAGE_LOCATION_REQUIRED": "L'emplacement de stockage est requis.",
+                                                                          "STORAGE_LOCATION_INVALID": "Sélectionnez le bon emplacement de stockage."
+                                                                        }
+                                                                      },
+                                                                      "BUTTONS": {
+                                                                        "CANCEL": "Annuler",
+                                                                        "EDIT": "Modifier"
+                                                                      },
+                                                                      "NOTIFICATIONS": {
+                                                                        "SUCCESS_TITLE": "Succès",
+                                                                        "ERROR_TITLE": "Erreur",
+                                                                        "EDIT_SUCCESS": "{{ category }} modifié avec succès !"
+                                                                      }
+                                                                    
+                                                                  
+                                                                
                                                               
                                                               
                                                             

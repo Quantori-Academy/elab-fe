@@ -571,12 +571,57 @@
                                                                   "ADMIN": "Admin",
                                                                   "RESEARCHER": "Researcher",
                                                                   "PROCUREMENT_OFFICER": "Procurement Officer"
-                                                                }
-                                                              
-                                                              
-                                                            
-                                                          
-                                                        
-                                                            
+                                                                },
+                                                                  "ADD_STRUCTURE": {
+                                                                    "HEADER": "Structure drawing",
+                                                                    "ADD_STRUCTURE_BUTTON": "Add structure"
+                                                                  },
+                                                                  "BUTTONS": {
+                                                                    "CANCEL": "Cancel"
+                                                                  },
+                                                                    "STORAGE_LOCATION_DIALOG": {
+                                                                      "ADD_REAGENT_TO_STORAGE_LOCATION": "Add Reagent to Storage Location",
+                                                                      "FILTER_BY_ROOM": "Filter by room",
+                                                                      "ALL_ROOMS": "All Rooms",
+                                                                      "FILTER_BY_NAME": "Filter by name",
+                                                                      "TABLE": {
+                                                                        "NAME": "Name",
+                                                                        "ROOM": "Room",
+                                                                        "REAGENTS": "Reagents",
+                                                                        "ACTIONS": "Actions"
+                                                                      },
+                                                                      
+                                                                      "NO_LOCATION_FOUND": "No location found",
+                                                                      "NO_DATA_ALT": "No data"
+                                                                      
+                                                                    },
+                                                                    "NOTIFICATIONS": {
+                                                                      "SUCCESS_TITLE": "Success",
+                                                                      "REAGENT_CREATED_SUCCESS": "Reagent has been successfully created!"
+                                                                    },
+                                                                      "EDIT_REAGENT": {
+                                                                        "HEADER": "Edit",
+                                                                        "QUANTITY_LEFT": "Quantity Left",
+                                                                        "STORAGE_LOCATION": "Storage Location",
+                                                                        "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
+                                                                        "ERRORS": {
+                                                                          "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
+                                                                          "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number.",
+                                                                          "STORAGE_LOCATION_REQUIRED": "Storage Location is required.",
+                                                                          "STORAGE_LOCATION_INVALID": "Select correct Storage Location."
+                                                                        }
+                                                                      },
+                                                                      "BUTTONS": {
+                                                                        "CANCEL": "Cancel",
+                                                                        "EDIT": "Edit"
+                                                                      },
+                                                                      "NOTIFICATIONS": {
+                                                                        "SUCCESS_TITLE": "Success",
+                                                                        "ERROR_TITLE": "Error",
+                                                                        "EDIT_SUCCESS": "{{ category }} edited successfully!"
+                                                                      }
+                                                                    
+                                                                  
+                                                                                                                    
   }
   
