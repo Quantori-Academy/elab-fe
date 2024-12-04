@@ -1,7 +1,7 @@
 import { OrderEntity } from './order-entity.model';
 
 export interface Reagent {
-  id?: number;
+  id: number;
   name: string;
   smiles: string;
   casNumber: string;

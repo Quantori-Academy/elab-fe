@@ -33,7 +33,5 @@ export const routes: Routes = [
       import('./components/reagent-detailed-page/reagent-detailed-page.component').then(
         (c) => c.ReagentDetailedPageComponent
       ),
-    // data: { role: UserRoles.Researcher, isSample: true },
-    // canActivate: [roleGuard],
   },
 ];

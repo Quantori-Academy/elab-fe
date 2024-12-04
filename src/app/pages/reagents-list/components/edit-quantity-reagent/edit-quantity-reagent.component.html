@@ -1,0 +1,26 @@
+<h5 class="header">Edit {{ editionData.category }} Quantity</h5>
+<form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
+  <mat-form-field subscriptSizing="dynamic" appearance="outline">
+    <mat-label>Quantity Left</mat-label>
+    <input matInput formControlName="quantityLeft" type="number" />
+    @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
+    reagentRequestForm.get('quantityLeft')?.touched) {
+    <mat-error>Quantity Left is required.</mat-error>
+    } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
+    <mat-error>Quantity Left must be a valid number.</mat-error>
+    }
+  </mat-form-field>
+  <div class="actions">
+    <button mat-button color="warn" type="button" mat-dialog-close>
+      Cancel
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="reagentRequestForm.pristine || reagentRequestForm.invalid">
+      Edit
+    </button>
+  </div>
+</form>
+

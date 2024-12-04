@@ -1,0 +1,9 @@
+<h5 class="header">Delete reagent?</h5>
+<form [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
+  <p>{{ deleteForm.value.reagentName }} will be deleted</p>
+  <div class="actions">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-button color="warn" type="submit">Delete</button>
+  </div>
+</form>
+

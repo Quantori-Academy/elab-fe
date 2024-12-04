@@ -1,7 +1,7 @@
 :host{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
 }
 
@@ -14,77 +14,78 @@
   justify-content: space-around;
 }
 
-.reagent-info-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content:center;
-  align-items: center;
-  gap: 50px;
-}
-
 mat-card{
-  // min-height: 350px;
-  min-width: 300px;
-  padding-bottom: 1rem;
-  display: flex;
-}
-
-
-mat-card-content{
-  position: relative;
-  flex-grow: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  gap: 1rem;
+  padding-block: 1rem;
+}
+
+mat-card-content{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-around;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reagent-structure{
+  position: relative;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-mat-card-header {
-  display: flex;
-  justify-content: center;
-  color: var(--primary-color-dark);
-  font-weight: bold;
-  font-size: initial;
+.no-reagent-structure img{
+  width: 200px;
+  object-fit: cover;
+  opacity: 0.3;
+  transform: rotate(90deg);
 }
 
 .copy-button{
   position: absolute;
-  top: 0;
-  right: 1rem;
+  top: -10px;
+  right: 0;
+}
+
+.smiles{
+  margin-top: 1rem;
 }
 
 .reagent-details {
-  width: 50%;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap:20px;
-}
-
-.reagent-details mat-card-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  justify-content: space-between;
+  grid-column-gap: 2rem;
 }
 
-.reagent-details span {
+.reagent-details span, .smiles span{
   font-weight: bold;
 }
 
 .actions{
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
-@media (max-width: 900px) {
-  .reagent-details mat-card-content {
+.actions_delete.mat-mdc-fab {
+  background-color: var(--error-light-color);
+}
+
+.actions_delete.mat-accent.mat-mdc-fab{
+  color: var(--error-color);
+}
+
+.actions_delete.mat-mdc-fab:hover {
+  background-color: var(--error-progress-bg-color);
+}
+
+@media (max-width: 1100px) {
+  .reagent-details {
     grid-template-columns: 1fr;
   }
-
-  .reagent-details  mat-card{
-    width: 100%;
-  }
 }
-
