@@ -87,6 +87,22 @@
               }
             </td>
           </ng-container>
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field appearance="fill" class="select-quantity-input">
+                <input
+                  matInput
+                  type="number"
+                  min="1"
+                  step="1"
+                  [disabled]="true"
+                  [value]="element.amount"
+                  (input)="onPackageAmountChange(element.id, $event)"
+                />
+              </mat-form-field>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="createdAt">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
             <td mat-cell *matCellDef="let element" class="createdAt">
@@ -147,8 +163,7 @@
             {{ item.desiredQuantity }}{{ item.quantityUnit }}
           </p>
           @if (item.package) {
-          <p class="reagent-item__attribute">{{ item.package }}</p>
-
+          <p class="reagent-item__attribute">{{ item.amount }}  {{ item.package }}</p>
           }@else { N/A }
 
           <app-molecule-structure

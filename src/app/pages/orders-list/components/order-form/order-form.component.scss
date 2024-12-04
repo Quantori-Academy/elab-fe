@@ -42,6 +42,9 @@ form {
   align-items: flex-end;
   justify-content: end;
 }
+.select-quantity-input {
+  width: 110px !important;
+}
 
 mat-card {
   width: 100%;
@@ -142,12 +145,19 @@ mat-expansion-panel {
   align-items: center;
 }
 
+.no-reagents-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
 @media screen and (max-width: 900px) {
   form {
     width: 100%;
   }
 }
-
 
 @media screen and (max-width: 500px) {
   .form-grid {
