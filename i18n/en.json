@@ -553,25 +553,14 @@
                                                               },
                                                               "NO_DATA": {
                                                                 "NO_ORDERED_REAGENTS": "No ordered reagents",
-                                                                "NO_ORDERS": "No orders"
+                                                                "NO_ORDERS": "No orders",
+                                                                "NO_DATA": "No Data",
+                                                                "NO_STORAGES": "No storages",
+                                                                "NO_ROOMS": "No rooms",
+                                                                "NO_REAGENT_REQUEST": "No Reagent Request",
+                                                                "NO_DATA_FOUND": "No data found"
                                                               },
-                                                                "ADMIN_DASHBOARD": {
-                                                                  "NUMBER_OF_ROOMS": "Number of Rooms",
-                                                                  "NUMBER_OF_STORAGES": "Number of Storages",
-                                                                  "NUMBER_OF_USERS": "Number of Users",
-                                                                  "ROOM1": "Room1",
-                                                                  "ROOM2": "Room2",
-                                                                  "ROOM3": "Room3",
-                                                                  "ROOM4": "Room4",
-                                                                  "KPI_ICON_ALT": "KPI Icon",
-                                                                  "USER_CHART_TITLE": "User Roles Distribution",
-                                                                  "ROOM_CHART_TITLE": "Rooms Overview"
-                                                                },
-                                                                "USER_ROLES": {
-                                                                  "ADMIN": "Admin",
-                                                                  "RESEARCHER": "Researcher",
-                                                                  "PROCUREMENT_OFFICER": "Procurement Officer"
-                                                                },
+                                                              
                                                                   "ADD_STRUCTURE": {
                                                                     "HEADER": "Structure drawing",
                                                                     "ADD_STRUCTURE_BUTTON": "Add structure"
@@ -619,9 +608,69 @@
                                                                         "SUCCESS_TITLE": "Success",
                                                                         "ERROR_TITLE": "Error",
                                                                         "EDIT_SUCCESS": "{{ category }} edited successfully!"
-                                                                      }
-                                                                    
-                                                                  
-                                                                                                                    
+                                                                      },
+                                                                        "ADMIN_DASHBOARD": {
+                                                                          "NUMBER_OF_ROOMS": "Number of Rooms",
+                                                                          "NUMBER_OF_STORAGES": "Number of Storages",
+                                                                          "NUMBER_OF_USERS": "Number of Users"
+                                                                        },
+                                                                        "ROLES": {
+                                                                          "ADMIN": "Admin",
+                                                                          "RESEARCHER": "Researcher",
+                                                                          "PROCUREMENTOFFICER": "Procurement Officer"
+                                                                        },
+                                                                          "RESEARCHER_DASHBOARD": {
+                                                                            "REAGENT_VS_SAMPLE": "Reagent vs Sample",
+                                                                            "EXPIRED_REAGENT_VS_SAMPLE": "Expired: Reagent vs Sample",
+                                                                            "EMPTY_REAGENT_VS_SAMPLE": "Empty: Reagent vs Sample",
+                                                                            "LESS_THAN_HALF": "Less than half"
+                                                                          },
+                                                                          "CATEGORIES": {
+                                                                            "REAGENT": "Reagent",
+                                                                            "SAMPLE": "Sample"
+                                                                          },
+                                                                          "REAGENT_LIST": {
+                                                                            "NAME": "Name",
+                                                                            "CATEGORY": "Category",
+                                                                            "EXPIRED_DATE": "Expired Date",
+                                                                            "QUANTITY_LEFT": "Quantity Left"
+                                                                          },
+                                                                            "PO_DASHBOARD": {
+                                                                              "NEW_INCOMING_REQUEST": "New incoming reagent request",
+                                                                              "REAGENT": "Reagent",
+                                                                              "DATE": "Date",
+                                                                              "DESIRED_QUANTITY": "Desired Quantity",
+                                                                              "STATUS": "Status",
+                                                                              "ORDERS_BUTTON": "Orders",
+                                                                              "ORDER_STATUS": "Order status"
+                                                                            },
+                                                                            "STATUSES": {
+                                                                              "PENDING": "Pending",
+                                                                              "ORDERED": "Ordered",
+                                                                              "FULFILLED": "Fulfilled",
+                                                                              "DECLINED": "Declined",
+                                                                              "COMPLETED": "Completed"
+                                                                            },
+                                                                           
+                                                                              "ERROR_MESSAGES": {
+                                                                                "FAILED_TO_CONNECT": "Failed to connect to the server",
+                                                                                "CHECK_INTERNET_CONNECTION": "Check your internet connection and try again",
+                                                                                "ERROR_WITH_CODE": "Error {{status}}",
+                                                                                "UNEXPECTED_ERROR": "Unexpected Error",
+                                                                                "UNEXPECTED_ERROR_OCCURRED": "An unexpected error occurred",
+                                                                                "SERVER_ERROR_OCCURRED": "Authorization error"
+                                                                              },
+                                                                              "SERVER_ERRORS": {
+                                                                                "INVALID_CREDENTIALS": "Invalid username or password.",
+                                                                                "USER_NOT_FOUND": "User not found.",
+                                                                                "ACCESS_DENIED": "Access denied.",
+                                                                                "RESOURCE_NOT_FOUND": "The requested resource was not found.",
+                                                                                "INTERNAL_SERVER_ERROR": "An internal server error occurred.",
+                                                                                "BAD_REQUEST": "Bad request.",
+                                                                                "VALIDATION_FAILED": "Validation failed for the provided data."
+                                                                                
+                                                                              }
+                                                                          
+                                                                            
   }
   

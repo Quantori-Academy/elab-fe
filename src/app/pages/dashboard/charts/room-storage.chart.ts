@@ -1,9 +1,13 @@
 import { ChartOptions } from '../models/chart.model';
 
-export const chartOptions = (data: number[], categories: string[]): Partial<ChartOptions> => ({
+export const chartOptions = (
+  data: number[],
+  categories: string[],
+  titleText: string
+): Partial<ChartOptions> => ({
   series: [
     {
-      name: 'Number of Storages',
+      name: titleText,
       data,
     },
   ],
@@ -17,7 +21,7 @@ export const chartOptions = (data: number[], categories: string[]): Partial<Char
   },
   colors: ['var(--neutral-color-dark1)'],
   title: {
-    text: 'Number of Storages',
+    text: titleText,
     style: {
       color: 'var(--neutral-color-light1)',
       fontWeight: 500,

@@ -170,7 +170,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!dataSource.length && !isLoading()) {
-    <app-no-data text="No Reagent Request" />
+    <app-no-data [text]="'NO_DATA.NO_REAGENT_REQUEST' | translate" />
     }
   </div>
 

@@ -57,7 +57,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!roomList.length) {
-    <app-no-data text="No rooms" />
+    <app-no-data [text]="'NO_DATA.NO_ROOMS' | translate" />
     }
   </div>
 

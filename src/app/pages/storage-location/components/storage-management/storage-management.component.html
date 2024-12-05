@@ -108,7 +108,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!storageLocationData.size && !isLoading()) {
-    <app-no-data text="No storages" />
+    <app-no-data [text]="'NO_DATA.NO_STORAGES' | translate" />
     }
   </div>
 

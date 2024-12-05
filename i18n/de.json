@@ -558,25 +558,14 @@
                                                               },
                                                               "NO_DATA": {
                                                                 "NO_ORDERED_REAGENTS": "Keine bestellten Reagenzien",
-                                                                "NO_ORDERS": "Keine Bestellungen"
+                                                                "NO_ORDERS": "Keine Bestellungen",
+                                                                "NO_DATA": "Keine Daten",
+                                                                "NO_STORAGES": "Keine Lagerorte",
+                                                                "NO_ROOMS": "Keine Raume",
+                                                                "NO_REAGENT_REQUEST": "Keine Reagenzienanforderung",
+                                                                "NO_DATA_FOUND": "Keine Daten gefunden"
                                                               },
-                                                                "ADMIN_DASHBOARD": {
-                                                                  "NUMBER_OF_ROOMS": "Anzahl der Räume",
-                                                                  "NUMBER_OF_STORAGES": "Anzahl der Lagerorte",
-                                                                  "NUMBER_OF_USERS": "Anzahl der Benutzer",
-                                                                  "ROOM1": "Raum1",
-                                                                  "ROOM2": "Raum2",
-                                                                  "ROOM3": "Raum3",
-                                                                  "ROOM4": "Raum4",
-                                                                  "KPI_ICON_ALT": "KPI-Symbol",
-                                                                  "USER_CHART_TITLE": "Verteilung der Benutzerrollen",
-                                                                  "ROOM_CHART_TITLE": "Raumübersicht"
-                                                                },
-                                                                "USER_ROLES": {
-                                                                  "ADMIN": "Administrator",
-                                                                  "RESEARCHER": "Forscher",
-                                                                  "PROCUREMENT_OFFICER": "Einkaufsleiter"
-                                                                },
+
                                                                   "ADD_STRUCTURE": {
                                                                     "HEADER": "Strukturzeichnung",
                                                                     "ADD_STRUCTURE_BUTTON": "Struktur hinzufügen"
@@ -624,13 +613,74 @@
                                                                         "SUCCESS_TITLE": "Erfolg",
                                                                         "ERROR_TITLE": "Fehler",
                                                                         "EDIT_SUCCESS": "{{ category }} wurde erfolgreich bearbeitet!"
-                                                                      }
-                                                                    
-                                                                  
-
-                                                                
-                                                              
-                                                                       
-
+                                                                      },
+                                                                        "ADMIN_DASHBOARD": {
+                                                                          "NUMBER_OF_ROOMS": "Anzahl der Räume",
+                                                                          "NUMBER_OF_STORAGES": "Anzahl der Lagerorte",
+                                                                          "NUMBER_OF_USERS": "Anzahl der Benutzer"
+                                                                        },
+                                                                        "ROLES": {
+                                                                          "ADMIN": "Administrator",
+                                                                          "RESEARCHER": "Forscher",
+                                                                          "PROCUREMENTOFFICER": "Einkaufsleiter"
+                                                                        },
+                                                                          "RESEARCHER_DASHBOARD": {
+                                                                            "REAGENT_VS_SAMPLE": "Reagenz vs Probe",
+                                                                            "EXPIRED_REAGENT_VS_SAMPLE": "Abgelaufen: Reagenz vs Probe",
+                                                                            "EMPTY_REAGENT_VS_SAMPLE": "Leer: Reagenz vs Probe",
+                                                                            "LESS_THAN_HALF": "Weniger als die Hälfte"
+                                                                          },
+                                                                          "CATEGORIES": {
+                                                                            "REAGENT": "Reagenz",
+                                                                            "SAMPLE": "Probe"
+                                                                          },
+                                                                          "REAGENT_LIST": {
+                                                                            "NAME": "Name",
+                                                                            "CATEGORY": "Kategorie",
+                                                                            "EXPIRED_DATE": "Ablaufdatum",
+                                                                            "QUANTITY_LEFT": "Verbleibende Menge"
+                                                                          },
+                                                                          "NO_DATA": {
+                                                                            "NO_DATA_FOUND": "Keine Daten gefunden",
+                                                                            "NO_DATA": "Keine Daten verfügbar"
+                                                                          },
+                                                                            "PO_DASHBOARD": {
+                                                                              "NEW_INCOMING_REQUEST": "Neue eingehende Reagenzanforderung",
+                                                                              "REAGENT": "Reagenz",
+                                                                              "DATE": "Datum",
+                                                                              "DESIRED_QUANTITY": "Gewünschte Menge",
+                                                                              "STATUS": "Status",
+                                                                              "ORDERS_BUTTON": "Bestellungen",
+                                                                              "ORDER_STATUS": "Bestellstatus"
+                                                                            },
+                                                                            "STATUSES": {
+                                                                              "PENDING": "Ausstehend",
+                                                                              "ORDERED": "Bestellt",
+                                                                              "FULFILLED": "Erfüllt",
+                                                                              "DECLINED": "Abgelehnt",
+                                                                              "COMPLETED": "Abgeschlossen"
+                                                                            },
+                                                                   
+                                                                                "ERROR_MESSAGES": {
+                                                                                  "FAILED_TO_CONNECT": "Verbindung zum Server fehlgeschlagen",
+                                                                                  "CHECK_INTERNET_CONNECTION": "Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut",
+                                                                                  "ERROR_WITH_CODE": "Fehler {{status}}",
+                                                                                  "UNEXPECTED_ERROR": "Unerwarteter Fehler",
+                                                                                  "UNEXPECTED_ERROR_OCCURRED": "Es ist ein unerwarteter Fehler aufgetreten",
+                                                                                  "SERVER_ERROR_OCCURRED": "Autorisierungsfehler"
+                                                                                },
+                                                                                "SERVER_ERRORS": {
+                                                                                  "INVALID_CREDENTIALS": "Ungültiger Benutzername oder Passwort.",
+                                                                                  "USER_NOT_FOUND": "Benutzer nicht gefunden.",
+                                                                                  "ACCESS_DENIED": "Zugriff verweigert.",
+                                                                                  "RESOURCE_NOT_FOUND": "Die angeforderte Ressource wurde nicht gefunden.",
+                                                                                  "INTERNAL_SERVER_ERROR": "Ein interner Serverfehler ist aufgetreten.",
+                                                                                  "BAD_REQUEST": "Ungültige Anfrage.",
+                                                                                  "VALIDATION_FAILED": "Die Überprüfung der bereitgestellten Daten ist fehlgeschlagen."
+                                                                             
+                                                                                }
+                                                                          
+                                                                              
+                                                                                
   }
   
