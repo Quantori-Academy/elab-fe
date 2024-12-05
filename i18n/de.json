@@ -696,5 +696,28 @@
       "NO_STRUCTURE_PROVIDED": "Keine Struktur bereitgestellt",
       "INVALID_STRUCTURE": "Ungültige Struktur"
     }
-  }
+  },
+  "EDIT_QUANTITY_REAGENT": {
+    "HEADER": "Bearbeite {{ category }} Menge",
+    "QUANTITY_LEFT": "Verbleibende Menge",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Verbleibende Menge ist erforderlich.",
+      "QUANTITY_LEFT_INVALID": "Verbleibende Menge muss eine gültige Zahl sein."
+    },
+    "CANCEL": "Abbrechen",
+    "EDIT": "Bearbeiten",
+    "SUCCESS_TITLE": "Erfolg",
+    "ERROR_TITLE": "Fehler",
+    "SUCCESS_MESSAGE_EDITED": "{{ category }} erfolgreich bearbeitet!",
+    "SUCCESS_MESSAGE_CONSUMED": "{{ category }} ist vollständig verbraucht"
+  },
+  "DELETE_REAGENT": {
+    "HEADER": "Reagenz löschen?",
+    "MESSAGE": "{{ name }} wird gelöscht",
+    "CANCEL": "Abbrechen",
+    "DELETE": "Löschen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "{{ name }} wurde erfolgreich entfernt!",
+    "ERROR_TITLE": "Fehler"
+  }  
 }

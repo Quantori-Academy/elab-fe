@@ -1,26 +1,37 @@
-<h5 class="header">Edit {{ editionData.category }} Quantity</h5>
+<h5 class="header">
+  {{
+    "EDIT_QUANTITY_REAGENT.HEADER"
+      | translate : { category: categoryTranslated }
+  }}
+</h5>
 <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
   <mat-form-field subscriptSizing="dynamic" appearance="outline">
-    <mat-label>Quantity Left</mat-label>
+    <mat-label>{{
+      "EDIT_QUANTITY_REAGENT.QUANTITY_LEFT" | translate
+    }}</mat-label>
     <input matInput formControlName="quantityLeft" type="number" />
-    @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
+    @if (hasError('quantityLeft', 'required') &&
     reagentRequestForm.get('quantityLeft')?.touched) {
-    <mat-error>Quantity Left is required.</mat-error>
-    } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
-    <mat-error>Quantity Left must be a valid number.</mat-error>
+    <mat-error>{{
+      "EDIT_QUANTITY_REAGENT.ERRORS.QUANTITY_LEFT_REQUIRED" | translate
+    }}</mat-error>
+    } @if (hasError('quantityLeft', 'pattern')) {
+    <mat-error>{{
+      "EDIT_QUANTITY_REAGENT.ERRORS.QUANTITY_LEFT_INVALID" | translate
+    }}</mat-error>
     }
   </mat-form-field>
   <div class="actions">
     <button mat-button color="warn" type="button" mat-dialog-close>
-      Cancel
+      {{ "EDIT_QUANTITY_REAGENT.CANCEL" | translate }}
     </button>
     <button
       mat-flat-button
       color="primary"
       type="submit"
-      [disabled]="reagentRequestForm.pristine || reagentRequestForm.invalid">
-      Edit
+      [disabled]="reagentRequestForm.pristine || reagentRequestForm.invalid"
+    >
+      {{ "EDIT_QUANTITY_REAGENT.EDIT" | translate }}
     </button>
   </div>
 </form>
-

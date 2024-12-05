@@ -1,9 +1,17 @@
-<h5 class="header">Delete reagent?</h5>
+<h5 class="header">{{ "DELETE_REAGENT.HEADER" | translate }}</h5>
 <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
-  <p>{{ deleteForm.value.reagentName }} will be deleted</p>
+  <p>
+    {{
+      "DELETE_REAGENT.MESSAGE"
+        | translate : { name: deleteForm.value.reagentName }
+    }}
+  </p>
   <div class="actions">
-    <button mat-button type="button" mat-dialog-close>Cancel</button>
-    <button mat-button color="warn" type="submit">Delete</button>
+    <button mat-button type="button" mat-dialog-close>
+      {{ "DELETE_REAGENT.CANCEL" | translate }}
+    </button>
+    <button mat-button color="warn" type="submit">
+      {{ "DELETE_REAGENT.DELETE" | translate }}
+    </button>
   </div>
 </form>
-
