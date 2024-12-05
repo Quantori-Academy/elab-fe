@@ -61,7 +61,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
     'name',
     'category',
     'structure',
-    'quantity',
+    'storageLocation',
     'isSelect',
     'selectQuantity',
   ];
