@@ -70,7 +70,7 @@
   <h3>Ordered Reagents</h3>
   @if (order.status === 'Pending') {
   <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
-    Add reagent request
+    {{ "ORDER_PAGE.ADD_REAGENT_REQUEST" | translate }}
   </button>
   }
 </div>
@@ -85,9 +85,11 @@
       <ng-container matColumnDef="casNumber">
         <th mat-header-cell *matHeaderCellDef>casNumber</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.casNumber === null || element.casNumber === '' ) {
-          <span>N/A</span>
-          }@else { {{ element.casNumber }} }
+          @if (element.casNumber === null || element.casNumber === '') {
+          <span>{{ "ORDER_FORM.N_A" | translate }}</span>
+          } @else {
+          {{ element.casNumber }}
+          }
         </td>
       </ng-container>
 
@@ -135,10 +137,10 @@
       </ng-container>
 
       <ng-container matColumnDef="structureSmiles">
-        <th th mat-header-cell *matHeaderCellDef>
+        <th mat-header-cell *matHeaderCellDef>
           {{ "ORDER_PAGE.TABLE.STRUCTURE" | translate }}
         </th>
-        <td td mat-cell *matCellDef="let element" class="structure-container">
+        <td mat-cell *matCellDef="let element" class="structure-container">
           <app-molecule-structure
             [structure]="element.structureSmiles"
             [width]="50"
@@ -150,9 +152,9 @@
       <ng-container matColumnDef="userComments">
         <th mat-header-cell *matHeaderCellDef>Creator's comment</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.userComments === null|| element.userComments === '') {
-          <span>N/A</span>
-          } @else{
+          @if (element.userComments === null || element.userComments === '') {
+          <span>{{ "ORDER_FORM.N_A" | translate }}</span>
+          } @else {
           {{ element.userComments }}
           }
         </td>
@@ -161,9 +163,9 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.status ==='Completed'){
+          @if (element.status === 'Completed') {
           <button class="add-btn" mat-flat-button disabled="true">
-            {{ "ORDERS_LIST.STATUS.COMPLETED" | translate }}
+            {{ "ORDER_PAGE.COMPLETED" | translate }}
           </button>
           } @else if (element.status === 'Fulfilled') {
           <button
@@ -171,9 +173,9 @@
             mat-flat-button
             (click)="onCompleted(element.id)"
           >
-            complete
+            {{ "ORDER_PAGE.COMPLETE" | translate }}
           </button>
-          }@else if (element.status === 'Pending') {
+          } @else if (element.status === 'Pending') {
           <button mat-icon-button aria-label="edit" (click)="onOpen(element)">
             <mat-icon color="primary">edit</mat-icon>
           </button>
@@ -182,8 +184,9 @@
             aria-label="delete"
             (click)="onRemove(order.id, element)"
           >
-            <mat-icon color="warn">delete</mat-icon></button
-          >}
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+          }
         </td>
       </ng-container>
 

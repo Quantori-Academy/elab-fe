@@ -65,8 +65,8 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private translate = inject(TranslateService);
   private destroy$ = new Subject<void>();
+  public translate = inject(TranslateService);
   filterStructureValue = '';
   isFullStructure = false;
 

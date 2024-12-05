@@ -24,7 +24,6 @@ import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reage
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-page',
@@ -38,7 +37,6 @@ import { CommonModule } from '@angular/common';
     NoDataComponent,
     NgClass,
     TranslateModule,
-    CommonModule,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -49,8 +47,8 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   private activatedRoutes = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private notificationPopupService = inject(NotificationPopupService);
-  private destroy$ = new Subject<void>();
   private translate = inject(TranslateService);
+  private destroy$ = new Subject<void>();
 
   private orderSubject = new BehaviorSubject<Order | null>(null);
   order$ = this.orderSubject.asObservable();

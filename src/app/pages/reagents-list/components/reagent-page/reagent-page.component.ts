@@ -12,7 +12,7 @@ import { MoleculeStructureComponent } from '../../../../shared/components/molecu
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { ReagentRequestService } from '../../../reagent-request/reagent-request-page/reagent-request-page.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagent-page',
@@ -32,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ReagentPageComponent {
   private ReagentsService = inject(ReagentRequestService);
   reagent$: Observable<ReagentRequestList | null> = of(null);
+  private translate = inject(TranslateService);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: number },

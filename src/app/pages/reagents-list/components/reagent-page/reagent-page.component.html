@@ -5,7 +5,10 @@
 </button>
 <div class="info">
   <div>
-    <img src="/assets/icons/reagent.svg" alt="reagent" />
+    <img
+      src="/assets/icons/reagent.svg"
+      alt="{{ 'REAGENT_PAGE.ALT_REAGENT' | translate }}"
+    />
   </div>
   <div>
     <h1>{{ "REAGENT_PAGE.NAME" | translate }}: {{ reagent.name }}</h1>
@@ -23,7 +26,8 @@
     </div>
     @if (reagent.producer) {
     <h3>
-      Price per unit: <span>{{ reagent.producer }}</span>
+      {{ "REAGENT_PAGE.PRODUCER" | translate }}:
+      <span>{{ reagent.producer }}</span>
     </h3>
     }
     <h3>
@@ -33,7 +37,9 @@
         {{ "REAGENT_PAGE.PER" | translate }}
         @if (reagent.package) {
         {{ reagent.package }}
-        } @else { {{ "REAGENT_PAGE.PACKAGE" | translate }} }
+        } @else {
+        {{ "REAGENT_PAGE.PACKAGE" | translate }}
+        }
       </span>
     </h3>
     @if (reagent.pricePerUnit) {
