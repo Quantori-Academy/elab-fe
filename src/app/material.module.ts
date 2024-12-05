@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -59,6 +60,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
+    ClipboardModule
   ],
   exports: [
     MatButtonModule,
@@ -87,6 +89,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
+    ClipboardModule
   ],
   providers: [
     {

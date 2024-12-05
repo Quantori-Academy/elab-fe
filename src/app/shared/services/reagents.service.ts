@@ -46,12 +46,16 @@ export class ReagentsService {
     );
   }
 
-  editReagent(id: number, reagentData: {quantityLeft: number, storageId: number}): Observable<Reagent[]> {
+  editReagent(id: number, reagentData: {quantityLeft: number, storageId?: number}): Observable<Reagent[]> {
     return this.httpClient.patch<Reagent[]>(`${this.apiUrl}/${id}`, reagentData)
   }
 
   public getReagentById(id: string): Observable<Reagent> {
     return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
+  }
+
+  public deleteReagent(id: string): Observable<Reagent> {
+    return this.httpClient.delete<Reagent>(`${this.apiUrl}/${id}`);
   }
 
   public createReagentFromOrder(

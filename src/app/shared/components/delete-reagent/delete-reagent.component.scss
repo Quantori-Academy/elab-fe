@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header {
+  margin: 0;
+  text-align: center;
+  color: var(--primary-color-dark);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+p{
+  text-align: center;
+}
+
+.actions {
+  margin-left: auto;
+}
