@@ -26,7 +26,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     TranslateModule,
   ],
   templateUrl: './reagent-detailed-page.component.html',
-  styleUrls: ['./reagent-detailed-page.component.scss'],
+  styleUrl: './reagent-detailed-page.component.scss',
 })
 export class ReagentDetailedPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
