@@ -21,6 +21,7 @@ import { Order } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
+import { EditOrderComponent } from '../edit-order/edit-order.component';
 
 @Component({
   selector: 'app-order-page',
@@ -87,7 +88,6 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   onOpen(ReagentRequest: ReagentRequestList) {
     const dialogRef = this.dialog.open(EditRequestedReagentComponent, {
       data: ReagentRequest,
-      width: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -95,6 +95,41 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         this.fetchOrder();
       }
     });
+  }
+
+  editOrder(order: Order) {
+    const dialogRef = this.dialog.open(EditOrderComponent, {
+      data: order.id,
+      minWidth: 'fit-content',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchOrder();
+      }
+    });
+  }
+  orderStatusChange(orderId: number, status: string) {
+    this.orderService
+      .updateOrder(orderId, { status })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Status Updated',
+            message: `Order status changed to ${status} successfully.`,
+            duration: 3000,
+          });
+          this.fetchOrder();
+        },
+        error: () => {
+          this.notificationPopupService.error({
+            title: 'Update Failed',
+            message: 'Failed to update order status.',
+            duration: 3000,
+          });
+        },
+      });
   }
   onCompleted(id: number) {
     const dialog = this.dialog.open(StorageLocationDialogComponent, {
@@ -132,6 +167,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   onAdd(id: number) {
     const dialog = this.dialog.open(ReagentRequestsDialogComponent, {
       data: id,
