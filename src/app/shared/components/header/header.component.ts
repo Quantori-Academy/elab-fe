@@ -22,7 +22,7 @@ export const collapsed = signal(false);
   standalone: true,
   imports: [NgIf, NgFor, AsyncPipe, MaterialModule, TranslateModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {

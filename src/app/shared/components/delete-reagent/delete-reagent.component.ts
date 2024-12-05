@@ -13,7 +13,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [ReactiveFormsModule, MaterialModule, TranslateModule],
   templateUrl: './delete-reagent.component.html',
-  styleUrls: ['./delete-reagent.component.scss'],
+  styleUrl: './delete-reagent.component.scss',
 })
 export class DeleteReagentComponent {
   deleteForm: FormGroup;

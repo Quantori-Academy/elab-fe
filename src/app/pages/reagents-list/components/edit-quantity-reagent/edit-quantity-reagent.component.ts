@@ -20,7 +20,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [MaterialModule, ReactiveFormsModule, AsyncPipe, TranslateModule],
   templateUrl: './edit-quantity-reagent.component.html',
-  styleUrls: ['./edit-quantity-reagent.component.scss'],
+  styleUrl: './edit-quantity-reagent.component.scss',
 })
 export class EditQuantityReagentComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);

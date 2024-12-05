@@ -30,7 +30,7 @@ export interface DrawDetails {
   standalone: true,
   imports: [NgClass, NgStyle, NgIf, CanvasRendererComponent],
   templateUrl: './molecule-structure.component.html',
-  styleUrls: ['./molecule-structure.component.scss'],
+  styleUrl: './molecule-structure.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
