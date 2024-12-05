@@ -30,10 +30,6 @@ form > mat-card {
   background-color: var(--mat-card-background-color);
 }
 
-form > mat-card:not(.reagents-card) {
-  min-height: 200px;
-}
-
 mat-accordion {
   width: 100%;
 }
