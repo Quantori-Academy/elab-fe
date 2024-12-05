@@ -12,6 +12,11 @@
     <button mat-flat-button color="primary" (click)="openMoveReagentDialog()" [disabled]="!isReagentsSelected()">
       Move Reagent
     </button>
+    @if (!storageLocationId) {
+      <button mat-flat-button color="primary" (click)="onUploadReagent()">
+        Upload
+      </button>
+    }
   </div>
   }
 

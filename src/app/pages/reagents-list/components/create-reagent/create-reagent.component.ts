@@ -231,7 +231,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           expirationDate: finalExpirationDate,
         };
       }
-      console.log(formRawValue);
 
       const formRequest = this.isSample
         ? this.reagentsService.createSample(formRawValue)
