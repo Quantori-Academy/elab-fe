@@ -1,758 +1,700 @@
 {
-    "LOGIN": {
-      "TITLE": "Login",
-      "EMAIL": "Email",
-      "PASSWORD": "Password",
-      "FORGOT_PASSWORD": "Forgot Password?",
-      "LOGIN_BUTTON": "Login",
-      "EMAIL_REQUIRED": "Email is required",
-      "EMAIL_INVALID": "Please enter a valid email address",
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "LOGIN_BUTTON": "Login",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Please enter a valid email address",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_INVALID": "Please enter a valid password (must be at least 8 characters long)",
+    "ERROR_INCORRECT": "Incorrect password or email"
+  },
+  "HEADER": {
+    "LOGOUT": "Logout",
+    "PROFILE": "Profile",
+    "LANGUAGE": "Language"
+  },
+  "PASSWORD_CHANGE": {
+    "MESSAGE": "Please change your password before proceeding",
+    "TITLE": "Change Password",
+    "CURRENT_PASSWORD": "Current Password",
+    "CURRENT_PASSWORD_REQUIRED": "Current password is required.",
+    "NEW_PASSWORD": "New Password",
+    "NEW_PASSWORD_REQUIRED": "New password is required.",
+    "NEW_PASSWORD_INVALID": "Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required.",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match!",
+    "CHANGE_PASSWORD_BUTTON": "Change Password"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Forgot Password",
+    "EMAIL": "Email",
+    "EMAIL_REQUIRED": "Email is required",
+    "EMAIL_INVALID": "Enter a valid email",
+    "EMAIL_NOT_EXIST": "Email doesn't exist",
+    "LOGIN_BUTTON": "Login",
+    "SUBMIT_BUTTON": "Submit"
+  },
+  "EDIT_ORDER": {
+    "TITLE": "Edit Order",
+    "FORM": {
+      "TITLE_LABEL": "Title",
+      "SELLER_LABEL": "Seller",
+      "STATUS_LABEL": "Status"
+    },
+    "ORDERED_REAGENTS": "Ordered Reagents",
+    "TABLE_HEADERS": {
+      "NAME": "Name",
+      "CAS_NUMBER": "CAS Number",
+      "MODIFICATION_DATE": "Modification Date",
+      "DESIRED_QUANTITY": "Desired Quantity",
+      "QUANTITY_LEFT": "Quantity Left",
+      "STRUCTURE": "Structure",
+      "CREATOR_COMMENT": "Creator's Comment",
+      "ACTIONS": "Actions"
+    },
+    "NO_CHANGES": "No changes to update",
+    "REMOVE_LAST_REAGENT_CONFIRM": "Removing the last reagent will cancel the order. Do you want to proceed?",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Order updated successfully",
+    "REAGENT_REMOVED_SUCCESS": "Reagent removed successfully!",
+    "ORDER_DECLINED_SUCCESS": "Order declined successfully!",
+    "ERROR_TITLE": "Error",
+    "PROCEED_BUTTON": "Proceed",
+    "CANCEL_BUTTON": "Cancel",
+    "UPDATE_BUTTON": "Update",
+    "CLOSE_BUTTON": "Close"
+  },
+  "EDIT_REQUESTED_REAGENT": {
+    "TITLE": "Edit Requested Reagent",
+    "DESIRED_QUANTITY": "Desired Quantity",
+    "DESIRED_QUANTITY_REQUIRED": "Desired quantity is required",
+    "PACKAGE": "Package",
+    "PACKAGE_REQUIRED": "Package is required",
+    "NONE": "None",
+    "UPDATE_BUTTON": "Update",
+    "CLOSE_BUTTON": "Close",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Reagent Request has been updated",
+    "ERROR_TITLE": "Error"
+  },
+  "ORDER_FORM": {
+    "HEADER": "Create New Order",
+    "GENERAL": "General",
+    "TITLE_LABEL": "Title",
+    "TITLE_REQUIRED": "Title is required.",
+    "SELLER_LABEL": "Seller",
+    "SELLER_PLACEHOLDER": "Select Seller",
+    "SELLER_REQUIRED": "Seller is required.",
+    "REQUESTED_REAGENTS": "Requested Reagents",
+    "SEARCH_BY_NAME": "Search by name",
+    "SEARCH_PLACEHOLDER": "Enter reagent name",
+    "SELECT": "Select",
+    "NAME": "Name",
+    "DESIRED_QUANTITY": "Desired Quantity",
+    "PACKAGE": "Package",
+    "N_A": "N/A",
+    "CREATED": "Created",
+    "COMMENT": "Comment",
+    "ACTIONS": "Actions",
+    "NO_PENDING_REQUESTS": "No pending requests found",
+    "SELECTED_REAGENTS": "Selected Reagents",
+    "SELECT_AT_LEAST_ONE": "Select at least one reagent",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Order created successfully!",
+    "ERROR_TITLE": "Error",
+    "ERROR_MESSAGE": "Reagent request already in use, select different reagent request",
+    "AMOUNT": "Amount"
+  },
+  "ORDER_PAGE": {
+    "ORDER_TITLE": "Order Title",
+    "SELLER": "Seller",
+    "STATUS": "Status",
+    "CREATED": "Created",
+    "LAST_UPDATED": "Last updated",
+    "UPDATED": "Updated",
+    "ORDERED_REAGENTS": "Ordered Reagents",
+    "ADD_REAGENT_REQUEST": "Add reagent request",
+    "COMPLETED": "Completed",
+    "COMPLETE": "Complete",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "ORDER_LIST_ALT": "Order list",
+    "SUCCESS_TITLE": "Success",
+    "REAGENT_REMOVED_SUCCESS": "Reagent has been successfully removed!",
+    "ERROR_TITLE": "Error",
+    "TABLE": {
+      "NAME": "Name",
+      "CAS_NUMBER": "CAS Number",
+      "MODIFICATION_DATE": "Modification Date",
+      "DESIRED_QUANTITY": "Desired Quantity",
+      "PACKAGE": "Package",
+      "STATUS": "Status",
+      "STRUCTURE": "Structure",
+      "CREATOR_COMMENT": "Creator's comment",
+      "ACTIONS": "Actions",
+      "NO_DATA": "______"
+    }
+  },
+  "STATUSES": {
+    "PENDING": "Pending",
+    "ORDERED": "Ordered",
+    "FULFILLED": "Fulfilled",
+    "DECLINED": "Declined",
+    "COMPLETED": "Completed"
+  },
+  "ORDERS_LIST": {
+    "CREATE_NEW_ORDER": "Create new order",
+    "FILTER_BY_STATUS": "Filter by status",
+    "ALL_ORDERS": "All Orders",
+    "STATUS": {
+      "PENDING": "Pending",
+      "SUBMITTED": "Submitted",
+      "DECLINED": "Declined",
+      "FULFILLED": "Fulfilled",
+      "COMPLETED": "Completed"
+    },
+    "FILTER_BY_TITLE": "Filter by Title",
+    "FILTER_BY_SELLER": "Filter by Seller",
+    "TABLE_HEADERS": {
+      "ORDER_TITLE": "Order Title",
+      "CREATION_DATE": "Creation Date",
+      "MODIFICATION_DATE": "Modification Date",
+      "SELLER_PRODUCER": "Seller/Producer",
+      "STATUS": "Status",
+      "ACTIONS": "Actions"
+    },
+    "NO_DATA": "______",
+    "ARIA_LABELS": {
+      "VIEW_DETAILS": "View details",
+      "EDIT": "Edit",
+      "SELECT_PAGE": "Select page"
+    }
+  },
+  "PROFILE": {
+    "ROLE_NAME": {
+      "RESEARCHER": "Researcher",
+      "PROCUREMENTOFFICER": "Procurement Officer",
+      "ADMIN": "Administrator"
+    },
+    "ROLE": "Role",
+    "EMAIL": "Email",
+    "CHANGE_PASSWORD": "Change Password",
+    "CURRENT_PASSWORD": "Current Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "CHANGE": "Change",
+    "CANCEL": "Cancel",
+    "ERRORS": {
+      "CURRENT_PASSWORD_REQUIRED": "Current password is required.",
+      "PASSWORD_INCORRECT": "Password is not correct.",
+      "NEW_PASSWORD_REQUIRED": "New password is required.",
+      "PASSWORD_PATTERN": "Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*",
+      "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required.",
+      "PASSWORDS_NOT_MATCH": "Passwords do not match!"
+    }
+  },
+  "CREATE_REAGENT_REQUEST": {
+    "HEADER": "Create New Reagent Request",
+    "GENERAL": "General",
+    "NAME_LABEL": "Name",
+    "NAME_REQUIRED": "Name is required.",
+    "DESIRED_QUANTITY_LABEL": "Desired Quantity",
+    "DESIRED_QUANTITY_REQUIRED": "Desired Quantity is required and must be at least 1.",
+    "QUANTITY_UNIT_LABEL": "Quantity Unit",
+    "QUANTITY_UNIT_REQUIRED": "Quantity Unit is required.",
+    "STRUCTURE": "Structure",
+    "STRUCTURE_SMILES_LABEL": "Structure SMILES",
+    "CAS_NUMBER_LABEL": "CAS Number",
+    "ADDITIONAL_INFO": "Additional Information",
+    "USER_COMMENTS_LABEL": "User Comments",
+    "ORDER_ID_LABEL": "Order ID",
+    "PRODUCER_LABEL": "Producer",
+    "CATALOG_ID_LABEL": "Catalog ID",
+    "CATALOG_LINK_LABEL": "Catalog Link",
+    "PRICE_PER_UNIT_LABEL": "Price Per Unit",
+    "EXPIRATION_DATE_LABEL": "Expiration Date",
+    "PACKAGE_LABEL": "Package",
+    "NONE": "None",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Reagent request created successfully!",
+    "ERROR_TITLE": "Error",
+    "ERROR_MESSAGE": "Failed to create reagent request. Please try again."
+  },
+  "DECLINE_REAGENT_REQUEST": {
+    "HEADER": "Decline Reagent Request",
+    "STATUS_LABEL": "Status",
+    "PROCUREMENT_COMMENT_LABEL": "Procurement Comment",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Reagent Request declined",
+    "ERROR_TITLE": "Error"
+  },
+  "REAGENT_REQUEST_DETAIL": {
+    "HEADER": "Reagent Request Details",
+    "GENERAL_INFO": "General Information",
+    "ID": "ID",
+    "NAME": "Name",
+    "STATUS": "Status",
+    "DESIRED_QUANTITY": "Desired Quantity",
+    "QUANTITY_UNIT": "Quantity Unit",
+    "PACKAGE": "Package",
+    "CAS_NUMBER": "CAS Number",
+    "USER_COMMENTS": "User Comments",
+    "PROCUREMENT_COMMENTS": "Procurement Comments",
+    "CREATED_AT": "Created At",
+    "UPDATED_AT": "Updated At",
+    "STRUCTURE": "Structure",
+    "SMILES": "SMILES"
+  },
+  "REAGENTS_REQUEST_PAGE": {
+    "CREATE_REAGENT_REQUEST": "Create Reagent Request",
+    "FILTER_BY_NAME": "Filter by Name",
+    "PLACEHOLDER_ENTER_NAME": "Enter name",
+    "FILTER_BY_STATUS": "Filter by Status",
+    "ALL_STATUSES": "All Statuses",
+    "STATUS": {
+      "PENDING": "Pending",
+      "ORDERED": "Ordered",
+      "DECLINED": "Declined",
+      "FULFILLED": "Fulfilled",
+      "COMPLETED": "Completed"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "STRUCTURE": "Structure",
+      "CAS_NUMBER": "CAS Number",
+      "DESIRED_QUANTITY": "Desired Quantity",
+      "STATUS": "Status",
+      "CREATED_AT": "Created At",
+      "UPDATED_AT": "Updated At",
+      "ACTIONS": "Actions",
+      "OPEN": "Open"
+    }
+  },
+  "REAGENTS_LIST": {
+    "CREATE_REAGENT": "Create Reagent",
+    "CREATE_SAMPLE": "Create Sample",
+    "MOVE_REAGENT": "Move Reagent",
+    "SEARCH_BY_NAME": "Search by name",
+    "PLACEHOLDER_ENTER_NAME": "Enter a name",
+    "SEARCH_BY_STRUCTURE": "Search by structure",
+    "PLACEHOLDER_ENTER_STRUCTURE": "Enter a structure",
+    "EXACT_MATCH": "Exact match",
+    "FILTER_BY_CATEGORY": "Filter by Category",
+    "ALL_CATEGORIES": "All Categories",
+    "CATEGORY": {
+      "SAMPLE": "Sample",
+      "REAGENT": "Reagent"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Category",
+      "STRUCTURE": "Structure",
+      "CAS": "CAS",
+      "QUANTITY": "Quantity",
+      "QUANTITY_LEFT": "Quantity Left",
+      "LOCATION": "Location",
+      "ACTIONS": "Actions"
+    },
+    "ARIA_LABEL": {
+      "OPEN_REAGENT_PAGE": "Open reagent page",
+      "SELECT_PAGE": "Select page"
+    }
+  },
+  "ADD_REAGENT_SAMPLE": {
+    "SEARCH_BY_NAME": "Search by name",
+    "PLACEHOLDER_ENTER_NAME": "Enter a name",
+    "FILTER_BY_CATEGORY": "Filter by Category",
+    "ALL_CATEGORIES": "All Categories",
+    "CATEGORY": {
+      "SAMPLE": "Sample",
+      "REAGENT": "Reagent"
+    },
+    "SAVE": "Save",
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Category",
+      "STRUCTURE": "Structure",
+      "QUANTITY": "Quantity",
+      "QUANTITY_LEFT": "Quantity Left",
+      "SELECT": "Select",
+      "SELECT_QUANTITY": "Select Quantity"
+    },
+    "ERRORS": {
+      "QUANTITY_LESS_THAN": "Quantity should be less than {{quantityLeft}} {{quantityUnit}}",
+      "QUANTITY_MORE_THAN_ZERO": "Quantity should be more than 0",
+      "QUANTITY_REQUIRED": "Quantity is required"
+    },
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Select page"
+    }
+  },
+  "CREATE_REAGENT": {
+    "HEADER": "Create New {{ itemType }}",
+    "SAMPLE": "Sample",
+    "REAGENT": "Reagent",
+    "GENERAL": "General",
+    "NAME_LABEL": "Name",
+    "NAME_REQUIRED": "Name is required.",
+    "DESCRIPTION_LABEL": "Description",
+    "EXPIRATION_DATE_LABEL": "Expiration Date",
+    "EXPIRATION_DATE_HINT": "MM/DD/YYYY",
+    "STORAGE_LOCATION_LABEL": "Storage Location",
+    "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
+    "STORAGE_LOCATION_REQUIRED": "Storage Location is required.",
+    "STORAGE_LOCATION_INVALID": "Select correct Storage Location.",
+    "QUANTITY": "Quantity",
+    "QUANTITY_UNIT_LABEL": "Quantity Unit",
+    "QUANTITY_UNIT_REQUIRED": "Quantity Unit is required.",
+    "TOTAL_QUANTITY_LABEL": "Total Quantity",
+    "TOTAL_QUANTITY_REQUIRED": "Total Quantity is required.",
+    "TOTAL_QUANTITY_INVALID": "Total Quantity must be a valid number.",
+    "QUANTITY_LEFT_LABEL": "Quantity Left",
+    "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
+    "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number.",
+    "REAGENTS_LABEL": "Reagents",
+    "SELECTED_REAGENTS": "Selected {{ count }} reagents",
+    "REAGENTS_REQUIRED": "Reagents are required",
+    "STRUCTURE": "Structure",
+    "STRUCTURE_LABEL": "Structure",
+    "CAS_NUMBER_LABEL": "CAS Number",
+    "CAS_NUMBER_MINLENGTH": "CAS Number must be at least 5 characters long.",
+    "CAS_NUMBER_MAXLENGTH": "CAS Number cannot be more than 10 characters long.",
+    "ORDER_DETAILS": "Order Details",
+    "PRODUCER_LABEL": "Producer",
+    "CATALOG_ID_LABEL": "Catalog ID",
+    "CATALOG_LINK_LABEL": "Catalog Link",
+    "CATALOG_LINK_INVALID": "Catalog Link must be a valid URL.",
+    "PRICE_PER_UNIT_LABEL": "Price Per Unit",
+    "PRICE_PER_UNIT_INVALID": "Price Per Unit must be a valid number.",
+    "CANCEL": "Cancel",
+    "SUBMIT": "Submit",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "{{ item }} created successfully!",
+    "ERROR_TITLE": "Error"
+  },
+  "MOVE_REAGENT": {
+    "STORAGE_LOCATION_LABEL": "Storage Location",
+    "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
+    "CANCEL": "Cancel",
+    "MOVE": "Move",
+    "ERROR_TITLE": "Error",
+    "ERROR_MESSAGE": "Reagents couldn't be moved to storage",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Reagents successfully moved",
+    "WARNING_TITLE": "Warning"
+  },
+  "REAGENT_PAGE": {
+    "DETAILS_HEADER": "Reagent's Details",
+    "NAME": "Reagent name",
+    "STRUCTURE": "Reagent structure",
+    "PRODUCER": "Producer",
+    "DESIRED_QUANTITY": "Reagent's desired quantity",
+    "PER": "per",
+    "PACKAGE": "package",
+    "PRICE_PER_UNIT": "Price per unit",
+    "CAS_NUMBER": "Reagent's CAS",
+    "CATALOG_ID": "Reagent's catalog ID",
+    "CATALOG_LINK": "Reagent's catalog link",
+    "ALT_REAGENT": "reagent"
+  },
+  "BUTTONS": {
+    "CLOSE": "Close",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit"
+  },
+  "STRUCTURE_DIALOG": {
+    "ENLARGED_IMAGE_ALT": "Enlarged Image"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Reset Password",
+    "NEW_PASSWORD_LABEL": "New password",
+    "CONFIRM_PASSWORD_LABEL": "Confirm password",
+    "ERRORS": {
       "PASSWORD_REQUIRED": "Password is required",
-      "PASSWORD_INVALID": "Please enter a valid password (must be at least 8 characters long)",
-      "ERROR_INCORRECT": "Incorrect password or email"
+      "PASSWORD_MIN_LENGTH": "Password must have at least {{ minLength }} characters",
+      "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required",
+      "PASSWORD_NO_MATCH": "Passwords don't match"
     },
-    "HEADER": {
-      "LOGOUT": "Logout",
-      "PROFILE": "Profile",
-      "LANGUAGE": "Language"
+    "LOGIN": "Login",
+    "SUBMIT": "Submit"
+  },
+  "STORAGE_LOCATION": {
+    "TAB": {
+      "STORAGE_LOCATION": "Storage Location",
+      "ROOM": "Room"
+    }
+  },
+  "ADD_EDIT_ROOM": {
+    "EDIT": "Edit",
+    "ADD_NEW": "Add New",
+    "ROOM": "Room",
+    "ROOM_LABEL": "Room",
+    "DESCRIPTION_LABEL": "Description",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_ADD": "Room is added successfully",
+    "SUCCESS_EDIT": "Room is edited successfully",
+    "ERROR_TITLE": "Error",
+    "ERRORS": {
+      "ROOM_REQUIRED": "Room is required"
+    }
+  },
+  "ADD_EDIT_STORAGE": {
+    "EDIT": "Edit",
+    "ADD_NEW": "Add New",
+    "STORAGE_LOCATION": "Storage Location",
+    "ROOM_LABEL": "Room",
+    "NAME_LABEL": "Name",
+    "DESCRIPTION_LABEL": "Description",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_ADD": "Storage Location added",
+    "SUCCESS_EDIT": "Storage Location edited",
+    "ERROR_TITLE": "Error",
+    "ERRORS": {
+      "ROOM_REQUIRED": "Room is required",
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MAXLENGTH": "Name length should be less than {{ maxLength }}"
+    }
+  },
+  "ROOM_MANAGEMENT": {
+    "ADD_NEW_ROOM": "Add New Room",
+    "TABLE": {
+      "ROOM": "Room",
+      "DESCRIPTION": "Description",
+      "STORAGES": "Storages",
+      "ACTIONS": "Actions"
     },
-      "PASSWORD_CHANGE": {
-        "MESSAGE": "Please change your password before proceeding",
-        "TITLE": "Change Password",
-        "CURRENT_PASSWORD": "Current Password",
-        "CURRENT_PASSWORD_REQUIRED": "Current password is required.",
-        "NEW_PASSWORD": "New Password",
-        "NEW_PASSWORD_REQUIRED": "New password is required.",
-        "NEW_PASSWORD_INVALID": "Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*",
-        "CONFIRM_PASSWORD": "Confirm Password",
-        "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required.",
-        "PASSWORDS_DO_NOT_MATCH": "Passwords do not match!",
-        "CHANGE_PASSWORD_BUTTON": "Change Password"
-      },
-        "FORGOT_PASSWORD": {
-          "TITLE": "Forgot Password",
-          "EMAIL": "Email",
-          "EMAIL_REQUIRED": "Email is required",
-          "EMAIL_INVALID": "Enter a valid email",
-          "EMAIL_NOT_EXIST": "Email doesn't exist",
-          "LOGIN_BUTTON": "Login",
-          "SUBMIT_BUTTON": "Submit"
-        },
-            "EDIT_ORDER": {
-              "TITLE": "Edit Order",
-              "FORM": {
-                "TITLE_LABEL": "Title",
-                "SELLER_LABEL": "Seller",
-                "STATUS_LABEL": "Status"
-              },
-              "ORDERED_REAGENTS": "Ordered Reagents",
-              "TABLE_HEADERS": {
-                "NAME": "Name",
-                "CAS_NUMBER": "CAS Number",
-                "MODIFICATION_DATE": "Modification Date",
-                "DESIRED_QUANTITY": "Desired Quantity",
-                "QUANTITY_LEFT": "Quantity Left",
-                "STRUCTURE": "Structure",
-                "CREATOR_COMMENT": "Creator's Comment",
-                "ACTIONS": "Actions"
-              },
-              "NO_CHANGES": "No changes to update",
-              "REMOVE_LAST_REAGENT_CONFIRM": "Removing the last reagent will cancel the order. Do you want to proceed?",
-              "SUCCESS_TITLE": "Success",
-              "SUCCESS_MESSAGE": "Order updated successfully",
-              "REAGENT_REMOVED_SUCCESS": "Reagent removed successfully!",
-              "ORDER_DECLINED_SUCCESS": "Order declined successfully!",
-              "ERROR_TITLE": "Error",
-              "PROCEED_BUTTON": "Proceed",
-              "CANCEL_BUTTON": "Cancel",
-              "UPDATE_BUTTON": "Update",
-              "CLOSE_BUTTON": "Close"
-            },
-
-            "EDIT_REQUESTED_REAGENT": {
-              "TITLE": "Edit Requested Reagent",
-              "DESIRED_QUANTITY": "Desired Quantity",
-              "DESIRED_QUANTITY_REQUIRED": "Desired quantity is required",
-              "PACKAGE": "Package",
-              "PACKAGE_REQUIRED": "Package is required",
-              "NONE": "None",
-              "UPDATE_BUTTON": "Update",
-              "CLOSE_BUTTON": "Close",
-              "SUCCESS_TITLE": "Success",
-              "SUCCESS_MESSAGE": "Reagent Request has been updated",
-              "ERROR_TITLE": "Error"
-            },
-              "ORDER_FORM": {
-                "HEADER": "Create New Order",
-                "GENERAL": "General",
-                "TITLE_LABEL": "Title",
-                "TITLE_REQUIRED": "Title is required.",
-                "SELLER_LABEL": "Seller",
-                "SELLER_PLACEHOLDER": "Select Seller",
-                "SELLER_REQUIRED": "Seller is required.",
-                "REQUESTED_REAGENTS": "Requested Reagents",
-                "SEARCH_BY_NAME": "Search by name",
-                "SEARCH_PLACEHOLDER": "Enter reagent name",
-                "SELECT": "Select",
-                "NAME": "Name",
-                "DESIRED_QUANTITY": "Desired Quantity",
-                "PACKAGE": "Package",
-                "N_A": "N/A",
-                "CREATED": "Created",
-                "COMMENT": "Comment",
-                "ACTIONS": "Actions",
-                "NO_PENDING_REQUESTS": "No pending requests found",
-                "SELECTED_REAGENTS": "Selected Reagents",
-                "SELECT_AT_LEAST_ONE": "Select at least one reagent",
-                "CANCEL": "Cancel",
-                "SUBMIT": "Submit",
-                "SUCCESS_TITLE": "Success",
-                "SUCCESS_MESSAGE": "Order created successfully!",
-                "ERROR_TITLE": "Error",
-                "ERROR_MESSAGE": "Reagent request already in use, select different reagent request",
-                "AMOUNT": "Amount",
-                "N_A": "N/A"
-              },
-
-            
-
-                "ORDER_PAGE": {
-                  "ORDER_TITLE": "Order Title",
-                  "SELLER": "Seller",
-                  "STATUS": "Status",
-                  "CREATED": "Created",
-                  "LAST_UPDATED": "Last updated",
-                  "UPDATED": "Updated",
-                  "ORDERED_REAGENTS": "Ordered Reagents",
-                  "ADD_REAGENT_REQUEST": "Add reagent request",
-                  "COMPLETED": "Completed",
-                  "COMPLETE": "Complete",
-                  "EDIT": "Edit",
-                  "DELETE": "Delete",
-                  "ORDER_LIST_ALT": "Order list",
-                  "SUCCESS_TITLE": "Success",
-                  "REAGENT_REMOVED_SUCCESS": "Reagent has been successfully removed!",
-                  "ERROR_TITLE": "Error",
-                  "TABLE": {
-                    "NAME": "Name",
-                    "CAS_NUMBER": "CAS Number",
-                    "MODIFICATION_DATE": "Modification Date",
-                    "DESIRED_QUANTITY": "Desired Quantity",
-                    "PACKAGE": "Package",
-                    "STATUS": "Status",
-                    "STRUCTURE": "Structure",
-                    "CREATOR_COMMENT": "Creator's comment",
-                    "ACTIONS": "Actions",
-                    "NO_DATA": "______"
-                  }
-                },
-                "STATUSES": {
-                  "PENDING": "Pending",
-                  "ORDERED": "Ordered",
-                  "FULFILLED": "Fulfilled",
-                  "DECLINED": "Declined",
-                  "COMPLETED": "Completed"
-                },
-
-
-
-
-                  "ORDERS_LIST": {
-                    "CREATE_NEW_ORDER": "Create new order",
-                    "FILTER_BY_STATUS": "Filter by status",
-                    "ALL_ORDERS": "All Orders",
-                    "STATUS": {
-                      "PENDING": "Pending",
-                      "SUBMITTED": "Submitted",
-                      "DECLINED": "Declined",
-                      "FULFILLED": "Fulfilled",
-                      "COMPLETED": "Completed"
-                    },
-                    "FILTER_BY_TITLE": "Filter by Title",
-                    "FILTER_BY_SELLER": "Filter by Seller",
-                    "TABLE_HEADERS": {
-                      "ORDER_TITLE": "Order Title",
-                      "CREATION_DATE": "Creation Date",
-                      "MODIFICATION_DATE": "Modification Date",
-                      "SELLER_PRODUCER": "Seller/Producer",
-                      "STATUS": "Status",
-                      "ACTIONS": "Actions"
-                    },
-                    "NO_DATA": "______",
-                    "ARIA_LABELS": {
-                      "VIEW_DETAILS": "View details",
-                      "EDIT": "Edit",
-                      "SELECT_PAGE": "Select page"
-                    }
-                  },
-                  "PROFILE": {
-                    "ROLE_NAME": {
-                      "RESEARCHER": "Researcher",
-                      "PROCUREMENTOFFICER": "Procurement Officer",
-                      "ADMIN": "Administrator"
-                    },
-                    "ROLE": "Role",
-                    "EMAIL": "Email",
-                    "CHANGE_PASSWORD": "Change Password",
-                    "CURRENT_PASSWORD": "Current Password",
-                    "NEW_PASSWORD": "New Password",
-                    "CONFIRM_PASSWORD": "Confirm Password",
-                    "CHANGE": "Change",
-                    "CANCEL": "Cancel",
-                    "ERRORS": {
-                      "CURRENT_PASSWORD_REQUIRED": "Current password is required.",
-                      "PASSWORD_INCORRECT": "Password is not correct.",
-                      "NEW_PASSWORD_REQUIRED": "New password is required.",
-                      "PASSWORD_PATTERN": "Must be longer than 8 letters, contain: A-Z, a-z, 0-9, !#$%^&*",
-                      "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required.",
-                      "PASSWORDS_NOT_MATCH": "Passwords do not match!"
-                    }
-                  },
-
-                      "CREATE_REAGENT_REQUEST": {
-                        "HEADER": "Create New Reagent Request",
-                        "GENERAL": "General",
-                        "NAME_LABEL": "Name",
-                        "NAME_REQUIRED": "Name is required.",
-                        "DESIRED_QUANTITY_LABEL": "Desired Quantity",
-                        "DESIRED_QUANTITY_REQUIRED": "Desired Quantity is required and must be at least 1.",
-                        "QUANTITY_UNIT_LABEL": "Quantity Unit",
-                        "QUANTITY_UNIT_REQUIRED": "Quantity Unit is required.",
-                        "STRUCTURE": "Structure",
-                        "STRUCTURE_SMILES_LABEL": "Structure SMILES",
-                        "CAS_NUMBER_LABEL": "CAS Number",
-                        "ADDITIONAL_INFO": "Additional Information",
-                        "USER_COMMENTS_LABEL": "User Comments",
-                        "ORDER_ID_LABEL": "Order ID",
-                        "PRODUCER_LABEL": "Producer",
-                        "CATALOG_ID_LABEL": "Catalog ID",
-                        "CATALOG_LINK_LABEL": "Catalog Link",
-                        "PRICE_PER_UNIT_LABEL": "Price Per Unit",
-                        "EXPIRATION_DATE_LABEL": "Expiration Date",
-                        "PACKAGE_LABEL": "Package",
-                        "NONE": "None",
-                        "CANCEL": "Cancel",
-                        "SUBMIT": "Submit",
-                        "SUCCESS_TITLE": "Success",
-                        "SUCCESS_MESSAGE": "Reagent request created successfully!",
-                        "ERROR_TITLE": "Error",
-                        "ERROR_MESSAGE": "Failed to create reagent request. Please try again."
-                      },
-                        "DECLINE_REAGENT_REQUEST": {
-                          "HEADER": "Decline Reagent Request",
-                          "STATUS_LABEL": "Status",
-                          "PROCUREMENT_COMMENT_LABEL": "Procurement Comment",
-                          "CANCEL": "Cancel",
-                          "SAVE": "Save",
-                          "SUCCESS_TITLE": "Success",
-                          "SUCCESS_MESSAGE": "Reagent Request declined",
-                          "ERROR_TITLE": "Error"
-                        },
-                          "REAGENT_REQUEST_DETAIL": {
-                            "HEADER": "Reagent Request Details",
-                            "GENERAL_INFO": "General Information",
-                            "ID": "ID",
-                            "NAME": "Name",
-                            "STATUS": "Status",
-                            "DESIRED_QUANTITY": "Desired Quantity",
-                            "QUANTITY_UNIT": "Quantity Unit",
-                            "PACKAGE": "Package",
-                            "CAS_NUMBER": "CAS Number",
-                            "USER_COMMENTS": "User Comments",
-                            "PROCUREMENT_COMMENTS": "Procurement Comments",
-                            "CREATED_AT": "Created At",
-                            "UPDATED_AT": "Updated At",
-                            "STRUCTURE": "Structure",
-                            "SMILES": "SMILES"
-                          },
-                            "REAGENTS_REQUEST_PAGE": {
-                              "CREATE_REAGENT_REQUEST": "Create Reagent Request",
-                              "FILTER_BY_NAME": "Filter by Name",
-                              "PLACEHOLDER_ENTER_NAME": "Enter name",
-                              "FILTER_BY_STATUS": "Filter by Status",
-                              "ALL_STATUSES": "All Statuses",
-                              "STATUS": {
-                                "PENDING": "Pending",
-                                "ORDERED": "Ordered",
-                                "DECLINED": "Declined",
-                                "FULFILLED": "Fulfilled"
-                              },
-                              "TABLE": {
-                                "NAME": "Name",
-                                "STRUCTURE": "Structure",
-                                "CAS_NUMBER": "CAS Number",
-                                "DESIRED_QUANTITY": "Desired Quantity",
-                                "STATUS": "Status",
-                                "CREATED_AT": "Created At",
-                                "UPDATED_AT": "Updated At",
-                                "ACTIONS": "Actions",
-                                "OPEN": "Open"
-                              }
-                            },
-
-                              "REAGENTS_LIST": {
-                                "CREATE_REAGENT": "Create Reagent",
-                                "CREATE_SAMPLE": "Create Sample",
-                                "MOVE_REAGENT": "Move Reagent",
-                                "SEARCH_BY_NAME": "Search by name",
-                                "PLACEHOLDER_ENTER_NAME": "Enter a name",
-                                "SEARCH_BY_STRUCTURE": "Search by structure",
-                                "PLACEHOLDER_ENTER_STRUCTURE": "Enter a structure",
-                                "EXACT_MATCH": "Exact match",
-                                "FILTER_BY_CATEGORY": "Filter by Category",
-                                "ALL_CATEGORIES": "All Categories",
-                                "CATEGORY": {
-                                  "SAMPLE": "Sample",
-                                  "REAGENT": "Reagent"
-                                },
-                                "TABLE": {
-                                  "NAME": "Name",
-                                  "CATEGORY": "Category",
-                                  "STRUCTURE": "Structure",
-                                  "CAS": "CAS",
-                                  "QUANTITY": "Quantity",
-                                  "QUANTITY_LEFT": "Quantity Left",
-                                  "LOCATION": "Location",
-                                  "ACTIONS": "Actions"
-                                },
-                                "ARIA_LABEL": {
-                                  "OPEN_REAGENT_PAGE": "Open reagent page",
-                                  "SELECT_PAGE": "Select page"
-                                }
-                            },
-                            
-                                "ADD_REAGENT_SAMPLE": {
-                                  "SEARCH_BY_NAME": "Search by name",
-                                  "PLACEHOLDER_ENTER_NAME": "Enter a name",
-                                  "FILTER_BY_CATEGORY": "Filter by Category",
-                                  "ALL_CATEGORIES": "All Categories",
-                                  "CATEGORY": {
-                                    "SAMPLE": "Sample",
-                                    "REAGENT": "Reagent"
-                                  },
-                                  "SAVE": "Save",
-                                  "TABLE": {
-                                    "NAME": "Name",
-                                    "CATEGORY": "Category",
-                                    "STRUCTURE": "Structure",
-                                    "QUANTITY": "Quantity",
-                                    "QUANTITY_LEFT": "Quantity Left",
-                                    "SELECT": "Select",
-                                    "SELECT_QUANTITY": "Select Quantity"
-                                  },
-                                  "ERRORS": {
-                                    "QUANTITY_LESS_THAN": "Quantity should be less than {{quantityLeft}} {{quantityUnit}}",
-                                    "QUANTITY_MORE_THAN_ZERO": "Quantity should be more than 0",
-                                    "QUANTITY_REQUIRED": "Quantity is required"
-                                  },
-                                  "ARIA_LABEL": {
-                                    "SELECT_PAGE": "Select page"
-                                  }
-                                },
-                                  "CREATE_REAGENT": {
-                                    "HEADER": "Create New {{ itemType }}",
-                                    "SAMPLE": "Sample",
-                                    "REAGENT": "Reagent",
-                                    "GENERAL": "General",
-                                    "NAME_LABEL": "Name",
-                                    "NAME_REQUIRED": "Name is required.",
-                                    "DESCRIPTION_LABEL": "Description",
-                                    "EXPIRATION_DATE_LABEL": "Expiration Date",
-                                    "EXPIRATION_DATE_HINT": "MM/DD/YYYY",
-                                    "STORAGE_LOCATION_LABEL": "Storage Location",
-                                    "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
-                                    "STORAGE_LOCATION_REQUIRED": "Storage Location is required.",
-                                    "STORAGE_LOCATION_INVALID": "Select correct Storage Location.",
-                                    "QUANTITY": "Quantity",
-                                    "QUANTITY_UNIT_LABEL": "Quantity Unit",
-                                    "QUANTITY_UNIT_REQUIRED": "Quantity Unit is required.",
-                                    "TOTAL_QUANTITY_LABEL": "Total Quantity",
-                                    "TOTAL_QUANTITY_REQUIRED": "Total Quantity is required.",
-                                    "TOTAL_QUANTITY_INVALID": "Total Quantity must be a valid number.",
-                                    "QUANTITY_LEFT_LABEL": "Quantity Left",
-                                    "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
-                                    "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number.",
-                                    "REAGENTS_LABEL": "Reagents",
-                                    "SELECTED_REAGENTS": "Selected {{ count }} reagents",
-                                    "REAGENTS_REQUIRED": "Reagents are required",
-                                    "STRUCTURE": "Structure",
-                                    "STRUCTURE_LABEL": "Structure",
-                                    "CAS_NUMBER_LABEL": "CAS Number",
-                                    "CAS_NUMBER_MINLENGTH": "CAS Number must be at least 5 characters long.",
-                                    "CAS_NUMBER_MAXLENGTH": "CAS Number cannot be more than 10 characters long.",
-                                    "ORDER_DETAILS": "Order Details",
-                                    "PRODUCER_LABEL": "Producer",
-                                    "CATALOG_ID_LABEL": "Catalog ID",
-                                    "CATALOG_LINK_LABEL": "Catalog Link",
-                                    "CATALOG_LINK_INVALID": "Catalog Link must be a valid URL.",
-                                    "PRICE_PER_UNIT_LABEL": "Price Per Unit",
-                                    "PRICE_PER_UNIT_INVALID": "Price Per Unit must be a valid number.",
-                                    "CANCEL": "Cancel",
-                                    "SUBMIT": "Submit",
-                                    "SUCCESS_TITLE": "Success",
-                                    "SUCCESS_MESSAGE": "{{ item }} created successfully!",
-                                    "ERROR_TITLE": "Error",
-                                    "SAMPLE": "Sample",
-                                    "REAGENT": "Reagent"
-                                  },
-                                    "MOVE_REAGENT": {
-                                      "STORAGE_LOCATION_LABEL": "Storage Location",
-                                      "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
-                                      "CANCEL": "Cancel",
-                                      "MOVE": "Move",
-                                      "ERROR_TITLE": "Error",
-                                      "ERROR_MESSAGE": "Reagents couldn't be moved to storage",
-                                      "SUCCESS_TITLE": "Success",
-                                      "SUCCESS_MESSAGE": "Reagents successfully moved",
-                                      "WARNING_TITLE": "Warning"
-                                    },
-                                      "REAGENT_PAGE": {
-                                        "DETAILS_HEADER": "Reagent's Details",
-                                        "NAME": "Reagent name",
-                                        "STRUCTURE": "Reagent structure",
-                                        "PRODUCER": "Producer",
-                                        "DESIRED_QUANTITY": "Reagent's desired quantity",
-                                        "PER": "per",
-                                        "PACKAGE": "package",
-                                        "PRICE_PER_UNIT": "Price per unit",
-                                        "CAS_NUMBER": "Reagent's CAS",
-                                        "CATALOG_ID": "Reagent's catalog ID",
-                                        "CATALOG_LINK": "Reagent's catalog link",
-                                        "ALT_REAGENT": "reagent"
-                                      },
-                                      "BUTTONS": {
-                                        "CLOSE": "Close"
-                                      },
-
-                                    
-                                        "STRUCTURE_DIALOG": {
-                                          "ENLARGED_IMAGE_ALT": "Enlarged Image"
-                                        },
-                                          "RESET_PASSWORD": {
-                                            "TITLE": "Reset Password",
-                                            "NEW_PASSWORD_LABEL": "New password",
-                                            "CONFIRM_PASSWORD_LABEL": "Confirm password",
-                                            "ERRORS": {
-                                              "PASSWORD_REQUIRED": "Password is required",
-                                              "PASSWORD_MIN_LENGTH": "Password must have at least {{ minLength }} characters",
-                                              "CONFIRM_PASSWORD_REQUIRED": "Confirm password is required",
-                                              "PASSWORD_NO_MATCH": "Passwords don't match"
-                                            },
-                                            "LOGIN": "Login",
-                                            "SUBMIT": "Submit"
-                                          },
-                                            "STORAGE_LOCATION": {
-                                              "TAB": {
-                                                "STORAGE_LOCATION": "Storage Location",
-                                                "ROOM": "Room"
-                                              }
-                                            },
-                                              "ADD_EDIT_ROOM": {
-                                                "EDIT": "Edit",
-                                                "ADD_NEW": "Add New",
-                                                "ROOM": "Room",
-                                                "ROOM_LABEL": "Room",
-                                                "DESCRIPTION_LABEL": "Description",
-                                                "CANCEL": "Cancel",
-                                                "SAVE": "Save",
-                                                "SUCCESS_TITLE": "Success",
-                                                "SUCCESS_ADD": "Room is added successfully",
-                                                "SUCCESS_EDIT": "Room is edited successfully",
-                                                "ERROR_TITLE": "Error",
-                                                "ERRORS": {
-                                                  "ROOM_REQUIRED": "Room is required"
-                                                }
-                                              },
-                                                "ADD_EDIT_STORAGE": {
-                                                  "EDIT": "Edit",
-                                                  "ADD_NEW": "Add New",
-                                                  "STORAGE_LOCATION": "Storage Location",
-                                                  "ROOM_LABEL": "Room",
-                                                  "NAME_LABEL": "Name",
-                                                  "DESCRIPTION_LABEL": "Description",
-                                                  "CANCEL": "Cancel",
-                                                  "SAVE": "Save",
-                                                  "SUCCESS_TITLE": "Success",
-                                                  "SUCCESS_ADD": "Storage Location added",
-                                                  "SUCCESS_EDIT": "Storage Location edited",
-                                                  "ERROR_TITLE": "Error",
-                                                  "ERRORS": {
-                                                    "ROOM_REQUIRED": "Room is required",
-                                                    "NAME_REQUIRED": "Name is required",
-                                                    "NAME_MAXLENGTH": "Name length should be less than {{ maxLength }}"
-                                                  }
-                                                },
-                                                  "ROOM_MANAGEMENT": {
-                                                    "ADD_NEW_ROOM": "Add New Room",
-                                                    "TABLE": {
-                                                      "ROOM": "Room",
-                                                      "DESCRIPTION": "Description",
-                                                      "STORAGES": "Storages",
-                                                      "ACTIONS": "Actions"
-                                                    },
-                                                    "DELETE_CONFIRMATION": "Are you sure you want to delete the room?",
-                                                    "SUCCESS_TITLE": "Success",
-                                                    "SUCCESS_MESSAGE": "Room is deleted successfully",
-                                                    "WARNING_TITLE": "Warning",
-                                                    "ERROR_TITLE": "Error",
-                                                    "ARIA_LABEL": {
-                                                      "SELECT_PAGE": "Select page"
-                                                    }
-                                                  },
-                                                    "STORAGE_MANAGEMENT": {
-                                                      "ADD_NEW_STORAGE": "Add New Storage Location",
-                                                      "FILTER_BY_ROOM": "Filter by room",
-                                                      "FILTER_BY_NAME": "Filter by name",
-                                                      "ALL_ROOMS": "All Rooms",
-                                                      "TABLE": {
-                                                        "ROOM": "Room",
-                                                        "NAME": "Name",
-                                                        "DATE": "Date",
-                                                        "REAGENTS": "Reagents",
-                                                        "ACTIONS": "Actions"
-                                                      },
-                                                      "DELETE_CONFIRMATION": "Are you sure you want to delete the storage location?",
-                                                      "SUCCESS_TITLE": "Success",
-                                                      "SUCCESS_MESSAGE": "Storage location is deleted successfully",
-                                                      "WARNING_TITLE": "Warning",
-                                                      "ERROR_TITLE": "Error",
-                                                      "ARIA_LABEL": {
-                                                        "SELECT_PAGE": "Select page"
-                                                      }
-                                                    },
-                                                      "STORAGE_LOCATION_DETAIL": {
-                                                        "ALT_STORAGE": "storage"
-                                                      },
-                                                        "USER_MANAGEMENT_FORM": {
-                                                          "CREATE_NEW_USER": "Create New User",
-                                                          "DELETE_CONFIRMATION": "Confirm action -> Delete user:",
-                                                          "DELETE_SUCCESS": "User deleted successfully!",
-                                                          "DELETE_FAILED": "Delete user failed",
-                                                          "SUCCESS_TITLE": "Success",
-                                                          "CREATE_SUCCESS": "User has been created successfully!",
-                                                          "UPDATE_SUCCESS": "User updated successfully!",
-                                                          "FIRST_NAME_LABEL": "First Name",
-                                                          "LAST_NAME_LABEL": "Last Name",
-                                                          "EMAIL_LABEL": "Email",
-                                                          "ROLE_LABEL": "Role",
-                                                          "SUBMIT_BUTTON": "Submit",
-                                                          "DELETE_USER_BUTTON": "Delete User",
-                                                          "ERRORS": {
-                                                            "FIRST_NAME_REQUIRED": "First Name is required",
-                                                            "LAST_NAME_REQUIRED": "Last Name is required",
-                                                            "EMAIL_REQUIRED": "Email is required",
-                                                            "EMAIL_INVALID": "Invalid email",
-                                                            "ROLE_REQUIRED": "Role is required"
-                                                          }
-                                                        },
-                                                          "USERS_LIST": {
-                                                            "CREATE_NEW_USER": "Create New User",
-                                                            "SEARCH_BY_NAME": "Search by name",
-                                                            "ENTER_NAME": "Enter a name",
-                                                            "FILTER_BY_ROLE": "Filter by role",
-                                                            "ALL_ROLES": "All Roles",
-                                                            "USER_DATA": "User Data",
-                                                            "DELETE_CONFIRMATION": "Confirm action -> Delete user:",
-                                                            "DELETE_SUCCESS": "User deleted successfully!",
-                                                            "DELETE_USER_FAILED": "Delete user failed",
-                                                            "ERROR_TITLE": "Error",
-                                                            "ERROR_LOADING_USERS": "Error loading users:",
-                                                            "ERROR_LOADING_USERS_MESSAGE": "Failed to load users: {{ error }}",
-                                                            "TABLE": {
-                                                              "FIRST_NAME": "First Name",
-                                                              "LAST_NAME": "Last Name",
-                                                              "EMAIL": "Email",
-                                                              "ROLE": "Role",
-                                                              "ACTIONS": "Actions"
-                                                            }
-                                                          },
-                                                            "LAYOUT": {
-                                                              "MENU": {
-                                                                "DASHBOARD": "Dashboard",
-                                                                "STORAGE_LOCATIONS": "Storage Locations",
-                                                                "REAGENTS": "Reagents",
-                                                                "ORDERS_MANAGEMENT": "Orders Management",
-                                                                "REAGENT_REQUEST": "Reagent Request",
-                                                                "USERS_MANAGEMENT": "Users Management"
-                                                              }
-                                                            },
-                                                              "PAGINATOR": {
-                                                                "ITEMS_PER_PAGE_LABEL": "Items per page:",
-                                                                "NEXT_PAGE_LABEL": "Next page",
-                                                                "PREVIOUS_PAGE_LABEL": "Previous page",
-                                                                "FIRST_PAGE_LABEL": "First page",
-                                                                "LAST_PAGE_LABEL": "Last page",
-                                                                "RANGE_PAGE_LABEL": "of"
-                                                              },
-                                                           
-                                                                "NO_DATA": {
-                                                                  "NO_REAGENTS": "No Reagents",
-                                                                  "NO_ORDERED_REAGENTS": "No ordered reagents",
-                                                                  "NO_ORDERS": "No orders",
-                                                                  "NO_DATA": "No Data",
-                                                                  "NO_STORAGES": "No storages",
-                                                                  "NO_ROOMS": "No rooms",
-                                                                  "NO_REAGENT_REQUEST": "No Reagent Request",
-                                                                  "NO_DATA_FOUND": "No data found"
-                                                                },
-                                                           
-                                                              
-                                                              
-                                                                  "ADD_STRUCTURE": {
-                                                                    "HEADER": "Structure drawing",
-                                                                    "ADD_STRUCTURE_BUTTON": "Add structure"
-                                                                  },
-                                                                  "BUTTONS": {
-                                                                    "CANCEL": "Cancel"
-                                                                  },
-                                                                    "STORAGE_LOCATION_DIALOG": {
-                                                                      "ADD_REAGENT_TO_STORAGE_LOCATION": "Add Reagent to Storage Location",
-                                                                      "FILTER_BY_ROOM": "Filter by room",
-                                                                      "ALL_ROOMS": "All Rooms",
-                                                                      "FILTER_BY_NAME": "Filter by name",
-                                                                      "TABLE": {
-                                                                        "NAME": "Name",
-                                                                        "ROOM": "Room",
-                                                                        "REAGENTS": "Reagents",
-                                                                        "ACTIONS": "Actions"
-                                                                      },
-                                                                      
-                                                                      "NO_LOCATION_FOUND": "No location found",
-                                                                      "NO_DATA_ALT": "No data"
-                                                                      
-                                                                    },
-                                                                    "NOTIFICATIONS": {
-                                                                      "SUCCESS_TITLE": "Success",
-                                                                      "REAGENT_CREATED_SUCCESS": "Reagent has been successfully created!"
-                                                                    },
-                                                                
-                                                                      "EDIT_REAGENT": {
-                                                                        "HEADER": "Edit {{ category }}",
-                                                                        "QUANTITY_LEFT": "Quantity Left",
-                                                                        "STORAGE_LOCATION": "Storage Location",
-                                                                        "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
-                                                                        "ERRORS": {
-                                                                          "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
-                                                                          "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number.",
-                                                                          "STORAGE_LOCATION_REQUIRED": "Storage Location is required.",
-                                                                          "STORAGE_LOCATION_INVALID": "Select correct Storage Location."
-                                                                        }
-                                                                      },
-                                                                      "BUTTONS": {
-                                                                        "CANCEL": "Cancel",
-                                                                        "EDIT": "Edit"
-                                                                      },
-                                                                      "NOTIFICATIONS": {
-                                                                        "SUCCESS_TITLE": "Success",
-                                                                        "ERROR_TITLE": "Error",
-                                                                        "EDIT_SUCCESS": "{{ category }} edited successfully!"
-                                                                      },
-                                                                      "CATEGORIES": {
-                                                                        "REAGENT": "Reagent",
-                                                                        "SAMPLE": "Sample"
-                                                                      },
-                                                                   
-                                                                    
-                                                                        "ADMIN_DASHBOARD": {
-                                                                          "NUMBER_OF_ROOMS": "Number of Rooms",
-                                                                          "NUMBER_OF_STORAGES": "Number of Storages",
-                                                                          "NUMBER_OF_USERS": "Number of Users"
-                                                                        },
-                                                                        "ROLES": {
-                                                                          "ADMIN": "Admin",
-                                                                          "RESEARCHER": "Researcher",
-                                                                          "PROCUREMENTOFFICER": "Procurement Officer"
-                                                                        },
-                                                                          "RESEARCHER_DASHBOARD": {
-                                                                            "REAGENT_VS_SAMPLE": "Reagent vs Sample",
-                                                                            "EXPIRED_REAGENT_VS_SAMPLE": "Expired: Reagent vs Sample",
-                                                                            "EMPTY_REAGENT_VS_SAMPLE": "Empty: Reagent vs Sample",
-                                                                            "LESS_THAN_HALF": "Less than half"
-                                                                          },
-                                                                          "CATEGORIES": {
-                                                                            "REAGENT": "Reagent",
-                                                                            "SAMPLE": "Sample"
-                                                                          },
-                                                                          "REAGENT_LIST": {
-                                                                            "NAME": "Name",
-                                                                            "CATEGORY": "Category",
-                                                                            "EXPIRED_DATE": "Expired Date",
-                                                                            "QUANTITY_LEFT": "Quantity Left"
-                                                                          },
-                                                                            "PO_DASHBOARD": {
-                                                                              "NEW_INCOMING_REQUEST": "New incoming reagent request",
-                                                                              "REAGENT": "Reagent",
-                                                                              "DATE": "Date",
-                                                                              "DESIRED_QUANTITY": "Desired Quantity",
-                                                                              "STATUS": "Status",
-                                                                              "ORDERS_BUTTON": "Orders",
-                                                                              "ORDER_STATUS": "Order status"
-                                                                            },
-                                                                            "STATUSES": {
-                                                                              "PENDING": "Pending",
-                                                                              "ORDERED": "Ordered",
-                                                                              "FULFILLED": "Fulfilled",
-                                                                              "DECLINED": "Declined",
-                                                                              "COMPLETED": "Completed"
-                                                                            },
-                                                                           
-                                                                              "ERROR_MESSAGES": {
-                                                                                "FAILED_TO_CONNECT": "Failed to connect to the server",
-                                                                                "CHECK_INTERNET_CONNECTION": "Check your internet connection and try again",
-                                                                                "ERROR_WITH_CODE": "Error {{status}}",
-                                                                                "UNEXPECTED_ERROR": "Unexpected Error",
-                                                                                "UNEXPECTED_ERROR_OCCURRED": "An unexpected error occurred",
-                                                                                "SERVER_ERROR_OCCURRED": "Authorization error"
-                                                                              },
-                                                                              "SERVER_ERRORS": {
-                                                                                "INVALID_CREDENTIALS": "Invalid username or password.",
-                                                                                "USER_NOT_FOUND": "User not found.",
-                                                                                "ACCESS_DENIED": "Access denied.",
-                                                                                "RESOURCE_NOT_FOUND": "The requested resource was not found.",
-                                                                                "INTERNAL_SERVER_ERROR": "An internal server error occurred.",
-                                                                                "BAD_REQUEST": "Bad request.",
-                                                                                "VALIDATION_FAILED": "Validation failed for the provided data."
-                                                                                
-                                                                              },
-                                                                      
-                                                                                "REAGENT_DETAILED_PAGE": {
-                                                                                  "DETAILS_TITLE": "{{ category }} details",
-                                                                                  "COPY_STRUCTURE": "Copy structure",
-                                                                                  "SMILES": "SMILES",
-                                                                                  "NO_STRUCTURE": "No structure provided",
-                                                                                  "INVALID_STRUCTURE_IMAGE": "Invalid structure image",
-                                                                                  "NAME": "Name",
-                                                                                  "ID": "ID",
-                                                                                  "CATEGORY": "Category",
-                                                                                  "QUANTITY": "Quantity",
-                                                                                  "DESCRIPTION": "Description",
-                                                                                  "CAS": "CAS",
-                                                                                  "PRODUCER": "Producer",
-                                                                                  "CATALOG_ID": "Catalog ID",
-                                                                                  "PRICE": "Price",
-                                                                                  "PER": "per",
-                                                                                  "CATALOG_LINK": "Catalog link",
-                                                                                  "EDIT_QUANTITY": "Edit quantity",
-                                                                                  "DELETE_REAGENT": "Delete reagent",
-                                                                                  "STRUCTURE_COPIED": "Structure copied"
-                                                                                },
-                                                                                "CATEGORIES": {
-                                                                                  "REAGENT": "Reagent",
-                                                                                  "SAMPLE": "Sample"
-                                                                                },
-                                                                             
-                                                                                  "MOLECULE_STRUCTURE": {
-                                                                                    "ERROR": {
-                                                                                      "RDKIT_FAILED_TO_LOAD": "RDKit failed to load",
-                                                                                      "NO_STRUCTURE_PROVIDED": "No structure provided",
-                                                                                      "INVALID_STRUCTURE": "Invalid structure"
-                                                                                    }
-                                                                                  }
-                                                                              
-                                                                                
-                                                                       
-                                                                              
-                                                                          
-                                                                            
+    "DELETE_CONFIRMATION": "Are you sure you want to delete the room?",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Room is deleted successfully",
+    "WARNING_TITLE": "Warning",
+    "ERROR_TITLE": "Error",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Select page"
+    }
+  },
+  "STORAGE_MANAGEMENT": {
+    "ADD_NEW_STORAGE": "Add New Storage Location",
+    "FILTER_BY_ROOM": "Filter by room",
+    "FILTER_BY_NAME": "Filter by name",
+    "ALL_ROOMS": "All Rooms",
+    "TABLE": {
+      "ROOM": "Room",
+      "NAME": "Name",
+      "DATE": "Date",
+      "REAGENTS": "Reagents",
+      "ACTIONS": "Actions"
+    },
+    "DELETE_CONFIRMATION": "Are you sure you want to delete the storage location?",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Storage location is deleted successfully",
+    "WARNING_TITLE": "Warning",
+    "ERROR_TITLE": "Error",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Select page"
+    }
+  },
+  "STORAGE_LOCATION_DETAIL": {
+    "ALT_STORAGE": "storage"
+  },
+  "USER_MANAGEMENT_FORM": {
+    "CREATE_NEW_USER": "Create New User",
+    "DELETE_CONFIRMATION": "Confirm action -> Delete user:",
+    "DELETE_SUCCESS": "User deleted successfully!",
+    "DELETE_FAILED": "Delete user failed",
+    "SUCCESS_TITLE": "Success",
+    "CREATE_SUCCESS": "User has been created successfully!",
+    "UPDATE_SUCCESS": "User updated successfully!",
+    "FIRST_NAME_LABEL": "First Name",
+    "LAST_NAME_LABEL": "Last Name",
+    "EMAIL_LABEL": "Email",
+    "ROLE_LABEL": "Role",
+    "SUBMIT_BUTTON": "Submit",
+    "DELETE_USER_BUTTON": "Delete User",
+    "ERRORS": {
+      "FIRST_NAME_REQUIRED": "First Name is required",
+      "LAST_NAME_REQUIRED": "Last Name is required",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_INVALID": "Invalid email",
+      "ROLE_REQUIRED": "Role is required"
+    }
+  },
+  "USERS_LIST": {
+    "CREATE_NEW_USER": "Create New User",
+    "SEARCH_BY_NAME": "Search by name",
+    "ENTER_NAME": "Enter a name",
+    "FILTER_BY_ROLE": "Filter by role",
+    "ALL_ROLES": "All Roles",
+    "USER_DATA": "User Data",
+    "DELETE_CONFIRMATION": "Confirm action -> Delete user:",
+    "DELETE_SUCCESS": "User deleted successfully!",
+    "DELETE_USER_FAILED": "Delete user failed",
+    "ERROR_TITLE": "Error",
+    "ERROR_LOADING_USERS": "Error loading users:",
+    "ERROR_LOADING_USERS_MESSAGE": "Failed to load users: {{ error }}",
+    "TABLE": {
+      "FIRST_NAME": "First Name",
+      "LAST_NAME": "Last Name",
+      "EMAIL": "Email",
+      "ROLE": "Role",
+      "ACTIONS": "Actions"
+    }
+  },
+  "LAYOUT": {
+    "MENU": {
+      "DASHBOARD": "Dashboard",
+      "STORAGE_LOCATIONS": "Storage Locations",
+      "REAGENTS": "Reagents",
+      "ORDERS_MANAGEMENT": "Orders Management",
+      "REAGENT_REQUEST": "Reagent Request",
+      "USERS_MANAGEMENT": "Users Management"
+    }
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE_LABEL": "Items per page:",
+    "NEXT_PAGE_LABEL": "Next page",
+    "PREVIOUS_PAGE_LABEL": "Previous page",
+    "FIRST_PAGE_LABEL": "First page",
+    "LAST_PAGE_LABEL": "Last page",
+    "RANGE_PAGE_LABEL": "of"
+  },
+  "NO_DATA": {
+    "NO_REAGENTS": "No Reagents",
+    "NO_ORDERED_REAGENTS": "No ordered reagents",
+    "NO_ORDERS": "No orders",
+    "NO_DATA": "No Data",
+    "NO_STORAGES": "No storages",
+    "NO_ROOMS": "No rooms",
+    "NO_REAGENT_REQUEST": "No Reagent Request",
+    "NO_DATA_FOUND": "No data found"
+  },
+  "ADD_STRUCTURE": {
+    "HEADER": "Structure drawing",
+    "ADD_STRUCTURE_BUTTON": "Add structure"
+  },
+  "STORAGE_LOCATION_DIALOG": {
+    "ADD_REAGENT_TO_STORAGE_LOCATION": "Add Reagent to Storage Location",
+    "FILTER_BY_ROOM": "Filter by room",
+    "ALL_ROOMS": "All Rooms",
+    "FILTER_BY_NAME": "Filter by name",
+    "TABLE": {
+      "NAME": "Name",
+      "ROOM": "Room",
+      "REAGENTS": "Reagents",
+      "ACTIONS": "Actions"
+    },
+    "NO_LOCATION_FOUND": "No location found",
+    "NO_DATA_ALT": "No data"
+  },
+  "EDIT_REAGENT": {
+    "HEADER": "Edit {{ category }}",
+    "QUANTITY_LEFT": "Quantity Left",
+    "STORAGE_LOCATION": "Storage Location",
+    "STORAGE_LOCATION_PLACEHOLDER": "e.g: Room1 Cabinet1-Shelf1",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
+      "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number.",
+      "STORAGE_LOCATION_REQUIRED": "Storage Location is required.",
+      "STORAGE_LOCATION_INVALID": "Select correct Storage Location."
+    }
+  },
+  "NOTIFICATIONS": {
+    "ERROR_TITLE": "Error",
+    "EDIT_SUCCESS": "{{ category }} edited successfully!",
+    "SUCCESS_TITLE": "Success",
+    "REAGENT_CREATED_SUCCESS": "Reagent has been successfully created!"
+  },
+  "CATEGORIES": {
+    "REAGENT": "Reagent",
+    "SAMPLE": "Sample"
+  },
+  "ADMIN_DASHBOARD": {
+    "NUMBER_OF_ROOMS": "Number of Rooms",
+    "NUMBER_OF_STORAGES": "Number of Storages",
+    "NUMBER_OF_USERS": "Number of Users"
+  },
+  "ROLES": {
+    "ADMIN": "Admin",
+    "RESEARCHER": "Researcher",
+    "PROCUREMENTOFFICER": "Procurement Officer"
+  },
+  "RESEARCHER_DASHBOARD": {
+    "REAGENT_VS_SAMPLE": "Reagent vs Sample",
+    "EXPIRED_REAGENT_VS_SAMPLE": "Expired: Reagent vs Sample",
+    "EMPTY_REAGENT_VS_SAMPLE": "Empty: Reagent vs Sample",
+    "LESS_THAN_HALF": "Less than half"
+  },
+  "REAGENT_LIST": {
+    "NAME": "Name",
+    "CATEGORY": "Category",
+    "EXPIRED_DATE": "Expired Date",
+    "QUANTITY_LEFT": "Quantity Left"
+  },
+  "PO_DASHBOARD": {
+    "NEW_INCOMING_REQUEST": "New incoming reagent request",
+    "REAGENT": "Reagent",
+    "DATE": "Date",
+    "DESIRED_QUANTITY": "Desired Quantity",
+    "STATUS": "Status",
+    "ORDERS_BUTTON": "Orders",
+    "ORDER_STATUS": "Order status"
+  },
+  "ERROR_MESSAGES": {
+    "FAILED_TO_CONNECT": "Failed to connect to the server",
+    "CHECK_INTERNET_CONNECTION": "Check your internet connection and try again",
+    "ERROR_WITH_CODE": "Error {{status}}",
+    "UNEXPECTED_ERROR": "Unexpected Error",
+    "UNEXPECTED_ERROR_OCCURRED": "An unexpected error occurred",
+    "SERVER_ERROR_OCCURRED": "Authorization error"
+  },
+  "SERVER_ERRORS": {
+    "INVALID_CREDENTIALS": "Invalid username or password.",
+    "USER_NOT_FOUND": "User not found.",
+    "ACCESS_DENIED": "Access denied.",
+    "RESOURCE_NOT_FOUND": "The requested resource was not found.",
+    "INTERNAL_SERVER_ERROR": "An internal server error occurred.",
+    "BAD_REQUEST": "Bad request.",
+    "VALIDATION_FAILED": "Validation failed for the provided data."
+  },
+  "REAGENT_DETAILED_PAGE": {
+    "DETAILS_TITLE": "{{ category }} details",
+    "COPY_STRUCTURE": "Copy structure",
+    "SMILES": "SMILES",
+    "NO_STRUCTURE": "No structure provided",
+    "INVALID_STRUCTURE_IMAGE": "Invalid structure image",
+    "NAME": "Name",
+    "ID": "ID",
+    "CATEGORY": "Category",
+    "QUANTITY": "Quantity",
+    "DESCRIPTION": "Description",
+    "CAS": "CAS",
+    "PRODUCER": "Producer",
+    "CATALOG_ID": "Catalog ID",
+    "PRICE": "Price",
+    "PER": "per",
+    "CATALOG_LINK": "Catalog link",
+    "EDIT_QUANTITY": "Edit quantity",
+    "DELETE_REAGENT": "Delete reagent",
+    "STRUCTURE_COPIED": "Structure copied"
+  },
+  "MOLECULE_STRUCTURE": {
+    "ERROR": {
+      "RDKIT_FAILED_TO_LOAD": "RDKit failed to load",
+      "NO_STRUCTURE_PROVIDED": "No structure provided",
+      "INVALID_STRUCTURE": "Invalid structure"
+    }
   }
-  
+}
