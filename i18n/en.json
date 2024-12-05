@@ -696,5 +696,28 @@
       "NO_STRUCTURE_PROVIDED": "No structure provided",
       "INVALID_STRUCTURE": "Invalid structure"
     }
-  }
+  },
+  "EDIT_QUANTITY_REAGENT": {
+    "HEADER": "Edit {{ category }} Quantity",
+    "QUANTITY_LEFT": "Quantity Left",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Quantity Left is required.",
+      "QUANTITY_LEFT_INVALID": "Quantity Left must be a valid number."
+    },
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "SUCCESS_TITLE": "Success",
+    "ERROR_TITLE": "Error",
+    "SUCCESS_MESSAGE_EDITED": "{{ category }} edited successfully!",
+    "SUCCESS_MESSAGE_CONSUMED": "{{ category }} is completely consumed"
+  },
+  "DELETE_REAGENT": {
+    "HEADER": "Delete reagent?",
+    "MESSAGE": "{{ name }} will be deleted",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "{{ name }} removed successfully!",
+    "ERROR_TITLE": "Error"
+  }  
 }

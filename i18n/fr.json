@@ -696,5 +696,28 @@
       "NO_STRUCTURE_PROVIDED": "Aucune structure fournie",
       "INVALID_STRUCTURE": "Structure invalide"
     }
-  }
+  },
+  "EDIT_QUANTITY_REAGENT": {
+    "HEADER": "Modifier la quantité de {{ category }}",
+    "QUANTITY_LEFT": "Quantité restante",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Quantité restante est requise.",
+      "QUANTITY_LEFT_INVALID": "Quantité restante doit être un nombre valide."
+    },
+    "CANCEL": "Annuler",
+    "EDIT": "Modifier",
+    "SUCCESS_TITLE": "Succès",
+    "ERROR_TITLE": "Erreur",
+    "SUCCESS_MESSAGE_EDITED": "{{ category }} modifié avec succès!",
+    "SUCCESS_MESSAGE_CONSUMED": "{{ category }} est complètement consommé"
+  },
+  "DELETE_REAGENT": {
+    "HEADER": "Supprimer le réactif?",
+    "MESSAGE": "{{ name }} sera supprimé",
+    "CANCEL": "Annuler",
+    "DELETE": "Supprimer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "{{ name }} a été supprimé avec succès!",
+    "ERROR_TITLE": "Erreur"
+  }  
 }
