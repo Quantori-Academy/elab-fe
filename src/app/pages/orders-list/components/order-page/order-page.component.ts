@@ -22,6 +22,7 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
+import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
 
 @Component({
   selector: 'app-order-page',
@@ -142,31 +143,46 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  onRemove(OrderId: number, reagent: ReagentRequestList) {
-    this.excludeReagents.push({ id: reagent.id });
-
-    this.orderService
-      .updateOrder(OrderId, { excludeReagents: this.excludeReagents })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.excludeReagents = [];
-          this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent has been successfully removed!',
-            duration: 3000,
-          });
-          this.fetchOrder();
-        },
-        error: (error: HttpErrorResponse) => {
-          this.notificationPopupService.error({
-            title: 'Error',
-            message: error.error.message,
-          });
-        },
+  onRemove(orderId: number, reagent: ReagentRequestList) {
+    const order = this.orderSubject.getValue();
+  
+    if (order && order.reagents.length === 1) {
+      const dialogRef = this.dialog.open(ConfirmDeclineDialogComponent, {
+        data: { orderId, reagentId: reagent.id },
       });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.fetchOrder();
+        }
+      });
+    } else {
+      this.excludeReagents.push({ id: reagent.id });
+  
+      this.orderService
+        .updateOrder(orderId, { excludeReagents: this.excludeReagents })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.excludeReagents = [];
+            this.notificationPopupService.success({
+              title: 'Success',
+              message: 'Reagent has been successfully removed!',
+              duration: 3000,
+            });
+            this.fetchOrder();
+          },
+          error: (error: HttpErrorResponse) => {
+            this.notificationPopupService.error({
+              title: 'Error',
+              message: error.error.message,
+            });
+          },
+        });
+    }
   }
+  
+  
 
   onAdd(id: number) {
     const dialog = this.dialog.open(ReagentRequestsDialogComponent, {
