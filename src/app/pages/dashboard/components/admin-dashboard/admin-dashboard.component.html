@@ -1,39 +1,38 @@
 @if (adminDashboardData$ | async; as adminDashboardData) {
-  <div class="row row1">
-    @for (card of adminDashboardData.kpiCards; track $index) {
-      <mat-card>
-        <mat-card-header>{{ card.title }}</mat-card-header>
-        <mat-card-content>
-          <img src="{{ card.icon }}" alt="room alt" class="kpi-icon" />
-          <h3 class="kpi-ind">{{ card.ind }}</h3>
-        </mat-card-content>
-      </mat-card
-    >}
-  </div>
-  <div class="row row2">
-    @if (adminDashboardData.roomChartOption.series?.length) {
-      <apx-chart
-        [series]="adminDashboardData.roomChartOption.series"
-        [chart]="adminDashboardData.roomChartOption.chart"
-        [dataLabels]="adminDashboardData.roomChartOption.dataLabels"
-        [plotOptions]="adminDashboardData.roomChartOption.plotOptions"
-        [xaxis]="adminDashboardData.roomChartOption.xaxis"
-        [colors]="adminDashboardData.roomChartOption.colors"
-        [title]="adminDashboardData.roomChartOption.title"
-      ></apx-chart>
-    }
-    @if (adminDashboardData.userChartOption.series?.length) {
-      <apx-chart
-        [series]="adminDashboardData.userChartOption.series"
-        [chart]="adminDashboardData.userChartOption.chart"
-        [labels]="adminDashboardData.userChartOption.labels"
-        [title]="adminDashboardData.userChartOption.title"
-        [theme]="adminDashboardData.userChartOption.theme"
-        [responsive]="adminDashboardData.userChartOption.responsive"
-        [colors]="adminDashboardData.userChartOption.colors"
-      ></apx-chart>
-    }
-  </div>
+<div class="row row1">
+  @for (card of adminDashboardData.kpiCards; track $index) {
+  <mat-card>
+    <mat-card-header>{{ card.title }}</mat-card-header>
+    <mat-card-content>
+      <img src="{{ card.icon }}" alt="{{ card.title }}" class="kpi-icon" />
+      <h3 class="kpi-ind">{{ card.ind }}</h3>
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
+<div class="row row2">
+  @if (adminDashboardData.roomChartOption.series?.length) {
+  <apx-chart
+    [series]="adminDashboardData.roomChartOption.series"
+    [chart]="adminDashboardData.roomChartOption.chart"
+    [dataLabels]="adminDashboardData.roomChartOption.dataLabels"
+    [plotOptions]="adminDashboardData.roomChartOption.plotOptions"
+    [xaxis]="adminDashboardData.roomChartOption.xaxis"
+    [colors]="adminDashboardData.roomChartOption.colors"
+    [title]="adminDashboardData.roomChartOption.title"
+  ></apx-chart>
+  } @if (adminDashboardData.userChartOption.series?.length) {
+  <apx-chart
+    [series]="adminDashboardData.userChartOption.series"
+    [chart]="adminDashboardData.userChartOption.chart"
+    [labels]="adminDashboardData.userChartOption.labels"
+    [title]="adminDashboardData.userChartOption.title"
+    [theme]="adminDashboardData.userChartOption.theme"
+    [responsive]="adminDashboardData.userChartOption.responsive"
+    [colors]="adminDashboardData.userChartOption.colors"
+  ></apx-chart>
+  }
+</div>
 } @else {
-  <app-no-data/>
+<app-no-data [text]="'NO_DATA.NO_DATA' | translate" />
 }

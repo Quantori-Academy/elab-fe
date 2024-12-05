@@ -191,7 +191,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if(!reagentsResponse.reagents.length && !isLoading()){
-    <app-no-data text="No Reagents" /> }
+    <app-no-data [text]="'REAGENTS_LIST.NO_DATA_AVAILABLE' | translate" />
+    }
   </div>
   <mat-paginator
     #paginator

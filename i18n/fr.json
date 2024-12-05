@@ -559,25 +559,13 @@
                                                               },
                                                               "NO_DATA": {
                                                                 "NO_ORDERED_REAGENTS": "Aucun réactif commandé",
-                                                                "NO_ORDERS": "Aucune commande"
+                                                                "NO_ORDERS": "Aucune commande",
+                                                                "NO_DATA": "Aucune donnée",
+                                                                "NO_STORAGES": "Aucun emplacement de stockage",
+                                                                "NO_REAGENT_REQUEST": "Aucune demande de réactif",
+                                                                "NO_DATA_FOUND": "Aucune donnée trouvée"
                                                               },
-                                                                "ADMIN_DASHBOARD": {
-                                                                  "NUMBER_OF_ROOMS": "Nombre de salles",
-                                                                  "NUMBER_OF_STORAGES": "Nombre de stockages",
-                                                                  "NUMBER_OF_USERS": "Nombre d'utilisateurs",
-                                                                  "ROOM1": "Salle1",
-                                                                  "ROOM2": "Salle2",
-                                                                  "ROOM3": "Salle3",
-                                                                  "ROOM4": "Salle4",
-                                                                  "KPI_ICON_ALT": "Icône KPI",
-                                                                  "USER_CHART_TITLE": "Répartition des rôles des utilisateurs",
-                                                                  "ROOM_CHART_TITLE": "Aperçu des salles"
-                                                                },
-                                                                "USER_ROLES": {
-                                                                  "ADMIN": "Administrateur",
-                                                                  "RESEARCHER": "Chercheur",
-                                                                  "PROCUREMENT_OFFICER": "Responsable des achats"
-                                                                },
+
                                                                   "ADD_STRUCTURE": {
                                                                     "HEADER": "Dessiner la structure",
                                                                     "ADD_STRUCTURE_BUTTON": "Ajouter la structure"
@@ -625,15 +613,70 @@
                                                                         "SUCCESS_TITLE": "Succès",
                                                                         "ERROR_TITLE": "Erreur",
                                                                         "EDIT_SUCCESS": "{{ category }} modifié avec succès !"
-                                                                      }
-                                                                    
-                                                                  
-                                                                
-                                                              
-                                                              
-                                                            
-                                                          
-                                                        
-                                                                                                
+                                                                      },
+                                                                        "ADMIN_DASHBOARD": {
+                                                                          "NUMBER_OF_ROOMS": "Nombre de salles",
+                                                                          "NUMBER_OF_STORAGES": "Nombre de stockages",
+                                                                          "NUMBER_OF_USERS": "Nombre d'utilisateurs"
+                                                                        },
+                                                                        "ROLES": {
+                                                                          "ADMIN": "Administrateur",
+                                                                          "RESEARCHER": "Chercheur",
+                                                                          "PROCUREMENTOFFICER": "Agent d'approvisionnement"
+                                                                        },
+                                                                          "RESEARCHER_DASHBOARD": {
+                                                                            "REAGENT_VS_SAMPLE": "Réactif vs Échantillon",
+                                                                            "EXPIRED_REAGENT_VS_SAMPLE": "Expiré : Réactif vs Échantillon",
+                                                                            "EMPTY_REAGENT_VS_SAMPLE": "Vide : Réactif vs Échantillon",
+                                                                            "LESS_THAN_HALF": "Moins de la moitié"
+                                                                          },
+                                                                          "CATEGORIES": {
+                                                                            "REAGENT": "Réactif",
+                                                                            "SAMPLE": "Échantillon"
+                                                                          },
+                                                                          "REAGENT_LIST": {
+                                                                            "NAME": "Nom",
+                                                                            "CATEGORY": "Catégorie",
+                                                                            "EXPIRED_DATE": "Date d'expiration",
+                                                                            "QUANTITY_LEFT": "Quantité restante"
+                                                                          },
+                                                                            "PO_DASHBOARD": {
+                                                                              "NEW_INCOMING_REQUEST": "Nouvelle demande de réactif entrante",
+                                                                              "REAGENT": "Réactif",
+                                                                              "DATE": "Date",
+                                                                              "DESIRED_QUANTITY": "Quantité désirée",
+                                                                              "STATUS": "Statut",
+                                                                              "ORDERS_BUTTON": "Commandes",
+                                                                              "ORDER_STATUS": "Statut de la commande"
+                                                                            },
+                                                                            "STATUSES": {
+                                                                              "PENDING": "En attente",
+                                                                              "ORDERED": "Commandé",
+                                                                              "FULFILLED": "Exécuté",
+                                                                              "DECLINED": "Refusé",
+                                                                              "COMPLETED": "Terminé"
+                                                                            },
+                                                                            
+                                                                              "ERROR_MESSAGES": {
+                                                                                "FAILED_TO_CONNECT": "Échec de la connexion au serveur",
+                                                                                "CHECK_INTERNET_CONNECTION": "Vérifiez votre connexion Internet et réessayez",
+                                                                                "ERROR_WITH_CODE": "Erreur {{status}}",
+                                                                                "UNEXPECTED_ERROR": "Erreur inattendue",
+                                                                                "UNEXPECTED_ERROR_OCCURRED": "Une erreur inattendue s'est produite",
+                                                                                "SERVER_ERROR_OCCURRED": "Erreur d'autorisation"
+                                                                              },
+                                                                              "SERVER_ERRORS": {
+                                                                                "INVALID_CREDENTIALS": "Nom d'utilisateur ou mot de passe invalide.",
+                                                                                "USER_NOT_FOUND": "Utilisateur non trouvé.",
+                                                                                "ACCESS_DENIED": "Accès refusé.",
+                                                                                "RESOURCE_NOT_FOUND": "La ressource demandée est introuvable.",
+                                                                                "INTERNAL_SERVER_ERROR": "Une erreur interne du serveur s'est produite.",
+                                                                                "BAD_REQUEST": "Mauvaise requête.",
+                                                                                "VALIDATION_FAILED": "La validation des données fournies a échoué."
+                                                                              
+                                                                              }
+                                                                            
+                                                                            
+
   }
   

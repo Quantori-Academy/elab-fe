@@ -16,15 +16,16 @@ export const chartOptions = (
   labels: string[] | undefined,
   titleText: string,
   height: string,
+  categories: string[]
 ): Partial<ChartOptions> => ({
   series,
   chart: {
     type: 'donut',
     width: '400px',
-    height
+    height,
   },
   labels,
-  colors: labels?.map((label) => pieColors[label]),
+  colors: categories.map((category) => pieColors[category]),
   title: {
     text: titleText,
     style: {
@@ -35,9 +36,9 @@ export const chartOptions = (
   dataLabels: {
     enabled: true,
     style: {
-      colors: labels?.map((label) => pieColors[label]),
+      colors: categories.map((category) => pieColors[category]),
       fontSize: '14px',
-    }
+    },
   },
   plotOptions: {
     pie: {
