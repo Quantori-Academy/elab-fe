@@ -11,7 +11,7 @@
 .info {
   margin: 0 100px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 50px;
   box-sizing: border-box;
   img {
@@ -19,7 +19,12 @@
     height: auto;
   }
 }
-
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
 h2,
 h3 {
   font-size: large;
@@ -29,6 +34,10 @@ h3 {
 }
 h2 {
   font-size: x-large;
+}
+.details {
+  display: grid;
+  gap: 10px;
 }
 span {
   color: var(--primary-color);
@@ -91,8 +100,13 @@ span {
 
 @media screen and (max-width: 768px) {
   .info {
-    margin: 0 50px;
+    margin: 0 30px;
     gap: 30px;
+
+    img {
+      width: 80px;
+      height: 80px;
+    }
   }
 
   h1 {
@@ -108,14 +122,10 @@ span {
   .info {
     margin: 0;
     gap: 20px;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
-
-  img {
-    width: 100px;
-    height: 100px;
-  }
-
-
 }
-
-

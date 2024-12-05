@@ -1,0 +1,22 @@
+:host {
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.content {
+  padding: 1.5rem;
+  max-height: 50%;
+}
+
+.filter-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+}
+.filter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: 1rem;
+}

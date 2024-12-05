@@ -20,6 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Order } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
+import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 
 @Component({
   selector: 'app-order-page',
@@ -49,7 +50,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
 
   excludeReagents: { id: number }[] = [];
 
-  displayedColumns = [
+  baseColumns = [
     'name',
     'structureSmiles',
     'casNumber',
@@ -57,8 +58,16 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     'package',
     'status',
     'userComments',
-    'actions',
   ];
+  actionColumn = 'actions';
+
+  get displayedColumns(): string[] {
+    const order = this.orderSubject.getValue();
+    if (order?.status === 'Pending' || order?.status === 'Fulfilled') {
+      return [...this.baseColumns, this.actionColumn];
+    }
+    return this.baseColumns.filter((column) => column !== this.actionColumn);
+  }
 
   ngOnInit(): void {
     this.fetchOrder();
@@ -122,6 +131,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
           });
         },
       });
+  }
+  onAdd(id: number) {
+    const dialog = this.dialog.open(ReagentRequestsDialogComponent, {
+      data: id,
+      minWidth: '700px',
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchOrder();
+      }
+    });
   }
 
   ngOnDestroy(): void {

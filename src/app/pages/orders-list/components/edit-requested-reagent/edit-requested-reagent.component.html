@@ -22,6 +22,15 @@
     <mat-error>Package is required</mat-error>
     }
   </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Package amount</mat-label>
+    <input matInput formControlName="amount" type="number" />
+    @if (hasError('amount', 'required')) {
+    <mat-error>Package amount is required</mat-error>
+    }@else if (hasError('amount','min')){
+    <mat-error>Package amount must be more than 0</mat-error>
+    }
+  </mat-form-field>
   <div class="actions">
     <button mat-raised-button color="primary" type="submit" (click)="onEdit()">
       Update

@@ -23,6 +23,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
 } from 'rxjs/operators';
@@ -37,6 +38,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-order-form',
@@ -70,10 +72,27 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     {}
   );
   sellerOptions$ = new BehaviorSubject<string[]>([]);
-  selectedReagents = new Set<number>();
+  selectedReagents = new Map<number, { id: number; packageAmount: number }>();
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
 
+  // dataSource$ = this.paramsSubject.pipe(
+  //   debounceTime(500),
+  //   distinctUntilChanged(),
+  //   switchMap((params) =>
+  //     this.reagentRequestService.getReagentRequests(
+  //       'Pending',
+  //       undefined,
+  //       params.sort?.active === 'createdAt' && params.sort.direction
+  //         ? params.sort.direction
+  //         : undefined,
+  //       undefined,
+  //       undefined,
+  //       undefined,
+  //       params.filter
+  //     )
+  //   )
+  // );
   dataSource$ = this.paramsSubject.pipe(
     debounceTime(500),
     distinctUntilChanged(),
@@ -89,9 +108,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         undefined,
         params.filter
       )
-    )
+    ),
+    map((response) => {
+      // Filter out items where inOrder is true
+      const filteredRequests = response.requests.filter(
+        (request) => !request.inOrder
+      );
+      return { ...response, requests: filteredRequests };
+    })
   );
-
+  
   updateParams(params: { filter?: string; sort?: Sort }) {
     this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
   }
@@ -101,6 +127,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     'name',
     'desiredQuantity',
     'package',
+    'amount',
     'createdAt',
     'userComments',
     'actions',
@@ -139,19 +166,27 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     if (this.selectedReagents.has(element.id)) {
       this.selectedReagents.delete(element.id);
       this.selectedReagentReq = this.selectedReagentReq.filter(
-        (name) => name !== element
+        (reagent) => reagent.id !== element.id
       );
     } else {
-      this.selectedReagents.add(element.id);
+      this.selectedReagents.set(element.id, {
+        id: element.id,
+        packageAmount: 1,
+      });
       this.selectedReagentReq.push(element);
     }
     this.updateOrdersFormControl();
   }
 
+  onPackageAmountChange(id: number, event: Event): void {
+    const amount = +(event.target as HTMLInputElement).value || 1;
+    if (this.selectedReagents.has(id)) {
+      this.selectedReagents.set(id, { id, packageAmount: amount });
+      this.updateOrdersFormControl();
+    }
+  }
   updateOrdersFormControl() {
-    const selectedReagentArray = Array.from(this.selectedReagents).map(
-      (id) => ({ id })
-    );
+    const selectedReagentArray = Array.from(this.selectedReagents.values());
     this.orderForm.patchValue({ reagents: selectedReagentArray });
     this.reagentsSelectionError = this.selectedReagents.size === 0;
   }
@@ -170,7 +205,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           });
           this.redirectToReagentList();
         },
-        error: (err) => this.notificationPopupService.error(err),
+        error: (error: HttpErrorResponse) => {
+          this.notificationPopupService.error({
+            title: 'Error',
+            message: `Reagent request already in use, select different reagent request:
+             ${error.error.message}`,
+            duration: 15000,
+          });
+        },
+        
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;

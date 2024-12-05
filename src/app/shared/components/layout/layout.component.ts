@@ -50,7 +50,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       route: 'storage-locations',
     },
     {
-      icon: 'school',
+      icon: 'science',
       label: 'Reagents',
       route: 'reagents',
       procurementOnly: true,
@@ -63,7 +63,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
       procurementOnly: true,
     },
     {
-      icon: 'science',
+      icon: 'note_add',
       label: 'Reagent Request',
       route: 'reagent-request-page',
       procurementOnly: true,

@@ -34,6 +34,7 @@ import {
 import { EditOrderComponent } from './components/edit-order/edit-order.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
+import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
 
 @Component({
   selector: 'app-orders-list',
@@ -45,7 +46,7 @@ import { NoDataComponent } from '../../shared/components/no-data/no-data.compone
     AsyncPipe,
     SpinnerDirective,
     TableLoaderSpinnerComponent,
-    NoDataComponent
+    NoDataComponent,
   ],
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.scss'],
@@ -55,6 +56,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   private readonly DEBOUNCE_TIME = 1000;
   public pageSize: number;
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
+  private notificationPopupService = inject(NotificationPopupService);
   private ordersListSubject = new BehaviorSubject<OrdersListData | undefined>(
     undefined
   );
@@ -138,6 +140,30 @@ export class OrdersListComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       }
     });
+  }
+  orderStatusChange(orderId: number, status: string) {
+    this.orderService
+      .updateOrder(orderId, { status })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.cdr.markForCheck();
+          this.notificationPopupService.success({
+            title: 'Status Updated',
+            message: `Order status changed to ${status} successfully.`,
+            duration: 3000,
+          });
+
+          this.ordersList$ = this.orderService.getOrdersList();
+        },
+        error: (err) => {
+          this.notificationPopupService.error({
+            title: 'Update Failed',
+            message: err.message || 'Failed to update order status.',
+            duration: 3000,
+          });
+        },
+      });
   }
 
   redirectToDetailPage(order: Order) {

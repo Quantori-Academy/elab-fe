@@ -29,14 +29,14 @@ export class ExpiredDateDirective implements OnChanges {
 
     if (expiredDate < currentDate) {
       this.renderer2.setStyle(element, 'backgroundColor', 'var(--error-color)');
-      this.renderer2.setStyle(element, 'color', '#fff');
+      this.renderer2.addClass(element, 'expired-date-directive');
     } else if (expiredDate < warningDate) {
       this.renderer2.setStyle(
         element,
         'backgroundColor',
         'var(--warning-color)'
       );
-      this.renderer2.setStyle(element, 'color', '#fff');
+      this.renderer2.addClass(element, 'expired-date-directive');
     }
   }
 }

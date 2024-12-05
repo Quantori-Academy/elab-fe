@@ -32,6 +32,7 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     MatSortModule,
     MatSelectModule,
     AsyncPipe,
+    // DatePipe,
     TableLoaderSpinnerComponent,
     NoDataComponent
   ],

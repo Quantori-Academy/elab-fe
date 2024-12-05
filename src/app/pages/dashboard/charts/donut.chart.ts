@@ -4,22 +4,24 @@ import { ChartOptions } from '../models/chart.model';
 const pieColors: Record<string, string> = {
   Reagent: 'var(--neutral-color-dark2)',
   Sample: 'var(--neutral-color-dark1)',
-  Pending: '#e68d11',
-  Ordered: '#4B0082',
-  Fulfilled: '#098109',
-  Declined: '#F44336',
+  Pending: 'var(--pending-color)',
+  Ordered: 'var(--ordered-color)',
+  Fulfilled: 'var(--fulfilled-color)',
+  Declined: 'var(--declined-color)',
+  Completed: 'var(--completed-color)',
 };
 
 export const chartOptions = (
   series: ApexNonAxisChartSeries | ApexAxisChartSeries,
   labels: string[] | undefined,
-  titleText: string
+  titleText: string,
+  height: string,
 ): Partial<ChartOptions> => ({
   series,
   chart: {
     type: 'donut',
-    height: '200px',
-    width: '350px',
+    width: '400px',
+    height
   },
   labels,
   colors: labels?.map((label) => pieColors[label]),
@@ -39,6 +41,7 @@ export const chartOptions = (
   },
   plotOptions: {
     pie: {
+      customScale: 0.8,
       dataLabels: {
         offset: 30,
       },
@@ -46,7 +49,7 @@ export const chartOptions = (
   },
   responsive: [
     {
-      breakpoint: 426,
+      breakpoint: 500,
       options: {
         chart: {
           width: 300,

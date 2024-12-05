@@ -6,6 +6,7 @@ export interface ReagentRequestList {
   desiredQuantity: string | null;
   structureSmiles: string | null;
   structureImage: string | null;
+  amount:number;
   userComments: string | null;
   procurementComments: string | null;
   status: 'Pending' | 'Ordered' | 'Fulfilled' | 'Declined' | 'Completed';
@@ -13,6 +14,7 @@ export interface ReagentRequestList {
   updatedAt?: string;
   quantityUnit?: string;
   package?: string;
+  inOrder:boolean;
   orderId?: number | null;
   producer?: string | null;
   catalogId?: string | null;

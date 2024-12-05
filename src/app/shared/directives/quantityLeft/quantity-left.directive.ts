@@ -24,16 +24,14 @@ export class QuantityLeftDirective implements OnChanges {
     const element = this.elementRef.nativeElement as HTMLSpanElement;
     if (this.appQuantityLeft == 0) {
       this.renderer2.setStyle(element, 'backgroundColor', 'var(--error-color)');
-      this.renderer2.setStyle(element, 'color', '#fff');
-    }
-
-    if (this.appQuantity / 2 > this.appQuantityLeft) {
+      this.renderer2.addClass(element, 'quantity-left-directive')
+    } else if (this.appQuantity / 2 > this.appQuantityLeft) {
       this.renderer2.setStyle(
         element,
         'backgroundColor',
         'var(--warning-color)'
       );
-      this.renderer2.setStyle(element, 'color', '#fff');
+      this.renderer2.addClass(element, 'quantity-left-directive')
     }
   }
 }
