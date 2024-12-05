@@ -92,7 +92,7 @@
                 "SELLER_REQUIRED": "Verkäufer ist erforderlich.",
                 "REQUESTED_REAGENTS": "Angeforderte Reagenzien",
                 "SEARCH_BY_NAME": "Nach Name suchen",
-                "SEARCH_PLACEHOLDER": "Reagenzname eingeben",
+                "SEARCH_PLACEHOLDER": "Reagenzienname eingeben",
                 "SELECT": "Auswählen",
                 "NAME": "Name",
                 "DESIRED_QUANTITY": "Gewünschte Menge",
@@ -108,16 +108,29 @@
                 "SUBMIT": "Einreichen",
                 "SUCCESS_TITLE": "Erfolg",
                 "SUCCESS_MESSAGE": "Bestellung erfolgreich erstellt!",
-                "ERROR_TITLE": "Fehler"
+                "ERROR_TITLE": "Fehler",
+                "ERROR_MESSAGE": "Reagenzanfrage wird bereits verwendet, wählen Sie eine andere Reagenzanfrage",
+                "AMOUNT": "Menge",
+                "N_A": "N/V"
               },
+            
                 "ORDER_PAGE": {
-                  "ORDER_TITLE": "Bestellungsname",
+                  "ORDER_TITLE": "Bestellungstitel",
                   "SELLER": "Verkäufer",
                   "STATUS": "Status",
                   "CREATED": "Erstellt",
                   "LAST_UPDATED": "Zuletzt aktualisiert",
                   "UPDATED": "Aktualisiert",
                   "ORDERED_REAGENTS": "Bestellte Reagenzien",
+                  "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
+                  "COMPLETED": "Abgeschlossen",
+                  "COMPLETE": "Abschließen",
+                  "EDIT": "Bearbeiten",
+                  "DELETE": "Löschen",
+                  "ORDER_LIST_ALT": "Bestellliste",
+                  "SUCCESS_TITLE": "Erfolg",
+                  "REAGENT_REMOVED_SUCCESS": "Reagenz wurde erfolgreich entfernt!",
+                  "ERROR_TITLE": "Fehler",
                   "TABLE": {
                     "NAME": "Name",
                     "CAS_NUMBER": "CAS-Nummer",
@@ -125,19 +138,23 @@
                     "DESIRED_QUANTITY": "Gewünschte Menge",
                     "PACKAGE": "Verpackung",
                     "STATUS": "Status",
-                    "QUANTITY_LEFT": "Verbleibende Menge",
                     "STRUCTURE": "Struktur",
                     "CREATOR_COMMENT": "Kommentar des Erstellers",
                     "ACTIONS": "Aktionen",
                     "NO_DATA": "______"
-                  },
-                  "EDIT": "Bearbeiten",
-                  "DELETE": "Löschen",
-                  "ORDER_LIST_ALT": "Bestellliste",
-                  "SUCCESS_TITLE": "Erfolg",
-                  "REAGENT_REMOVED_SUCCESS": "Reagenz wurde erfolgreich entfernt!",
-                  "ERROR_TITLE": "Fehler"
+                  }
                 },
+                "STATUSES": {
+                  "PENDING": "Ausstehend",
+                  "ORDERED": "Bestellt",
+                  "FULFILLED": "Erfüllt",
+                  "DECLINED": "Abgelehnt",
+                  "COMPLETED": "Abgeschlossen"
+                },
+
+
+
+              
                   "ORDERS_LIST": {
                     "CREATE_NEW_ORDER": "Neue Bestellung erstellen",
                     "FILTER_BY_STATUS": "Nach Status filtern",
@@ -269,13 +286,14 @@
                                 "OPEN": "Öffnen"
                               }
                             },
+             
                               "REAGENTS_LIST": {
                                 "CREATE_REAGENT": "Reagenz erstellen",
                                 "CREATE_SAMPLE": "Probe erstellen",
                                 "MOVE_REAGENT": "Reagenz verschieben",
-                                "SEARCH_BY_NAME": "Suche nach Name",
+                                "SEARCH_BY_NAME": "Nach Name suchen",
                                 "PLACEHOLDER_ENTER_NAME": "Name eingeben",
-                                "SEARCH_BY_STRUCTURE": "Suche nach Struktur",
+                                "SEARCH_BY_STRUCTURE": "Nach Struktur suchen",
                                 "PLACEHOLDER_ENTER_STRUCTURE": "Struktur eingeben",
                                 "EXACT_MATCH": "Genaue Übereinstimmung",
                                 "FILTER_BY_CATEGORY": "Nach Kategorie filtern",
@@ -291,14 +309,15 @@
                                   "CAS": "CAS",
                                   "QUANTITY": "Menge",
                                   "QUANTITY_LEFT": "Verbleibende Menge",
-                                  "LOCATION": "Standort",
+                                  "LOCATION": "Ort",
                                   "ACTIONS": "Aktionen"
                                 },
-                                "NO_DATA_AVAILABLE": "Keine Reagenzdaten verfügbar",
                                 "ARIA_LABEL": {
+                                  "OPEN_REAGENT_PAGE": "Reagenzseite öffnen",
                                   "SELECT_PAGE": "Seite auswählen"
                                 }
-                              },
+                            },
+                            
                                 "ADD_REAGENT_SAMPLE": {
                                   "SEARCH_BY_NAME": "Suche nach Name",
                                   "PLACEHOLDER_ENTER_NAME": "Name eingeben",
@@ -389,14 +408,19 @@
                                         "NAME": "Reagenzname",
                                         "STRUCTURE": "Reagenzstruktur",
                                         "PRODUCER": "Hersteller",
-                                        "DESIRED_QUANTITY": "Gewünschte Reagenzmenge",
+                                        "DESIRED_QUANTITY": "Gewünschte Menge des Reagenz",
                                         "PER": "pro",
-                                        "PACKAGE": "Paket",
+                                        "PACKAGE": "Verpackung",
                                         "PRICE_PER_UNIT": "Preis pro Einheit",
-                                        "CAS_NUMBER": "Reagenz CAS-Nummer",
-                                        "CATALOG_ID": "Reagenz Katalog-ID",
-                                        "CATALOG_LINK": "Reagenz Kataloglink"
+                                        "CAS_NUMBER": "CAS-Nummer des Reagenz",
+                                        "CATALOG_ID": "Katalog-ID des Reagenz",
+                                        "CATALOG_LINK": "Kataloglink des Reagenz",
+                                        "ALT_REAGENT": "Reagenz"
                                       },
+                                      "BUTTONS": {
+                                        "CLOSE": "Schließen"
+                                      },
+                                    
                                         "STRUCTURE_DIALOG": {
                                           "ENLARGED_IMAGE_ALT": "Vergrößertes Bild"
                                         },
@@ -556,15 +580,19 @@
                                                                 "LAST_PAGE_LABEL": "Letzte Seite",
                                                                 "RANGE_PAGE_LABEL": "von"
                                                               },
-                                                              "NO_DATA": {
-                                                                "NO_ORDERED_REAGENTS": "Keine bestellten Reagenzien",
-                                                                "NO_ORDERS": "Keine Bestellungen",
-                                                                "NO_DATA": "Keine Daten",
-                                                                "NO_STORAGES": "Keine Lagerorte",
-                                                                "NO_ROOMS": "Keine Raume",
-                                                                "NO_REAGENT_REQUEST": "Keine Reagenzienanforderung",
-                                                                "NO_DATA_FOUND": "Keine Daten gefunden"
-                                                              },
+                                                            
+                                                                "NO_DATA": {
+                                                                  "NO_REAGENTS": "Keine Reagenzien",
+                                                                  "NO_ORDERED_REAGENTS": "Keine bestellten Reagenzien",
+                                                                  "NO_ORDERS": "Keine Bestellungen",
+                                                                  "NO_DATA": "Keine Daten",
+                                                                  "NO_STORAGES": "Keine Lager",
+                                                                  "NO_ROOMS": "Keine Räume",
+                                                                  "NO_REAGENT_REQUEST": "Keine Reagenzienanfrage",
+                                                                  "NO_DATA_FOUND": "Keine Daten gefunden"
+                                                                },
+                                                             
+                                                              
 
                                                                   "ADD_STRUCTURE": {
                                                                     "HEADER": "Strukturzeichnung",
@@ -593,8 +621,9 @@
                                                                       "SUCCESS_TITLE": "Erfolg",
                                                                       "REAGENT_CREATED_SUCCESS": "Reagenz wurde erfolgreich erstellt!"
                                                                     },
+                                                                  
                                                                       "EDIT_REAGENT": {
-                                                                        "HEADER": "Bearbeiten",
+                                                                        "HEADER": "Bearbeite {{ category }}",
                                                                         "QUANTITY_LEFT": "Verbleibende Menge",
                                                                         "STORAGE_LOCATION": "Lagerort",
                                                                         "STORAGE_LOCATION_PLACEHOLDER": "z.B.: Raum1 Schrank1-Regal1",
@@ -602,7 +631,7 @@
                                                                           "QUANTITY_LEFT_REQUIRED": "Verbleibende Menge ist erforderlich.",
                                                                           "QUANTITY_LEFT_INVALID": "Verbleibende Menge muss eine gültige Zahl sein.",
                                                                           "STORAGE_LOCATION_REQUIRED": "Lagerort ist erforderlich.",
-                                                                          "STORAGE_LOCATION_INVALID": "Wählen Sie den richtigen Lagerort aus."
+                                                                          "STORAGE_LOCATION_INVALID": "Wählen Sie einen gültigen Lagerort."
                                                                         }
                                                                       },
                                                                       "BUTTONS": {
@@ -612,8 +641,14 @@
                                                                       "NOTIFICATIONS": {
                                                                         "SUCCESS_TITLE": "Erfolg",
                                                                         "ERROR_TITLE": "Fehler",
-                                                                        "EDIT_SUCCESS": "{{ category }} wurde erfolgreich bearbeitet!"
+                                                                        "EDIT_SUCCESS": "{{ category }} erfolgreich bearbeitet!"
                                                                       },
+                                                                      "CATEGORIES": {
+                                                                        "REAGENT": "Reagenz",
+                                                                        "SAMPLE": "Probe"
+                                                                      },
+                                                                 
+                                                                    
                                                                         "ADMIN_DASHBOARD": {
                                                                           "NUMBER_OF_ROOMS": "Anzahl der Räume",
                                                                           "NUMBER_OF_STORAGES": "Anzahl der Lagerorte",
@@ -622,7 +657,7 @@
                                                                         "ROLES": {
                                                                           "ADMIN": "Administrator",
                                                                           "RESEARCHER": "Forscher",
-                                                                          "PROCUREMENTOFFICER": "Einkaufsleiter"
+                                                                          "PROCUREMENTOFFICER": "Einkaufsbeauftragter"
                                                                         },
                                                                           "RESEARCHER_DASHBOARD": {
                                                                             "REAGENT_VS_SAMPLE": "Reagenz vs Probe",
@@ -640,10 +675,7 @@
                                                                             "EXPIRED_DATE": "Ablaufdatum",
                                                                             "QUANTITY_LEFT": "Verbleibende Menge"
                                                                           },
-                                                                          "NO_DATA": {
-                                                                            "NO_DATA_FOUND": "Keine Daten gefunden",
-                                                                            "NO_DATA": "Keine Daten verfügbar"
-                                                                          },
+
                                                                             "PO_DASHBOARD": {
                                                                               "NEW_INCOMING_REQUEST": "Neue eingehende Reagenzanforderung",
                                                                               "REAGENT": "Reagenz",
@@ -678,7 +710,45 @@
                                                                                   "BAD_REQUEST": "Ungültige Anfrage.",
                                                                                   "VALIDATION_FAILED": "Die Überprüfung der bereitgestellten Daten ist fehlgeschlagen."
                                                                              
-                                                                                }
+                                                                                },
+                                                                            
+                                                                                  "REAGENT_DETAILED_PAGE": {
+                                                                                    "DETAILS_TITLE": "{{ category }} Details",
+                                                                                    "COPY_STRUCTURE": "Struktur kopieren",
+                                                                                    "SMILES": "SMILES",
+                                                                                    "NO_STRUCTURE": "Keine Struktur angegeben",
+                                                                                    "INVALID_STRUCTURE_IMAGE": "Ungültiges Strukturbild",
+                                                                                    "NAME": "Name",
+                                                                                    "ID": "ID",
+                                                                                    "CATEGORY": "Kategorie",
+                                                                                    "QUANTITY": "Menge",
+                                                                                    "DESCRIPTION": "Beschreibung",
+                                                                                    "CAS": "CAS",
+                                                                                    "PRODUCER": "Hersteller",
+                                                                                    "CATALOG_ID": "Katalog-ID",
+                                                                                    "PRICE": "Preis",
+                                                                                    "PER": "pro",
+                                                                                    "CATALOG_LINK": "Kataloglink",
+                                                                                    "EDIT_QUANTITY": "Menge bearbeiten",
+                                                                                    "DELETE_REAGENT": "Reagenz löschen",
+                                                                                    "STRUCTURE_COPIED": "Struktur kopiert"
+                                                                                  },
+                                                                                  "CATEGORIES": {
+                                                                                    "REAGENT": "Reagenz",
+                                                                                    "SAMPLE": "Probe"
+                                                                                  },
+                                                                              
+                                                                                    "MOLECULE_STRUCTURE": {
+                                                                                      "ERROR": {
+                                                                                        "RDKIT_FAILED_TO_LOAD": "RDKit konnte nicht geladen werden",
+                                                                                        "NO_STRUCTURE_PROVIDED": "Keine Struktur bereitgestellt",
+                                                                                        "INVALID_STRUCTURE": "Ungültige Struktur"
+                                                                                      }
+                                                                                    }
+                                                                                
+                                                                                  
+                                                                     
+                                                                                
                                                                           
                                                                               
                                                                                 

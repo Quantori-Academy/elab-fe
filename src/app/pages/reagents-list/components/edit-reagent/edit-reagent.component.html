@@ -1,7 +1,11 @@
 <h5 class="header">
-  {{ "EDIT_REAGENT.HEADER" | translate }}
   {{
-    "REAGENTS_LIST.CATEGORY." + (editionData.category | uppercase) | translate
+    "EDIT_REAGENT.HEADER"
+      | translate
+        : {
+            category:
+              "CATEGORIES." + editionData.category.toUpperCase() | translate
+          }
   }}
 </h5>
 <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
@@ -31,21 +35,19 @@
       [matAutocomplete]="auto"
       #storageInput
     />
-
-    <mat-autocomplete
-      autoActiveFirstOption
-      #auto="matAutocomplete"
-      [displayWith]="displayFn"
-    >
-      @if (storageInput.value) { @if (storageLocations$ | async; as
-      storageLocations) { @if (storageLocations.size) { @for (option of
-      storageLocations.storages; track option.id) {
-      <mat-option [value]="option">
-        {{ option.room.name }} {{ option.name }}
-      </mat-option>
-      } } } }
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+      @if (storageInput.value) {
+        @if (storageLocations$ | async; as storageLocations) {
+          @if (storageLocations.size) {
+            @for (option of storageLocations.storages; track option.id) {
+            <mat-option [value]="option">
+              {{ option.room.name }} {{ option.name }}
+            </mat-option>
+            }
+          }
+        }
+      }
     </mat-autocomplete>
-
     @if (hasError('storageLocation', 'required')) {
     <mat-error>{{
       "EDIT_REAGENT.ERRORS.STORAGE_LOCATION_REQUIRED" | translate

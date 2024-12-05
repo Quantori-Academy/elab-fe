@@ -16,6 +16,7 @@ import { RDKitLoaderService } from '../../services/rdkit-loader.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { MolDrawOptions } from './mol-draw-options';
 import { CanvasRendererComponent } from './canvas-renderer/canvas-renderer.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface DrawDetails {
   width: number;
@@ -50,7 +51,8 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
 
   constructor(
     private rdkitService: RDKitLoaderService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
   ) {
     this.rdkit$ = this.rdkitService.getRDKit().pipe(shareReplay(1));
     this.rdkit$.pipe(first()).subscribe({
@@ -62,7 +64,9 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
       error: (error) => {
         this.loading = false;
         console.error(error);
-        this.error = 'RDKit failed to load';
+        this.error = this.translate.instant(
+          'MOLECULE_STRUCTURE.ERROR.RDKIT_FAILED_TO_LOAD'
+        );
         this.cdr.markForCheck();
       },
     });
@@ -96,7 +100,9 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
 
   renderStructure() {
     if (!this.structure) {
-      this.error = 'No structure provided';
+      this.error = this.translate.instant(
+        'MOLECULE_STRUCTURE.ERROR.NO_STRUCTURE_PROVIDED'
+      );
       this.cdr.markForCheck();
       return;
     }
@@ -104,7 +110,9 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
     this.rdkit$.pipe(first()).subscribe((rdkit) => {
       const mol = rdkit.get_mol(this.structure);
       if (!mol) {
-        this.error = 'Invalid structure';
+        this.error = this.translate.instant(
+          'MOLECULE_STRUCTURE.ERROR.INVALID_STRUCTURE'
+        );
         this.cdr.markForCheck();
         return;
       }

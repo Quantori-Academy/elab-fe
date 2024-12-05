@@ -23,22 +23,15 @@ import { StorageLocationItem } from '../../../storage-location/models/storage-lo
 import { Reagent } from '../../../../shared/models/reagent-model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AsyncPipe } from '@angular/common';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-reagent',
   standalone: true,
-  imports: [
-    MaterialModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-    TranslateModule,
-    CommonModule,
-  ],
+  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe, TranslateModule],
   providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './edit-reagent.component.html',
-  styleUrl: './edit-reagent.component.scss',
+  styleUrls: ['./edit-reagent.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditReagentComponent {
@@ -48,6 +41,7 @@ export class EditReagentComponent {
   private storageLocationQueryService = inject(StorageLocationQueryService);
   private notificationsService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<EditReagentComponent>);
+  private translate = inject(TranslateService);
   public storageLocations$ =
     this.storageLocationService.searchStorageLocationByName();
   private destroy$ = new Subject<void>();
@@ -100,16 +94,21 @@ export class EditReagentComponent {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
+            const categoryTranslated = this.translate.instant(
+              'CATEGORIES.' + this.editionData.category.toUpperCase()
+            );
             this.notificationsService.success({
-              title: 'Success',
-              message: `${this.editionData.category} edited successfully!`,
+              title: this.translate.instant('NOTIFICATIONS.SUCCESS_TITLE'),
+              message: this.translate.instant('NOTIFICATIONS.EDIT_SUCCESS', {
+                category: categoryTranslated,
+              }),
               duration: 3000,
             });
             this.dialogRef.close(true);
           },
           error: (error: HttpErrorResponse) => {
             this.notificationsService.error({
-              title: 'Error',
+              title: this.translate.instant('NOTIFICATIONS.ERROR_TITLE'),
               message: error.error.message,
               duration: 4000,
             });

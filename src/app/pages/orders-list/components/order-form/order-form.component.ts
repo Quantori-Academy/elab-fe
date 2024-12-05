@@ -67,6 +67,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private reagentRequestService = inject(ReagentRequestService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  private translate = inject(TranslateService);
   private destroy$ = new Subject<void>();
   public isLoading = computed(() => this.reagentRequestService.isLoading());
   private paramsSubject = new BehaviorSubject<{ filter?: string; sort?: Sort }>(
@@ -76,23 +77,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   selectedReagents = new Map<number, { id: number; packageAmount: number }>();
   reagentsSelectionError = false;
   selectedReagentReq: ReagentRequestList[] = [];
-  // dataSource$ = this.paramsSubject.pipe(
-  //   debounceTime(500),
-  //   distinctUntilChanged(),
-  //   switchMap((params) =>
-  //     this.reagentRequestService.getReagentRequests(
-  //       'Pending',
-  //       undefined,
-  //       params.sort?.active === 'createdAt' && params.sort.direction
-  //         ? params.sort.direction
-  //         : undefined,
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       params.filter
-  //     )
-  //   )
-  // );
+
   dataSource$ = this.paramsSubject.pipe(
     debounceTime(500),
     distinctUntilChanged(),
@@ -110,14 +95,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       )
     ),
     map((response) => {
-      // Filter out items where inOrder is true
       const filteredRequests = response.requests.filter(
         (request) => !request.inOrder
       );
       return { ...response, requests: filteredRequests };
     })
   );
-  
+
   updateParams(params: { filter?: string; sort?: Sort }) {
     this.paramsSubject.next({ ...this.paramsSubject.value, ...params });
   }
@@ -185,6 +169,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.updateOrdersFormControl();
     }
   }
+
   updateOrdersFormControl() {
     const selectedReagentArray = Array.from(this.selectedReagents.values());
     this.orderForm.patchValue({ reagents: selectedReagentArray });
@@ -207,18 +192,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         },
         error: (error: HttpErrorResponse) => {
           this.notificationPopupService.error({
-            title: 'Error',
-            message: `Reagent request already in use, select different reagent request:
-             ${error.error.message}`,
+            title: this.translate.instant('ORDER_FORM.ERROR_TITLE'),
+            message: `${this.translate.instant('ORDER_FORM.ERROR_MESSAGE')}: ${
+              error.error.message
+            }`,
             duration: 15000,
           });
         },
-        
-        error: (err) =>
-          this.notificationPopupService.error({
-            title: this.translate.instant('ORDER_FORM.ERROR_TITLE'),
-            message: err.error.message,
-          }),
       });
     } else if (this.selectedReagents.size === 0) {
       this.reagentsSelectionError = true;

@@ -61,7 +61,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
-    ClipboardModule
+    ClipboardModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
@@ -93,7 +93,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
-    ClipboardModule
+    ClipboardModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,

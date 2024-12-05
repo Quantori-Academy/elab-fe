@@ -172,7 +172,7 @@
         </table>
       </ng-container>
       @if (!dataSource.data.length && !isLoading()) {
-      <app-no-data text="No Reagents" />
+      <app-no-data [text]="'NO_DATA.NO_REAGENTS' | translate" />
       }
     </form>
   </div>

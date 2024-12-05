@@ -92,12 +92,12 @@
                 "SELLER_REQUIRED": "Le vendeur est requis.",
                 "REQUESTED_REAGENTS": "Réactifs demandés",
                 "SEARCH_BY_NAME": "Rechercher par nom",
-                "SEARCH_PLACEHOLDER": "Entrez le nom du réactif",
+                "SEARCH_PLACEHOLDER": "Entrer le nom du réactif",
                 "SELECT": "Sélectionner",
                 "NAME": "Nom",
                 "DESIRED_QUANTITY": "Quantité désirée",
                 "PACKAGE": "Emballage",
-                "N_A": "N/D",
+                "N_A": "N/A",
                 "CREATED": "Créé",
                 "COMMENT": "Commentaire",
                 "ACTIONS": "Actions",
@@ -108,8 +108,13 @@
                 "SUBMIT": "Soumettre",
                 "SUCCESS_TITLE": "Succès",
                 "SUCCESS_MESSAGE": "Commande créée avec succès!",
-                "ERROR_TITLE": "Erreur"
+                "ERROR_TITLE": "Erreur",
+                "ERROR_MESSAGE": "Demande de réactif déjà utilisée, sélectionnez une autre demande de réactif",
+                "AMOUNT": "Quantité",
+                "N_A": "N/A"
               },
+
+            
                 "ORDER_PAGE": {
                   "ORDER_TITLE": "Titre de la commande",
                   "SELLER": "Vendeur",
@@ -118,6 +123,15 @@
                   "LAST_UPDATED": "Dernière mise à jour",
                   "UPDATED": "Mis à jour",
                   "ORDERED_REAGENTS": "Réactifs commandés",
+                  "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
+                  "COMPLETED": "Terminé",
+                  "COMPLETE": "Terminer",
+                  "EDIT": "Modifier",
+                  "DELETE": "Supprimer",
+                  "ORDER_LIST_ALT": "Liste des commandes",
+                  "SUCCESS_TITLE": "Succès",
+                  "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès!",
+                  "ERROR_TITLE": "Erreur",
                   "TABLE": {
                     "NAME": "Nom",
                     "CAS_NUMBER": "Numéro CAS",
@@ -125,19 +139,22 @@
                     "DESIRED_QUANTITY": "Quantité désirée",
                     "PACKAGE": "Emballage",
                     "STATUS": "Statut",
-                    "QUANTITY_LEFT": "Quantité restante",
                     "STRUCTURE": "Structure",
                     "CREATOR_COMMENT": "Commentaire du créateur",
                     "ACTIONS": "Actions",
                     "NO_DATA": "______"
-                  },
-                  "EDIT": "Modifier",
-                  "DELETE": "Supprimer",
-                  "ORDER_LIST_ALT": "Liste des commandes",
-                  "SUCCESS_TITLE": "Succès",
-                  "REAGENT_REMOVED_SUCCESS": "Le réactif a été supprimé avec succès!",
-                  "ERROR_TITLE": "Erreur"
+                  }
                 },
+                "STATUSES": {
+                  "PENDING": "En attente",
+                  "ORDERED": "Commandé",
+                  "FULFILLED": "Exécuté",
+                  "DECLINED": "Refusé",
+                  "COMPLETED": "Terminé"
+                },
+      
+
+              
                   "ORDERS_LIST": {
                     "CREATE_NEW_ORDER": "Créer une nouvelle commande",
                     "FILTER_BY_STATUS": "Filtrer par statut",
@@ -270,13 +287,14 @@
                                 "OPEN": "Ouvrir"
                               }
                             },
+                    
                               "REAGENTS_LIST": {
                                 "CREATE_REAGENT": "Créer un réactif",
                                 "CREATE_SAMPLE": "Créer un échantillon",
                                 "MOVE_REAGENT": "Déplacer le réactif",
-                                "SEARCH_BY_NAME": "Recherche par nom",
+                                "SEARCH_BY_NAME": "Rechercher par nom",
                                 "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
-                                "SEARCH_BY_STRUCTURE": "Recherche par structure",
+                                "SEARCH_BY_STRUCTURE": "Rechercher par structure",
                                 "PLACEHOLDER_ENTER_STRUCTURE": "Entrez une structure",
                                 "EXACT_MATCH": "Correspondance exacte",
                                 "FILTER_BY_CATEGORY": "Filtrer par catégorie",
@@ -295,11 +313,12 @@
                                   "LOCATION": "Emplacement",
                                   "ACTIONS": "Actions"
                                 },
-                                "NO_DATA_AVAILABLE": "Aucune donnée de réactif disponible",
                                 "ARIA_LABEL": {
+                                  "OPEN_REAGENT_PAGE": "Ouvrir la page du réactif",
                                   "SELECT_PAGE": "Sélectionner la page"
                                 }
-                              },
+                            },
+                            
                                 "ADD_REAGENT_SAMPLE": {
                                   "SEARCH_BY_NAME": "Recherche par nom",
                                   "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
@@ -390,14 +409,19 @@
                                         "NAME": "Nom du réactif",
                                         "STRUCTURE": "Structure du réactif",
                                         "PRODUCER": "Producteur",
-                                        "DESIRED_QUANTITY": "Quantité souhaitée du réactif",
+                                        "DESIRED_QUANTITY": "Quantité désirée du réactif",
                                         "PER": "par",
                                         "PACKAGE": "paquet",
                                         "PRICE_PER_UNIT": "Prix par unité",
                                         "CAS_NUMBER": "CAS du réactif",
                                         "CATALOG_ID": "ID du catalogue du réactif",
-                                        "CATALOG_LINK": "Lien du catalogue du réactif"
+                                        "CATALOG_LINK": "Lien du catalogue du réactif",
+                                        "ALT_REAGENT": "réactif"
                                       },
+                                      "BUTTONS": {
+                                        "CLOSE": "Fermer"
+                                      },
+                                    
                                         "STRUCTURE_DIALOG": {
                                           "ENLARGED_IMAGE_ALT": "Image agrandie"
                                         },
@@ -557,14 +581,19 @@
                                                                 "LAST_PAGE_LABEL": "Dernière page",
                                                                 "RANGE_PAGE_LABEL": "sur"
                                                               },
-                                                              "NO_DATA": {
-                                                                "NO_ORDERED_REAGENTS": "Aucun réactif commandé",
-                                                                "NO_ORDERS": "Aucune commande",
-                                                                "NO_DATA": "Aucune donnée",
-                                                                "NO_STORAGES": "Aucun emplacement de stockage",
-                                                                "NO_REAGENT_REQUEST": "Aucune demande de réactif",
-                                                                "NO_DATA_FOUND": "Aucune donnée trouvée"
-                                                              },
+                                                          
+                                                                "NO_DATA": {
+                                                                  "NO_REAGENTS": "Aucun réactif",
+                                                                  "NO_ORDERED_REAGENTS": "Aucun réactif commandé",
+                                                                  "NO_ORDERS": "Aucune commande",
+                                                                  "NO_DATA": "Aucune donnée",
+                                                                  "NO_STORAGES": "Aucun stockage",
+                                                                  "NO_ROOMS": "Aucune salle",
+                                                                  "NO_REAGENT_REQUEST": "Aucune demande de réactif",
+                                                                  "NO_DATA_FOUND": "Aucune donnée trouvée"
+                                                                },
+                                                            
+                                                              
 
                                                                   "ADD_STRUCTURE": {
                                                                     "HEADER": "Dessiner la structure",
@@ -593,16 +622,17 @@
                                                                       "SUCCESS_TITLE": "Succès",
                                                                       "REAGENT_CREATED_SUCCESS": "Le réactif a été créé avec succès !"
                                                                     },
+                                                               
                                                                       "EDIT_REAGENT": {
-                                                                        "HEADER": "Modifier",
+                                                                        "HEADER": "Modifier {{ category }}",
                                                                         "QUANTITY_LEFT": "Quantité restante",
                                                                         "STORAGE_LOCATION": "Emplacement de stockage",
                                                                         "STORAGE_LOCATION_PLACEHOLDER": "ex : Salle1 Armoire1-Étagère1",
                                                                         "ERRORS": {
-                                                                          "QUANTITY_LEFT_REQUIRED": "La quantité restante est requise.",
-                                                                          "QUANTITY_LEFT_INVALID": "La quantité restante doit être un nombre valide.",
-                                                                          "STORAGE_LOCATION_REQUIRED": "L'emplacement de stockage est requis.",
-                                                                          "STORAGE_LOCATION_INVALID": "Sélectionnez le bon emplacement de stockage."
+                                                                          "QUANTITY_LEFT_REQUIRED": "Quantité restante est requise.",
+                                                                          "QUANTITY_LEFT_INVALID": "Quantité restante doit être un nombre valide.",
+                                                                          "STORAGE_LOCATION_REQUIRED": "Emplacement de stockage est requis.",
+                                                                          "STORAGE_LOCATION_INVALID": "Sélectionnez un emplacement de stockage valide."
                                                                         }
                                                                       },
                                                                       "BUTTONS": {
@@ -614,6 +644,12 @@
                                                                         "ERROR_TITLE": "Erreur",
                                                                         "EDIT_SUCCESS": "{{ category }} modifié avec succès !"
                                                                       },
+                                                                      "CATEGORIES": {
+                                                                        "REAGENT": "Réactif",
+                                                                        "SAMPLE": "Échantillon"
+                                                                      },
+                                                              
+                                                                    
                                                                         "ADMIN_DASHBOARD": {
                                                                           "NUMBER_OF_ROOMS": "Nombre de salles",
                                                                           "NUMBER_OF_STORAGES": "Nombre de stockages",
@@ -674,7 +710,45 @@
                                                                                 "BAD_REQUEST": "Mauvaise requête.",
                                                                                 "VALIDATION_FAILED": "La validation des données fournies a échoué."
                                                                               
-                                                                              }
+                                                                              },
+                                                                      
+                                                                                "REAGENT_DETAILED_PAGE": {
+                                                                                  "DETAILS_TITLE": "Détails de {{ category }}",
+                                                                                  "COPY_STRUCTURE": "Copier la structure",
+                                                                                  "SMILES": "SMILES",
+                                                                                  "NO_STRUCTURE": "Aucune structure fournie",
+                                                                                  "INVALID_STRUCTURE_IMAGE": "Image de structure invalide",
+                                                                                  "NAME": "Nom",
+                                                                                  "ID": "ID",
+                                                                                  "CATEGORY": "Catégorie",
+                                                                                  "QUANTITY": "Quantité",
+                                                                                  "DESCRIPTION": "Description",
+                                                                                  "CAS": "CAS",
+                                                                                  "PRODUCER": "Producteur",
+                                                                                  "CATALOG_ID": "ID du catalogue",
+                                                                                  "PRICE": "Prix",
+                                                                                  "PER": "par",
+                                                                                  "CATALOG_LINK": "Lien du catalogue",
+                                                                                  "EDIT_QUANTITY": "Modifier la quantité",
+                                                                                  "DELETE_REAGENT": "Supprimer le réactif",
+                                                                                  "STRUCTURE_COPIED": "Structure copiée"
+                                                                                },
+                                                                                "CATEGORIES": {
+                                                                                  "REAGENT": "Réactif",
+                                                                                  "SAMPLE": "Échantillon"
+                                                                                },
+                                                                          
+                                                                                  "MOLECULE_STRUCTURE": {
+                                                                                    "ERROR": {
+                                                                                      "RDKIT_FAILED_TO_LOAD": "Échec du chargement de RDKit",
+                                                                                      "NO_STRUCTURE_PROVIDED": "Aucune structure fournie",
+                                                                                      "INVALID_STRUCTURE": "Structure invalide"
+                                                                                    }
+                                                                                  }
+                                                                              
+                                                                                
+                                                                   
+                                                                              
                                                                             
                                                                             
 
