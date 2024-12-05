@@ -10,12 +10,12 @@
       "EDIT_QUANTITY_REAGENT.QUANTITY_LEFT" | translate
     }}</mat-label>
     <input matInput formControlName="quantityLeft" type="number" />
-    @if (hasError('quantityLeft', 'required') &&
+    @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
     reagentRequestForm.get('quantityLeft')?.touched) {
     <mat-error>{{
       "EDIT_QUANTITY_REAGENT.ERRORS.QUANTITY_LEFT_REQUIRED" | translate
     }}</mat-error>
-    } @if (hasError('quantityLeft', 'pattern')) {
+    } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
     <mat-error>{{
       "EDIT_QUANTITY_REAGENT.ERRORS.QUANTITY_LEFT_INVALID" | translate
     }}</mat-error>
