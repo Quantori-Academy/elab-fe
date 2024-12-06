@@ -200,6 +200,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onFilterName($event: Event) {
+    this.setSelectedReagentSample()
     const value = ($event.target as HTMLInputElement).value;
     this.reagentsQueryService.nameFilterSubject.next({
       value,
@@ -208,6 +209,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onFilterCategory(value: string) {
+    this.setSelectedReagentSample()
     this.reagentsQueryService.setFilteringPageData({
       value,
       column: ReagentListColumn.CATEGORY,
@@ -215,6 +217,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onSortChange(sort: Sort) {
+    this.setSelectedReagentSample()
     this.reagentsQueryService.setSortingPageData(sort);
   }
 
