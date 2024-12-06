@@ -18,7 +18,7 @@
     </div>
 
     <button mat-flat-button color="primary" (click)="onUploadReagent()">
-      Upload
+      {{ "REAGENTS_LIST.UPLOAD" | translate }}
     </button>
     }
     <button
@@ -27,17 +27,17 @@
       (click)="openMoveReagentDialog()"
       [disabled]="!isReagentsSelected()"
     >
-      Move Reagent
+      {{ "REAGENTS_LIST.MOVE_REAGENT" | translate }}
     </button>
   </div>
   }
   <div class="filter-container">
     <mat-form-field appearance="fill" subscriptSizing="dynamic">
-      <mat-label>Search by name</mat-label>
+      <mat-label>{{ "REAGENTS_LIST.SEARCH_BY_NAME" | translate }}</mat-label>
       <input
         matInput
         (input)="onFilterName($event)"
-        placeholder="Enter a name"
+        placeholder="{{ 'REAGENTS_LIST.PLACEHOLDER_ENTER_NAME' | translate }}"
       />
     </mat-form-field>
     <mat-form-field
@@ -45,10 +45,14 @@
       class="structure-form"
       subscriptSizing="dynamic"
     >
-      <mat-label>Search by structure</mat-label>
+      <mat-label>{{
+        "REAGENTS_LIST.SEARCH_BY_STRUCTURE" | translate
+      }}</mat-label>
       <input
         matInput
-        placeholder="Enter a structure"
+        placeholder="{{
+          'REAGENTS_LIST.PLACEHOLDER_ENTER_STRUCTURE' | translate
+        }}"
         (input)="onFilterStructure($event)"
         [value]="filterStructureValue"
       />
@@ -64,7 +68,7 @@
         matSuffix
         [disabled]="!filterStructureValue"
         (click)="toggleFullStructureSearch()"
-        matTooltip="Exact match"
+        matTooltip="{{ 'REAGENTS_LIST.EXACT_MATCH' | translate }}"
         matTooltipPosition="above"
       >
         <mat-icon class="search-structure-field-icon">
@@ -73,11 +77,19 @@
       </button>
     </mat-form-field>
     <mat-form-field appearance="fill" subscriptSizing="dynamic">
-      <mat-label>Filter by Category</mat-label>
+      <mat-label>{{
+        "REAGENTS_LIST.FILTER_BY_CATEGORY" | translate
+      }}</mat-label>
       <mat-select (selectionChange)="onFilterCategory($event.value)">
-        <mat-option value="">All Categories</mat-option>
-        <mat-option value="Sample">Sample</mat-option>
-        <mat-option value="Reagent">Reagent</mat-option>
+        <mat-option value="">{{
+          "REAGENTS_LIST.ALL_CATEGORIES" | translate
+        }}</mat-option>
+        <mat-option value="Sample">{{
+          "REAGENTS_LIST.CATEGORY.SAMPLE" | translate
+        }}</mat-option>
+        <mat-option value="Reagent">{{
+          "REAGENTS_LIST.CATEGORY.REAGENT" | translate
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -108,19 +120,29 @@
           mat-sort-header
           class="name-column"
         >
-          Name
+          {{ "REAGENTS_LIST.TABLE.NAME" | translate }}
         </th>
         <td mat-cell *matCellDef="let element" class="name-column">
           {{ element.name }}
         </td>
       </ng-container>
+
       <ng-container matColumnDef="category">
-        <th mat-header-cell *matHeaderCellDef>Category</th>
-        <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.CATEGORY" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{
+            "REAGENTS_LIST.CATEGORY." + (element.category | uppercase)
+              | translate
+          }}
+        </td>
       </ng-container>
       <!-- Structure Column -->
       <ng-container matColumnDef="structure">
-        <th mat-header-cell *matHeaderCellDef>Structure</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.STRUCTURE" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element" class="structure-container">
           <app-molecule-structure
             [structure]="element.structure"
@@ -131,34 +153,45 @@
       </ng-container>
       <!-- CAS Column -->
       <ng-container matColumnDef="cas">
-        <th mat-header-cell *matHeaderCellDef>CAS</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.CAS" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           @if (element.cas === '') {-} @else { {{ element.casNumber }} }
         </td>
       </ng-container>
       <!-- Quantity Column -->
       <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.QUANTITY" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.totalQuantity }} {{ element.quantityUnit }}
         </td>
       </ng-container>
       <!-- QuantityLeft Column -->
       <ng-container matColumnDef="quantityLeft">
-        <th mat-header-cell *matHeaderCellDef>Quantity Left</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.QUANTITY_LEFT" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.quantityLeft }} {{ element.quantityUnit }}
         </td>
       </ng-container>
       <!-- Room Column -->
       <ng-container matColumnDef="location">
-        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.LOCATION" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.storage.room.name }} {{ element.storage.name }}
         </td>
       </ng-container>
+
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENTS_LIST.TABLE.ACTIONS" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           <button mat-icon-button (click)="onEditReagent(element)">
             <mat-icon color="primary">edit</mat-icon>
@@ -176,7 +209,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if(!reagentsResponse.reagents.length && !isLoading()){
-    <app-no-data text="No Reagents" /> }
+    <app-no-data [text]="'NO_DATA.NO_REAGENTS' | translate" /> }
   </div>
   <mat-paginator
     #paginator

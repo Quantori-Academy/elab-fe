@@ -1,30 +1,32 @@
-<h5 class="header">Edit Order</h5>
-
+<h5 class="header">{{ "EDIT_ORDER.TITLE" | translate }}</h5>
 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
-    <mat-label>Title</mat-label>
+    <mat-label>{{ "EDIT_ORDER.FORM.TITLE_LABEL" | translate }}</mat-label>
     <input matInput formControlName="title" />
     @if (hasError('title', 'required')) {
-    <mat-error>Title amount is required</mat-error>}
+    <mat-error>{{ "ORDER_FORM.TITLE_REQUIRED" | translate }}</mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field subscriptSizing="dynamic" appearance="outline">
-    <mat-label>Seller</mat-label>
+    <mat-label>{{ "EDIT_ORDER.FORM.SELLER_LABEL" | translate }}</mat-label>
     <input
       type="text"
-      placeholder="Select Seller"
+      placeholder="{{ 'ORDER_FORM.SELLER_PLACEHOLDER' | translate }}"
       matInput
       formControlName="seller"
       [matAutocomplete]="auto"
     />
     <mat-autocomplete #auto="matAutocomplete">
-      @for (option of sellerOptions$|async; track option) {
+      @for (option of sellerOptions$ | async; track option) {
       <mat-option [value]="option">{{ option }}</mat-option>
       }
     </mat-autocomplete>
     @if (hasError('seller', 'required')) {
-    <mat-error>Seller amount is required</mat-error>}
+    <mat-error>{{ "ORDER_FORM.SELLER_REQUIRED" | translate }}</mat-error>
+    }
   </mat-form-field>
+
   <div class="actions">
     <button
       mat-raised-button
@@ -32,10 +34,10 @@
       type="submit"
       [disabled]="updateForm.pristine || updateForm.invalid"
     >
-      Update
+      {{ "EDIT_ORDER.UPDATE_BUTTON" | translate }}
     </button>
     <button mat-button color="warn" type="button" (click)="onClose()">
-      Close
+      {{ "EDIT_ORDER.CLOSE_BUTTON" | translate }}
     </button>
   </div>
 </form>

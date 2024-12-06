@@ -38,36 +38,37 @@
     "LOGIN_BUTTON": "Login",
     "SUBMIT_BUTTON": "Submit"
   },
-  "EDIT_ORDER": {
-    "TITLE": "Edit Order",
-    "FORM": {
-      "TITLE_LABEL": "Title",
-      "SELLER_LABEL": "Seller",
-      "STATUS_LABEL": "Status"
-    },
-    "ORDERED_REAGENTS": "Ordered Reagents",
-    "TABLE_HEADERS": {
-      "NAME": "Name",
-      "CAS_NUMBER": "CAS Number",
-      "MODIFICATION_DATE": "Modification Date",
-      "DESIRED_QUANTITY": "Desired Quantity",
-      "QUANTITY_LEFT": "Quantity Left",
-      "STRUCTURE": "Structure",
-      "CREATOR_COMMENT": "Creator's Comment",
-      "ACTIONS": "Actions"
-    },
-    "NO_CHANGES": "No changes to update",
-    "REMOVE_LAST_REAGENT_CONFIRM": "Removing the last reagent will cancel the order. Do you want to proceed?",
-    "SUCCESS_TITLE": "Success",
-    "SUCCESS_MESSAGE": "Order updated successfully",
-    "REAGENT_REMOVED_SUCCESS": "Reagent removed successfully!",
-    "ORDER_DECLINED_SUCCESS": "Order declined successfully!",
-    "ERROR_TITLE": "Error",
-    "PROCEED_BUTTON": "Proceed",
-    "CANCEL_BUTTON": "Cancel",
-    "UPDATE_BUTTON": "Update",
-    "CLOSE_BUTTON": "Close"
+"EDIT_ORDER": {
+  "TITLE": "Edit Order",
+  "FORM": {
+    "TITLE_LABEL": "Title",
+    "SELLER_LABEL": "Seller",
+    "TITLE_REQUIRED": "Title is required.",
+    "SELLER_REQUIRED": "Seller is required."
   },
+  "ORDERED_REAGENTS": "Ordered Reagents",
+  "TABLE_HEADERS": {
+    "NAME": "Name",
+    "CAS_NUMBER": "CAS Number",
+    "MODIFICATION_DATE": "Modification Date",
+    "DESIRED_QUANTITY": "Desired Quantity",
+    "QUANTITY_LEFT": "Quantity Left",
+    "STRUCTURE": "Structure",
+    "CREATOR_COMMENT": "Creator's Comment",
+    "ACTIONS": "Actions"
+  },
+  "NO_CHANGES": "No changes to update",
+  "REMOVE_LAST_REAGENT_CONFIRM": "Removing the last reagent will cancel the order. Do you want to proceed?",
+  "SUCCESS_TITLE": "Success",
+  "SUCCESS_MESSAGE": "Order updated successfully",
+  "REAGENT_REMOVED_SUCCESS": "Reagent removed successfully!",
+  "ORDER_DECLINED_SUCCESS": "Order declined successfully!",
+  "ERROR_TITLE": "Error",
+  "PROCEED_BUTTON": "Proceed",
+  "CANCEL_BUTTON": "Cancel",
+  "UPDATE_BUTTON": "Update",
+  "CLOSE_BUTTON": "Close"
+},
   "EDIT_REQUESTED_REAGENT": {
     "TITLE": "Edit Requested Reagent",
     "DESIRED_QUANTITY": "Desired Quantity",
@@ -105,6 +106,7 @@
     "SELECT_AT_LEAST_ONE": "Select at least one reagent",
     "CANCEL": "Cancel",
     "SUBMIT": "Submit",
+    "SUBMIT_ORDER": "Submit Order",
     "SUCCESS_TITLE": "Success",
     "SUCCESS_MESSAGE": "Order created successfully!",
     "ERROR_TITLE": "Error",
@@ -287,6 +289,7 @@
     }
   },
   "REAGENTS_LIST": {
+    "UPLOAD": "Upload",
     "CREATE_REAGENT": "Create Reagent",
     "CREATE_SAMPLE": "Create Sample",
     "MOVE_REAGENT": "Move Reagent",
@@ -316,34 +319,35 @@
       "SELECT_PAGE": "Select page"
     }
   },
-  "ADD_REAGENT_SAMPLE": {
-    "SEARCH_BY_NAME": "Search by name",
-    "PLACEHOLDER_ENTER_NAME": "Enter a name",
-    "FILTER_BY_CATEGORY": "Filter by Category",
-    "ALL_CATEGORIES": "All Categories",
-    "CATEGORY": {
-      "SAMPLE": "Sample",
-      "REAGENT": "Reagent"
-    },
-    "SAVE": "Save",
-    "TABLE": {
-      "NAME": "Name",
-      "CATEGORY": "Category",
-      "STRUCTURE": "Structure",
-      "QUANTITY": "Quantity",
-      "QUANTITY_LEFT": "Quantity Left",
-      "SELECT": "Select",
-      "SELECT_QUANTITY": "Select Quantity"
-    },
-    "ERRORS": {
-      "QUANTITY_LESS_THAN": "Quantity should be less than {{quantityLeft}} {{quantityUnit}}",
-      "QUANTITY_MORE_THAN_ZERO": "Quantity should be more than 0",
-      "QUANTITY_REQUIRED": "Quantity is required"
-    },
-    "ARIA_LABEL": {
-      "SELECT_PAGE": "Select page"
-    }
+"ADD_REAGENT_SAMPLE": {
+  "SEARCH_BY_NAME": "Search by name",
+  "PLACEHOLDER_ENTER_NAME": "Enter a name",
+  "FILTER_BY_CATEGORY": "Filter by Category",
+  "ALL_CATEGORIES": "All Categories",
+  "CATEGORY": {
+    "SAMPLE": "Sample",
+    "REAGENT": "Reagent"
   },
+  "SAVE": "Save",
+  "TABLE": {
+    "NAME": "Name",
+    "CATEGORY": "Category",
+    "STRUCTURE": "Structure",
+    "QUANTITY": "Quantity",
+    "QUANTITY_LEFT": "Quantity Left",
+    "SELECT": "Select",
+    "SELECT_QUANTITY": "Select Quantity",
+    "STORAGE_LOCATION": "Storage Location"
+  },
+  "ERRORS": {
+    "QUANTITY_LESS_THAN": "Quantity should be less than {{quantityLeft}} {{quantityUnit}}",
+    "QUANTITY_MORE_THAN_ZERO": "Quantity should be more than 0",
+    "QUANTITY_REQUIRED": "Quantity is required"
+  },
+  "ARIA_LABEL": {
+    "SELECT_PAGE": "Select page"
+  }
+},
   "CREATE_REAGENT": {
     "HEADER": "Create New {{ itemType }}",
     "SAMPLE": "Sample",
@@ -741,5 +745,13 @@
     "SUCCESS_TITLE": "Success",
     "SUCCESS_MESSAGE": "Reagent Request has been successfully added!",
     "ERROR_TITLE": "Error"
+  },
+  "CONFIRM_DECLINE_DIALOG": {
+    "HEADER": "Confirm Removal",
+    "MESSAGE": "Removing the last reagent request will set the order to Declined. Do you want to proceed?",
+    "PROCEED_BUTTON": "Proceed",
+    "CANCEL_BUTTON": "Cancel",
+    "SUCCESS_TITLE": "Success",
+    "SUCCESS_MESSAGE": "Order declined successfully!"
   }
 }

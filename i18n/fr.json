@@ -38,36 +38,37 @@
     "LOGIN_BUTTON": "Connexion",
     "SUBMIT_BUTTON": "Envoyer"
   },
-  "EDIT_ORDER": {
-    "TITLE": "Modifier la commande",
-    "FORM": {
-      "TITLE_LABEL": "Titre",
-      "SELLER_LABEL": "Vendeur",
-      "STATUS_LABEL": "Statut"
-    },
-    "ORDERED_REAGENTS": "Réactifs commandés",
-    "TABLE_HEADERS": {
-      "NAME": "Nom",
-      "CAS_NUMBER": "Numéro CAS",
-      "MODIFICATION_DATE": "Date de modification",
-      "DESIRED_QUANTITY": "Quantité désirée",
-      "QUANTITY_LEFT": "Quantité restante",
-      "STRUCTURE": "Structure",
-      "CREATOR_COMMENT": "Commentaire du créateur",
-      "ACTIONS": "Actions"
-    },
-    "NO_CHANGES": "Aucun changement à mettre à jour",
-    "REMOVE_LAST_REAGENT_CONFIRM": "La suppression du dernier réactif annulera la commande. Voulez-vous continuer ?",
-    "SUCCESS_TITLE": "Succès",
-    "SUCCESS_MESSAGE": "Commande mise à jour avec succès",
-    "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès !",
-    "ORDER_DECLINED_SUCCESS": "Commande refusée avec succès !",
-    "ERROR_TITLE": "Erreur",
-    "PROCEED_BUTTON": "Procéder",
-    "CANCEL_BUTTON": "Annuler",
-    "UPDATE_BUTTON": "Mettre à jour",
-    "CLOSE_BUTTON": "Fermer"
+"EDIT_ORDER": {
+  "TITLE": "Modifier la Commande",
+  "FORM": {
+    "TITLE_LABEL": "Titre",
+    "SELLER_LABEL": "Vendeur",
+    "TITLE_REQUIRED": "Le titre est requis.",
+    "SELLER_REQUIRED": "Le vendeur est requis."
   },
+  "ORDERED_REAGENTS": "Réactifs Commandés",
+  "TABLE_HEADERS": {
+    "NAME": "Nom",
+    "CAS_NUMBER": "Numéro CAS",
+    "MODIFICATION_DATE": "Date de Modification",
+    "DESIRED_QUANTITY": "Quantité Désirée",
+    "QUANTITY_LEFT": "Quantité Restante",
+    "STRUCTURE": "Structure",
+    "CREATOR_COMMENT": "Commentaire du Créateur",
+    "ACTIONS": "Actions"
+  },
+  "NO_CHANGES": "Aucun changement à mettre à jour",
+  "REMOVE_LAST_REAGENT_CONFIRM": "Supprimer le dernier réactif annulera la commande. Voulez-vous continuer ?",
+  "SUCCESS_TITLE": "Succès",
+  "SUCCESS_MESSAGE": "Commande mise à jour avec succès",
+  "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès !",
+  "ORDER_DECLINED_SUCCESS": "Commande refusée avec succès !",
+  "ERROR_TITLE": "Erreur",
+  "PROCEED_BUTTON": "Continuer",
+  "CANCEL_BUTTON": "Annuler",
+  "UPDATE_BUTTON": "Mettre à jour",
+  "CLOSE_BUTTON": "Fermer"
+},
   "EDIT_REQUESTED_REAGENT": {
     "TITLE": "Modifier le réactif demandé",
     "DESIRED_QUANTITY": "Quantité désirée",
@@ -104,6 +105,7 @@
     "SELECT_AT_LEAST_ONE": "Sélectionnez au moins un réactif",
     "CANCEL": "Annuler",
     "SUBMIT": "Soumettre",
+    "SUBMIT_ORDER": "Soumettre une commande",
     "SUCCESS_TITLE": "Succès",
     "SUCCESS_MESSAGE": "Commande créée avec succès!",
     "ERROR_TITLE": "Erreur",
@@ -287,6 +289,7 @@
     }
   },
   "REAGENTS_LIST": {
+    "UPLOAD": "Télécharger",
     "CREATE_REAGENT": "Créer un réactif",
     "CREATE_SAMPLE": "Créer un échantillon",
     "MOVE_REAGENT": "Déplacer le réactif",
@@ -333,7 +336,8 @@
       "QUANTITY": "Quantité",
       "QUANTITY_LEFT": "Quantité restante",
       "SELECT": "Sélectionner",
-      "SELECT_QUANTITY": "Sélectionner la quantité"
+      "SELECT_QUANTITY": "Sélectionner la quantité",
+      "STORAGE_LOCATION": "Emplacement de stockage"
     },
     "ERRORS": {
       "QUANTITY_LESS_THAN": "La quantité doit être inférieure à {{quantityLeft}} {{quantityUnit}}",
@@ -741,5 +745,13 @@
     "SUCCESS_TITLE": "Succès",
     "SUCCESS_MESSAGE": "La demande de réactif a été ajoutée avec succès!",
     "ERROR_TITLE": "Erreur"
+  },
+  "CONFIRM_DECLINE_DIALOG": {
+    "HEADER": "Confirmer la suppression",
+    "MESSAGE": "La suppression de la dernière demande de réactif définira la commande comme refusée. Voulez-vous continuer ?",
+    "PROCEED_BUTTON": "Continuer",
+    "CANCEL_BUTTON": "Annuler",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Commande refusée avec succès !"
   }
 }

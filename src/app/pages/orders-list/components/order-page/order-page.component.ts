@@ -23,6 +23,8 @@ import { StorageLocationDialogComponent } from '../storage-location-dialog/stora
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-page',
@@ -35,6 +37,8 @@ import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm
     TableLoaderSpinnerComponent,
     NoDataComponent,
     NgClass,
+    TranslateModule,
+    CommonModule,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -117,16 +121,24 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Status Updated',
-            message: `Order status changed to ${status} successfully.`,
+            title: this.translate.instant('ORDER_PAGE.SUCCESS_TITLE'),
+            message:
+              this.translate.instant('ORDER_PAGE.ORDER_TITLE') +
+              ' ' +
+              this.translate.instant('STATUSES.' + status) +
+              ' ' +
+              this.translate.instant('ORDERS_LIST.ACTIONS') +
+              '!',
             duration: 3000,
           });
           this.fetchOrder();
         },
         error: () => {
           this.notificationPopupService.error({
-            title: 'Update Failed',
-            message: 'Failed to update order status.',
+            title: this.translate.instant('ORDER_PAGE.ERROR_TITLE'),
+            message: this.translate.instant(
+              'ERROR_MESSAGES.UNEXPECTED_ERROR_OCCURRED'
+            ),
             duration: 3000,
           });
         },
@@ -166,15 +178,17 @@ export class OrderPageComponent implements OnInit, OnDestroy {
           next: () => {
             this.excludeReagents = [];
             this.notificationPopupService.success({
-              title: 'Success',
-              message: 'Reagent has been successfully removed!',
+              title: this.translate.instant('ORDER_PAGE.SUCCESS_TITLE'),
+              message: this.translate.instant(
+                'ORDER_PAGE.REAGENT_REMOVED_SUCCESS'
+              ),
               duration: 3000,
             });
             this.fetchOrder();
           },
           error: (error: HttpErrorResponse) => {
             this.notificationPopupService.error({
-              title: 'Error',
+              title: this.translate.instant('ORDER_PAGE.ERROR_TITLE'),
               message: error.error.message,
             });
           },
@@ -193,6 +207,8 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  private translate = inject(TranslateService);
 
   ngOnDestroy(): void {
     this.destroy$.next();

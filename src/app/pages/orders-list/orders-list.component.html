@@ -144,7 +144,7 @@
               mat-button
               (click)="orderStatusChange(element.id, 'Submitted')"
             >
-              Submit
+              {{ "ORDER_FORM.SUBMIT" | translate }}
             </button>
             }@else if (element.status === 'Submitted'){
             <div class="buttons">
