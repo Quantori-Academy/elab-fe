@@ -37,7 +37,6 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
 import { UploadReagentComponent } from './components/upload-reagent/upload-reagent.component';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagents-list',
@@ -51,7 +50,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     TableLoaderSpinnerComponent,
     SpinnerDirective,
     NoDataComponent,
-    TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
@@ -66,7 +64,6 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private destroy$ = new Subject<void>();
-  public translate = inject(TranslateService);
   filterStructureValue = '';
   isFullStructure = false;
 
@@ -161,14 +158,15 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   }
 
   onUploadReagent() {
-    this.dialog.open(UploadReagentComponent, { width: '400px'})
+    this.dialog
+      .open(UploadReagentComponent, { width: '400px' })
       .afterClosed()
       .pipe(first())
       .subscribe((isUpload) => {
         if (isUpload) {
-          this.reagentsQueryService.reloadReagentList()
+          this.reagentsQueryService.reloadReagentList();
         }
-      })
+      });
   }
 
   onFilterName($event: Event) {

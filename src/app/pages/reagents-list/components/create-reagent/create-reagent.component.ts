@@ -40,7 +40,6 @@ import {
 } from '../../../storage-location/models/storage-location.interface';
 import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
 import { DISPLAY_EXTENSION } from '../../../../shared/units/display.units';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-reagent',
@@ -55,7 +54,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     MaterialModule,
     MoleculeStructureComponent,
-    TranslateModule,
   ],
   templateUrl: './create-reagent.component.html',
   styleUrl: './create-reagent.component.scss',
@@ -72,7 +70,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private displayExtension = inject(DISPLAY_EXTENSION);
   private destroy$ = new Subject<void>();
-  private translate = inject(TranslateService);
 
   public isSample = false;
   public selectedReagentSample = signal<SelectedReagentSample[]>([]);
@@ -80,12 +77,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
   public reagentRequestForm!: FormGroup;
   public storageLocations$?: Observable<StorageLocationListData>;
   public isTablet = signal(false);
-
-  get itemType(): string {
-    return this.isSample
-      ? this.translate.instant('CREATE_REAGENT.SAMPLE')
-      : this.translate.instant('CREATE_REAGENT.REAGENT');
-  }
 
   errorMessage = '';
   units = Object.keys(Unit).map((key) => ({
@@ -125,8 +116,8 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       storageId: [null as number | null, Validators.required],
       ...(this.isSample
         ? {
-          usedReagentSample: [[]],
-        }
+            usedReagentSample: [[]],
+          }
         : {
             quantityLeft: [null, Validators.required],
             casNumber: [
@@ -240,7 +231,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
         };
       }
       if (this.isSample) {
-        formRawValue.quantityLeft = formRawValue.totalQuantity
+        formRawValue.quantityLeft = formRawValue.totalQuantity;
       }
 
       const formRequest = this.isSample
@@ -249,12 +240,10 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       formRequest.pipe(takeUntil(this.destroy$)).subscribe({
         next: () => {
           this.notificationsService.success({
-            title: this.translate.instant('CREATE_REAGENT.SUCCESS_TITLE'),
-            message: this.translate.instant('CREATE_REAGENT.SUCCESS_MESSAGE', {
-              item: this.isSample
-                ? this.translate.instant('CREATE_REAGENT.SAMPLE')
-                : this.translate.instant('CREATE_REAGENT.REAGENT'),
-            }),
+            title: 'Success',
+            message: `${
+              this.isSample ? 'Sample' : 'Reagent'
+            } created successfully!`,
             duration: 3000,
           });
           this.redirectToReagentList();
@@ -265,7 +254,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
             this.setSampleRequestError(error.error.details);
           }
           this.notificationsService.error({
-            title: this.translate.instant('CREATE_REAGENT.ERROR_TITLE'),
+            title: 'Error',
             message: error.error.message,
             duration: 4000,
           });

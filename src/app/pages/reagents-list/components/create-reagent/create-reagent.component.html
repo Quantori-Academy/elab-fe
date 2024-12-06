@@ -1,39 +1,28 @@
-<h5 class="header">
-  {{ "CREATE_REAGENT.HEADER" | translate : { itemType: itemType } }}
-</h5>
-
+<h5 class="header">Create New {{ isSample ? "Sample" : "Reagent" }}</h5>
 <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
   <mat-card>
-    <mat-card-header>{{
-      "CREATE_REAGENT.GENERAL" | translate
-    }}</mat-card-header>
+    <mat-card-header>General</mat-card-header>
     <mat-card-content>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{ "CREATE_REAGENT.NAME_LABEL" | translate }}</mat-label>
+        <mat-label>Name</mat-label>
         <input matInput formControlName="name" />
         @if (reagentRequestForm.get('name')?.invalid &&
         reagentRequestForm.get('name')?.touched) {
-        <mat-error>{{ "CREATE_REAGENT.NAME_REQUIRED" | translate }}</mat-error>
+        <mat-error>Name is required.</mat-error>
         }
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{
-          "CREATE_REAGENT.DESCRIPTION_LABEL" | translate
-        }}</mat-label>
+        <mat-label>Description</mat-label>
         <input matInput formControlName="description" />
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{
-          "CREATE_REAGENT.EXPIRATION_DATE_LABEL" | translate
-        }}</mat-label>
+        <mat-label>Expiration Date</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
           formControlName="expirationDate"
         />
-        <mat-hint>{{
-          "CREATE_REAGENT.EXPIRATION_DATE_HINT" | translate
-        }}</mat-hint>
+        <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
           [for]="picker"
@@ -41,52 +30,42 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{
-          "CREATE_REAGENT.STORAGE_LOCATION_LABEL" | translate
-        }}</mat-label>
+        <mat-label>Storage Location</mat-label>
         <input
           matInput
-          placeholder="{{
-            'CREATE_REAGENT.STORAGE_LOCATION_PLACEHOLDER' | translate
-          }}"
+          placeholder="e.g: Room1 Cabinet1-Shelf1"
           (input)="onRoomNameChange($event)"
           formControlName="storageLocation"
           [matAutocomplete]="auto"
           #storageInput
         />
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-          @if (storageInput.value) {
-          @if (storageLocations$ | async; as storageLocations) {
-          @for (option of storageLocations.storages; track option.id) {
+        <mat-autocomplete
+          autoActiveFirstOption
+          #auto="matAutocomplete"
+          [displayWith]="displayFn"
+        >
+          @if (storageInput.value) { @if (storageLocations$ | async; as
+          storageLocations) { @for (option of storageLocations.storages; track
+          option.id) {
           <mat-option [value]="option">
             {{ option.room.name }} {{ option.name }}
           </mat-option>
-          }
-          }
-          }
+          } } }
         </mat-autocomplete>
         @if (hasError('storageLocation', 'required')) {
-        <mat-error>{{
-          "CREATE_REAGENT.STORAGE_LOCATION_REQUIRED" | translate
-        }}</mat-error>
+        <mat-error>Storage Location is required.</mat-error>
         } @if (hasError('storageLocation', 'invalidOption')) {
-        <mat-error>{{
-          "CREATE_REAGENT.STORAGE_LOCATION_INVALID" | translate
-        }}</mat-error>
+        <mat-error>Select correct Storage Location.</mat-error>
         }
       </mat-form-field>
     </mat-card-content>
   </mat-card>
 
   <mat-card>
-    <mat-card-header>{{
-      "CREATE_REAGENT.QUANTITY" | translate
-    }}</mat-card-header>
+    <mat-card-header>Quantity</mat-card-header>
     <mat-card-content>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{
-          "CREATE_REAGENT.QUANTITY_UNIT_LABEL" | translate
-        }}</mat-label>
+        <mat-label>Quantity Unit</mat-label>
         <input matInput formControlName="quantityUnit" />
         <!-- <mat-select formControlName="quantityUnit">
           @for (unit of units; track unit) {
@@ -95,25 +74,17 @@
         </mat-select> -->
         @if (reagentRequestForm.get('quantityUnit')?.invalid &&
         reagentRequestForm.get('quantityUnit')?.touched) {
-        <mat-error>{{
-          "CREATE_REAGENT.QUANTITY_UNIT_REQUIRED" | translate
-        }}</mat-error>
+        <mat-error>Quantity Unit is required.</mat-error>
         }
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{
-          "CREATE_REAGENT.TOTAL_QUANTITY_LABEL" | translate
-        }}</mat-label>
+        <mat-label>Total Quantity</mat-label>
         <input matInput formControlName="totalQuantity" type="number" />
         @if (reagentRequestForm.get('totalQuantity')?.hasError('required') &&
         reagentRequestForm.get('totalQuantity')?.touched) {
-        <mat-error>{{
-          "CREATE_REAGENT.TOTAL_QUANTITY_REQUIRED" | translate
-        }}</mat-error>
+        <mat-error>Total Quantity is required.</mat-error>
         } @if (reagentRequestForm.get('totalQuantity')?.hasError('pattern')) {
-        <mat-error>{{
-          "CREATE_REAGENT.TOTAL_QUANTITY_INVALID" | translate
-        }}</mat-error>
+        <mat-error>Total Quantity must be a valid number.</mat-error>
         }
       </mat-form-field>
 
@@ -138,7 +109,7 @@
     class="reagents-card"
   >
     <mat-card-header>
-      {{ "CREATE_REAGENT.REAGENTS_LABEL" | translate }}*
+      Reagents*
       <button
         mat-icon-button
         type="button"
@@ -151,10 +122,7 @@
     <mat-card-content class="reagents-card-content">
       @if(selectedReagentSample().length) {
       <p class="reagents-selected">
-        {{
-          "CREATE_REAGENT.SELECTED_REAGENTS"
-            | translate : { count: selectedReagentSample().length }
-        }}
+        Selected {{ selectedReagentSample().length }} reagents
       </p>
       <div class="reagents-list">
         @for (item of selectedReagentSample(); track $index; let i = $index) {
@@ -178,9 +146,7 @@
       }
       <div class="reagent-action">
         @if (hasError('usedReagentSample', 'required')) {
-        <mat-error>{{
-          "CREATE_REAGENT.REAGENTS_REQUIRED" | translate
-        }}</mat-error>
+        <mat-error>Reagents are required</mat-error>
         }
       </div>
     </mat-card-content>
@@ -190,16 +156,12 @@
   <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ "CREATE_REAGENT.STRUCTURE" | translate }}
-        </mat-panel-title>
+        <mat-panel-title> Structure </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div class="expansion-panel-body">
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.STRUCTURE_LABEL" | translate
-          }}</mat-label>
+          <mat-label>Structure</mat-label>
           <input matInput formControlName="structure" />
           <button
             type="button"
@@ -213,18 +175,14 @@
 
         @if (!isSample) {
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.CAS_NUMBER_LABEL" | translate
-          }}</mat-label>
+          <mat-label>CAS Number</mat-label>
           <input matInput formControlName="casNumber" />
           @if (reagentRequestForm.get('casNumber')?.hasError('minlength')) {
-          <mat-error>{{
-            "CREATE_REAGENT.CAS_NUMBER_MINLENGTH" | translate
-          }}</mat-error>
+          <mat-error>CAS Number must be at least 5 characters long.</mat-error>
           } @if (reagentRequestForm.get('casNumber')?.hasError('maxlength')) {
-          <mat-error>{{
-            "CREATE_REAGENT.CAS_NUMBER_MAXLENGTH" | translate
-          }}</mat-error>
+          <mat-error
+            >CAS Number cannot be more than 10 characters long.</mat-error
+          >
           }
         </mat-form-field>
         }
@@ -234,47 +192,33 @@
     @if(!isSample){
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ "CREATE_REAGENT.ORDER_DETAILS" | translate }}
-        </mat-panel-title>
+        <mat-panel-title> Order Details </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div class="expansion-panel-body">
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.PRODUCER_LABEL" | translate
-          }}</mat-label>
+          <mat-label>Producer</mat-label>
           <input matInput formControlName="producer" />
         </mat-form-field>
 
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.CATALOG_ID_LABEL" | translate
-          }}</mat-label>
+          <mat-label>Catalog ID</mat-label>
           <input matInput formControlName="catalogId" />
         </mat-form-field>
 
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.CATALOG_LINK_LABEL" | translate
-          }}</mat-label>
+          <mat-label>Catalog Link</mat-label>
           <input matInput formControlName="catalogLink" />
           @if (reagentRequestForm.get('catalogLink')?.hasError('pattern')) {
-          <mat-error>{{
-            "CREATE_REAGENT.CATALOG_LINK_INVALID" | translate
-          }}</mat-error>
+          <mat-error>Catalog Link must be a valid URL.</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
-          <mat-label>{{
-            "CREATE_REAGENT.PRICE_PER_UNIT_LABEL" | translate
-          }}</mat-label>
+          <mat-label>Price Per Unit</mat-label>
           <input matInput formControlName="pricePerUnit" type="number" />
           @if (reagentRequestForm.get('pricePerUnit')?.hasError('pattern')) {
-          <mat-error>{{
-            "CREATE_REAGENT.PRICE_PER_UNIT_INVALID" | translate
-          }}</mat-error>
+          <mat-error>Price Per Unit must be a valid number.</mat-error>
           }
         </mat-form-field>
       </div>
@@ -289,10 +233,8 @@
       type="button"
       (click)="redirectToReagentList()"
     >
-      {{ "CREATE_REAGENT.CANCEL" | translate }}
+      Cancel
     </button>
-    <button mat-flat-button color="primary" type="submit">
-      {{ "CREATE_REAGENT.SUBMIT" | translate }}
-    </button>
+    <button mat-flat-button color="primary" type="submit">Submit</button>
   </div>
 </form>

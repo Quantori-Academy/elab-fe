@@ -23,7 +23,6 @@ import { StorageLocationDialogComponent } from '../storage-location-dialog/stora
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-order-page',
@@ -36,7 +35,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     TableLoaderSpinnerComponent,
     NoDataComponent,
     NgClass,
-    TranslateModule,
   ],
   templateUrl: './order-page.component.html',
   styleUrl: './order-page.component.scss',
@@ -47,7 +45,6 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   private activatedRoutes = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
   private notificationPopupService = inject(NotificationPopupService);
-  private translate = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
   private orderSubject = new BehaviorSubject<Order | null>(null);

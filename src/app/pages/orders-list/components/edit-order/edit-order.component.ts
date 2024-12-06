@@ -20,8 +20,6 @@ import {
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { AsyncPipe } from '@angular/common';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-order',
@@ -36,8 +34,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
-  private translate = inject(TranslateService);
-
   statusOptions: Status[] = [
     Status.pending,
     Status.submitted,
@@ -99,8 +95,8 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         next: () => {
           this.dialogRef.close(true);
           this.notificationPopupService.success({
-            title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
-            message: this.translate.instant('EDIT_ORDER.SUCCESS_MESSAGE'),
+            title: 'Success',
+            message: 'Order updated successfully',
             duration: 3000,
           });
         },
@@ -122,17 +118,5 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  get translatedStatus(): string {
-    const status = this.updateForm.get('status')?.value;
-    return status
-      ? this.translate.instant('ORDERS_LIST.STATUS.' + status.toUpperCase())
-      : '';
-  }
-  translateStatus(status: string): string {
-    return status
-      ? this.translate.instant('ORDERS_LIST.STATUS.' + status.toUpperCase())
-      : '';
   }
 }

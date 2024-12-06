@@ -8,31 +8,27 @@
     </div>
     <div class="details">
       <h2>
-        Order title: {{ "ORDER_PAGE.ORDER_TITLE" | translate }}:
-        <span>{{ order.title }}</span>
+        Order Title: <span>{{ order.title }}</span>
       </h2>
       <h2>
-        {{ "ORDER_PAGE.SELLER" | translate }}: <span>{{ order.seller }}</span>
+        Seller: <span>{{ order.seller }}</span>
       </h2>
       <h3>
-        {{ "ORDER_PAGE.STATUS" | translate }}:
-        <span>{{
-          "ORDERS_LIST.STATUS." + (order.status | uppercase) | translate
-        }}</span>
+        Status: <span>{{ order.status }}</span>
       </h3>
       <h3>
-        {{ "ORDER_PAGE.CREATED" | translate }}:
+        Created:
         <span>{{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</span>
       </h3>
 
       @if (order.updatedAt === '') {
       <h3>
-        {{ "ORDER_PAGE.LAST_UPDATED" | translate }}:
+        Last updated:
         <span>{{ order.createdAt | date : "dd/MM/yyyy - HH:mm" }}</span>
       </h3>
       }@else {
       <h3>
-        {{ "ORDER_PAGE.UPDATED" | translate }}:
+        Updated:
         <span>{{ order.updatedAt | date : "dd/MM/yyyy - HH:mm" }}</span>
       </h3>
       }
@@ -70,7 +66,7 @@
   <h3>Ordered Reagents</h3>
   @if (order.status === 'Pending') {
   <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
-    {{ "ORDER_PAGE.ADD_REAGENT_REQUEST" | translate }}
+    Add reagent request
   </button>
   }
 </div>
@@ -85,11 +81,9 @@
       <ng-container matColumnDef="casNumber">
         <th mat-header-cell *matHeaderCellDef>casNumber</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.casNumber === null || element.casNumber === '') {
-          <span>{{ "ORDER_FORM.N_A" | translate }}</span>
-          } @else {
-          {{ element.casNumber }}
-          }
+          @if (element.casNumber === null || element.casNumber === '' ) {
+          <span>N/A</span>
+          }@else { {{ element.casNumber }} }
         </td>
       </ng-container>
 
@@ -137,10 +131,8 @@
       </ng-container>
 
       <ng-container matColumnDef="structureSmiles">
-        <th mat-header-cell *matHeaderCellDef>
-          {{ "ORDER_PAGE.TABLE.STRUCTURE" | translate }}
-        </th>
-        <td mat-cell *matCellDef="let element" class="structure-container">
+        <th th mat-header-cell *matHeaderCellDef>Structure</th>
+        <td td mat-cell *matCellDef="let element" class="structure-container">
           <app-molecule-structure
             [structure]="element.structureSmiles"
             [width]="50"
@@ -152,9 +144,9 @@
       <ng-container matColumnDef="userComments">
         <th mat-header-cell *matHeaderCellDef>Creator's comment</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.userComments === null || element.userComments === '') {
-          <span>{{ "ORDER_FORM.N_A" | translate }}</span>
-          } @else {
+          @if (element.userComments === null|| element.userComments === '') {
+          <span>N/A</span>
+          } @else{
           {{ element.userComments }}
           }
         </td>
@@ -163,9 +155,9 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element">
-          @if (element.status === 'Completed') {
+          @if (element.status ==='Completed'){
           <button class="add-btn" mat-flat-button disabled="true">
-            {{ "ORDER_PAGE.COMPLETED" | translate }}
+            completed
           </button>
           } @else if (element.status === 'Fulfilled') {
           <button
@@ -173,9 +165,9 @@
             mat-flat-button
             (click)="onCompleted(element.id)"
           >
-            {{ "ORDER_PAGE.COMPLETE" | translate }}
+            complete
           </button>
-          } @else if (element.status === 'Pending') {
+          }@else if (element.status === 'Pending') {
           <button mat-icon-button aria-label="edit" (click)="onOpen(element)">
             <mat-icon color="primary">edit</mat-icon>
           </button>
@@ -184,9 +176,8 @@
             aria-label="delete"
             (click)="onRemove(order.id, element)"
           >
-            <mat-icon color="warn">delete</mat-icon>
-          </button>
-          }
+            <mat-icon color="warn">delete</mat-icon></button
+          >}
         </td>
       </ng-container>
 
@@ -194,7 +185,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     @if (!order.reagents.length) {
-    <app-no-data [text]="'NO_DATA.NO_ORDERED_REAGENTS' | translate" />
+    <app-no-data text="No Ordered Reagents" />
     }
   </div>
 </div>
