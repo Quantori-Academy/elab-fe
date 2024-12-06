@@ -112,30 +112,19 @@
     }
   </mat-card>
   <mat-card>
-    @if ( researcherDashboardData.expiredReagentSampleChartOption.series?.length
-    ) {
-    <apx-chart
-      [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
-      [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
-      [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
-      [responsive]="
-        researcherDashboardData.expiredReagentSampleChartOption.responsive
-      "
-      [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
-      [dataLabels]="
-        researcherDashboardData.expiredReagentSampleChartOption.dataLabels
-      "
-      [plotOptions]="
-        researcherDashboardData.expiredReagentSampleChartOption.plotOptions
-      "
-    ></apx-chart>
-    } @else {
-    <app-no-data
-      [text]="'NO_DATA.NO_DATA_FOUND' | translate"
-      size="small"
-      style="min-height: 150px"
-    />
+    @if (researcherDashboardData.expiredReagentSampleChartOption.series?.length) {
+      <apx-chart
+        [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
+        [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
+        [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
+        [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
+        [responsive]="researcherDashboardData.expiredReagentSampleChartOption.responsive"
+        [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
+        [dataLabels]="researcherDashboardData.expiredReagentSampleChartOption.dataLabels"
+        [plotOptions]="researcherDashboardData.expiredReagentSampleChartOption.plotOptions"
+      ></apx-chart>
+    }@else {
+      <app-no-data text="No data found" size="small" style="min-height: 150px;"/>
     }
   </mat-card>
   <mat-card>
