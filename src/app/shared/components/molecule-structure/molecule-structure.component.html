@@ -3,9 +3,9 @@
     <i class="fas fa-spin fa-2x fa-circle-notch"></i>
   </span>
   <ng-template #loadedView>
-    <span *ngIf="error; else molView">
-      {{ error }}
-    </span>
+    <div *ngIf="error; else molView">
+      <span>{{ error }}</span>
+    </div>
     <ng-template #molView>
       <app-canvas-renderer
         [structure]="structure"

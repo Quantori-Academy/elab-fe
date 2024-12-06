@@ -64,10 +64,10 @@
             </ng-container>
 
             <!-- Quantity Column -->
-            <ng-container matColumnDef="quantity">
-              <th mat-header-cell *matHeaderCellDef>Quantity</th>
+            <ng-container matColumnDef="storageLocation">
+              <th mat-header-cell *matHeaderCellDef>Storage Location</th>
               <td mat-cell *matCellDef="let element">
-                {{ element.totalQuantity }} {{ element.quantityUnit }}
+                {{ element.storage.room.name }} {{ element.storage.name }}
               </td>
             </ng-container>
 

@@ -110,7 +110,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       structure: [null],
       quantityUnit: ['', Validators.required],
       totalQuantity: [null, Validators.required],
-      quantityLeft: [null, Validators.required],
       storageLocation: [
         '',
         [Validators.required, storageLocationAutoCompleteValidator()],
@@ -118,9 +117,10 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       storageId: [null as number | null, Validators.required],
       ...(this.isSample
         ? {
-            usedReagentSample: [[]],
-          }
+          usedReagentSample: [[]],
+        }
         : {
+            quantityLeft: [null, Validators.required],
             casNumber: [
               null,
               [Validators.minLength(5), Validators.maxLength(10)],
@@ -230,6 +230,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           ...formRawValue,
           expirationDate: finalExpirationDate,
         };
+      }
+      if (this.isSample) {
+        formRawValue.quantityLeft = formRawValue.totalQuantity
       }
 
       const formRequest = this.isSample

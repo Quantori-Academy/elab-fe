@@ -1,0 +1,53 @@
+import { Component, Inject, inject } from '@angular/core';
+import { ReagentsService } from '../../services/reagents.service';
+import { MaterialModule } from '../../../material.module';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Reagent } from '../../models/reagent-model';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationPopupService } from '../../services/notification-popup/notification-popup.service';
+import { HttpErrorResponse } from '@angular/common/http';
+
+@Component({
+  selector: 'app-delete-reagent',
+  standalone: true,
+  imports: [ReactiveFormsModule, MaterialModule],
+  templateUrl: './delete-reagent.component.html',
+  styleUrl: './delete-reagent.component.scss',
+})
+export class DeleteReagentComponent {
+  deleteForm: FormGroup;
+  private reagentsService = inject(ReagentsService);
+  private notificationsService = inject(NotificationPopupService);
+
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<DeleteReagentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Reagent
+  ) {
+    this.deleteForm = this.fb.group({
+      reagentName: [data.name],
+    });
+  }
+
+  onSubmit(): void {
+    this.reagentsService.deleteReagent(this.data.id.toString()).subscribe({
+      next: () => {
+        this.notificationsService.success({
+          title: 'Success',
+          message: `${this.data.name} removed successfully!`,
+          duration: 3000,
+        });
+        this.dialogRef.close(true);
+      },
+      error: (error:  HttpErrorResponse) => {
+        this.notificationsService.error({
+          title: 'Error',
+          message: error.error.message,
+          duration: 4000,
+        });
+        this.dialogRef.close(false);
+      },
+    });
+  }
+}

@@ -31,6 +31,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatProgressBar
+    MatProgressBar,
+    ClipboardModule
   ],
   exports: [
     MatButtonModule,
@@ -89,7 +91,8 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatProgressBar
+    MatProgressBar,
+    ClipboardModule
   ],
   providers: [
     {

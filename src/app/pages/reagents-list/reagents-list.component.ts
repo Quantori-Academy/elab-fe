@@ -81,7 +81,7 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     ReagentListColumn.QUANTITYLEFT,
     ReagentListColumn.CAS,
     ReagentListColumn.LOCATION,
-    ...(this.isResearcher ? [ReagentListColumn.ACTIONS] : []),
+    ReagentListColumn.ACTIONS,
   ];
 
   public reagentsResponse$?: Observable<ReagentListResponse | undefined>;
@@ -224,6 +224,10 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['reagents/create-sample']);
     }
+  }
+
+  redirectToReagentPage(reagent: Reagent) {
+    this.router.navigate([`/reagents`, reagent.id]);
   }
 
   handlePageEvent($event: PageEvent) {

@@ -1,0 +1,13 @@
+<h5 mat-dialog-title>Confirm Removal</h5>
+<mat-dialog-content>
+  Removing last reagent request will set order to Declined, do you want to
+  proceed?</mat-dialog-content
+>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="confirmRemoval()">
+    proceed
+  </button>
+  <button mat-button color="warn" mat-dialog-close>
+    cancel
+  </button>
+</mat-dialog-actions>

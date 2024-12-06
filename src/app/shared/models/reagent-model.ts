@@ -1,10 +1,10 @@
 import { OrderEntity } from './order-entity.model';
 
 export interface Reagent {
-  id?: number;
+  id: number;
   name: string;
   smiles: string;
-  cas: string;
+  casNumber: string;
   category: Category;
   producer: string;
   totalQuantity: number | null;
@@ -14,11 +14,15 @@ export interface Reagent {
   storageId: number;
   structure: string;
   storage: {
-    name: string,
+    name: string;
     room: {
       name: string;
-    }
-  }
+    };
+  };
+  catalogId?: string;
+  catalogLink?: string;
+  pricePerUnit?: number;
+  description?: string;
 }
 
 export interface ReagentFromFulfilledOrder {

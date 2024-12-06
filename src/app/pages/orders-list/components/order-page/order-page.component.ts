@@ -21,6 +21,8 @@ import { Order } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
+import { EditOrderComponent } from '../edit-order/edit-order.component';
+import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
 
 @Component({
   selector: 'app-order-page',
@@ -87,7 +89,6 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   onOpen(ReagentRequest: ReagentRequestList) {
     const dialogRef = this.dialog.open(EditRequestedReagentComponent, {
       data: ReagentRequest,
-      width: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -95,6 +96,41 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         this.fetchOrder();
       }
     });
+  }
+
+  editOrder(order: Order) {
+    const dialogRef = this.dialog.open(EditOrderComponent, {
+      data: order.id,
+      minWidth: 'fit-content',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchOrder();
+      }
+    });
+  }
+  orderStatusChange(orderId: number, status: string) {
+    this.orderService
+      .updateOrder(orderId, { status })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.notificationPopupService.success({
+            title: 'Status Updated',
+            message: `Order status changed to ${status} successfully.`,
+            duration: 3000,
+          });
+          this.fetchOrder();
+        },
+        error: () => {
+          this.notificationPopupService.error({
+            title: 'Update Failed',
+            message: 'Failed to update order status.',
+            duration: 3000,
+          });
+        },
+      });
   }
   onCompleted(id: number) {
     const dialog = this.dialog.open(StorageLocationDialogComponent, {
@@ -107,31 +143,47 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  onRemove(OrderId: number, reagent: ReagentRequestList) {
-    this.excludeReagents.push({ id: reagent.id });
-
-    this.orderService
-      .updateOrder(OrderId, { excludeReagents: this.excludeReagents })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.excludeReagents = [];
-          this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent has been successfully removed!',
-            duration: 3000,
-          });
-          this.fetchOrder();
-        },
-        error: (error: HttpErrorResponse) => {
-          this.notificationPopupService.error({
-            title: 'Error',
-            message: error.error.message,
-          });
-        },
+  onRemove(orderId: number, reagent: ReagentRequestList) {
+    const order = this.orderSubject.getValue();
+  
+    if (order && order.reagents.length === 1) {
+      const dialogRef = this.dialog.open(ConfirmDeclineDialogComponent, {
+        data: { orderId, reagentId: reagent.id },
       });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.fetchOrder();
+        }
+      });
+    } else {
+      this.excludeReagents.push({ id: reagent.id });
+  
+      this.orderService
+        .updateOrder(orderId, { excludeReagents: this.excludeReagents })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.excludeReagents = [];
+            this.notificationPopupService.success({
+              title: 'Success',
+              message: 'Reagent has been successfully removed!',
+              duration: 3000,
+            });
+            this.fetchOrder();
+          },
+          error: (error: HttpErrorResponse) => {
+            this.notificationPopupService.error({
+              title: 'Error',
+              message: error.error.message,
+            });
+          },
+        });
+    }
   }
+  
+  
+
   onAdd(id: number) {
     const dialog = this.dialog.open(ReagentRequestsDialogComponent, {
       data: id,

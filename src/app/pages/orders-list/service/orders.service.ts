@@ -33,7 +33,7 @@ export class OrdersService {
     titleOrder: '',
     sellerOrder: '',
     createdAt: '',
-    updatedAt: '',
+    updatedAt: 'desc',
   });
 
   public query$ = this.querySubject.asObservable();
@@ -176,7 +176,7 @@ export class OrdersService {
       titleOrder: '',
       sellerOrder: '',
       createdAt: '',
-      updatedAt: '',
+      updatedAt: 'desc',
     });
   }
 

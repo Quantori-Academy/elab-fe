@@ -1,12 +1,11 @@
 :host {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 300px;
+  gap: 1rem;
   padding: 20px;
-  position: relative;
   box-sizing: border-box;
 }
+
 .header {
   margin: 0;
   text-align: center;
@@ -19,6 +18,9 @@ form {
   gap: 10px;
 }
 
+p{
+  text-align: center;
+}
 
 .actions {
   margin-left: auto;
