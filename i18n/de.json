@@ -725,5 +725,21 @@
     "SUCCESS_TITLE": "Erfolg",
     "SUCCESS_MESSAGE": "{{ name }} wurde erfolgreich entfernt!",
     "ERROR_TITLE": "Fehler"
-  }  
+  },
+  "REAGENT_REQUESTS_DIALOG": {
+    "SEARCH_BY_NAME": "Nach Name suchen",
+    "SEARCH_PLACEHOLDER": "Geben Sie den Reagenz",
+    "SELECT": "Auswählen",
+    "NAME": "Name",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "PACKAGE": "Verpackung",
+    "N_A": "N/A",
+    "CREATED": "Erstellt",
+    "COMMENT": "Kommentar",
+    "NO_PENDING_REQUESTS": "Keine ausstehenden Anfragen gefunden",
+    "ADD": "Hinzufügen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzienanforderung wurde erfolgreich hinzugefügt!",
+    "ERROR_TITLE": "Fehler"
+  }
 }

@@ -725,5 +725,21 @@
     "SUCCESS_TITLE": "Succès",
     "SUCCESS_MESSAGE": "{{ name }} a été supprimé avec succès!",
     "ERROR_TITLE": "Erreur"
-  }  
+  },
+  "REAGENT_REQUESTS_DIALOG": {
+    "SEARCH_BY_NAME": "Rechercher par nom",
+    "SEARCH_PLACEHOLDER": "Entrez le nom du réactif",
+    "SELECT": "Sélectionner",
+    "NAME": "Nom",
+    "DESIRED_QUANTITY": "Quantité souhaitée",
+    "PACKAGE": "Emballage",
+    "N_A": "N/A",
+    "CREATED": "Créé",
+    "COMMENT": "Commentaire",
+    "NO_PENDING_REQUESTS": "Aucune demande en attente trouvée",
+    "ADD": "Ajouter",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "La demande de réactif a été ajoutée avec succès!",
+    "ERROR_TITLE": "Erreur"
+  }
 }
