@@ -117,11 +117,10 @@
             </button>
             @if (element.status === 'Pending') {
             <button
-              mat-icon-button
-              aria-label="edit"
-              (click)="openEditor(element)"
+              mat-button
+              (click)="orderStatusChange(element.id, 'Submitted')"
             >
-              <mat-icon color="primary">edit</mat-icon>
+              Submit
             </button>
             }@else if (element.status === 'Submitted'){
             <div class="buttons">
