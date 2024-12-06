@@ -28,10 +28,7 @@ form {
 form > mat-card {
   width: 100%;
   background-color: var(--mat-card-background-color);
-}
-
-form > mat-card:not(.reagents-card) {
-  min-height: 200px;
+  padding-bottom: 1rem;
 }
 
 mat-accordion {
@@ -99,20 +96,21 @@ mat-card-content,
     gap: 0.5rem;
 
     .reagent-item {
-      height: 60px;
+      min-height: 60px;
       display: flex;
-      flex-direction: row !important;
+      flex-flow: row nowrap !important;
       justify-content: start;
       align-items: center;
       padding: 0;
       background-color: var(--mat-card-background-color);
+      overflow-x: auto;
 
       &__seq {
         width: 10px;
       }
 
       &__name {
-        width: 100px;
+        width: 300px;
       }
 
       &__quantity {
@@ -148,5 +146,9 @@ mat-card-content,
 @media screen and (max-width: 768px) {
   mat-form-field {
     flex-grow: 1;
+  }
+
+  .reagent-item__name {
+    width: 150px;
   }
 }

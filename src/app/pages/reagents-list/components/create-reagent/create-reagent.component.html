@@ -72,16 +72,19 @@
         <mat-error>Total Quantity must be a valid number.</mat-error>
         }
       </mat-form-field>
-      <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Quantity Left</mat-label>
-        <input matInput formControlName="quantityLeft" type="number" />
-        @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
-        reagentRequestForm.get('quantityLeft')?.touched) {
-        <mat-error>Quantity Left is required.</mat-error>
-        } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
-        <mat-error>Quantity Left must be a valid number.</mat-error>
-        }
-      </mat-form-field>
+
+      @if (!isSample) {
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+          <mat-label>Quantity Left</mat-label>
+          <input matInput formControlName="quantityLeft" type="number" />
+          @if (reagentRequestForm.get('quantityLeft')?.hasError('required') &&
+          reagentRequestForm.get('quantityLeft')?.touched) {
+          <mat-error>Quantity Left is required.</mat-error>
+          } @if (reagentRequestForm.get('quantityLeft')?.hasError('pattern')) {
+          <mat-error>Quantity Left must be a valid number.</mat-error>
+          }
+        </mat-form-field>
+      }
     </mat-card-content>
   </mat-card>
 
