@@ -91,19 +91,19 @@
   <mat-card>
     @if (procurementOfficerDashboardData.statusChartOption.series?.length) {
     <apx-chart
-      [series]="procurementOfficerDashboardData.statusChartOption.series"
-      [chart]="procurementOfficerDashboardData.statusChartOption.chart"
-      [labels]="procurementOfficerDashboardData.statusChartOption.labels"
-      [title]="procurementOfficerDashboardData.statusChartOption.title"
+      [series]="procurementOfficerDashboardData.statusChartOption.series!"
+      [chart]="procurementOfficerDashboardData.statusChartOption.chart!"
+      [labels]="procurementOfficerDashboardData.statusChartOption.labels!"
+      [title]="procurementOfficerDashboardData.statusChartOption.title!"
       [responsive]="
-        procurementOfficerDashboardData.statusChartOption.responsive
+        procurementOfficerDashboardData.statusChartOption.responsive!
       "
-      [colors]="procurementOfficerDashboardData.statusChartOption.colors"
+      [colors]="procurementOfficerDashboardData.statusChartOption.colors!"
       [dataLabels]="
-        procurementOfficerDashboardData.statusChartOption.dataLabels
+        procurementOfficerDashboardData.statusChartOption.dataLabels!
       "
       [plotOptions]="
-        procurementOfficerDashboardData.statusChartOption.plotOptions
+        procurementOfficerDashboardData.statusChartOption.plotOptions!
       "
     ></apx-chart>
     } @else {

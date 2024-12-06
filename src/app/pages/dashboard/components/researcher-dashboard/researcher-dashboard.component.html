@@ -92,15 +92,15 @@
   <mat-card>
     @if (researcherDashboardData.reagentSampleChartOption.series?.length) {
     <apx-chart
-      [series]="researcherDashboardData.reagentSampleChartOption.series"
-      [chart]="researcherDashboardData.reagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.reagentSampleChartOption.labels"
-      [title]="researcherDashboardData.reagentSampleChartOption.title"
-      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive"
-      [colors]="researcherDashboardData.reagentSampleChartOption.colors"
-      [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels"
+      [series]="researcherDashboardData.reagentSampleChartOption.series!"
+      [chart]="researcherDashboardData.reagentSampleChartOption.chart!"
+      [labels]="researcherDashboardData.reagentSampleChartOption.labels!"
+      [title]="researcherDashboardData.reagentSampleChartOption.title!"
+      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive!"
+      [colors]="researcherDashboardData.reagentSampleChartOption.colors!"
+      [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels!"
       [plotOptions]="
-        researcherDashboardData.reagentSampleChartOption.plotOptions
+        researcherDashboardData.reagentSampleChartOption.plotOptions!
       "
     ></apx-chart>
     } @else {
@@ -115,19 +115,19 @@
     @if ( researcherDashboardData.expiredReagentSampleChartOption.series?.length
     ) {
     <apx-chart
-      [series]="researcherDashboardData.expiredReagentSampleChartOption.series"
-      [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels"
-      [title]="researcherDashboardData.expiredReagentSampleChartOption.title"
+      [series]="researcherDashboardData.expiredReagentSampleChartOption.series!"
+      [chart]="researcherDashboardData.expiredReagentSampleChartOption.chart!"
+      [labels]="researcherDashboardData.expiredReagentSampleChartOption.labels!"
+      [title]="researcherDashboardData.expiredReagentSampleChartOption.title!"
       [responsive]="
-        researcherDashboardData.expiredReagentSampleChartOption.responsive
+        researcherDashboardData.expiredReagentSampleChartOption.responsive!
       "
-      [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors"
+      [colors]="researcherDashboardData.expiredReagentSampleChartOption.colors!"
       [dataLabels]="
-        researcherDashboardData.expiredReagentSampleChartOption.dataLabels
+        researcherDashboardData.expiredReagentSampleChartOption.dataLabels!
       "
       [plotOptions]="
-        researcherDashboardData.expiredReagentSampleChartOption.plotOptions
+        researcherDashboardData.expiredReagentSampleChartOption.plotOptions!
       "
     ></apx-chart>
     } @else {
@@ -141,19 +141,19 @@
   <mat-card>
     @if (researcherDashboardData.emptyReagentSampleChartOption.series?.length) {
     <apx-chart
-      [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
-      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"
-      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels"
-      [title]="researcherDashboardData.emptyReagentSampleChartOption.title"
+      [series]="researcherDashboardData.emptyReagentSampleChartOption.series!"
+      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart!"
+      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels!"
+      [title]="researcherDashboardData.emptyReagentSampleChartOption.title!"
       [responsive]="
-        researcherDashboardData.emptyReagentSampleChartOption.responsive
+        researcherDashboardData.emptyReagentSampleChartOption.responsive!
       "
-      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors"
+      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors!"
       [dataLabels]="
-        researcherDashboardData.emptyReagentSampleChartOption.dataLabels
+        researcherDashboardData.emptyReagentSampleChartOption.dataLabels!
       "
       [plotOptions]="
-        researcherDashboardData.emptyReagentSampleChartOption.plotOptions
+        researcherDashboardData.emptyReagentSampleChartOption.plotOptions!
       "
     ></apx-chart>
     } @else {
