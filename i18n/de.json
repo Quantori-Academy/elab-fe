@@ -144,9 +144,10 @@
   "STATUSES": {
     "PENDING": "Ausstehend",
     "ORDERED": "Bestellt",
-    "FULFILLED": "Erfüllt",
     "DECLINED": "Abgelehnt",
-    "COMPLETED": "Abgeschlossen"
+    "FULFILLED": "Erfüllt",
+    "COMPLETED": "Abgeschlossen",
+    "SUBMITTED": "Eingereicht"
   },
   "ORDERS_LIST": {
     "CREATE_NEW_ORDER": "Neue Bestellung erstellen",
@@ -158,6 +159,10 @@
       "DECLINED": "Abgelehnt",
       "FULFILLED": "Erfüllt",
       "COMPLETED": "Abgeschlossen"
+    },
+    "ACTIONS": {
+      "FULFILL": "Erfüllen",
+      "DECLINE": "Ablehnen"
     },
     "FILTER_BY_TITLE": "Nach Titel filtern",
     "FILTER_BY_SELLER": "Nach Verkäufer filtern",
@@ -266,7 +271,8 @@
       "ORDERED": "Bestellt",
       "DECLINED": "Abgelehnt",
       "FULFILLED": "Erfüllt",
-      "COMPLETED": "Abgeschlossen"
+      "COMPLETED": "Abgeschlossen",
+      "SUBMITTED": "Eingereicht"
     },
     "TABLE": {
       "NAME": "Name",

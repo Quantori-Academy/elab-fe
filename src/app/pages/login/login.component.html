@@ -14,20 +14,6 @@
     }
     <h2 id="login-h2">{{ "LOGIN.TITLE" | translate }}</h2>
 
-    <mat-form-field appearance="fill" id="language-selector">
-      <mat-label>{{ "HEADER.LANGUAGE" | translate }}</mat-label>
-      <mat-select
-        [value]="translate.currentLang"
-        (selectionChange)="changeLanguage($event.value)"
-      >
-        @for (lang of languages; track lang) {
-        <mat-option [value]="lang.code">
-          {{ lang.label }}
-        </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
     <mat-form-field id="login-form-field" hideRequiredMarker="true">
       <mat-label>{{ "LOGIN.EMAIL" | translate }}</mat-label>
       <input

@@ -153,17 +153,16 @@
                 color="primary"
                 (click)="orderStatusChange(element.id, 'Fulfilled')"
               >
-                Fulfill
+                {{ "ORDERS_LIST.ACTIONS.FULFILL" | translate }}
               </button>
               <button
                 mat-button
                 color="warn"
                 (click)="orderStatusChange(element.id, 'Declined')"
               >
-                Decline
+                {{ "ORDERS_LIST.ACTIONS.DECLINE" | translate }}
               </button>
             </div>
-
             }
           </div>
           <!-- <button mat-icon-button aria-label="delete">

@@ -146,7 +146,8 @@
     "ORDERED": "Ordered",
     "FULFILLED": "Fulfilled",
     "DECLINED": "Declined",
-    "COMPLETED": "Completed"
+    "COMPLETED": "Completed",
+    "SUBMITTED": "Submitted"
   },
   "ORDERS_LIST": {
     "CREATE_NEW_ORDER": "Create new order",
@@ -158,6 +159,10 @@
       "DECLINED": "Declined",
       "FULFILLED": "Fulfilled",
       "COMPLETED": "Completed"
+    },
+    "ACTIONS": {
+      "FULFILL": "Fulfill",
+      "DECLINE": "Decline"
     },
     "FILTER_BY_TITLE": "Filter by Title",
     "FILTER_BY_SELLER": "Filter by Seller",
@@ -264,9 +269,10 @@
     "STATUS": {
       "PENDING": "Pending",
       "ORDERED": "Ordered",
-      "DECLINED": "Declined",
       "FULFILLED": "Fulfilled",
-      "COMPLETED": "Completed"
+      "DECLINED": "Declined",
+      "COMPLETED": "Completed",
+      "SUBMITTED": "Submitted"
     },
     "TABLE": {
       "NAME": "Name",

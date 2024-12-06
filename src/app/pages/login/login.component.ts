@@ -163,9 +163,4 @@ export class LoginComponent implements OnInit {
   closeError() {
     this.errorMessage.set('');
   }
-
-  changeLanguage(lang: string) {
-    this.translate.use(lang);
-    localStorage.setItem('language', lang);
-  }
 }
