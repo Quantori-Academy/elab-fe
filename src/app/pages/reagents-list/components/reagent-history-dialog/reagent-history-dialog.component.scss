@@ -1,0 +1,12 @@
+h5{
+  color: var(--primary-color-dark) !important;
+  text-align: center !important;
+}
+ol{
+  padding: 0;
+}
+td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditQuantityReagentComponent } from '../edit-quantity-reagent/edit-quantity-reagent.component';
 import { DeleteReagentComponent } from '../../../../shared/components/delete-reagent/delete-reagent.component';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
+import { ReagentHistoryDialogComponent } from '../reagent-history-dialog/reagent-history-dialog.component';
 
 @Component({
   selector: 'app-reagent-detailed-page',
@@ -81,7 +82,11 @@ export class ReagentDetailedPageComponent implements OnInit {
         }
       });
   }
-
+  onHistory(reagent: Reagent) {
+    this.dialog.open(ReagentHistoryDialogComponent, {
+      data: reagent,
+    });
+  }
   onDeleteReagent(reagent: Reagent) {
     this.dialog
       .open(DeleteReagentComponent, {

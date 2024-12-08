@@ -28,10 +28,17 @@ export const routes: Routes = [
     canActivate: [roleGuard],
   },
   {
+    path: 'history',
+    loadComponent: () =>
+      import(
+        './components/reagents-history-list/reagents-history-list.component'
+      ).then((c) => c.ReagentsHistoryListComponent),
+  },
+  {
     path: ':id',
     loadComponent: () =>
-      import('./components/reagent-detailed-page/reagent-detailed-page.component').then(
-        (c) => c.ReagentDetailedPageComponent
-      ),
+      import(
+        './components/reagent-detailed-page/reagent-detailed-page.component'
+      ).then((c) => c.ReagentDetailedPageComponent),
   },
 ];

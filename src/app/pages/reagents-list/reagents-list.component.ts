@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { StructureDialogComponent } from './components/structure-dialog/structure-dialog.component';
 import { MaterialModule } from '../../material.module';
 import { MoleculeStructureComponent } from '../../shared/components/molecule-structure/molecule-structure.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TableLoaderSpinnerComponent } from '../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { first, Observable, Subject, takeUntil } from 'rxjs';
 import { ReagentsQueryService } from './services/reagents-query.service';
@@ -41,7 +41,8 @@ import { EditReagentComponent } from './components/edit-reagent/edit-reagent.com
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
-    NoDataComponent
+    NoDataComponent,
+    RouterLink
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',

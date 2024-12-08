@@ -37,6 +37,7 @@
 </mat-card-content>
 <div class="actions">
   <button  mat-fab extended class="actions_edit" (click)="onEditReagent(reagent)">Edit quantity<mat-icon>edit</mat-icon></button>
+  <button  mat-fab extended class="actions_edit" (click)="onHistory(reagent)">See Reagent History<mat-icon>history</mat-icon></button>
   @if(isProcurementOfficer){
     <button  mat-fab extended  class="actions_delete" (click)="onDeleteReagent(reagent)">Delete reagent<mat-icon color="warn">delete</mat-icon></button>
   }

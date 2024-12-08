@@ -6,6 +6,7 @@ import { ReagentsQueryService } from '../../pages/reagents-list/services/reagent
 import {
   Reagent,
   ReagentFromFulfilledOrder,
+  ReagentHistory,
   ReagentListResponse,
   ReagentRequest,
   SampleRequest,
@@ -53,7 +54,11 @@ export class ReagentsService {
   public getReagentById(id: string): Observable<Reagent> {
     return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
   }
-
+  
+  public getReagentsHistory(): Observable<ReagentHistory[]> {
+    return this.httpClient.get<ReagentHistory[]>(`${this.apiUrl}/history/log`);
+  }
+  
   public deleteReagent(id: string): Observable<Reagent> {
     return this.httpClient.delete<Reagent>(`${this.apiUrl}/${id}`);
   }

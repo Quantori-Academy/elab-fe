@@ -3,7 +3,7 @@
     <button mat-flat-button color="primary" (click)="redirectToCreatePage('sample')"> Create Sample </button> } <button
       mat-flat-button color="primary" (click)="openMoveReagentDialog()" [disabled]="!isReagentsSelected()"> Move Reagent
     </button>
-  </div> } <div class="filter-container">
+  </div> } <div class="create-btns"><a mat-button  routerLink="history">History</a></div> <div class="filter-container">
     <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Search by name</mat-label>
       <input matInput (input)="onFilterName($event)" placeholder="Enter a name" />
