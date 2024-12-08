@@ -29,6 +29,7 @@ import { AddStructureComponent } from '../../shared/components/structure-editor/
 import { MoveReagentComponent } from './components/move-reagent/move-reagent.component';
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
+import { UploadReagentComponent } from './components/upload-reagent/upload-reagent.component';
 
 @Component({
   selector: 'app-reagents-list',
@@ -144,6 +145,17 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((isEdited) => {
         if (isEdited) {
+          this.reagentsQueryService.reloadReagentList()
+        }
+      })
+  }
+
+  onUploadReagent() {
+    this.dialog.open(UploadReagentComponent, { width: '400px'})
+      .afterClosed()
+      .pipe(first())
+      .subscribe((isUpload) => {
+        if (isUpload) {
           this.reagentsQueryService.reloadReagentList()
         }
       })

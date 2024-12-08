@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
 import {
@@ -45,6 +45,13 @@ export class ReagentsService {
       `${this.apiUrl}/create/sample`,
       sampleData
     );
+  }
+
+  uploadReagent(formData: FormData): Observable<HttpEvent<unknown>> {
+    return this.httpClient.post<HttpEvent<unknown>>(`${this.apiUrl}/upload`, formData, {
+      reportProgress: true,
+      observe: 'events',
+    });
   }
 
   editReagent(id: number, reagentData: {quantityLeft: number, storageId?: number}): Observable<Reagent[]> {
