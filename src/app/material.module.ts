@@ -32,6 +32,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatExpansionModule,
     MatTooltipModule,
     MatProgressBar,
-    ClipboardModule
+    ClipboardModule,
+    MatMenuModule,
   ],
   exports: [
     MatButtonModule,
@@ -92,7 +94,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatExpansionModule,
     MatTooltipModule,
     MatProgressBar,
-    ClipboardModule
+    ClipboardModule,
+    MatMenuModule,
   ],
   providers: [
     {

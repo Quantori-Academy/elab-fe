@@ -25,7 +25,7 @@ export class StructureEditorComponent implements OnInit, AfterViewInit {
   ketcherFrame!: ElementRef<HTMLIFrameElement>;
   @Input() initialSmiles: string | null = null;
 
-  ketcherUrl!: SafeResourceUrl;
+  ketcherUrl?: SafeResourceUrl;
   loading = signal(true);
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -48,10 +48,16 @@ export class StructureEditorComponent implements OnInit, AfterViewInit {
       return await this.ketcher!.getSmiles();
   }
 
-  private async loadPreviousSmiles(): Promise<void> {
-    if (this.ketcher && this.initialSmiles) {
-      this.ketcher.setMolecule(this.initialSmiles);
-    }
+  private loadPreviousSmiles(): void {
+    const trySetMolecule = () => {
+      if (this.ketcher && this.initialSmiles) {
+        this.ketcher.setMolecule(this.initialSmiles);
+      } else {
+        setTimeout(trySetMolecule, 500);
+      }
+    };
+
+    trySetMolecule();
   }
 
   onLoaded() {

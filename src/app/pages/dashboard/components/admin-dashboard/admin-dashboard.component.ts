@@ -12,11 +12,12 @@ import { map, Observable } from 'rxjs';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AsyncPipe } from '@angular/common';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from "../../../../shared/components/table-loader-spinner/table-loader-spinner.component";
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [MaterialModule, ChartComponent, AsyncPipe, NoDataComponent],
+  imports: [MaterialModule, ChartComponent, AsyncPipe, NoDataComponent, TableLoaderSpinnerComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
