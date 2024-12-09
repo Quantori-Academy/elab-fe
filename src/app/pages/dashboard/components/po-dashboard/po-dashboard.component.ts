@@ -19,6 +19,7 @@ import { StatusLabelColorDirective } from '../../../../shared/directives/status-
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from "../../../../shared/components/table-loader-spinner/table-loader-spinner.component";
 
 @Component({
   selector: 'app-po-dashboard',
@@ -31,8 +32,9 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     AsyncPipe,
     StatusLabelColorDirective,
     ReactiveFormsModule,
-    NoDataComponent
-  ],
+    NoDataComponent,
+    TableLoaderSpinnerComponent
+],
   providers: [provideNativeDateAdapter()],
   templateUrl: './po-dashboard.component.html',
   styleUrl: './po-dashboard.component.scss',

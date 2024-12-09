@@ -22,6 +22,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from "../../../../shared/components/table-loader-spinner/table-loader-spinner.component";
 
 @Component({
   selector: 'app-researcher-dashboard',
@@ -35,7 +36,8 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     DatePipe,
     ReactiveFormsModule,
     NoDataComponent,
-  ],
+    TableLoaderSpinnerComponent
+],
   providers: [provideNativeDateAdapter()],
   templateUrl: './researcher-dashboard.component.html',
   styleUrl: './researcher-dashboard.component.scss',
