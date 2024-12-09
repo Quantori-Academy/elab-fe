@@ -1,0 +1,22 @@
+<div class="container" appDragDropFile (fileDropped)="onFileDropped($event)">
+	<input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event)" />
+
+
+	<h5>Drag and drop file here</h5>
+	<h5>or</h5>
+	<label for="fileDropRef">Browse for file</label>
+
+  <div class="progress">
+    @if (uploadProgress()) {
+      <mat-progress-bar
+        mode="determinate"
+        [value]="uploadProgress()"
+        />
+      <mat-icon
+        class="cancel-upload"
+        (click)="cancelUpload()">
+        delete_forever
+      </mat-icon>
+    }
+  </div>
+</div>

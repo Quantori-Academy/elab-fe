@@ -141,11 +141,10 @@
             </button>
             @if (element.status === 'Pending') {
             <button
-              mat-icon-button
-              aria-label="edit"
-              (click)="openEditor(element)"
+              mat-button
+              (click)="orderStatusChange(element.id, 'Submitted')"
             >
-              <mat-icon color="primary">edit</mat-icon>
+              {{ "ORDER_FORM.SUBMIT" | translate }}
             </button>
             }@else if (element.status === 'Submitted'){
             <div class="buttons">
@@ -154,17 +153,16 @@
                 color="primary"
                 (click)="orderStatusChange(element.id, 'Fulfilled')"
               >
-                Fulfill
+                {{ "ORDERS_LIST.ACTIONS.FULFILL" | translate }}
               </button>
               <button
                 mat-button
                 color="warn"
                 (click)="orderStatusChange(element.id, 'Declined')"
               >
-                Decline
+                {{ "ORDERS_LIST.ACTIONS.DECLINE" | translate }}
               </button>
             </div>
-
             }
           </div>
           <!-- <button mat-icon-button aria-label="delete">

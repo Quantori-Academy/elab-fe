@@ -9,30 +9,23 @@ import {
 import { OrdersService } from '../../service/orders.service';
 import { Order, Status, UpdateOrder } from '../../model/order-model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Subject, takeUntil, BehaviorSubject } from 'rxjs';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { MaterialModule } from '../../../../material.module';
-import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MoleculeStructureComponent } from '../../../../shared/components/molecule-structure/molecule-structure.component';
-import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-order',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    DatePipe,
-    MaterialModule,
-    ReactiveFormsModule,
-    MoleculeStructureComponent,
-    TableLoaderSpinnerComponent,
-    TranslateModule,
-    CommonModule,
-  ],
+  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe, TranslateModule],
   templateUrl: './edit-order.component.html',
   styleUrls: ['./edit-order.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,7 +36,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
   private translate = inject(TranslateService);
-
   statusOptions: Status[] = [
     Status.pending,
     Status.submitted,
@@ -51,38 +43,13 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     Status.declined,
   ];
 
-  reagents$ = new BehaviorSubject<ReagentRequestList[]>([]);
-  excludeReagents: { id: number }[] = [];
-
-  baseColumns = [
-    'name',
-    'casNumber',
-    'desiredQuantity',
-    'structureSmiles',
-    'userComments',
-  ];
-  actionColumn = 'actions';
-  initialValues: Partial<Order> = {}; //initial values of order
-  showRemoveConfirmation = false;
-
-  get displayedColumns(): string[] {
-    if (this.showRemoveConfirmation) {
-      return this.baseColumns;
-    }
-    const status = this.updateForm.get('status')?.value;
-
-    if (status === Status.pending) {
-      return [...this.baseColumns, this.actionColumn];
-    }
-    return this.baseColumns;
-  }
-  errorMessage = '';
-
+  initialValues: Partial<Order> = {};
+  //initial values of order
+  sellerOptions$ = new BehaviorSubject<string[]>([]);
   lastReagentToRemove: ReagentRequestList | null = null;
   updateForm = this.fb.group({
-    title: [''],
-    seller: [''],
-    status: ['Pending'],
+    title: ['', Validators.required],
+    seller: ['', Validators.required],
   });
 
   constructor(
@@ -91,44 +58,22 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.loadOrderDetails();
-    this.updateForm.get('status')?.valueChanges.subscribe((status) => {
-      if (status === 'Submitted') {
-        this.updateForm.get('title')?.disable();
-        this.updateForm.get('seller')?.disable();
-      } else if (status === 'Pending') {
-        this.updateForm.get('title')?.enable();
-        this.updateForm.get('seller')?.enable();
-      }
-    });
-  }
-
-  loadOrderDetails() {
     this.orderService
       .getReagentById(this.orderId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((order: Order) => {
-        // Saves initial values for comparison
         this.initialValues = {
           title: order.title,
           seller: order.seller,
-          status: order.status,
         };
-
         this.updateForm.patchValue(this.initialValues);
-        this.setStatusOptions(order.status);
-
-        // to reset form's dirty state after setting initial values
         this.updateForm.markAsPristine();
-        this.reagents$.next(order.reagents);
       });
+    this.orderService
+      .getAllUniqueSellers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((sellers) => this.sellerOptions$.next(sellers));
   }
-
-  private setStatusOptions(status: string) {
-    this.statusOptions = status === Status.pending 
-      ? [Status.pending, Status.submitted] 
-      : [];
-  }  
 
   onSubmit() {
     const modifiedValues: Partial<UpdateOrder> = {};
@@ -145,13 +90,6 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         modifiedValues[key as keyof UpdateOrder] = control.value;
       }
     });
-
-    // If no modifications notify user
-    if (Object.keys(modifiedValues).length === 0) {
-      this.errorMessage = this.translate.instant('EDIT_ORDER.NO_CHANGES');
-      return;
-    }
-
     this.orderService
       .updateOrder(this.orderId, modifiedValues as UpdateOrder)
       .pipe(takeUntil(this.destroy$))
@@ -167,93 +105,21 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         error: (err) =>
           this.notificationPopupService.error({
             title: this.translate.instant('EDIT_ORDER.ERROR_TITLE'),
-            message: err.error.message,
+            message: err.message,
+            duration: 3000,
           }),
       });
   }
 
-  onRemove(reagent: ReagentRequestList) {
-    if (this.reagents$.getValue().length === 1) {
-      this.errorMessage = this.translate.instant(
-        'EDIT_ORDER.REMOVE_LAST_REAGENT_CONFIRM'
-      );
-      this.showRemoveConfirmation = true;
-      this.lastReagentToRemove = reagent;
-    } else {
-      this.processReagentRemoval(reagent);
-    }
-  }
-
-  private processReagentRemoval(reagent: ReagentRequestList) {
-    this.excludeReagents.push({ id: reagent.id });
-
-    this.orderService
-      .updateOrder(this.orderId, { excludeReagents: this.excludeReagents })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          const updatedReagents = this.reagents$
-            .getValue()
-            .filter((r: ReagentRequestList) => r.id !== reagent.id);
-          this.excludeReagents = [];
-          this.reagents$.next(updatedReagents);
-          this.excludeReagents = [];
-
-          this.notificationPopupService.success({
-            title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
-            message: this.translate.instant(
-              'EDIT_ORDER.REAGENT_REMOVED_SUCCESS'
-            ),
-            duration: 3000,
-          });
-        },
-        error: (err) => this.notificationPopupService.error(err),
-      });
-  }
-
-  confirmRemoval() {
-    if (this.lastReagentToRemove) {
-      this.processReagentRemoval(this.lastReagentToRemove);
-
-      // first set order status to submitted, because of BE/requirements specifications
-      this.orderService
-        .updateOrder(this.orderId, { status: Status.submitted })
-        .pipe(takeUntil(this.destroy$))
-        .subscribe();
-
-      // after that, set status to canceled
-      this.orderService
-        .updateOrder(this.orderId, { status: Status.declined })
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            this.dialogRef.close(true);
-            this.showRemoveConfirmation = false;
-            this.lastReagentToRemove = null;
-
-            this.notificationPopupService.success({
-              title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
-              message: this.translate.instant(
-                'EDIT_ORDER.ORDER_DECLINED_SUCCESS'
-              ),
-              duration: 3000,
-            });
-          },
-          error: (err) => this.notificationPopupService.error(err),
-        });
-    }
-  }
-
-  cancelRemoval() {
-    this.showRemoveConfirmation = false;
-    this.lastReagentToRemove = null;
-    this.errorMessage = '';
+  public hasError(label: string, error: string): boolean | undefined {
+    return this.updateForm.get(label)?.hasError(error);
   }
 
   onClose() {
     this.dialogRef.close();
     this.updateForm.reset();
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

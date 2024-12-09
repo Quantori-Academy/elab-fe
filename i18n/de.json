@@ -38,36 +38,37 @@
     "LOGIN_BUTTON": "Anmelden",
     "SUBMIT_BUTTON": "Absenden"
   },
-  "EDIT_ORDER": {
-    "TITLE": "Bestellung bearbeiten",
-    "FORM": {
-      "TITLE_LABEL": "Titel",
-      "SELLER_LABEL": "Verkäufer",
-      "STATUS_LABEL": "Status"
-    },
-    "ORDERED_REAGENTS": "Bestellte Reagenzien",
-    "TABLE_HEADERS": {
-      "NAME": "Name",
-      "CAS_NUMBER": "CAS-Nummer",
-      "MODIFICATION_DATE": "Änderungsdatum",
-      "DESIRED_QUANTITY": "Gewünschte Menge",
-      "QUANTITY_LEFT": "Verbleibende Menge",
-      "STRUCTURE": "Struktur",
-      "CREATOR_COMMENT": "Kommentar des Erstellers",
-      "ACTIONS": "Aktionen"
-    },
-    "NO_CHANGES": "Keine Änderungen zum Aktualisieren",
-    "REMOVE_LAST_REAGENT_CONFIRM": "Das Entfernen des letzten Reagenz führt zur Stornierung der Bestellung. Möchten Sie fortfahren?",
-    "SUCCESS_TITLE": "Erfolg",
-    "SUCCESS_MESSAGE": "Bestellung erfolgreich aktualisiert",
-    "REAGENT_REMOVED_SUCCESS": "Reagenz erfolgreich entfernt!",
-    "ORDER_DECLINED_SUCCESS": "Bestellung erfolgreich abgelehnt!",
-    "ERROR_TITLE": "Fehler",
-    "PROCEED_BUTTON": "Fortfahren",
-    "CANCEL_BUTTON": "Abbrechen",
-    "UPDATE_BUTTON": "Aktualisieren",
-    "CLOSE_BUTTON": "Schließen"
+"EDIT_ORDER": {
+  "TITLE": "Bestellung Bearbeiten",
+  "FORM": {
+    "TITLE_LABEL": "Titel",
+    "SELLER_LABEL": "Verkäufer",
+    "TITLE_REQUIRED": "Titel ist erforderlich.",
+    "SELLER_REQUIRED": "Verkäufer ist erforderlich."
   },
+  "ORDERED_REAGENTS": "Bestellte Reagenzien",
+  "TABLE_HEADERS": {
+    "NAME": "Name",
+    "CAS_NUMBER": "CAS-Nummer",
+    "MODIFICATION_DATE": "Änderungsdatum",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "QUANTITY_LEFT": "Verbleibende Menge",
+    "STRUCTURE": "Struktur",
+    "CREATOR_COMMENT": "Kommentar des Erstellers",
+    "ACTIONS": "Aktionen"
+  },
+  "NO_CHANGES": "Keine Änderungen zum Aktualisieren",
+  "REMOVE_LAST_REAGENT_CONFIRM": "Das Entfernen des letzten Reagenz wird die Bestellung stornieren. Möchten Sie fortfahren?",
+  "SUCCESS_TITLE": "Erfolg",
+  "SUCCESS_MESSAGE": "Bestellung erfolgreich aktualisiert",
+  "REAGENT_REMOVED_SUCCESS": "Reagenz erfolgreich entfernt!",
+  "ORDER_DECLINED_SUCCESS": "Bestellung erfolgreich abgelehnt!",
+  "ERROR_TITLE": "Fehler",
+  "PROCEED_BUTTON": "Fortfahren",
+  "CANCEL_BUTTON": "Abbrechen",
+  "UPDATE_BUTTON": "Aktualisieren",
+  "CLOSE_BUTTON": "Schließen"
+},
   "EDIT_REQUESTED_REAGENT": {
     "TITLE": "Angefordertes Reagenz bearbeiten",
     "DESIRED_QUANTITY": "Gewünschte Menge",
@@ -105,6 +106,7 @@
     "SELECT_AT_LEAST_ONE": "Wählen Sie mindestens ein Reagenz aus",
     "CANCEL": "Abbrechen",
     "SUBMIT": "Einreichen",
+    "SUBMIT_ORDER": "Bestellung aufgeben",
     "SUCCESS_TITLE": "Erfolg",
     "SUCCESS_MESSAGE": "Bestellung erfolgreich erstellt!",
     "ERROR_TITLE": "Fehler",
@@ -144,9 +146,10 @@
   "STATUSES": {
     "PENDING": "Ausstehend",
     "ORDERED": "Bestellt",
-    "FULFILLED": "Erfüllt",
     "DECLINED": "Abgelehnt",
-    "COMPLETED": "Abgeschlossen"
+    "FULFILLED": "Erfüllt",
+    "COMPLETED": "Abgeschlossen",
+    "SUBMITTED": "Eingereicht"
   },
   "ORDERS_LIST": {
     "CREATE_NEW_ORDER": "Neue Bestellung erstellen",
@@ -158,6 +161,10 @@
       "DECLINED": "Abgelehnt",
       "FULFILLED": "Erfüllt",
       "COMPLETED": "Abgeschlossen"
+    },
+    "ACTIONS": {
+      "FULFILL": "Erfüllen",
+      "DECLINE": "Ablehnen"
     },
     "FILTER_BY_TITLE": "Nach Titel filtern",
     "FILTER_BY_SELLER": "Nach Verkäufer filtern",
@@ -266,7 +273,8 @@
       "ORDERED": "Bestellt",
       "DECLINED": "Abgelehnt",
       "FULFILLED": "Erfüllt",
-      "COMPLETED": "Abgeschlossen"
+      "COMPLETED": "Abgeschlossen",
+      "SUBMITTED": "Eingereicht"
     },
     "TABLE": {
       "NAME": "Name",
@@ -281,14 +289,16 @@
     }
   },
   "REAGENTS_LIST": {
+    "CREATE": "Erstellen",
     "CREATE_REAGENT": "Reagenz erstellen",
     "CREATE_SAMPLE": "Probe erstellen",
+    "UPLOAD": "Hochladen",
     "MOVE_REAGENT": "Reagenz verschieben",
-    "SEARCH_BY_NAME": "Nach Name suchen",
-    "PLACEHOLDER_ENTER_NAME": "Name eingeben",
+    "SEARCH_BY_NAME": "Nach Namen suchen",
+    "PLACEHOLDER_ENTER_NAME": "Geben Sie einen Namen ein",
     "SEARCH_BY_STRUCTURE": "Nach Struktur suchen",
-    "PLACEHOLDER_ENTER_STRUCTURE": "Struktur eingeben",
-    "EXACT_MATCH": "Genaue Übereinstimmung",
+    "PLACEHOLDER_ENTER_STRUCTURE": "Geben Sie eine Struktur ein",
+    "EXACT_MATCH": "Exakte Übereinstimmung",
     "FILTER_BY_CATEGORY": "Nach Kategorie filtern",
     "ALL_CATEGORIES": "Alle Kategorien",
     "CATEGORY": {
@@ -302,14 +312,15 @@
       "CAS": "CAS",
       "QUANTITY": "Menge",
       "QUANTITY_LEFT": "Verbleibende Menge",
-      "LOCATION": "Ort",
+      "LOCATION": "Standort",
       "ACTIONS": "Aktionen"
     },
+    "NO_DATA_AVAILABLE": "Keine Reagenzdaten verfügbar",
     "ARIA_LABEL": {
-      "OPEN_REAGENT_PAGE": "Reagenzseite öffnen",
       "SELECT_PAGE": "Seite auswählen"
     }
   },
+
   "ADD_REAGENT_SAMPLE": {
     "SEARCH_BY_NAME": "Suche nach Name",
     "PLACEHOLDER_ENTER_NAME": "Name eingeben",
@@ -327,7 +338,8 @@
       "QUANTITY": "Menge",
       "QUANTITY_LEFT": "Verbleibende Menge",
       "SELECT": "Auswählen",
-      "SELECT_QUANTITY": "Menge auswählen"
+      "SELECT_QUANTITY": "Menge auswählen",
+      "STORAGE_LOCATION": "Lagerort"
     },
     "ERRORS": {
       "QUANTITY_LESS_THAN": "Menge sollte weniger als {{quantityLeft}} {{quantityUnit}} sein",
@@ -719,5 +731,29 @@
     "SUCCESS_TITLE": "Erfolg",
     "SUCCESS_MESSAGE": "{{ name }} wurde erfolgreich entfernt!",
     "ERROR_TITLE": "Fehler"
-  }  
+  },
+  "REAGENT_REQUESTS_DIALOG": {
+    "SEARCH_BY_NAME": "Nach Name suchen",
+    "SEARCH_PLACEHOLDER": "Geben Sie den Reagenz",
+    "SELECT": "Auswählen",
+    "NAME": "Name",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "PACKAGE": "Verpackung",
+    "N_A": "N/A",
+    "CREATED": "Erstellt",
+    "COMMENT": "Kommentar",
+    "NO_PENDING_REQUESTS": "Keine ausstehenden Anfragen gefunden",
+    "ADD": "Hinzufügen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzienanforderung wurde erfolgreich hinzugefügt!",
+    "ERROR_TITLE": "Fehler"
+  },
+  "CONFIRM_DECLINE_DIALOG": {
+    "HEADER": "Entfernung bestätigen",
+    "MESSAGE": "Das Entfernen der letzten Reagenzienanfrage setzt die Bestellung auf 'Abgelehnt'. Möchten Sie fortfahren?",
+    "PROCEED_BUTTON": "Fortfahren",
+    "CANCEL_BUTTON": "Abbrechen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Bestellung erfolgreich abgelehnt!"
+  }
 }

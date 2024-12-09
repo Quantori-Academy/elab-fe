@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBar } from '@angular/material/progress-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -61,6 +62,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatProgressBar,
     ClipboardModule,
     MatMenuModule,
     MatIconModule,
@@ -93,6 +95,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatProgressBar,
     ClipboardModule,
     MatMenuModule,
     MatIconModule,

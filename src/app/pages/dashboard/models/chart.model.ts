@@ -16,8 +16,8 @@ export interface ChartOptions {
   series: ApexNonAxisChartSeries | ApexAxisChartSeries;
   chart: ApexChart;
   responsive: ApexResponsive[];
-  labels: string[] | undefined;
-  colors: string[] | undefined;
+  labels: string[];
+  colors: string[];
   theme: ApexTheme;
   title: ApexTitleSubtitle;
   dataLabels: ApexDataLabels;

@@ -17,6 +17,7 @@ import { map, Observable, combineLatest, startWith } from 'rxjs';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AsyncPipe } from '@angular/common';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -27,6 +28,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     ChartComponent,
     AsyncPipe,
     NoDataComponent,
+    TableLoaderSpinnerComponent,
     TranslateModule,
   ],
   templateUrl: './admin-dashboard.component.html',
@@ -38,8 +40,8 @@ export class AdminDashboardComponent implements OnInit {
   private translate = inject(TranslateService);
 
   public adminDashboardData$!: Observable<{
-    roomChartOption: Partial<ChartOptions>;
-    userChartOption: Partial<ChartOptions>;
+    roomChartOption: ChartOptions;
+    userChartOption: ChartOptions;
     kpiCards: AdminKpiCard[];
   }>;
 
@@ -65,7 +67,7 @@ export class AdminDashboardComponent implements OnInit {
       storageCounts,
       rooms,
       roomChartTitle
-    );
+    ) as ChartOptions;
 
     const userCounts = data.userNumberInRoles.map((user) => user._count.id);
     const roles = data.userNumberInRoles.map((user) => user.role);
@@ -81,7 +83,7 @@ export class AdminDashboardComponent implements OnInit {
       translatedRoles,
       userChartTitle,
       roles
-    );
+    ) as ChartOptions;
 
     const kpiCards = [
       {

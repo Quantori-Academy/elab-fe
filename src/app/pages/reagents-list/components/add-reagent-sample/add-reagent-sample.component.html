@@ -77,17 +77,17 @@
                 [structure]="element.structure"
                 [width]="64"
                 [height]="64"
-              />
+              ></app-molecule-structure>
             </td>
           </ng-container>
 
           <!-- Quantity Column -->
-          <ng-container matColumnDef="quantity">
+          <ng-container matColumnDef="storageLocation">
             <th mat-header-cell *matHeaderCellDef>
-              {{ "ADD_REAGENT_SAMPLE.TABLE.QUANTITY" | translate }}
+              {{ "ADD_REAGENT_SAMPLE.TABLE.STORAGE_LOCATION" | translate }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.totalQuantity }} {{ element.quantityUnit }}
+              {{ element.storage.room.name }} {{ element.storage.name }}
             </td>
           </ng-container>
 
@@ -145,14 +145,18 @@
                   }}
                 </mat-error>
                 } @if(hasError(i,'quantityUsed', 'min')) {
-                <mat-error>{{
-                  "ADD_REAGENT_SAMPLE.ERRORS.QUANTITY_MORE_THAN_ZERO"
-                    | translate
-                }}</mat-error>
+                <mat-error>
+                  {{
+                    "ADD_REAGENT_SAMPLE.ERRORS.QUANTITY_MORE_THAN_ZERO"
+                      | translate
+                  }}
+                </mat-error>
                 } @if(hasError(i,'quantityUsed', 'required')) {
-                <mat-error>{{
-                  "ADD_REAGENT_SAMPLE.ERRORS.QUANTITY_REQUIRED" | translate
-                }}</mat-error>
+                <mat-error>
+                  {{
+                    "ADD_REAGENT_SAMPLE.ERRORS.QUANTITY_REQUIRED" | translate
+                  }}
+                </mat-error>
                 } @if (hasError(i, 'quantityUsed', 'serverError')) {
                 <mat-error>
                   {{

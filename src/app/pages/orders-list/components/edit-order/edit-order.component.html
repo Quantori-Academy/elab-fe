@@ -1,172 +1,43 @@
-<div class="content">
-  <h3>{{ "EDIT_ORDER.TITLE" | translate }}</h3>
-  @if (reagents$ | async) {
-  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
-    <!-- Title Field -->
-    <div class="fields">
-      <mat-form-field appearance="outline">
-        <mat-label>{{ "EDIT_ORDER.FORM.TITLE_LABEL" | translate }}</mat-label>
-        <input matInput formControlName="title" />
-      </mat-form-field>
-
-      <!-- Seller Field -->
-      <mat-form-field appearance="outline">
-        <mat-label>{{ "EDIT_ORDER.FORM.SELLER_LABEL" | translate }}</mat-label>
-        <input matInput formControlName="seller" />
-      </mat-form-field>
-
-      <!-- Status Field -->
-      <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>{{ "EDIT_ORDER.FORM.STATUS_LABEL" | translate }}</mat-label>
-        <input
-          matInput
-          formControlName="status"
-          [value]="translatedStatus"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete #auto="matAutocomplete">
-          @for (option of statusOptions; track option) {
-          <mat-option [value]="option">{{
-            "ORDERS_LIST.STATUS." + (option | uppercase) | translate
-          }}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-
-    <h4>{{ "EDIT_ORDER.ORDERED_REAGENTS" | translate }}</h4>
-    <div class="mat-elevation-z8 table-container">
-      <table mat-table class="mat-elevation-z8" [dataSource]="reagents$">
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.NAME" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.name }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="casNumber">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.CAS_NUMBER" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.casNumber }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="modification date">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.MODIFICATION_DATE" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            @if (element.updatedAt === '') {
-            <span>______</span>
-            } @else {
-            {{ element.updatedAt | date : "HH:mm:ss  dd-MM-yyyy" }}
-            }
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="desiredQuantity">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.DESIRED_QUANTITY" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.desiredQuantity }} {{ element.quantityUnit }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="quantityLeft">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.QUANTITY_LEFT" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.quantityLeft }} {{ element.quantityUnit }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="structureSmiles">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.STRUCTURE" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element" class="structure-container">
-            <app-molecule-structure
-              [structure]="element.structureSmiles"
-              [width]="50"
-              [height]="50"
-            ></app-molecule-structure>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="userComments">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.CREATOR_COMMENT" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            {{ element.userComments }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef>
-            {{ "EDIT_ORDER.TABLE_HEADERS.ACTIONS" | translate }}
-          </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <button
-              mat-icon-button
-              aria-label="close"
-              (click)="onRemove(element)"
-              type="button"
-              [disabled]="updateForm.get('status')?.value !== 'Pending'"
-            >
-              <mat-icon color="warn">close</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row
-          *matHeaderRowDef="displayedColumns; sticky: true"
-        ></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-      </table>
-    </div>
-    @if (showRemoveConfirmation === false && errorMessage !== "") {
-    <div class="error-message">
-      <mat-error class="error-text">{{ errorMessage }}</mat-error>
-    </div>
-    } @if (showRemoveConfirmation) {
-    <div class="error-message">
-      <p class="error-text">{{ errorMessage }}</p>
-    </div>
-    <div class="actions">
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="confirmRemoval()"
-      >
-        {{ "EDIT_ORDER.PROCEED_BUTTON" | translate }}
-      </button>
-      <button mat-button color="warn" type="button" (click)="cancelRemoval()">
-        {{ "EDIT_ORDER.CANCEL_BUTTON" | translate }}
-      </button>
-    </div>
-    } @if (showRemoveConfirmation === false) {
-    <div class="actions">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="updateForm.invalid"
-      >
-        {{ "EDIT_ORDER.UPDATE_BUTTON" | translate }}
-      </button>
-      <button mat-button color="warn" type="button" (click)="onClose()">
-        {{ "EDIT_ORDER.CLOSE_BUTTON" | translate }}
-      </button>
-    </div>
+<h5 class="header">{{ "EDIT_ORDER.TITLE" | translate }}</h5>
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "EDIT_ORDER.FORM.TITLE_LABEL" | translate }}</mat-label>
+    <input matInput formControlName="title" />
+    @if (hasError('title', 'required')) {
+    <mat-error>{{ "ORDER_FORM.TITLE_REQUIRED" | translate }}</mat-error>
     }
-  </form>
-  } @else {
-  <app-table-loader-spinner />
-  }
-</div>
+  </mat-form-field>
+
+  <mat-form-field subscriptSizing="dynamic" appearance="outline">
+    <mat-label>{{ "EDIT_ORDER.FORM.SELLER_LABEL" | translate }}</mat-label>
+    <input
+      type="text"
+      placeholder="{{ 'ORDER_FORM.SELLER_PLACEHOLDER' | translate }}"
+      matInput
+      formControlName="seller"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete #auto="matAutocomplete">
+      @for (option of sellerOptions$ | async; track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-autocomplete>
+    @if (hasError('seller', 'required')) {
+    <mat-error>{{ "ORDER_FORM.SELLER_REQUIRED" | translate }}</mat-error>
+    }
+  </mat-form-field>
+
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="updateForm.pristine || updateForm.invalid"
+    >
+      {{ "EDIT_ORDER.UPDATE_BUTTON" | translate }}
+    </button>
+    <button mat-button color="warn" type="button" (click)="onClose()">
+      {{ "EDIT_ORDER.CLOSE_BUTTON" | translate }}
+    </button>
+  </div>
+</form>

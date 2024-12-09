@@ -19,6 +19,7 @@ import { StatusLabelColorDirective } from '../../../../shared/directives/status-
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
 
@@ -34,6 +35,7 @@ import { DateAdapter } from '@angular/material/core';
     StatusLabelColorDirective,
     ReactiveFormsModule,
     NoDataComponent,
+    TableLoaderSpinnerComponent,
     TranslateModule,
   ],
   providers: [provideNativeDateAdapter()],
@@ -53,7 +55,7 @@ export class PoDashboardComponent implements OnInit {
   private dateAdapter = inject(DateAdapter);
   public procurementOfficerDashboardData$!: Observable<{
     requestList: ReagentRequestList[];
-    statusChartOption: Partial<ChartOptions>;
+    statusChartOption: ChartOptions;
   }>;
   public filteredDate = new FormControl(
     this.dashboardService.filteredDate.value
@@ -97,7 +99,7 @@ export class PoDashboardComponent implements OnInit {
       statusChartTitle,
       '200px',
       orderStatusLabels
-    );
+    ) as ChartOptions;
 
     return { requestList: data.requestList, statusChartOption };
   }

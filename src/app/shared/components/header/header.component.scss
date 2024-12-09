@@ -27,7 +27,7 @@
   .logout-btn {
     border: none;
     color: white;
-    margin-left: 16px;
+    margin-left: 12px;
 
     &:hover {
       background-color: #be1a1a;
@@ -56,9 +56,9 @@
 }
 
 .selected {
-  font-weight: bold; 
-  background-color: var(--neutral-color-light2); 
-  color: var(--primary-color); 
+  font-weight: bold;
+  background-color: var(--neutral-color-light2);
+  color: var(--primary-color);
 }
 
 .header-icon {

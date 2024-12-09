@@ -9,21 +9,25 @@
 }
 
 .info {
-  margin: 0 100px;
+  margin: 0 30px;
   display: flex;
   align-items: flex-start;
   gap: 50px;
+  justify-content: space-between;
   box-sizing: border-box;
+  .info {
+    justify-content: flex-start;
+  }
   img {
     width: 164px;
     height: auto;
   }
 }
-.filter {
+.add-reagent {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin: 10px 0;
 }
 h2,
 h3 {
@@ -58,7 +62,12 @@ span {
   color: #000;
   border-radius: 12px;
 }
-
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
 .status-pending {
   background-color: var(--pending-background-color);
   color: var(--pending-color);
@@ -100,7 +109,7 @@ span {
 
 @media screen and (max-width: 768px) {
   .info {
-    margin: 0 30px;
+    margin: 0;
     gap: 30px;
 
     img {
@@ -123,9 +132,8 @@ span {
     margin: 0;
     gap: 20px;
 
-    img {
-      width: 50px;
-      height: 50px;
+    .image {
+      display: none;
     }
   }
 }

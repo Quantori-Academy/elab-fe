@@ -92,16 +92,14 @@
   <mat-card>
     @if (researcherDashboardData.reagentSampleChartOption.series?.length) {
     <apx-chart
-      [series]="researcherDashboardData.reagentSampleChartOption.series!"
-      [chart]="researcherDashboardData.reagentSampleChartOption.chart!"
-      [labels]="researcherDashboardData.reagentSampleChartOption.labels!"
-      [title]="researcherDashboardData.reagentSampleChartOption.title!"
-      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive!"
-      [colors]="researcherDashboardData.reagentSampleChartOption.colors!"
-      [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels!"
-      [plotOptions]="
-        researcherDashboardData.reagentSampleChartOption.plotOptions!
-      "
+      [series]="researcherDashboardData.reagentSampleChartOption.series"
+      [chart]="researcherDashboardData.reagentSampleChartOption.chart"
+      [labels]="researcherDashboardData.reagentSampleChartOption.labels"
+      [title]="researcherDashboardData.reagentSampleChartOption.title"
+      [responsive]="researcherDashboardData.reagentSampleChartOption.responsive"
+      [colors]="researcherDashboardData.reagentSampleChartOption.colors"
+      [dataLabels]="researcherDashboardData.reagentSampleChartOption.dataLabels"
+      [plotOptions]="researcherDashboardData.reagentSampleChartOption.plotOptions"
     ></apx-chart>
     } @else {
     <app-no-data
@@ -141,20 +139,14 @@
   <mat-card>
     @if (researcherDashboardData.emptyReagentSampleChartOption.series?.length) {
     <apx-chart
-      [series]="researcherDashboardData.emptyReagentSampleChartOption.series!"
-      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart!"
-      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels!"
-      [title]="researcherDashboardData.emptyReagentSampleChartOption.title!"
-      [responsive]="
-        researcherDashboardData.emptyReagentSampleChartOption.responsive!
-      "
-      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors!"
-      [dataLabels]="
-        researcherDashboardData.emptyReagentSampleChartOption.dataLabels!
-      "
-      [plotOptions]="
-        researcherDashboardData.emptyReagentSampleChartOption.plotOptions!
-      "
+      [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
+      [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"
+      [labels]="researcherDashboardData.emptyReagentSampleChartOption.labels"
+      [title]="researcherDashboardData.emptyReagentSampleChartOption.title"
+      [responsive]="researcherDashboardData.emptyReagentSampleChartOption.responsive"
+      [colors]="researcherDashboardData.emptyReagentSampleChartOption.colors"
+      [dataLabels]="researcherDashboardData.emptyReagentSampleChartOption.dataLabels"
+      [plotOptions]="researcherDashboardData.emptyReagentSampleChartOption.plotOptions"
     ></apx-chart>
     } @else {
     <app-no-data
@@ -166,5 +158,5 @@
   </mat-card>
 </div>
 } @else {
-<app-no-data [text]="'NO_DATA.NO_DATA' | translate" />
+<app-table-loader-spinner />
 }

@@ -1,0 +1,12 @@
+<h5 mat-dialog-title>{{ "CONFIRM_DECLINE_DIALOG.HEADER" | translate }}</h5>
+<mat-dialog-content>
+  {{ "CONFIRM_DECLINE_DIALOG.MESSAGE" | translate }}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="confirmRemoval()">
+    {{ "CONFIRM_DECLINE_DIALOG.PROCEED_BUTTON" | translate }}
+  </button>
+  <button mat-button color="warn" mat-dialog-close>
+    {{ "CONFIRM_DECLINE_DIALOG.CANCEL_BUTTON" | translate }}
+  </button>
+</mat-dialog-actions>

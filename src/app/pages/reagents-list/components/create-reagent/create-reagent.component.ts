@@ -40,7 +40,7 @@ import {
 } from '../../../storage-location/models/storage-location.interface';
 import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
 import { DISPLAY_EXTENSION } from '../../../../shared/units/display.units';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-reagent',
@@ -118,7 +118,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
       structure: [null],
       quantityUnit: ['', Validators.required],
       totalQuantity: [null, Validators.required],
-      quantityLeft: [null, Validators.required],
       storageLocation: [
         '',
         [Validators.required, storageLocationAutoCompleteValidator()],
@@ -129,6 +128,7 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
             usedReagentSample: [[]],
           }
         : {
+            quantityLeft: [null, Validators.required],
             casNumber: [
               null,
               [Validators.minLength(5), Validators.maxLength(10)],
@@ -155,7 +155,6 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
 
   onRoomNameChange($event: Event) {
     const value = ($event.target as HTMLInputElement).value;
-
     this.storageLocationQueryService.nameFilterSubject.next({
       value,
       column: StorageLocationColumn.FullPath,
@@ -239,7 +238,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           expirationDate: finalExpirationDate,
         };
       }
-      console.log(formRawValue);
+      if (this.isSample) {
+        formRawValue.quantityLeft = formRawValue.totalQuantity;
+      }
 
       const formRequest = this.isSample
         ? this.reagentsService.createSample(formRawValue)
@@ -249,9 +250,9 @@ export class CreateReagentComponent implements OnInit, OnDestroy {
           this.notificationsService.success({
             title: this.translate.instant('CREATE_REAGENT.SUCCESS_TITLE'),
             message: this.translate.instant('CREATE_REAGENT.SUCCESS_MESSAGE', {
-              item: this.isSample
-                ? this.translate.instant('CREATE_REAGENT.SAMPLE')
-                : this.translate.instant('CREATE_REAGENT.REAGENT'),
+              item: this.translate.instant(
+                `CATEGORIES.${this.isSample ? 'SAMPLE' : 'REAGENT'}`
+              ),
             }),
             duration: 3000,
           });

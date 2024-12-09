@@ -22,6 +22,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TableLoaderSpinnerComponent } from "../../../../shared/components/table-loader-spinner/table-loader-spinner.component";
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { DateAdapter } from '@angular/material/core';
 
@@ -37,8 +38,9 @@ import { DateAdapter } from '@angular/material/core';
     DatePipe,
     ReactiveFormsModule,
     NoDataComponent,
+    TableLoaderSpinnerComponent,
     TranslateModule,
-  ],
+],
   providers: [provideNativeDateAdapter()],
   templateUrl: './researcher-dashboard.component.html',
   styleUrl: './researcher-dashboard.component.scss',
@@ -50,9 +52,9 @@ export class ResearcherDashboardComponent implements OnInit {
   private dateAdapter = inject(DateAdapter);
 
   public researcherDashboardData$!: Observable<{
-    reagentSampleChartOption: Partial<ChartOptions>;
-    expiredReagentSampleChartOption: Partial<ChartOptions>;
-    emptyReagentSampleChartOption: Partial<ChartOptions>;
+    reagentSampleChartOption: ChartOptions;
+    expiredReagentSampleChartOption: ChartOptions;
+    emptyReagentSampleChartOption: ChartOptions;
     emptyOrExpiredList: Reagent[];
   }>;
   public filteredDate = new FormControl(
@@ -90,7 +92,7 @@ export class ResearcherDashboardComponent implements OnInit {
       reagentSampleChartTitle,
       '100%',
       data.reagentsVsSampleNumber.map((reagent) => reagent.category)
-    );
+    ) as ChartOptions;
 
     const expiredReagentSampleSeries = data.reagentsVsSampleExpiredNumber.map(
       (reagent) => reagent._count.id
@@ -108,7 +110,7 @@ export class ResearcherDashboardComponent implements OnInit {
       expiredReagentSampleChartTitle,
       '100%',
       data.reagentsVsSampleExpiredNumber.map((reagent) => reagent.category)
-    );
+    ) as ChartOptions;
 
     const emptyReagentSampleSeries = data.reagentsVsSampleEmptyNumber.map(
       (reagent) => reagent._count.id
@@ -126,7 +128,7 @@ export class ResearcherDashboardComponent implements OnInit {
       emptyReagentSampleChartTitle,
       '100%',
       data.reagentsVsSampleEmptyNumber.map((reagent) => reagent.category)
-    );
+    ) as ChartOptions;
 
     return {
       reagentSampleChartOption,

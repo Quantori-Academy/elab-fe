@@ -11,14 +11,19 @@
 
 td,
 th {
-  min-height: 2.5rem;
+  height: 55px;
 }
-.action-column{
+.action-column {
   display: flex;
   align-items: center;
-}
-.buttons{
-  display: grid;
+
+  .buttons {
+    display: grid;
+    
+    button {
+      height: 1.5rem;
+    }
+  }
 }
 .status-label {
   display: inline-block;

@@ -1,0 +1,67 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  border: dashed 2px var(--neutral-color-light1);
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+  }
+
+  h5 {
+    font-weight: 600;
+    color: var(--neutral-color-light1);
+  }
+}
+
+.container.fileOver {
+  border: dashed 2px var(--neutral-color-dark2);
+
+  h5 {
+    color: var(--neutral-color-dark2);
+  }
+}
+
+.progress {
+  position: relative;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .cancel-upload {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      color: red;
+    }
+  }
+
+}
+
