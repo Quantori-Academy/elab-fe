@@ -123,6 +123,8 @@
     "UPDATED": "Mis à jour",
     "ORDERED_REAGENTS": "Réactifs commandés",
     "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
+    "CREATE_NEW_REQUEST": "Créer une nouvelle demande",
+    "ADD_FROM_EXISTING_REQUESTS": "Ajouter à partir de demandes existantes",
     "COMPLETED": "Terminé",
     "COMPLETE": "Terminer",
     "EDIT": "Modifier",

@@ -123,6 +123,8 @@
     "UPDATED": "Aktualisiert",
     "ORDERED_REAGENTS": "Bestellte Reagenzien",
     "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
+    "CREATE_NEW_REQUEST": "Erstellen Sie eine neue Anfrage",
+    "ADD_FROM_EXISTING_REQUESTS": "Hinzufügen aus bestehenden Anträgen",
     "COMPLETED": "Abgeschlossen",
     "COMPLETE": "Abschließen",
     "EDIT": "Bearbeiten",

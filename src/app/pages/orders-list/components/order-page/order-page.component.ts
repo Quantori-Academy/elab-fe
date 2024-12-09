@@ -17,7 +17,7 @@ import { EditRequestedReagentComponent } from '../edit-requested-reagent/edit-re
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Order } from '../../model/order-model';
+import { Order, UpdateOrder } from '../../model/order-model';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { StorageLocationDialogComponent } from '../storage-location-dialog/storage-location-dialog.component';
 import { ReagentRequestsDialogComponent } from '../reagent-requests-dialog/reagent-requests-dialog.component';
@@ -25,6 +25,7 @@ import { EditOrderComponent } from '../edit-order/edit-order.component';
 import { ConfirmDeclineDialogComponent } from '../confirm-decline-dialog/confirm-decline-dialog.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { CreateReagentRequestComponent } from '../../../reagent-request/create-reagent-request/create-reagent-request.component';
 
 @Component({
   selector: 'app-order-page',
@@ -207,6 +208,47 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         this.fetchOrder();
       }
     });
+  }
+
+  openAddReagentForm() {
+    const dialogRef = this.dialog.open(CreateReagentRequestComponent, {
+      minWidth: '500px',
+      maxHeight: '500px',
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe((newReagentRequest: ReagentRequestList) => {
+        if (newReagentRequest) {
+          const currentOrder = this.orderSubject.getValue();
+          const updatedReagents = [
+            ...currentOrder!.reagents,
+            newReagentRequest,
+          ];
+          const updatedOrder: UpdateOrder = {
+            includeReagents: updatedReagents,
+          };
+
+          this.orderService
+            .updateOrder(currentOrder!.id, updatedOrder)
+            .subscribe({
+              next: (updatedOrder) => {
+                // this.notificationPopupService.success({
+                //   title: 'Success',
+                //   message: 'Reagent has been successfully added!',
+                //   duration: 3000,
+                // });
+                this.orderSubject.next(updatedOrder);
+              },
+              error: (error: HttpErrorResponse) => {
+                this.notificationPopupService.error({
+                  title: 'Error',
+                  message: error.error.message,
+                });
+              },
+            });
+        }
+      });
   }
 
   ngOnDestroy(): void {
