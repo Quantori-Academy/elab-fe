@@ -103,7 +103,7 @@
       <mat-icon>edit</mat-icon>
     </button>
     <button mat-fab extended class="actions_edit" (click)="onHistory(reagent)">
-      Reagent History<mat-icon>history</mat-icon>
+      {{ "REAGENT_DETAILED_PAGE.REAGENT_HISTORY" | translate }}<mat-icon>history</mat-icon>
     </button>
     @if (isProcurementOfficer) {
     <button
