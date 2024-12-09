@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf, NgFor } from '@angular/common';
 import { Observable, catchError, of } from 'rxjs';
 import {
   ChangeDetectionStrategy,
@@ -13,13 +13,14 @@ import { Profile } from '../../../auth/roles/types';
 import { RbacService } from '../../../auth/services/authentication/rbac.service';
 import { LogoutService } from '../../../auth/services/logout/logout.service';
 import { AuthService } from '../../../auth/services/authentication/auth.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 export const collapsed = signal(false);
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [NgIf, AsyncPipe, MaterialModule],
+  imports: [NgIf, NgFor, AsyncPipe, MaterialModule, TranslateModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +33,14 @@ export class HeaderComponent implements OnInit {
   public collapsed = collapsed;
   public currentUser$: Observable<Profile | null> =
     this.rbacService.authenticatedUser$;
+
+  public languages = [
+    { code: 'en', label: 'English' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'fr', label: 'Français' },
+  ];
+
+  constructor(public translate: TranslateService) {}
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
@@ -61,5 +70,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.logoutService.onLogoutUser();
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 }

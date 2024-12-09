@@ -13,7 +13,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { catchError, first, map, Observable, of, Subject, take, tap } from 'rxjs';
+import {
+  catchError,
+  first,
+  map,
+  Observable,
+  of,
+  Subject,
+  take,
+  tap,
+} from 'rxjs';
 import {
   RoomData,
   StorageLocationItem,
@@ -34,6 +43,7 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { StorageLocationQueryService } from '../../services/storage-location-query.service';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-storage-management',
@@ -51,6 +61,7 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     SpinnerDirective,
     TableLoaderSpinnerComponent,
     NoDataComponent,
+    TranslateModule,
   ],
   providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './storage-management.component.html',
@@ -82,6 +93,7 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   public isLoading = computed(() =>
     this.storageLocationQueryService.isLoading()
@@ -123,42 +135,48 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
   }
 
   public onCreate(): void {
-    this.dialog.open(AddEditStorageComponent, {width: '400px'})
+    this.dialog
+      .open(AddEditStorageComponent, { width: '400px' })
       .afterClosed()
       .pipe(first())
-      .subscribe(value => {
-        if(value) {
-          this.storageLocationQueryService.reloadStorageLocation()
+      .subscribe((value) => {
+        if (value) {
+          this.storageLocationQueryService.reloadStorageLocation();
           this.roomManagementService.loadListOfRooms();
         }
-      });;
+      });
   }
 
   public onEdit(element: StorageLocationItem) {
-    this.dialog.open(AddEditStorageComponent, { data: element, width: '400px' })
+    this.dialog
+      .open(AddEditStorageComponent, { data: element, width: '400px' })
       .afterClosed()
       .pipe(first())
-      .subscribe(value => {
-        if(value) {
-          this.storageLocationQueryService.reloadStorageLocation()
+      .subscribe((value) => {
+        if (value) {
+          this.storageLocationQueryService.reloadStorageLocation();
         }
       });
   }
 
   public onDelete(element: StorageLocationItem) {
-    this.dialog.open(DeleteConfirmComponent, {
-      data: {
-        message: 'Are you sure you want to delete the storage location?',
-        deleteHandler: () => this.deleteHandler(element.id),
-      },
-    }).afterClosed()
+    this.dialog
+      .open(DeleteConfirmComponent, {
+        data: {
+          message: this.translate.instant(
+            'STORAGE_MANAGEMENT.DELETE_CONFIRMATION'
+          ),
+          deleteHandler: () => this.deleteHandler(element.id),
+        },
+      })
+      .afterClosed()
       .pipe(first())
-      .subscribe(value => {
-        if(value) {
-          this.storageLocationQueryService.reloadStorageLocation()
+      .subscribe((value) => {
+        if (value) {
+          this.storageLocationQueryService.reloadStorageLocation();
           this.roomManagementService.loadListOfRooms();
         }
-      });;
+      });
   }
 
   public deleteHandler(storageId: number): Observable<boolean> {
@@ -167,20 +185,22 @@ export class StorageManagementComponent implements OnInit, OnDestroy {
       tap({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Storage location is deleted successfully',
+            title: this.translate.instant('STORAGE_MANAGEMENT.SUCCESS_TITLE'),
+            message: this.translate.instant(
+              'STORAGE_MANAGEMENT.SUCCESS_MESSAGE'
+            ),
           });
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === HttpStatusCode.Conflict) {
             this.notificationPopupService.warning({
-              title: 'Warning',
+              title: this.translate.instant('STORAGE_MANAGEMENT.WARNING_TITLE'),
               message: error.error.message,
               duration: 4000,
             });
           } else {
             this.notificationPopupService.error({
-              title: 'Error',
+              title: this.translate.instant('STORAGE_MANAGEMENT.ERROR_TITLE'),
               message: error.error.message,
               duration: 3000,
             });

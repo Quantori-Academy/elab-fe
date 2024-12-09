@@ -28,6 +28,7 @@ import {
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { fadeInOutEmailSuccess } from '../../shared/animations/fadeInOut/fadeInOut.animation';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forgot-password',
@@ -42,6 +43,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     NgClass,
+    TranslateModule,
   ],
   providers: [ForgotPasswordService],
   templateUrl: './forgot-password.component.html',
@@ -61,6 +63,7 @@ export class ForgotPasswordComponent implements OnDestroy {
   private router = inject(Router);
   private forgotPasswordService = inject(ForgotPasswordService);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   constructor() {
     this.forgotPasswordForm = this.fb.group({

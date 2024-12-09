@@ -1,44 +1,120 @@
-@if (reagent$ | async; as reagent) { <div class="header">
-  <h5>{{ reagent.category }} details</h5>
+@if (reagent$ | async; as reagent) {
+<div class="header">
+  <h5>
+    {{
+        'REAGENT_DETAILED_PAGE.DETAILS_TITLE' | translate: {
+          category: ('CATEGORIES.' + reagent.category.toUpperCase()) | translate,
+        }
+    }}
+  </h5>
 </div>
 <mat-card class="reagent-info-wrapper">
   <mat-card-content>
-  <div class="reagent-structure">
-    @if (reagent.structure) {
-      <button class="copy-button" mat-icon-button onclick="this.blur()" (click)="onCopyStructure()"
-        matTooltip="Copy structure">
+    <div class="reagent-structure">
+      @if (reagent.structure) {
+      <button
+        class="copy-button"
+        mat-icon-button
+        onclick="this.blur()"
+        (click)="onCopyStructure()"
+        matTooltip="{{ 'REAGENT_DETAILED_PAGE.COPY_STRUCTURE' | translate }}"
+      >
         <mat-icon>content_copy</mat-icon>
       </button>
-      <app-molecule-structure [structure]="reagent.structure" [width]="300" [height]="300"></app-molecule-structure>
-      <p class="smiles"><span>SMILES:</span> {{reagent.structure}}</p>
-    } @else {
-        <div class="no-reagent-structure">
-        <p>No structure provided</p>
-        <img src="/assets/icons/reagent.svg" alt="invalid structure image">
+      <app-molecule-structure
+        [structure]="reagent.structure"
+        [width]="300"
+        [height]="300"
+      ></app-molecule-structure>
+      <p class="smiles">
+        <span>{{ "REAGENT_DETAILED_PAGE.SMILES" | translate }}:</span>
+        {{ reagent.structure }}
+      </p>
+      } @else {
+      <div class="no-reagent-structure">
+        <p>{{ "REAGENT_DETAILED_PAGE.NO_STRUCTURE" | translate }}</p>
+        <img
+          src="/assets/icons/reagent.svg"
+          alt="{{
+            'REAGENT_DETAILED_PAGE.INVALID_STRUCTURE_IMAGE' | translate
+          }}"
+        />
       </div>
       }
-  </div>
+    </div>
 
-  <div class="reagent-details">
-      <p><span>Name:</span> {{ reagent.name }}</p>
-      <p><span>ID:</span> {{ reagent.id }}</p>
-      <p><span>Category:</span> {{ reagent.category || "-" }}</p>
-      <p><span>Quantity:</span> {{ reagent.quantityLeft }} {{ reagent.quantityUnit }}
-    </p>
-      <p><span>Description:</span> {{ reagent.description || "-"}}</p>
-      <p><span>CAS:</span> {{ reagent.casNumber || "-" }}</p>
-      <p><span>Producer:</span> {{ reagent.producer || "-" }}</p>
-      <p><span>Catalog ID:</span> {{ reagent.catalogId|| "-" }}</p>
-      <p><span>Price:</span> @if(reagent.pricePerUnit){ {{ reagent.pricePerUnit }}$ per {{ reagent.quantityUnit }}}
-        @else{ - } </p>
-        <p><span>Catalog link: </span> @if(reagent.catalogLink){ <a [href]="reagent.catalogLink">{{ reagent.catalogLink }}</a> } @else {-}
-        </p>
+    <div class="reagent-details">
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.NAME" | translate }}:</span>
+        {{ reagent.name }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.ID" | translate }}:</span>
+        {{ reagent.id }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.CATEGORY" | translate }}:</span>
+        {{ reagent.category || "-" }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.QUANTITY" | translate }}:</span>
+        {{ reagent.quantityLeft }} {{ reagent.quantityUnit }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.DESCRIPTION" | translate }}:</span>
+        {{ reagent.description || "-" }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.CAS" | translate }}:</span>
+        {{ reagent.casNumber || "-" }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.PRODUCER" | translate }}:</span>
+        {{ reagent.producer || "-" }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.CATALOG_ID" | translate }}:</span>
+        {{ reagent.catalogId || "-" }}
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.PRICE" | translate }}:</span>
+        @if (reagent.pricePerUnit) {
+        {{ reagent.pricePerUnit }}$
+        {{ "REAGENT_DETAILED_PAGE.PER" | translate }}
+        {{ reagent.quantityUnit }}
+        } @else { - }
+      </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.CATALOG_LINK" | translate }}:</span>
+        @if (reagent.catalogLink) {
+        <a [href]="reagent.catalogLink">{{ reagent.catalogLink }}</a>
+        } @else { - }
+      </p>
+    </div>
+  </mat-card-content>
+  <div class="actions">
+    <button
+      mat-fab
+      extended
+      class="actions_edit"
+      (click)="onEditReagent(reagent)"
+    >
+      {{ "REAGENT_DETAILED_PAGE.EDIT_QUANTITY" | translate }}
+      <mat-icon>edit</mat-icon>
+    </button>
+    @if (isProcurementOfficer) {
+    <button
+      mat-fab
+      extended
+      class="actions_delete"
+      (click)="onDeleteReagent(reagent)"
+    >
+      {{ "REAGENT_DETAILED_PAGE.DELETE_REAGENT" | translate }}
+      <mat-icon color="warn">delete</mat-icon>
+    </button>
+    }
   </div>
-</mat-card-content>
-<div class="actions">
-  <button  mat-fab extended class="actions_edit" (click)="onEditReagent(reagent)">Edit quantity<mat-icon>edit</mat-icon></button>
-  @if(isProcurementOfficer){
-    <button  mat-fab extended  class="actions_delete" (click)="onDeleteReagent(reagent)">Delete reagent<mat-icon color="warn">delete</mat-icon></button>
-  }
-</div>
-</mat-card> } @else { <app-table-loader-spinner /> }
+</mat-card>
+} @else {
+<app-table-loader-spinner />
+}

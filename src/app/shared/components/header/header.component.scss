@@ -23,11 +23,11 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  cursor: pointer;
-  button {
+
+  .logout-btn {
     border: none;
     color: white;
-    cursor: pointer;
+    margin-left: 12px;
 
     &:hover {
       background-color: #be1a1a;
@@ -38,14 +38,31 @@
 .username {
   color: #496984;
   transition: all 0.5s ease;
+  margin-right: 10px;
+
+  &:hover {
+    color: var(--primary-color);
+    cursor: pointer;
+  }
 }
 
-.username:hover {
+.language-button {
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+.selected {
+  font-weight: bold;
+  background-color: var(--neutral-color-light2);
   color: var(--primary-color);
 }
 
-.username {
-  margin-right: 10px;
+.header-icon {
+  color: #496984;
 }
 
 @media (orientation: portrait) and (max-width: 500px) {

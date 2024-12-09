@@ -12,20 +12,23 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { ReagentRequestService } from '../reagent-request-page/reagent-request-page.service';
-// import { AsyncPipe } from '@angular/common';
-import { ReagentRequestList } from '../reagent-request-page/reagent-request-page.interface';
 import { take } from 'rxjs/operators';
 import { NotificationPopupService } from '../../../shared/services/notification-popup/notification-popup.service';
+import { ReagentRequestList } from '../reagent-request-page/reagent-request-page.interface';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-decline-reagent-request',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule, 
-    // AsyncPipe
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    TranslateModule,
   ],
   templateUrl: './decline-reagent-request.component.html',
-  styleUrls: ['./decline-reagent-request.component.scss'],
+  styleUrl: './decline-reagent-request.component.scss',
 })
 export class DeclineReagentRequestComponent implements OnInit {
   readonly MAX_LENGTH = 300;
@@ -34,6 +37,7 @@ export class DeclineReagentRequestComponent implements OnInit {
   private reagentRequestService = inject(ReagentRequestService);
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<DeclineReagentRequestComponent>);
+  private translate = inject(TranslateService);
 
   public reagentRequestForm: FormGroup = this.fb.group({
     status: [{ value: 'Declined', disabled: true }, [Validators.required]],
@@ -70,17 +74,30 @@ export class DeclineReagentRequestComponent implements OnInit {
       .subscribe({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagent Request declined',
+            title: this.translate.instant(
+              'DECLINE_REAGENT_REQUEST.SUCCESS_TITLE'
+            ),
+            message: this.translate.instant(
+              'DECLINE_REAGENT_REQUEST.SUCCESS_MESSAGE'
+            ),
           });
           this.dialogRef.close(true);
         },
         error: (error: HttpErrorResponse) => {
           this.notificationPopupService.error({
-            title: 'Error',
+            title: this.translate.instant(
+              'DECLINE_REAGENT_REQUEST.ERROR_TITLE'
+            ),
             message: error.error.message,
           });
         },
       });
+  }
+
+  get translatedStatus(): string {
+    const status = this.reagentRequestForm.get('status')?.value;
+    return status
+      ? this.translate.instant('ORDERS_LIST.STATUS.' + status.toUpperCase())
+      : '';
   }
 }

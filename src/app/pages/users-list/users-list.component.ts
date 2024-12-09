@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserManagementFormComponent } from './components/user-management-form/user-management-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationPopupService } from '../../shared/services/notification-popup/notification-popup.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-users-list',
@@ -22,6 +23,7 @@ import { NotificationPopupService } from '../../shared/services/notification-pop
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    TranslateModule,
   ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
@@ -30,6 +32,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   private users: IUserInfo[] | null = null;
   private subscriptions = new Subscription();
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
 
   userRoles = Object.values(UserRoles);
   selectedRole = '';
@@ -65,10 +68,18 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.dataSource.filterPredicate = this.customFilterPredicate();
       },
       error: (error) => {
-        console.error('Error loading users:', error.message);
+        console.error(
+          this.translate.instant('USERS_LIST.ERROR_LOADING_USERS'),
+          error.message
+        );
         this.notificationPopupService.error({
-          title: 'Error',
-          message: `Failed to load users: ${error.message}`,
+          title: this.translate.instant('USERS_LIST.ERROR_TITLE'),
+          message: this.translate.instant(
+            'USERS_LIST.ERROR_LOADING_USERS_MESSAGE',
+            {
+              error: error.message,
+            }
+          ),
           duration: 3000,
         });
       },
@@ -131,7 +142,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
       width: '450px',
       data: {
         userData: user,
-        formTitle: 'User Data',
+        formTitle: this.translate.instant('USERS_LIST.USER_DATA'),
       },
     });
 
@@ -145,18 +156,22 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(user: IUserInfo) {
-    if (!confirm('Confirm action -> Delete user:')) return;
+    if (!confirm(this.translate.instant('USERS_LIST.DELETE_CONFIRMATION')))
+      return;
     const deleteSub = this.userManagementService.deleteUser(user.id).subscribe({
       next: () => {
         this.notificationPopupService.info({
           title: '',
-          message: 'User deleted successfully!',
+          message: this.translate.instant('USERS_LIST.DELETE_SUCCESS'),
           duration: 3000,
         });
         this.loadUsers();
       },
       error: (error: Error) => {
-        console.error('Delete user failed', error);
+        console.error(
+          this.translate.instant('USERS_LIST.DELETE_USER_FAILED'),
+          error
+        );
       },
     });
     this.subscriptions.add(deleteSub);

@@ -22,6 +22,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-room-management',
@@ -34,7 +35,8 @@ import { NoDataComponent } from '../../../../shared/components/no-data/no-data.c
     AsyncPipe,
     // DatePipe,
     TableLoaderSpinnerComponent,
-    NoDataComponent
+    NoDataComponent,
+    TranslateModule,
   ],
   templateUrl: './room-management.component.html',
   styleUrl: './room-management.component.scss',
@@ -45,6 +47,7 @@ export class RoomManagementComponent implements OnInit {
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private rbcService = inject(RbacService);
+  private translate = inject(TranslateService);
 
   public displayedColumns = ['room', 'description', 'storages'];
   public pageSizeOptions = inject(PAGE_SIZE_OPTIONS);
@@ -62,20 +65,20 @@ export class RoomManagementComponent implements OnInit {
   }
 
   public openDialog() {
-    this.dialog.open(AddEditRoomComponent, {width: '400px'});
+    this.dialog.open(AddEditRoomComponent, { width: '400px' });
   }
 
   public onEdit(element: RoomData) {
     this.dialog.open(AddEditRoomComponent, {
       data: element,
-      width: '400px'
+      width: '400px',
     });
   }
 
   public onDelete(element: RoomData) {
     this.dialog.open(DeleteConfirmComponent, {
       data: {
-        message: 'Are you sure you want to delete the room?',
+        message: this.translate.instant('ROOM_MANAGEMENT.DELETE_CONFIRMATION'),
         deleteHandler: () => this.deleteHandler(element.id!),
       },
       width: '400px',
@@ -88,20 +91,20 @@ export class RoomManagementComponent implements OnInit {
       tap({
         next: () => {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Room is deleted successfully',
+            title: this.translate.instant('ROOM_MANAGEMENT.SUCCESS_TITLE'),
+            message: this.translate.instant('ROOM_MANAGEMENT.SUCCESS_MESSAGE'),
           });
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === HttpStatusCode.Conflict) {
             this.notificationPopupService.warning({
-              title: 'Warning',
+              title: this.translate.instant('ROOM_MANAGEMENT.WARNING_TITLE'),
               message: error.error.message,
               duration: 4000,
             });
           } else {
             this.notificationPopupService.error({
-              title: 'Error',
+              title: this.translate.instant('ROOM_MANAGEMENT.ERROR_TITLE'),
               message: error.error.message,
               duration: 3000,
             });

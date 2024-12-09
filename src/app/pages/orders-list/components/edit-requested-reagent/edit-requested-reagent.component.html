@@ -1,17 +1,23 @@
-<h5>Edit Requested Reagent</h5>
+<h5>{{ "EDIT_REQUESTED_REAGENT.TITLE" | translate }}</h5>
 <form action="" [formGroup]="reagentRequestForm" (ngSubmit)="onEdit()">
   <mat-form-field appearance="outline">
-    <mat-label>Desired Quantity</mat-label>
+    <mat-label>{{
+      "EDIT_REQUESTED_REAGENT.DESIRED_QUANTITY" | translate
+    }}</mat-label>
     <input matInput formControlName="desiredQuantity" />
     @if (hasError('desiredQuantity', 'required')) {
-    <mat-error>Desired quantity is required</mat-error>
+    <mat-error>{{
+      "EDIT_REQUESTED_REAGENT.DESIRED_QUANTITY_REQUIRED" | translate
+    }}</mat-error>
     }
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Package</mat-label>
+    <mat-label>{{ "EDIT_REQUESTED_REAGENT.PACKAGE" | translate }}</mat-label>
     <mat-select formControlName="package">
-      <mat-option [value]="null">None</mat-option>
+      <mat-option [value]="null">{{
+        "EDIT_REQUESTED_REAGENT.NONE" | translate
+      }}</mat-option>
       @for (pkg of packages; track pkg.value) {
       <mat-option [value]="pkg.value">
         {{ pkg.viewValue }}
@@ -19,7 +25,9 @@
       }
     </mat-select>
     @if (hasError('package', 'required')) {
-    <mat-error>Package is required</mat-error>
+    <mat-error>{{
+      "EDIT_REQUESTED_REAGENT.PACKAGE_REQUIRED" | translate
+    }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field appearance="outline">
@@ -33,10 +41,10 @@
   </mat-form-field>
   <div class="actions">
     <button mat-raised-button color="primary" type="submit" (click)="onEdit()">
-      Update
+      {{ "EDIT_REQUESTED_REAGENT.UPDATE_BUTTON" | translate }}
     </button>
     <button mat-button color="warn" type="button" (click)="onClose()">
-      Close
+      {{ "EDIT_REQUESTED_REAGENT.CLOSE_BUTTON" | translate }}
     </button>
   </div>
 </form>

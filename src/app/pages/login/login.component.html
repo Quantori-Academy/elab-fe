@@ -1,8 +1,8 @@
 <div class="form-container">
   <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     @if(errorMessage()) {
-    <mat-card class="login-error"
-      >{{ errorMessage() }}
+    <mat-card class="login-error">
+      {{ errorMessage() }}
       <span
         class="close-btn"
         (keyup)="$event.key === 'Enter' && closeError()"
@@ -12,9 +12,10 @@
       >
     </mat-card>
     }
-    <h2 id="login-h2" id="login-h2">Login</h2>
+    <h2 id="login-h2">{{ "LOGIN.TITLE" | translate }}</h2>
+
     <mat-form-field id="login-form-field" hideRequiredMarker="true">
-      <mat-label>Email</mat-label>
+      <mat-label>{{ "LOGIN.EMAIL" | translate }}</mat-label>
       <input
         mat-error
         id="email"
@@ -24,13 +25,14 @@
       />
 
       @if(emailIsInvalid) {
-      <mat-error>Please enter a valid email address</mat-error>
-      } @if(emailTouched && !emailIsInvalid) {
-      <mat-error>Email is required</mat-error>
+      <mat-error>{{ "LOGIN.EMAIL_INVALID" | translate }}</mat-error>
+      } @else if(emailTouched && !emailIsInvalid) {
+      <mat-error>{{ "LOGIN.EMAIL_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
+
     <mat-form-field id="login-form-field" hideRequiredMarker="true">
-      <mat-label>Password</mat-label>
+      <mat-label>{{ "LOGIN.PASSWORD" | translate }}</mat-label>
       <input
         id="password"
         type="password"
@@ -43,23 +45,24 @@
         (click)="hide.confirmPassword = !hide.confirmPassword"
         >{{ hide.confirmPassword ? "visibility_off" : "visibility" }}</mat-icon
       >
-      @if (passwordIsInvalid) {
+
+      @if(passwordIsInvalid) {
       <mat-error>
-        Please enter a valid password (must be at least 8 characters long)
+        {{ "LOGIN.PASSWORD_INVALID" | translate }}
       </mat-error>
-      } @if(passwordTouched && !passwordIsInvalid) {
-      <mat-error> Password is required </mat-error>
+      } @else if(passwordTouched && !passwordIsInvalid) {
+      <mat-error>{{ "LOGIN.PASSWORD_REQUIRED" | translate }}</mat-error>
       }
     </mat-form-field>
+
     <span>
       <button
         mat-stroked-button
         type="button"
-        id="login-form-button"
         id="login-form-button-fp"
         (click)="navigateToForgotPassword()"
       >
-        Forgot Password?
+        {{ "LOGIN.FORGOT_PASSWORD" | translate }}
       </button>
       <button
         type="submit"
@@ -68,10 +71,10 @@
         id="login-form-button-submit"
         [disabled]="form.invalid"
       >
-        Login
+        {{ "LOGIN.LOGIN_BUTTON" | translate }}
       </button>
     </span>
-    @if (isLoading) {
+    @if(isLoading) {
     <div class="login-spinner-container">
       <mat-progress-spinner
         mode="indeterminate"

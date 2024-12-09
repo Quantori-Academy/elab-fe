@@ -14,6 +14,8 @@ import { MatIcon } from '@angular/material/icon';
 import { LogoutService } from '../../auth/services/logout/logout.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler } from '@angular/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { NgFor } from '@angular/common';
 
 let initialEmailValue = '';
 const savedForm = localStorage.getItem('login-email');
@@ -26,9 +28,16 @@ if (savedForm) {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatIcon, MatCardModule],
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    MatIcon,
+    MatCardModule,
+    TranslateModule,
+    NgFor,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
@@ -42,9 +51,16 @@ export class LoginComponent implements OnInit {
   public isSubmitting = false;
   private errorHandler = inject(ErrorHandler);
 
+  public languages = [
+    { code: 'en', label: 'English' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'fr', label: 'Français' },
+  ];
+
   constructor(
     private authLogin: AuthService,
-    private logoutService: LogoutService
+    private logoutService: LogoutService,
+    public translate: TranslateService
   ) {}
 
   form = new FormGroup({
@@ -122,7 +138,9 @@ export class LoginComponent implements OnInit {
 
           if (error instanceof HttpErrorResponse) {
             if (error.status === 401) {
-              this.errorMessage.set('Incorrect password or email');
+              this.errorMessage.set(
+                this.translate.instant('LOGIN.ERROR_INCORRECT')
+              );
               this.errorHandler.handleError(error);
             } else {
               this.errorHandler.handleError(error);
@@ -144,5 +162,10 @@ export class LoginComponent implements OnInit {
 
   closeError() {
     this.errorMessage.set('');
+  }
+
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+    localStorage.setItem('language', lang);
   }
 }

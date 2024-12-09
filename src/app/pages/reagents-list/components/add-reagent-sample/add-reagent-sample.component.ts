@@ -32,6 +32,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-reagent-sample',
@@ -43,7 +44,8 @@ import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.
     ReactiveFormsModule,
     TableLoaderSpinnerComponent,
     NoDataComponent,
-    SpinnerDirective
+    SpinnerDirective,
+    TranslateModule,
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './add-reagent-sample.component.html',
@@ -56,6 +58,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<AddReagentSampleComponent>);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   public displayedColumns: string[] = [
     'name',
@@ -191,7 +194,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   public onSave(): void {
-    this.setSelectedReagentSample()
+    this.setSelectedReagentSample();
     if (this.formSelection.valid) {
       this.dialogRef.close(this.selectedReagentSample);
     } else {
@@ -200,7 +203,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onFilterName($event: Event) {
-    this.setSelectedReagentSample()
+    this.setSelectedReagentSample();
     const value = ($event.target as HTMLInputElement).value;
     this.reagentsQueryService.nameFilterSubject.next({
       value,
@@ -209,7 +212,7 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onFilterCategory(value: string) {
-    this.setSelectedReagentSample()
+    this.setSelectedReagentSample();
     this.reagentsQueryService.setFilteringPageData({
       value,
       column: ReagentListColumn.CATEGORY,
@@ -217,12 +220,12 @@ export class AddReagentSampleComponent implements OnInit, OnDestroy {
   }
 
   onSortChange(sort: Sort) {
-    this.setSelectedReagentSample()
+    this.setSelectedReagentSample();
     this.reagentsQueryService.setSortingPageData(sort);
   }
 
   handlePageEvent($event: PageEvent) {
-    this.setSelectedReagentSample()
+    this.setSelectedReagentSample();
     this.reagentsQueryService.setPageData($event);
   }
 

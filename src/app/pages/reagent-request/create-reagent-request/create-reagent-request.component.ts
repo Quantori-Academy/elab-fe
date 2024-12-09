@@ -16,6 +16,7 @@ import {
 } from '../../../shared/models/reagent-model';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-reagent-request',
@@ -26,9 +27,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     MaterialModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TranslateModule,
   ],
   templateUrl: './create-reagent-request.component.html',
-  styleUrls: ['./create-reagent-request.component.scss'],
+  styleUrl: './create-reagent-request.component.scss',
 })
 export class CreateReagentRequestComponent {
   private fb = inject(FormBuilder);
@@ -36,6 +38,7 @@ export class CreateReagentRequestComponent {
   private notificationsService = inject(NotificationPopupService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private translate = inject(TranslateService);
 
   reagentRequestForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -99,8 +102,12 @@ export class CreateReagentRequestComponent {
         .subscribe({
           next: () => {
             this.notificationsService.success({
-              title: 'Success',
-              message: 'Reagent request created successfully!',
+              title: this.translate.instant(
+                'CREATE_REAGENT_REQUEST.SUCCESS_TITLE'
+              ),
+              message: this.translate.instant(
+                'CREATE_REAGENT_REQUEST.SUCCESS_MESSAGE'
+              ),
               duration: 3000,
             });
             this.router.navigate(['/reagent-request-page']);
@@ -108,8 +115,12 @@ export class CreateReagentRequestComponent {
           error: (error) => {
             console.error('Error creating reagent request:', error);
             this.notificationsService.error({
-              title: 'Error',
-              message: 'Failed to create reagent request. Please try again.',
+              title: this.translate.instant(
+                'CREATE_REAGENT_REQUEST.ERROR_TITLE'
+              ),
+              message: this.translate.instant(
+                'CREATE_REAGENT_REQUEST.ERROR_MESSAGE'
+              ),
               duration: 3000,
             });
           },

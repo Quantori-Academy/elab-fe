@@ -24,6 +24,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { confirmPasswordValidator } from '../../shared/validators/confirm-password.validator';
 import { ForgotPasswordService } from '../../auth/services/forgot-password/forgot-password.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset-password',
@@ -36,6 +37,7 @@ import { ForgotPasswordService } from '../../auth/services/forgot-password/forgo
     MatIcon,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',

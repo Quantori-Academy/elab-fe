@@ -13,9 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
-import { ChangePasswordService } from '../../auth/services/change-password.service';
-import { MaterialModule } from '../../material.module';
 import { AuthService } from '../../auth/services/authentication/auth.service';
+import { MaterialModule } from '../../material.module';
+import { ChangePasswordService } from '../../auth/services/change-password.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-first-password-change',
@@ -28,6 +29,7 @@ import { AuthService } from '../../auth/services/authentication/auth.service';
     MatIconModule,
     ReactiveFormsModule,
     MaterialModule,
+    TranslateModule,
   ],
   templateUrl: './first-password-change.component.html',
   styleUrls: ['./first-password-change.component.scss'],
@@ -37,6 +39,7 @@ export class FirstPasswordChangeComponent {
   private fb: FormBuilder = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  public translate = inject(TranslateService);
 
   passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 

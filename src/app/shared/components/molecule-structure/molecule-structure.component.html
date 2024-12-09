@@ -1,18 +1,15 @@
-
-  <span *ngIf="loading; else loadedView" class="loading-icon">
-    <i class="fas fa-spin fa-2x fa-circle-notch"></i>
-  </span>
-  <ng-template #loadedView>
-    <div *ngIf="error; else molView">
-      <span>{{ error }}</span>
-    </div>
-    <ng-template #molView>
-      <app-canvas-renderer
-        [structure]="structure"
-        [drawingDetails]="drawDetails"
-      ></app-canvas-renderer>
-    </ng-template>
+<span *ngIf="loading; else loadedView" class="loading-icon">
+  <i class="fas fa-spin fa-2x fa-circle-notch"></i>
+</span>
+<ng-template #loadedView>
+  <div *ngIf="error; else molView">
+    <span>{{ error }}</span>
+  </div>
+  <ng-template #molView>
+    <app-canvas-renderer
+      *ngIf="drawDetails"
+      [structure]="structure"
+      [drawingDetails]="drawDetails"
+    ></app-canvas-renderer>
   </ng-template>
-
-
-
+</ng-template>

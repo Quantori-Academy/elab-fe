@@ -25,11 +25,18 @@ import { StorageLocationQueryService } from '../../../storage-location/services/
 import { StorageLocationColumn } from '../../../storage-location/models/storage-location.enum';
 import { AsyncPipe } from '@angular/common';
 import { storageLocationAutoCompleteValidator } from '../../../../shared/validators/storage-location-autocomplete.validator';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-move-reagent',
   standalone: true,
-  imports: [MaterialModule, FormsModule, AsyncPipe, ReactiveFormsModule],
+  imports: [
+    MaterialModule,
+    FormsModule,
+    AsyncPipe,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
   providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './move-reagent.component.html',
   styleUrl: './move-reagent.component.scss',
@@ -41,6 +48,7 @@ export class MoveReagentComponent implements OnInit {
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<MoveReagentComponent>);
   private fb = inject(FormBuilder);
+  private translate = inject(TranslateService);
 
   public movedReagents!: Map<number, Set<number>>;
   public storageLocations$?: Observable<StorageLocationListData>;
@@ -60,7 +68,8 @@ export class MoveReagentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storageLocations$ = this.storageLocationService.searchStorageLocationByName();
+    this.storageLocations$ =
+      this.storageLocationService.searchStorageLocationByName();
   }
 
   displayFn = (option: StorageLocationItem): string => {
@@ -97,23 +106,25 @@ export class MoveReagentComponent implements OnInit {
 
       const httpResponses = await Promise.allSettled(movePromises);
 
-      const rejectedRes = httpResponses.filter((res) => res.status === 'rejected');
+      const rejectedRes = httpResponses.filter(
+        (res) => res.status === 'rejected'
+      );
 
       if (httpResponses.length === rejectedRes.length) {
         this.notificationPopupService.error({
-          title: 'Error',
-          message: "Reagents couldn't move to storage",
+          title: this.translate.instant('MOVE_REAGENT.ERROR_TITLE'),
+          message: this.translate.instant('MOVE_REAGENT.ERROR_MESSAGE'),
         });
         this.dialogRef.close(false);
       } else {
         if (!rejectedRes.length) {
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Reagents successfully moved',
+            title: this.translate.instant('MOVE_REAGENT.SUCCESS_TITLE'),
+            message: this.translate.instant('MOVE_REAGENT.SUCCESS_MESSAGE'),
           });
         } else {
           this.notificationPopupService.warning({
-            title: 'Warning',
+            title: this.translate.instant('MOVE_REAGENT.WARNING_TITLE'),
             message: rejectedRes
               .map((res) => res.reason.error.message)
               .join('\n'),

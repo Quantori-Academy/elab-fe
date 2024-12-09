@@ -6,6 +6,7 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
+
   <div
     class="logo"
     (click)="navigateToDashboard()"
@@ -16,6 +17,27 @@
     <div>E-LAB</div>
   </div>
 </div>
+
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="languageMenuPreLogin"
+  *ngIf="
+    (currentUser$ | async) === null || (currentUser$ | async) === undefined
+  "
+>
+  <mat-icon class="header-icon">language</mat-icon>
+</button>
+<mat-menu #languageMenuPreLogin="matMenu" xPosition="before">
+  <button
+    mat-menu-item
+    *ngFor="let lang of languages"
+    (click)="changeLanguage(lang.code)"
+    [class.selected]="translate.currentLang === lang.code"
+  >
+    <span>{{ lang.label }}</span>
+  </button>
+</mat-menu>
+
 <div class="user-section" *ngIf="currentUser$ | async as currentUser">
   <span
     class="username"
@@ -25,5 +47,22 @@
   >
     {{ currentUser?.firstName }} {{ currentUser?.lastName }}
   </span>
-  <button class="logout-btn" mat-flat-button (click)="logout()">Logout</button>
+
+  <button mat-icon-button [matMenuTriggerFor]="languageMenuPostLogin">
+    <mat-icon class="header-icon">language</mat-icon>
+  </button>
+  <mat-menu #languageMenuPostLogin="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      *ngFor="let lang of languages"
+      (click)="changeLanguage(lang.code)"
+      [class.selected]="translate.currentLang === lang.code"
+    >
+      <span>{{ lang.label }}</span>
+    </button>
+  </mat-menu>
+
+  <button class="logout-btn" mat-flat-button (click)="logout()">
+    {{ "HEADER.LOGOUT" | translate }}
+  </button>
 </div>

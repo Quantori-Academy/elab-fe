@@ -1,16 +1,19 @@
 <div class="content">
   <div class="filter-container">
     <mat-form-field appearance="fill">
-      <mat-label>Search by name</mat-label>
+      <mat-label>{{
+        "REAGENT_REQUESTS_DIALOG.SEARCH_BY_NAME" | translate
+      }}</mat-label>
       <input
         matInput
         (input)="onFilterName($event)"
-        placeholder="Enter reagent name"
+        placeholder="{{
+          'REAGENT_REQUESTS_DIALOG.SEARCH_PLACEHOLDER' | translate
+        }}"
       />
     </mat-form-field>
   </div>
   @if (dataSource$ | async; as ReagentRequestResponse) {
-
   <div class="table-wrapper mat-elevation-z8">
     <table
       mat-table
@@ -20,7 +23,9 @@
       [appSpinner]="isLoading()"
     >
       <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>Select</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENT_REQUESTS_DIALOG.SELECT" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element" class="clickable-cell">
           <mat-checkbox
             [checked]="selectedReagents.has(element.id)"
@@ -28,39 +33,57 @@
           ></mat-checkbox>
         </td>
       </ng-container>
+
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element" mat-cell class="createdAt">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENT_REQUESTS_DIALOG.NAME" | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element" class="createdAt">
           {{ element.name }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="desiredQuantity">
-        <th mat-header-cell *matHeaderCellDef>Desired quantity</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENT_REQUESTS_DIALOG.DESIRED_QUANTITY" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ element.desiredQuantity }} {{ element.quantityUnit }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="package">
-        <th mat-header-cell *matHeaderCellDef>Package</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENT_REQUESTS_DIALOG.PACKAGE" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
-          @if (element.package === null) {<span>N/A</span>}@else {
+          @if (element.package === null) {
+          <span>{{ "REAGENT_REQUESTS_DIALOG.N_A" | translate }}</span>
+          } @else {
           {{ element.package }}
           }
         </td>
       </ng-container>
+
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "REAGENT_REQUESTS_DIALOG.CREATED" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element" class="createdAt">
           {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
         </td>
       </ng-container>
+
       <ng-container matColumnDef="userComments">
-        <th mat-header-cell *matHeaderCellDef>Comment</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "REAGENT_REQUESTS_DIALOG.COMMENT" | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
-          @if ( element.userComments) {
-          {{ element.userComments }} }@else { N/A }
+          @if (element.userComments) {
+          {{ element.userComments }}
+          } @else {
+          {{ "REAGENT_REQUESTS_DIALOG.N_A" | translate }}
+          }
         </td>
       </ng-container>
 
@@ -76,12 +99,14 @@
       <div>
         <img src="/assets/icons/no_data.svg" alt="no_data" />
       </div>
-      <p>No pending requests found</p>
+      <p>{{ "REAGENT_REQUESTS_DIALOG.NO_PENDING_REQUESTS" | translate }}</p>
     </div>
     }
   </div>
   }@else {<app-table-loader-spinner />}
   <div class="filter">
-    <button class="add-btn" mat-flat-button (click)="add()">Add</button>
+    <button class="add-btn" mat-flat-button (click)="add()">
+      {{ "REAGENT_REQUESTS_DIALOG.ADD" | translate }}
+    </button>
   </div>
 </div>

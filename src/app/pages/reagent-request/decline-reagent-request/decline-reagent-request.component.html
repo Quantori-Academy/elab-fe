@@ -1,12 +1,16 @@
-<p class="header">Decline Reagent Request</p>
+<p class="header">{{ "DECLINE_REAGENT_REQUEST.HEADER" | translate }}</p>
 <form class="form" [formGroup]="reagentRequestForm" (ngSubmit)="onSave()">
   <mat-form-field>
-    <mat-label>Status</mat-label>
-    <input matInput formControlName="status" readonly />
+    <mat-label>{{
+      "DECLINE_REAGENT_REQUEST.STATUS_LABEL" | translate
+    }}</mat-label>
+    <input matInput [value]="translatedStatus" readonly />
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Procurement Comment</mat-label>
+    <mat-label>{{
+      "DECLINE_REAGENT_REQUEST.PROCUREMENT_COMMENT_LABEL" | translate
+    }}</mat-label>
     <textarea
       matInput
       formControlName="procurementComments"
@@ -26,7 +30,7 @@
       mat-dialog-close
       color="warn"
     >
-      Cancel
+      {{ "DECLINE_REAGENT_REQUEST.CANCEL" | translate }}
     </button>
     <button
       type="submit"
@@ -34,7 +38,7 @@
       class="save-btn"
       mat-flat-button
     >
-      Save
+      {{ "DECLINE_REAGENT_REQUEST.SAVE" | translate }}
     </button>
   </div>
 </form>

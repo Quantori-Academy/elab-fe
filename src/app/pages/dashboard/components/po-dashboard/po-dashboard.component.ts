@@ -11,7 +11,7 @@ import { chartOptions as statusChartOptions } from '../../charts/donut.chart';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, combineLatest, startWith } from 'rxjs';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { ProcurementOfficerDashboardDataResponse } from '../../models/dashboard.model';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -19,7 +19,9 @@ import { StatusLabelColorDirective } from '../../../../shared/directives/status-
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
-import { TableLoaderSpinnerComponent } from "../../../../shared/components/table-loader-spinner/table-loader-spinner.component";
+import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-po-dashboard',
@@ -33,8 +35,9 @@ import { TableLoaderSpinnerComponent } from "../../../../shared/components/table
     StatusLabelColorDirective,
     ReactiveFormsModule,
     NoDataComponent,
-    TableLoaderSpinnerComponent
-],
+    TableLoaderSpinnerComponent,
+    TranslateModule,
+  ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './po-dashboard.component.html',
   styleUrl: './po-dashboard.component.scss',
@@ -48,16 +51,30 @@ export class PoDashboardComponent implements OnInit {
     'date',
   ];
   private dashboardService = inject(DashboardService);
+  private translate = inject(TranslateService);
+  private dateAdapter = inject(DateAdapter);
   public procurementOfficerDashboardData$!: Observable<{
     requestList: ReagentRequestList[];
-    statusChartOption: Partial<ChartOptions>;
+    statusChartOption: ChartOptions;
   }>;
-  public filteredDate = new FormControl(this.dashboardService.filteredDate.value);
+  public filteredDate = new FormControl(
+    this.dashboardService.filteredDate.value
+  );
 
   ngOnInit(): void {
-    this.procurementOfficerDashboardData$ = this.dashboardService
-      .getProcurementOfficerDashboardData$()
-      .pipe(map(this.setChartOptions));
+    const data$ = this.dashboardService.getProcurementOfficerDashboardData$();
+    const langChange$ = this.translate.onLangChange.pipe(startWith(null));
+
+    this.procurementOfficerDashboardData$ = combineLatest([
+      data$,
+      langChange$,
+    ]).pipe(map(([data]) => this.setChartOptions(data)));
+
+    this.dateAdapter.setLocale(this.translate.currentLang);
+
+    this.translate.onLangChange.subscribe((event) => {
+      this.dateAdapter.setLocale(event.lang);
+    });
   }
 
   setChartOptions(data: ProcurementOfficerDashboardDataResponse) {
@@ -67,23 +84,39 @@ export class PoDashboardComponent implements OnInit {
     const orderStatusLabels = data.requestByStatuses.map(
       (order) => order.status
     );
+
+    const translatedOrderStatusLabels = orderStatusLabels.map((status) =>
+      this.translate.instant('STATUSES.' + status.toUpperCase())
+    );
+
+    const statusChartTitle = this.translate.instant(
+      'PO_DASHBOARD.ORDER_STATUS'
+    );
+
     const statusChartOption = statusChartOptions(
       orderStatusSeries,
-      orderStatusLabels,
-      'Order status',
-      '200px'
-    );
+      translatedOrderStatusLabels,
+      statusChartTitle,
+      '200px',
+      orderStatusLabels
+    ) as ChartOptions;
 
     return { requestList: data.requestList, statusChartOption };
   }
 
   formatMonthYear(): string {
     if (!this.filteredDate) return '';
-    return new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(this.filteredDate.value as Date);
+    const locale = this.translate.currentLang || 'en-US';
+    return new Intl.DateTimeFormat(locale, {
+      month: 'long',
+      year: 'numeric',
+    }).format(this.filteredDate.value as Date);
   }
 
-
-  setMonthAndYear(normalizedMonthAndYear: Date, datepicker: MatDatepicker<Date>) {
+  setMonthAndYear(
+    normalizedMonthAndYear: Date,
+    datepicker: MatDatepicker<Date>
+  ) {
     const ctrlValue = this.filteredDate.value as Date;
     ctrlValue.setMonth(normalizedMonthAndYear.getMonth());
     ctrlValue.setFullYear(normalizedMonthAndYear.getFullYear());

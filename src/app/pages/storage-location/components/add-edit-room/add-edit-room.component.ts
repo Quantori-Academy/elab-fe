@@ -22,11 +22,17 @@ import { RoomManagementService } from '../../services/room-management.service';
 import { RoomData } from '../../models/storage-location.interface';
 import { take } from 'rxjs';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-edit-room',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, MatDialogModule],
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    TranslateModule,
+  ],
   templateUrl: './add-edit-room.component.html',
   styleUrl: './add-edit-room.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,6 +43,7 @@ export class AddEditRoomComponent implements OnInit {
   private roomManagementService = inject(RoomManagementService);
   private notificationPopupService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<AddEditRoomComponent>);
+  private translate = inject(TranslateService);
 
   public roomForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(this.MAX_LENGTH)]],
@@ -88,7 +95,9 @@ export class AddEditRoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.showSuccessMessage('Room is added successfully');
+          this.showSuccessMessage(
+            this.translate.instant('ADD_EDIT_ROOM.SUCCESS_ADD')
+          );
           this.dialogRef.close(true);
         },
         error: (error: HttpErrorResponse) => this.handleError(error),
@@ -101,7 +110,9 @@ export class AddEditRoomComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.showSuccessMessage('Room is edited successfully');
+          this.showSuccessMessage(
+            this.translate.instant('ADD_EDIT_ROOM.SUCCESS_EDIT')
+          );
           this.dialogRef.close(true);
         },
         error: (error: HttpErrorResponse) => this.handleError(error),
@@ -120,7 +131,7 @@ export class AddEditRoomComponent implements OnInit {
       nameControl?.setErrors({ serverError: error.error.message });
     } else {
       this.notificationPopupService.error({
-        title: 'Error',
+        title: this.translate.instant('ADD_EDIT_ROOM.ERROR_TITLE'),
         message: error.error.message,
       });
     }
@@ -128,7 +139,7 @@ export class AddEditRoomComponent implements OnInit {
 
   private showSuccessMessage(message: string) {
     this.notificationPopupService.success({
-      title: 'Success',
+      title: this.translate.instant('ADD_EDIT_ROOM.SUCCESS_TITLE'),
       message,
     });
   }

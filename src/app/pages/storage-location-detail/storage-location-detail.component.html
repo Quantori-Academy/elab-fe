@@ -1,7 +1,11 @@
 @if (storageLocation$ | async; as storageLocation) {
 <div class="info">
   <div class="icon">
-    <img class="storage-icon" src="assets/icons/storage.svg" alt="storage" />
+    <img
+      class="storage-icon"
+      src="assets/icons/storage.svg"
+      alt="{{ 'STORAGE_LOCATION_DETAIL.ALT_STORAGE' | translate }}"
+    />
   </div>
   <div class="content">
     <h5 class="title">{{ storageLocation.room.name }}</h5>
