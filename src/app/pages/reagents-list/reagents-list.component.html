@@ -1,13 +1,32 @@
-<div class="control-bar-wrapper"> @if (isResearcher) { <div class="create-btns"> @if (!storageLocationId) { <button
-  mat-flat-button color="primary" (click)="redirectToCreatePage('reagent')"> Create Reagent </button>
-<button mat-flat-button color="primary" (click)="redirectToCreatePage('sample')"> Create Sample </button>
-  <button mat-flat-button color="primary" (click)="onUploadReagent()">
-    Upload
-  </button>
-} <button
-  mat-flat-button color="primary" (click)="openMoveReagentDialog()" [disabled]="!isReagentsSelected()"> Move Reagent
-</button>
-</div> }
+<div class="control-bar-wrapper">
+  @if (isResearcher) {
+  <div class="create-btns">
+    @if (!storageLocationId) {
+      <div class="create-container">
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="actionMenu">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create</span>
+      </button>
+      <mat-menu #actionMenu="matMenu">
+        <button mat-menu-item (click)="redirectToCreatePage('reagent')"> New reagent </button>
+        <button mat-menu-item (click)="redirectToCreatePage('sample')"> New sample </button>
+      </mat-menu>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="onUploadReagent()">
+      Upload
+    </button>
+    }
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="openMoveReagentDialog()"
+      [disabled]="!isReagentsSelected()"
+    >
+      Move Reagent
+    </button>
+  </div>
+  }
   <div class="filter-container">
     <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>Search by name</mat-label>
