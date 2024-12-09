@@ -759,6 +759,7 @@
     "SUCCESS_MESSAGE": "Bestellung erfolgreich abgelehnt!"
   },
   "REAGENTS_HISTORY_TABLE": {
+    "NO_DATA_AVAILABLE": "Protokollverlauf ist leer",
     "CATEGORY": {
       "SAMPLE": "Probe",
       "REAGENT": "Reagenz"

@@ -6,6 +6,7 @@ import { AsyncPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-reagents-history-list',
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     AsyncPipe,
     TableLoaderSpinnerComponent,
     TranslateModule,
-    UpperCasePipe
+    UpperCasePipe, 
+    NoDataComponent,
   ],
   templateUrl: './reagents-history-list.component.html',
   styleUrls: ['./reagents-history-list.component.scss'],

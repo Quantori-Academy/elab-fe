@@ -97,6 +97,9 @@
         ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+      @if(!reagentHistory.length){
+        <app-no-data [text]="'REAGENTS_HISTORY_TABLE.NO_DATA_AVAILABLE' | translate" />
+        }
     </div>
     }@else {
     <app-table-loader-spinner />

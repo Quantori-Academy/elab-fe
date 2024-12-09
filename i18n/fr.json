@@ -759,6 +759,7 @@
     "SUCCESS_MESSAGE": "Commande refusée avec succès !"
   },
   "REAGENTS_HISTORY_TABLE": {
+    "NO_DATA_AVAILABLE": "Le journal d'historique est vide",
     "CATEGORY": {
       "SAMPLE": "Échantillon",
       "REAGENT": "Réactif"

@@ -759,6 +759,7 @@
     "SUCCESS_MESSAGE": "Order declined successfully!"
   },
   "REAGENTS_HISTORY_TABLE": {
+    "NO_DATA_AVAILABLE": "History log is empty",
     "CATEGORY": {
       "SAMPLE": "Sample",
       "REAGENT": "Reagent"

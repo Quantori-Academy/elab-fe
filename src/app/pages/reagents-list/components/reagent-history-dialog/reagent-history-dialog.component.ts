@@ -10,6 +10,7 @@ import { AsyncPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { BehaviorSubject, map } from 'rxjs';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 
 @Component({
   selector: 'app-reagent-history-dialog',
@@ -21,6 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TableLoaderSpinnerComponent,
     TranslateModule,
     UpperCasePipe,
+    NoDataComponent,
   ],
   templateUrl: './reagent-history-dialog.component.html',
   styleUrl: './reagent-history-dialog.component.scss',
