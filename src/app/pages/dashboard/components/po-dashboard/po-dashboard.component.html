@@ -98,28 +98,18 @@ procurementOfficerDashboardData ) {
 
   <mat-card>
     @if (procurementOfficerDashboardData.statusChartOption.series?.length) {
-    <apx-chart
-      [series]="procurementOfficerDashboardData.statusChartOption.series"
-      [chart]="procurementOfficerDashboardData.statusChartOption.chart"
-      [labels]="procurementOfficerDashboardData.statusChartOption.labels"
-      [title]="procurementOfficerDashboardData.statusChartOption.title"
-      [responsive]="
-        procurementOfficerDashboardData.statusChartOption.responsive
-      "
-      [colors]="procurementOfficerDashboardData.statusChartOption.colors"
-      [dataLabels]="
-        procurementOfficerDashboardData.statusChartOption.dataLabels
-      "
-      [plotOptions]="
-        procurementOfficerDashboardData.statusChartOption.plotOptions
-      "
-    ></apx-chart>
+      <apx-chart
+        [series]="procurementOfficerDashboardData.statusChartOption.series"
+        [chart]="procurementOfficerDashboardData.statusChartOption.chart"
+        [labels]="procurementOfficerDashboardData.statusChartOption.labels"
+        [title]="procurementOfficerDashboardData.statusChartOption.title"
+        [responsive]="procurementOfficerDashboardData.statusChartOption.responsive"
+        [colors]="procurementOfficerDashboardData.statusChartOption.colors"
+        [dataLabels]="procurementOfficerDashboardData.statusChartOption.dataLabels"
+        [plotOptions]="procurementOfficerDashboardData.statusChartOption.plotOptions"
+      ></apx-chart>
     } @else {
-    <app-no-data
-      [text]="'NO_DATA.NO_DATA_FOUND' | translate"
-      size="small"
-      style="min-height: 200px"
-    />
+      <app-no-data text="No data found" size="small" style="min-height: 200px;"/>
     }
   </mat-card>
 </div>
