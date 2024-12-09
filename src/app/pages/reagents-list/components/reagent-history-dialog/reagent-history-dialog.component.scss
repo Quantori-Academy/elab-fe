@@ -1,3 +1,14 @@
+:host {
+  box-sizing: border-box;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.content {
+  padding: 1.5rem;
+  max-height: 50%;
+}
+
 h5{
   color: var(--primary-color-dark) !important;
   text-align: center !important;
@@ -9,4 +20,9 @@ td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.mat-elevation-z8 {
+  max-height: 400px;
+  overflow-x: auto;
+  min-height: 14.4rem;
 }
