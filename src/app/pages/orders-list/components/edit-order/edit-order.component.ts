@@ -128,7 +128,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   get translatedStatus(): string {
     const status = this.updateForm.get('status')?.value;
     return status
-      ? this.translate.instant('ORDERS_LIST.STATUS.' + status.toUpperCase())
+      ? this.translate.instant('ORDERS_LIST.STATUS.' + (status as string).toUpperCase())
       : '';
   }
 }
