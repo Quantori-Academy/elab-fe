@@ -90,7 +90,7 @@
     </mat-datepicker>
   </mat-form-field>
   <mat-card>
-    @if (researcherDashboardData.reagentSampleChartOption.series?.length) {
+    @if (researcherDashboardData.reagentSampleChartOption.series.length) {
     <apx-chart
       [series]="researcherDashboardData.reagentSampleChartOption.series"
       [chart]="researcherDashboardData.reagentSampleChartOption.chart"
@@ -110,7 +110,7 @@
     }
   </mat-card>
   <mat-card>
-    @if ( researcherDashboardData.expiredReagentSampleChartOption.series?.length
+    @if ( researcherDashboardData.expiredReagentSampleChartOption.series.length
     ) {
     <apx-chart
       [series]="researcherDashboardData.expiredReagentSampleChartOption.series!"
@@ -137,7 +137,7 @@
     }
   </mat-card>
   <mat-card>
-    @if (researcherDashboardData.emptyReagentSampleChartOption.series?.length) {
+    @if (researcherDashboardData.emptyReagentSampleChartOption.series.length) {
     <apx-chart
       [series]="researcherDashboardData.emptyReagentSampleChartOption.series"
       [chart]="researcherDashboardData.emptyReagentSampleChartOption.chart"

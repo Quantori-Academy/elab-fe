@@ -11,7 +11,7 @@
   }
 </div>
 <div class="row row2">
-  @if (adminDashboardData.roomChartOption.series?.length) {
+  @if (adminDashboardData.roomChartOption.series.length) {
   <apx-chart
     [series]="adminDashboardData.roomChartOption.series"
     [chart]="adminDashboardData.roomChartOption.chart"
@@ -21,7 +21,7 @@
     [colors]="adminDashboardData.roomChartOption.colors"
     [title]="adminDashboardData.roomChartOption.title"
   ></apx-chart>
-  } @if (adminDashboardData.userChartOption.series?.length) {
+  } @if (adminDashboardData.userChartOption.series.length) {
   <apx-chart
     [series]="adminDashboardData.userChartOption.series"
     [chart]="adminDashboardData.userChartOption.chart"

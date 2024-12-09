@@ -16,7 +16,6 @@ import {
 import { map, Observable, combineLatest, startWith } from 'rxjs';
 import { DashboardService } from '../../services/dashboard/dashboard.service';
 import { AsyncPipe } from '@angular/common';
-import { NoDataComponent } from '../../../../shared/components/no-data/no-data.component';
 import { TableLoaderSpinnerComponent } from '../../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
@@ -27,7 +26,6 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     ChartComponent,
     AsyncPipe,
-    NoDataComponent,
     TableLoaderSpinnerComponent,
     TranslateModule,
   ],

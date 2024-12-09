@@ -97,7 +97,7 @@
   </mat-form-field>
 
   <mat-card>
-    @if (procurementOfficerDashboardData.statusChartOption.series?.length) {
+    @if (procurementOfficerDashboardData.statusChartOption.series.length) {
       <apx-chart
         [series]="procurementOfficerDashboardData.statusChartOption.series"
         [chart]="procurementOfficerDashboardData.statusChartOption.chart"
