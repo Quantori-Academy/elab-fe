@@ -1,5 +1,5 @@
 <h5 class="header">
-  {{ "CREATE_REAGENT.HEADER" | translate : { itemType: isSample ? "CREATE_REAGENT.SAMPLE" : "CREATE_REAGENT.REAGENT" | translate}
+  {{ "CREATE_REAGENT.HEADER" | translate : { itemType: (isSample ? "CREATE_REAGENT.SAMPLE" : "CREATE_REAGENT.REAGENT") | translate}
   }}
 </h5>
 <form [formGroup]="reagentRequestForm" (ngSubmit)="onSubmit()">
