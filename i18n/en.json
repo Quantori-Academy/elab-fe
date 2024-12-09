@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Create New Order",
+    "ADD_REAGENT_REQUEST": "Add reagent request",
     "GENERAL": "General",
     "TITLE_LABEL": "Title",
     "TITLE_REQUIRED": "Title is required.",

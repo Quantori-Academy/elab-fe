@@ -52,7 +52,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-accordion>
+  <mat-accordion multi>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>{{
@@ -169,9 +169,15 @@
   </mat-accordion>
 
   <div class="actions mat-elevation-z6">
-    <button mat-button color="warn" type="button" (click)="cancel()">
-      {{ "CREATE_REAGENT_REQUEST.CANCEL" | translate }}
-    </button>
+    @if(isResearcher){
+      <button mat-button color="warn" type="button" (click)="cancel()">
+        {{ "CREATE_REAGENT_REQUEST.CANCEL" | translate }}
+      </button>
+    } @else if(isProcurementOfficer){
+      <button mat-button color="warn" type="button" mat-dialog-close>
+        {{ "CREATE_REAGENT_REQUEST.CANCEL" | translate }}
+      </button>
+    }
     <button mat-flat-button color="primary" type="submit">
       {{ "CREATE_REAGENT_REQUEST.SUBMIT" | translate }}
     </button>

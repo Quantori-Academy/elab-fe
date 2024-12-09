@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Créer une nouvelle commande",
+    "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
     "GENERAL": "Général",
     "TITLE_LABEL": "Titre",
     "TITLE_REQUIRED": "Le titre est requis.",

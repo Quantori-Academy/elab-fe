@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Neue Bestellung erstellen",
+    "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
     "GENERAL": "Allgemein",
     "TITLE_LABEL": "Titel",
     "TITLE_REQUIRED": "Titel ist erforderlich.",

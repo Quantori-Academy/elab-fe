@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { ReagentRequestCreate } from '../reagent-request-page/reagent-request-page.interface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddStructureComponent } from '../../../shared/components/structure-editor/add-structure/add-structure.component';
 import {
   Unit,
@@ -17,6 +17,7 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { RbacService } from '../../../auth/services/authentication/rbac.service';
 
 @Component({
   selector: 'app-create-reagent-request',
@@ -34,12 +35,15 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class CreateReagentRequestComponent {
   private fb = inject(FormBuilder);
+  private rbacService = inject(RbacService);
   private reagentRequestService = inject(ReagentRequestService);
   private notificationsService = inject(NotificationPopupService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private translate = inject(TranslateService);
-
+  private dialogRef = inject(MatDialogRef<CreateReagentRequestComponent>, { optional: true });
+  isProcurementOfficer = this.rbacService.isProcurementOfficer();
+  isResearcher = this.rbacService.isResearcher();
   reagentRequestForm = this.fb.nonNullable.group({
     name: ['', Validators.required],
     desiredQuantity: [null, [Validators.required, Validators.min(1)]],
@@ -74,6 +78,7 @@ export class CreateReagentRequestComponent {
         name: formValue.name,
         desiredQuantity: Number(formValue.desiredQuantity),
         quantityUnit: formValue.quantityUnit,
+        hide: this.isProcurementOfficer,
         status: 'Pending',
         ...(formValue.packageType ? { package: formValue.packageType } : {}),
         ...(formValue.structureSmiles
@@ -100,7 +105,7 @@ export class CreateReagentRequestComponent {
       this.reagentRequestService
         .createReagentRequest(reagentRequest)
         .subscribe({
-          next: () => {
+          next: (createdReagentRequest) => {
             this.notificationsService.success({
               title: this.translate.instant(
                 'CREATE_REAGENT_REQUEST.SUCCESS_TITLE'
@@ -110,7 +115,12 @@ export class CreateReagentRequestComponent {
               ),
               duration: 3000,
             });
-            this.router.navigate(['/reagent-request-page']);
+            if (this.isProcurementOfficer && this.dialogRef){
+              this.dialogRef.close(createdReagentRequest);
+            }
+            if (this.isResearcher){
+              this.cancel();
+            }
           },
           error: (error) => {
             console.error('Error creating reagent request:', error);

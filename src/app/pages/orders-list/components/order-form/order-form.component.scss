@@ -39,8 +39,8 @@ form {
 
 .filter-container {
   display: flex;
-  align-items: flex-end;
-  justify-content: end;
+  align-items: center;
+  justify-content: space-between;
 }
 .select-quantity-input {
   width: 110px !important;
@@ -106,33 +106,35 @@ mat-expansion-panel {
 }
 
 .reagents-list {
-  max-height: 70px;
+  max-height: 200px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   gap: 0.5rem;
 
   .reagent-item {
-    height: 60px;
+    min-height: 50px;
     display: flex;
     flex-direction: row !important;
     justify-content: start;
+    gap: 50px;
     align-items: center;
     padding: 0;
     background-color: var(--mat-card-background-color);
     p {
       padding: 0;
       margin: 0;
-      flex-grow: 1;
     }
 
     &__seq {
-      width: 50px;
+      width: 20px;
     }
 
-    &_attribute {
-      flex-grow: 1;
+    &__attribute {
+      width: 120px;
+      text-align: left;
     }
+
     &__structure {
       text-align: center;
       flex-grow: 2;
