@@ -289,15 +289,16 @@
     }
   },
   "REAGENTS_LIST": {
-    "UPLOAD": "Hochladen",
+    "CREATE": "Erstellen",
     "CREATE_REAGENT": "Reagenz erstellen",
     "CREATE_SAMPLE": "Probe erstellen",
+    "UPLOAD": "Hochladen",
     "MOVE_REAGENT": "Reagenz verschieben",
-    "SEARCH_BY_NAME": "Nach Name suchen",
-    "PLACEHOLDER_ENTER_NAME": "Name eingeben",
+    "SEARCH_BY_NAME": "Nach Namen suchen",
+    "PLACEHOLDER_ENTER_NAME": "Geben Sie einen Namen ein",
     "SEARCH_BY_STRUCTURE": "Nach Struktur suchen",
-    "PLACEHOLDER_ENTER_STRUCTURE": "Struktur eingeben",
-    "EXACT_MATCH": "Genaue Übereinstimmung",
+    "PLACEHOLDER_ENTER_STRUCTURE": "Geben Sie eine Struktur ein",
+    "EXACT_MATCH": "Exakte Übereinstimmung",
     "FILTER_BY_CATEGORY": "Nach Kategorie filtern",
     "ALL_CATEGORIES": "Alle Kategorien",
     "CATEGORY": {
@@ -311,14 +312,15 @@
       "CAS": "CAS",
       "QUANTITY": "Menge",
       "QUANTITY_LEFT": "Verbleibende Menge",
-      "LOCATION": "Ort",
+      "LOCATION": "Standort",
       "ACTIONS": "Aktionen"
     },
+    "NO_DATA_AVAILABLE": "Keine Reagenzdaten verfügbar",
     "ARIA_LABEL": {
-      "OPEN_REAGENT_PAGE": "Reagenzseite öffnen",
       "SELECT_PAGE": "Seite auswählen"
     }
   },
+  
   "ADD_REAGENT_SAMPLE": {
     "SEARCH_BY_NAME": "Suche nach Name",
     "PLACEHOLDER_ENTER_NAME": "Name eingeben",

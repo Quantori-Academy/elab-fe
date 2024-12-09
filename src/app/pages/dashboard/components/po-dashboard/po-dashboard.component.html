@@ -1,26 +1,26 @@
-@if (procurementOfficerDashboardData$ | async; as
-procurementOfficerDashboardData ) {
-<div class="col col1">
-  <mat-card>
-    @if (procurementOfficerDashboardData.requestList.length) {
-    <mat-card-header>
-      {{ "PO_DASHBOARD.NEW_INCOMING_REQUEST" | translate }}
-    </mat-card-header>
-    <mat-card-content>
-      <div class="table-container">
-        <div class="table-content">
-          <table
-            mat-table
-            [dataSource]="procurementOfficerDashboardData.requestList"
-          >
-            <ng-container matColumnDef="reagent">
-              <th mat-header-cell *matHeaderCellDef>
-                {{ "PO_DASHBOARD.REAGENT" | translate }}
-              </th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.name }}
-              </td>
-            </ng-container>
+@if (procurementOfficerDashboardData$ | async; as procurementOfficerDashboardData ) {
+  <div class="col col1">
+    <mat-card>
+      @if (procurementOfficerDashboardData.requestList.length) {
+        <mat-card-header>{{ "PO_DASHBOARD.NEW_INCOMING_REQUEST" | translate }}
+        </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <div class="table-content">
+              <table mat-table [dataSource]="procurementOfficerDashboardData.requestList">
+                <ng-container matColumnDef="reagent">
+                  <th mat-header-cell *matHeaderCellDef>{{ "PO_DASHBOARD.REAGENT" | translate }}</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef>Date</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.updatedAt || element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
+                  </td>
+                </ng-container>
 
             <ng-container matColumnDef="date">
               <th mat-header-cell *matHeaderCellDef>

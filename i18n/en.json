@@ -288,37 +288,39 @@
       "OPEN": "Open"
     }
   },
-  "REAGENTS_LIST": {
-    "UPLOAD": "Upload",
-    "CREATE_REAGENT": "Create Reagent",
-    "CREATE_SAMPLE": "Create Sample",
-    "MOVE_REAGENT": "Move Reagent",
-    "SEARCH_BY_NAME": "Search by name",
-    "PLACEHOLDER_ENTER_NAME": "Enter a name",
-    "SEARCH_BY_STRUCTURE": "Search by structure",
-    "PLACEHOLDER_ENTER_STRUCTURE": "Enter a structure",
-    "EXACT_MATCH": "Exact match",
-    "FILTER_BY_CATEGORY": "Filter by Category",
-    "ALL_CATEGORIES": "All Categories",
-    "CATEGORY": {
-      "SAMPLE": "Sample",
-      "REAGENT": "Reagent"
-    },
-    "TABLE": {
-      "NAME": "Name",
-      "CATEGORY": "Category",
-      "STRUCTURE": "Structure",
-      "CAS": "CAS",
-      "QUANTITY": "Quantity",
-      "QUANTITY_LEFT": "Quantity Left",
-      "LOCATION": "Location",
-      "ACTIONS": "Actions"
-    },
-    "ARIA_LABEL": {
-      "OPEN_REAGENT_PAGE": "Open reagent page",
-      "SELECT_PAGE": "Select page"
-    }
+"REAGENTS_LIST": {
+  "CREATE": "Create",
+  "CREATE_REAGENT": "Create Reagent",
+  "CREATE_SAMPLE": "Create Sample",
+  "UPLOAD": "Upload",
+  "MOVE_REAGENT": "Move Reagent",
+  "SEARCH_BY_NAME": "Search by name",
+  "PLACEHOLDER_ENTER_NAME": "Enter a name",
+  "SEARCH_BY_STRUCTURE": "Search by structure",
+  "PLACEHOLDER_ENTER_STRUCTURE": "Enter a structure",
+  "EXACT_MATCH": "Exact match",
+  "FILTER_BY_CATEGORY": "Filter by Category",
+  "ALL_CATEGORIES": "All Categories",
+  "CATEGORY": {
+    "SAMPLE": "Sample",
+    "REAGENT": "Reagent"
   },
+  "TABLE": {
+    "NAME": "Name",
+    "CATEGORY": "Category",
+    "STRUCTURE": "Structure",
+    "CAS": "CAS",
+    "QUANTITY": "Quantity",
+    "QUANTITY_LEFT": "Quantity Left",
+    "LOCATION": "Location",
+    "ACTIONS": "Actions"
+  },
+  "NO_DATA_AVAILABLE": "No reagents data available",
+  "ARIA_LABEL": {
+    "SELECT_PAGE": "Select page"
+  }
+},
+  
 "ADD_REAGENT_SAMPLE": {
   "SEARCH_BY_NAME": "Search by name",
   "PLACEHOLDER_ENTER_NAME": "Enter a name",

@@ -289,9 +289,10 @@
     }
   },
   "REAGENTS_LIST": {
-    "UPLOAD": "Télécharger",
+    "CREATE": "Créer",
     "CREATE_REAGENT": "Créer un réactif",
     "CREATE_SAMPLE": "Créer un échantillon",
+    "UPLOAD": "Télécharger",
     "MOVE_REAGENT": "Déplacer le réactif",
     "SEARCH_BY_NAME": "Rechercher par nom",
     "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
@@ -314,11 +315,12 @@
       "LOCATION": "Emplacement",
       "ACTIONS": "Actions"
     },
+    "NO_DATA_AVAILABLE": "Aucune donnée de réactifs disponible",
     "ARIA_LABEL": {
-      "OPEN_REAGENT_PAGE": "Ouvrir la page du réactif",
-      "SELECT_PAGE": "Sélectionner la page"
+      "SELECT_PAGE": "Sélectionner une page"
     }
   },
+  
   "ADD_REAGENT_SAMPLE": {
     "SEARCH_BY_NAME": "Recherche par nom",
     "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
