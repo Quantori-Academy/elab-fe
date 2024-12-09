@@ -696,7 +696,7 @@
     "PER": "par",
     "CATALOG_LINK": "Lien du catalogue",
     "LOCATION": "Emplacement",
-    "EDIT_QUANTITY": "Modifier la quantité",
+    "EDIT": "Modifier",
     "REAGENT_HISTORY": "Historique des réactifs",
     "DELETE_REAGENT": "Supprimer le réactif",
     "STRUCTURE_COPIED": "Structure copiée"

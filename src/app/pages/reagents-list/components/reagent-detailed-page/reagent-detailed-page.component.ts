@@ -10,13 +10,12 @@ import { Reagent } from '../../../../shared/models/reagent-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { MatDialog } from '@angular/material/dialog';
-import { EditQuantityReagentComponent } from '../edit-quantity-reagent/edit-quantity-reagent.component';
 import { DeleteReagentComponent } from '../../../../shared/components/delete-reagent/delete-reagent.component';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 import { ReagentHistoryDialogComponent } from '../reagent-history-dialog/reagent-history-dialog.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-// import { EditReagentComponent } from '../edit-reagent/edit-reagent.component';
 import { ReagentsQueryService } from '../../services/reagents-query.service';
+import { EditReagentComponent } from '../edit-reagent/edit-reagent.component';
 
 @Component({
   selector: 'app-reagent-detailed-page',
@@ -76,18 +75,20 @@ export class ReagentDetailedPageComponent implements OnInit {
 
   onEditReagent(reagent: Reagent) {
     this.dialog
-      .open(EditQuantityReagentComponent, {
-        data: reagent,
-        width: '400px',
-        restoreFocus: false,
-      })
+      .open(EditReagentComponent, { data: reagent, width: '400px' })
       .afterClosed()
-      .pipe(first())
-      .subscribe((updatedData) => {
-        if (updatedData) {
-          this.reagentSubject.next(updatedData);
-          if (updatedData.quantityLeft === 0) {
+      .pipe(
+        first(),
+        switchMap((updatedData) =>
+          updatedData ? this.reagentsService.getReagentById(reagent.id.toString()) : of(null)
+        )
+      )
+      .subscribe((updatedReagent) => {
+        if (updatedReagent) {
+          if (updatedReagent.quantityLeft === 0) {
             this.onClose();
+          } else {
+            this.reagentSubject.next(updatedReagent);
           }
         }
       });

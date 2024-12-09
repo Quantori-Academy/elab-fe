@@ -700,7 +700,7 @@
     "PER": "pro",
     "CATALOG_LINK": "Kataloglink",
     "LOCATION": "Standort",
-    "EDIT_QUANTITY": "Menge bearbeiten",
+    "EDIT": "Bearbeiten",
     "REAGENT_HISTORY": "Reagenzienverlauf",
     "DELETE_REAGENT": "Reagenz löschen",
     "STRUCTURE_COPIED": "Struktur kopiert"

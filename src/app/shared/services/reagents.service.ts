@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReagentsQueryService } from '../../pages/reagents-list/services/reagents-query.service';
 import {
@@ -58,14 +58,15 @@ export class ReagentsService {
     return this.httpClient.patch<Reagent[]>(`${this.apiUrl}/${id}`, reagentData)
   }
 
-  public getReagentById(id: string): Observable<Reagent> {
-    return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`);
+  public getReagentById(id: string, storageId?: string): Observable<Reagent> {
+    const params = new HttpParams().set('storageId', storageId || '');
+    return this.httpClient.get<Reagent>(`${this.apiUrl}/${id}`, { params });
   }
-  
+
   public getReagentsHistory(): Observable<ReagentHistory[]> {
     return this.httpClient.get<ReagentHistory[]>(`${this.apiUrl}/history/log`);
   }
-  
+
   public deleteReagent(id: string): Observable<Reagent> {
     return this.httpClient.delete<Reagent>(`${this.apiUrl}/${id}`);
   }

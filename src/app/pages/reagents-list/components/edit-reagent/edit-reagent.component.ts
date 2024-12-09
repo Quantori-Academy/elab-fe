@@ -94,12 +94,17 @@ export class EditReagentComponent {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (updatedData) => {
+            const actionKey =
+              quantityLeft === 0
+                ? 'EDIT_QUANTITY_REAGENT.SUCCESS_MESSAGE_CONSUMED'
+                : 'EDIT_QUANTITY_REAGENT.SUCCESS_MESSAGE_EDITED';
+
             const categoryTranslated = this.translate.instant(
               'CATEGORIES.' + this.editionData.category.toUpperCase()
             );
             this.notificationsService.success({
               title: this.translate.instant('NOTIFICATIONS.SUCCESS_TITLE'),
-              message: this.translate.instant('NOTIFICATIONS.EDIT_SUCCESS', {
+              message: this.translate.instant(actionKey, {
                 category: categoryTranslated,
               }),
               duration: 3000,

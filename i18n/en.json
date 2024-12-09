@@ -700,7 +700,7 @@
     "PER": "per",
     "CATALOG_LINK": "Catalog link",
     "LOCATION": "Location",
-    "EDIT_QUANTITY": "Edit quantity",
+    "EDIT": "Edit",
     "REAGENT_HISTORY":"Reagent History",
     "DELETE_REAGENT": "Delete reagent",
     "STRUCTURE_COPIED": "Structure copied"
