@@ -1,36 +1,48 @@
 # ElabFe
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+## Technology Stack
+  ### Core Technologies
+   - **Framework:** Angular 18
+   - **Language:** TypeScript, JavaScript (ES6+)
+   - **Styling:** SCSS, Angular Materials
+   - **Package Manager:** npm 
+  ### Tools & Utilities
+   - **Linting & Formatting:** ESLint, Prettier
+   - **Build Tool:** Angular CLI
+   - **Version Control:** Git, GitHub
+  ### Deployment 
+   - **CI/CD:** GitHub Actions
 
-## Requirements
 
-- [NodeJS 18+](https://nodejs.org)
-- [Angular CLI](https://github.com/angular/angular-cli)
+## Core Features
+  ### Authentication
+   <!-- TODO: -->
+  ### User Management
+  <!--  -->
+  ### Storage Location
+  The **Storage Location Navigation** module is designed to manage and organize storage locations. It consists of two tabs:
+  - **Storage Locations Tab:**  
+    Displays a list of all storage locations. Users can view details of each location, such as its name, description, and associated metadata.
 
-## Preparations
+  - **Rooms Tab:**  
+    Displays a list of rooms that contain storage locations. Users can view room details and manage their attributes.
 
-Run `npm i` to install project dependencies
+  #### **Permissions**
+  Only administrators have the ability to:
+  - **Add:** Create new storage locations or rooms with relevant details.
+  - **Edit:** Update existing storage location or room information.
+  - **Delete:** Remove storage locations or rooms from the system.
 
-## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+  ### Reagents
+  <!--  -->
+  ### Reagent Request
+  <!--  -->
+  ### Order
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Useful links (DEV stand, API url)...
 
-## Build
+## Architecture (modules, structure)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Instructions
