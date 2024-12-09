@@ -16,6 +16,7 @@ import { Display } from '../../models/display.interface';
 import { DISPLAY_EXTENSION } from '../../units/display.units';
 import { Profile } from '../../../auth/roles/types';
 import { AsyncPipe } from '@angular/common';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-layout',
@@ -26,6 +27,7 @@ import { AsyncPipe } from '@angular/common';
     RouterLinkActive,
     MaterialModule,
     AsyncPipe,
+    TranslateModule,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
@@ -37,41 +39,42 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private displayExtension: Observable<Display> = inject(DISPLAY_EXTENSION);
   public isMobile = signal(false);
   private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
 
   menuLinks = signal<MenuLink[]>([
     {
       icon: 'home',
-      label: 'Dashboard',
+      label: 'LAYOUT.MENU.DASHBOARD',
       route: 'dashboard',
     },
     {
       icon: 'storage',
-      label: 'Storage Locations',
+      label: 'LAYOUT.MENU.STORAGE_LOCATIONS',
       route: 'storage-locations',
     },
     {
       icon: 'science',
-      label: 'Reagents',
+      label: 'LAYOUT.MENU.REAGENTS',
       route: 'reagents',
       procurementOnly: true,
       researcherOnly: true,
     },
     {
       icon: 'storefront',
-      label: 'Orders Management',
+      label: 'LAYOUT.MENU.ORDERS_MANAGEMENT',
       route: 'orders',
       procurementOnly: true,
     },
     {
       icon: 'note_add',
-      label: 'Reagent Request',
+      label: 'LAYOUT.MENU.REAGENT_REQUEST',
       route: 'reagent-request-page',
       procurementOnly: true,
       researcherOnly: true,
     },
     {
       icon: 'person_add',
-      label: 'Users Management',
+      label: 'LAYOUT.MENU.USERS_MANAGEMENT',
       route: 'users',
       adminOnly: true,
     },
@@ -79,12 +82,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   public navbarWidth = computed(() => {
     if (this.isMobile()) {
-      return 'unset'
+      return 'unset';
     } else {
-      return collapsed() ? '250px' : '60px'
+      return collapsed() ? '250px' : '60px';
     }
   });
-  public sideNavMode = computed(() => this.isMobile() ? 'over' : 'side')
+  public sideNavMode = computed(() => (this.isMobile() ? 'over' : 'side'));
 
   ngOnInit(): void {
     this.displayExtension
@@ -98,7 +101,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   closeSideNav() {
     if (this.isMobile()) {
-      collapsed.set(false)
+      collapsed.set(false);
     }
   }
 

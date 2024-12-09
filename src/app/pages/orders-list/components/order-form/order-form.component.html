@@ -1,47 +1,49 @@
-<h5 class="header">Create New Order</h5>
+<h5 class="header">{{ "ORDER_FORM.HEADER" | translate }}</h5>
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <mat-card>
-    <mat-card-header>General</mat-card-header>
+    <mat-card-header>{{ "ORDER_FORM.GENERAL" | translate }}</mat-card-header>
     <mat-card-content class="form-grid">
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Title</mat-label>
+        <mat-label>{{ "ORDER_FORM.TITLE_LABEL" | translate }}</mat-label>
         <input matInput formControlName="title" />
         @if (orderForm.get('title')?.invalid && orderForm.get('title')?.touched)
         {
-        <mat-error>Title is required.</mat-error>
+        <mat-error>{{ "ORDER_FORM.TITLE_REQUIRED" | translate }}</mat-error>
         }
       </mat-form-field>
       <mat-form-field subscriptSizing="dynamic" appearance="outline">
-        <mat-label>Seller</mat-label>
+        <mat-label>{{ "ORDER_FORM.SELLER_LABEL" | translate }}</mat-label>
         <input
           type="text"
-          placeholder="Select Seller"
+          placeholder="{{ 'ORDER_FORM.SELLER_PLACEHOLDER' | translate }}"
           matInput
           formControlName="seller"
           [matAutocomplete]="auto"
         />
         <mat-autocomplete #auto="matAutocomplete">
-          @for (option of sellerOptions$|async; track option) {
+          @for (option of sellerOptions$ | async; track option) {
           <mat-option [value]="option">{{ option }}</mat-option>
           }
         </mat-autocomplete>
         @if (orderForm.get('seller')?.invalid &&
         orderForm.get('seller')?.touched) {
-        <mat-error>Seller is required.</mat-error>
+        <mat-error>{{ "ORDER_FORM.SELLER_REQUIRED" | translate }}</mat-error>
         }
       </mat-form-field>
     </mat-card-content>
   </mat-card>
   <mat-card class="reagent-request-card">
-    <mat-card-header>Requested Reagents</mat-card-header>
+    <mat-card-header>
+      {{ "ORDER_FORM.REQUESTED_REAGENTS" | translate }}
+    </mat-card-header>
     <mat-card-content>
       <div class="filter-container">
         <mat-form-field appearance="fill">
-          <mat-label>Search by name</mat-label>
+          <mat-label>{{ "ORDER_FORM.SEARCH_BY_NAME" | translate }}</mat-label>
           <input
             matInput
             (input)="onFilterName($event)"
-            placeholder="Enter reagent name"
+            placeholder="{{ 'ORDER_FORM.SEARCH_PLACEHOLDER' | translate }}"
           />
         </mat-form-field>
       </div>
@@ -56,7 +58,9 @@
           [appSpinner]="isLoading()"
         >
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>Select</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.SELECT" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element" class="clickable-cell">
               <mat-checkbox
                 [checked]="selectedReagents.has(element.id)"
@@ -65,29 +69,39 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.NAME" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element" mat-cell class="createdAt">
               {{ element.name }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="desiredQuantity">
-            <th mat-header-cell *matHeaderCellDef>Desired quantity</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.DESIRED_QUANTITY" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ element.desiredQuantity }} {{ element.quantityUnit }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="package">
-            <th mat-header-cell *matHeaderCellDef>Package</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.PACKAGE" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
-              @if (element.package === null) {<span>N/A</span>}@else {
+              @if (element.package === null) {
+              <span>{{ "ORDER_FORM.N_A" | translate }}</span>
+              } @else {
               {{ element.package }}
               }
             </td>
           </ng-container>
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.AMOUNT" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field appearance="fill" class="select-quantity-input">
                 <input
@@ -103,21 +117,30 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ "ORDER_FORM.CREATED" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element" class="createdAt">
               {{ element.createdAt | date : "HH:mm:ss  dd-MM-yyyy" }}
             </td>
           </ng-container>
           <ng-container matColumnDef="userComments">
-            <th mat-header-cell *matHeaderCellDef>Comment</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.COMMENT" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
-              @if ( element.userComments) {
-              {{ element.userComments }} }@else { N/A }
+              @if (element.userComments) {
+              {{ element.userComments }}
+              } @else {
+              {{ "ORDER_FORM.N_A" | translate }}
+              }
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ "ORDER_FORM.ACTIONS" | translate }}
+            </th>
             <td mat-cell *matCellDef="let element">
               <button
                 mat-icon-button
@@ -139,18 +162,27 @@
             *matRowDef="let row; columns: displayedColumns"
           ></tr>
         </table>
-        @if(!ReagentRequestResponse.requests.length && !isLoading()){
-          <app-no-data text="No pending requests found" size="small"/>
+        @if (!ReagentRequestResponse.requests.length && !isLoading()) {
+        <app-no-data
+          [text]="'ORDER_FORM.NO_PENDING_REQUESTS' | translate"
+          size="small"
+        />
         }
       </div>
-      }@else {<app-table-loader-spinner />}
+      } @else {
+      <app-table-loader-spinner />
+      }
     </mat-card-content>
   </mat-card>
-  <mat-expansion-panel [hideToggle]="!selectedReagentReq.length" [disabled]="!selectedReagentReq.length">
+  <mat-expansion-panel
+    [hideToggle]="!selectedReagentReq.length"
+    [disabled]="!selectedReagentReq.length"
+  >
     <mat-expansion-panel-header>
-      <mat-panel-title
-        >{{ selectedReagentReq.length }} Selected Reagents</mat-panel-title
-      >
+      <mat-panel-title>
+        {{ selectedReagentReq.length }}
+        {{ "ORDER_FORM.SELECTED_REAGENTS" | translate }}
+      </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="reagents-list">
       @for (item of selectedReagentReq; track $index; let i = $index) {
@@ -162,22 +194,28 @@
             {{ item.desiredQuantity }}{{ item.quantityUnit }}
           </p>
           @if (item.package) {
-          <p class="reagent-item__attribute">{{ item.amount }}  {{ item.package }}</p>
-          }@else { N/A }
+          <p class="reagent-item__attribute">
+            {{ item.amount }} {{ item.package }}
+          </p>
+          } @else {
+          {{ "ORDER_FORM.N_A" | translate }}
+          }
 
           <app-molecule-structure
             class="reagent-item__structure"
             [structure]="item.structureSmiles!"
             [width]="50"
             [height]="50"
-          />
+          ></app-molecule-structure>
         </mat-card-content>
       </mat-card>
       }
     </div>
     <div class="reagent-action">
       @if (reagentsSelectionError) {
-      <mat-error>Select at least one reagent</mat-error>
+      <mat-error>
+        {{ "ORDER_FORM.SELECT_AT_LEAST_ONE" | translate }}
+      </mat-error>
       }
     </div>
   </mat-expansion-panel>
@@ -188,8 +226,10 @@
       type="button"
       (click)="redirectToReagentList()"
     >
-      Cancel
+      {{ "ORDER_FORM.CANCEL" | translate }}
     </button>
-    <button mat-flat-button color="primary" type="submit">Submit</button>
+    <button mat-flat-button color="primary" type="submit">
+      {{ "ORDER_FORM.SUBMIT" | translate }}
+    </button>
   </div>
 </form>

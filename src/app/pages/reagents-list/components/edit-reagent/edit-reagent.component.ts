@@ -1,6 +1,16 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  inject,
+} from '@angular/core';
 import { MaterialModule } from '../../../../material.module';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ReagentsService } from '../../../../shared/services/reagents.service';
 import { StorageLocationService } from '../../../storage-location/services/storage-location.service';
 import { StorageLocationQueryService } from '../../../storage-location/services/storage-location-query.service';
@@ -13,14 +23,15 @@ import { StorageLocationItem } from '../../../storage-location/models/storage-lo
 import { Reagent } from '../../../../shared/models/reagent-model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AsyncPipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-reagent',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe],
+  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe, TranslateModule],
   providers: [StorageLocationService, StorageLocationQueryService],
   templateUrl: './edit-reagent.component.html',
-  styleUrl: './edit-reagent.component.scss',
+  styleUrls: ['./edit-reagent.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditReagentComponent {
@@ -30,15 +41,15 @@ export class EditReagentComponent {
   private storageLocationQueryService = inject(StorageLocationQueryService);
   private notificationsService = inject(NotificationPopupService);
   private dialogRef = inject(MatDialogRef<EditReagentComponent>);
-  public storageLocations$ = this.storageLocationService.searchStorageLocationByName();
+  private translate = inject(TranslateService);
+  public storageLocations$ =
+    this.storageLocationService.searchStorageLocationByName();
   private destroy$ = new Subject<void>();
 
   public reagentRequestForm!: FormGroup;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public editionData: Reagent
-  ) {
-    this. reagentRequestForm = this.fb.group({
+  constructor(@Inject(MAT_DIALOG_DATA) public editionData: Reagent) {
+    this.reagentRequestForm = this.fb.group({
       quantityLeft: [this.editionData.quantityLeft, Validators.required],
       storageLocation: [
         {
@@ -72,28 +83,37 @@ export class EditReagentComponent {
 
   onSubmit() {
     if (this.reagentRequestForm.valid) {
-      const { quantityLeft, storageId }  = this.reagentRequestForm.value as {quantityLeft: number, storageId: number};
-      const editedValue = { quantityLeft, storageId}
+      const { quantityLeft, storageId } = this.reagentRequestForm.value as {
+        quantityLeft: number;
+        storageId: number;
+      };
+      const editedValue = { quantityLeft, storageId };
 
-      this.reagentsService.editReagent(this.editionData.id!, editedValue)
+      this.reagentsService
+        .editReagent(this.editionData.id!, editedValue)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
+            const categoryTranslated = this.translate.instant(
+              'CATEGORIES.' + this.editionData.category.toUpperCase()
+            );
             this.notificationsService.success({
-              title: 'Success',
-              message: `${this.editionData.category} edited successfully!`,
+              title: this.translate.instant('NOTIFICATIONS.SUCCESS_TITLE'),
+              message: this.translate.instant('NOTIFICATIONS.EDIT_SUCCESS', {
+                category: categoryTranslated,
+              }),
               duration: 3000,
             });
-            this.dialogRef.close(true)
+            this.dialogRef.close(true);
           },
           error: (error: HttpErrorResponse) => {
             this.notificationsService.error({
-              title: 'Error',
+              title: this.translate.instant('NOTIFICATIONS.ERROR_TITLE'),
               message: error.error.message,
               duration: 4000,
             });
           },
-       });
+        });
     }
   }
 }

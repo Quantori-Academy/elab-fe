@@ -13,11 +13,12 @@ import { MaterialModule } from '../../../../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-edit-order',
+  selector: 'app-confirm-decline-dialog',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './confirm-decline-dialog.component.html',
   styleUrls: ['./confirm-decline-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +27,7 @@ export class ConfirmDeclineDialogComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
 
   reagents$ = new BehaviorSubject<ReagentRequestList[]>([]);
   excludeReagents: { id: number }[] = [];
@@ -33,6 +35,7 @@ export class ConfirmDeclineDialogComponent implements OnDestroy {
   errorMessage = '';
   lastReagentToRemove: ReagentRequestList | null = null;
   orderId;
+
   constructor(
     @Inject(MAT_DIALOG_DATA)
     private data: { orderId: number; reagentId: number },
@@ -40,6 +43,7 @@ export class ConfirmDeclineDialogComponent implements OnDestroy {
   ) {
     this.orderId = data.orderId;
   }
+
   confirmRemoval() {
     const reagentId = this.data.reagentId;
     this.excludeReagents.push({ id: reagentId });
@@ -55,6 +59,7 @@ export class ConfirmDeclineDialogComponent implements OnDestroy {
             })
             .pipe(takeUntil(this.destroy$))
             .subscribe();
+
           this.orderService
             .updateOrder(this.orderId, { status: Status.declined })
             .pipe(takeUntil(this.destroy$))
@@ -62,8 +67,12 @@ export class ConfirmDeclineDialogComponent implements OnDestroy {
               next: () => {
                 this.dialogRef.close(true);
                 this.notificationPopupService.success({
-                  title: 'Success',
-                  message: 'Order Declined successfully!',
+                  title: this.translate.instant(
+                    'CONFIRM_DECLINE_DIALOG.SUCCESS_TITLE'
+                  ),
+                  message: this.translate.instant(
+                    'CONFIRM_DECLINE_DIALOG.SUCCESS_MESSAGE'
+                  ),
                   duration: 3000,
                 });
               },

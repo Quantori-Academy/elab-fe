@@ -17,6 +17,7 @@ import { RoomManagementService } from '../../../storage-location/services/room-m
 import { SpinnerDirective } from '../../../../shared/directives/spinner/spinner.directive';
 import { PageEvent } from '@angular/material/paginator';
 import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-storage-location-dialog',
@@ -26,6 +27,7 @@ import { PAGE_SIZE_OPTIONS } from '../../../../shared/units/variables.units';
     AsyncPipe,
     TableLoaderSpinnerComponent,
     SpinnerDirective,
+    TranslateModule,
   ],
   templateUrl: './storage-location-dialog.component.html',
   styleUrl: './storage-location-dialog.component.scss',
@@ -36,6 +38,7 @@ export class StorageLocationDialogComponent implements OnDestroy {
   private roomManagementService = inject(RoomManagementService);
   private reagentService = inject(ReagentsService);
   private notificationService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
 
   public displayedColumns: string[] = ['room', 'name', 'reagents', 'actions'];
   public pageSize: number;
@@ -80,12 +83,19 @@ export class StorageLocationDialogComponent implements OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.notificationService.success({
-            title: 'Success',
-            message: 'Reagent has been successfully created!',
-            duration: 3000,
-          });
-          this.dialogRef.close(true);
+          this.translate
+            .get([
+              'NOTIFICATIONS.SUCCESS_TITLE',
+              'NOTIFICATIONS.REAGENT_CREATED_SUCCESS',
+            ])
+            .subscribe((translations) => {
+              this.notificationService.success({
+                title: translations['NOTIFICATIONS.SUCCESS_TITLE'],
+                message: translations['NOTIFICATIONS.REAGENT_CREATED_SUCCESS'],
+                duration: 3000,
+              });
+              this.dialogRef.close(true);
+            });
         },
       });
   }

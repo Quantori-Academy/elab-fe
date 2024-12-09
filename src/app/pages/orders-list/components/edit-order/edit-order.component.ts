@@ -20,11 +20,12 @@ import {
 import { NotificationPopupService } from '../../../../shared/services/notification-popup/notification-popup.service';
 import { ReagentRequestList } from '../../../reagent-request/reagent-request-page/reagent-request-page.interface';
 import { AsyncPipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-edit-order',
   standalone: true,
-  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe],
+  imports: [MaterialModule, ReactiveFormsModule, AsyncPipe, TranslateModule],
   templateUrl: './edit-order.component.html',
   styleUrls: ['./edit-order.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +35,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private orderService = inject(OrdersService);
   private notificationPopupService = inject(NotificationPopupService);
+  private translate = inject(TranslateService);
   statusOptions: Status[] = [
     Status.pending,
     Status.submitted,
@@ -41,9 +43,9 @@ export class EditOrderComponent implements OnInit, OnDestroy {
     Status.declined,
   ];
 
-  initialValues: Partial<Order> = {}; //initial values of order
+  initialValues: Partial<Order> = {};
+  //initial values of order
   sellerOptions$ = new BehaviorSubject<string[]>([]);
-
   lastReagentToRemove: ReagentRequestList | null = null;
   updateForm = this.fb.group({
     title: ['', Validators.required],
@@ -67,7 +69,7 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         this.updateForm.patchValue(this.initialValues);
         this.updateForm.markAsPristine();
       });
-      this.orderService
+    this.orderService
       .getAllUniqueSellers()
       .pipe(takeUntil(this.destroy$))
       .subscribe((sellers) => this.sellerOptions$.next(sellers));
@@ -95,28 +97,38 @@ export class EditOrderComponent implements OnInit, OnDestroy {
         next: () => {
           this.dialogRef.close(true);
           this.notificationPopupService.success({
-            title: 'Success',
-            message: 'Order updated successfully',
+            title: this.translate.instant('EDIT_ORDER.SUCCESS_TITLE'),
+            message: this.translate.instant('EDIT_ORDER.SUCCESS_MESSAGE'),
             duration: 3000,
           });
         },
         error: (err) =>
           this.notificationPopupService.error({
-            title: 'Error',
+            title: this.translate.instant('EDIT_ORDER.ERROR_TITLE'),
             message: err.message,
             duration: 3000,
           }),
       });
   }
+
   public hasError(label: string, error: string): boolean | undefined {
     return this.updateForm.get(label)?.hasError(error);
   }
+
   onClose() {
     this.dialogRef.close();
     this.updateForm.reset();
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  get translatedStatus(): string {
+    const status = this.updateForm.get('status')?.value;
+    return status
+      ? this.translate.instant('ORDERS_LIST.STATUS.' + (status as string).toUpperCase())
+      : '';
   }
 }

@@ -14,6 +14,7 @@ import { EditQuantityReagentComponent } from '../edit-quantity-reagent/edit-quan
 import { DeleteReagentComponent } from '../../../../shared/components/delete-reagent/delete-reagent.component';
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 import { ReagentHistoryDialogComponent } from '../reagent-history-dialog/reagent-history-dialog.component';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagent-detailed-page',
@@ -23,6 +24,7 @@ import { ReagentHistoryDialogComponent } from '../reagent-history-dialog/reagent
     MaterialModule,
     MoleculeStructureComponent,
     TableLoaderSpinnerComponent,
+    TranslateModule,
   ],
   templateUrl: './reagent-detailed-page.component.html',
   styleUrl: './reagent-detailed-page.component.scss',
@@ -38,6 +40,7 @@ export class ReagentDetailedPageComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
   private clipBoard = inject(Clipboard);
   private dialog = inject(MatDialog);
+  private translate = inject(TranslateService);
 
   ngOnInit() {
     this.route.paramMap
@@ -53,9 +56,13 @@ export class ReagentDetailedPageComponent implements OnInit {
   }
 
   onCopyStructure() {
-    this._snackBar.open('Structure copied', '', {
-      duration: 1000,
-    });
+    this._snackBar.open(
+      this.translate.instant('REAGENT_DETAILED_PAGE.STRUCTURE_COPIED'),
+      '',
+      {
+        duration: 1000,
+      }
+    );
 
     this.reagent$.pipe(first()).subscribe((reagent) => {
       if (reagent && reagent.structure) {
@@ -76,7 +83,7 @@ export class ReagentDetailedPageComponent implements OnInit {
       .subscribe((updatedData) => {
         if (updatedData) {
           this.reagentSubject.next(updatedData);
-          if (updatedData.quantityLeft === 0){
+          if (updatedData.quantityLeft === 0) {
             this.onClose();
           }
         }
@@ -94,9 +101,9 @@ export class ReagentDetailedPageComponent implements OnInit {
         width: '400px',
         restoreFocus: false,
       })
-      .afterClosed().subscribe(successfulDeletion => {
-        if (successfulDeletion)
-          this.onClose();
+      .afterClosed()
+      .subscribe((successfulDeletion) => {
+        if (successfulDeletion) this.onClose();
       });
   }
 

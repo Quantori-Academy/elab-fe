@@ -1,0 +1,785 @@
+{
+  "LOGIN": {
+    "TITLE": "Anmelden",
+    "EMAIL": "E-Mail",
+    "PASSWORD": "Passwort",
+    "FORGOT_PASSWORD": "Passwort vergessen?",
+    "LOGIN_BUTTON": "Anmelden",
+    "EMAIL_REQUIRED": "E-Mail ist erforderlich",
+    "EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "PASSWORD_REQUIRED": "Passwort ist erforderlich",
+    "PASSWORD_INVALID": "Bitte geben Sie ein gültiges Passwort ein (mindestens 8 Zeichen)",
+    "ERROR_INCORRECT": "Falsches Passwort oder E-Mail"
+  },
+  "HEADER": {
+    "LOGOUT": "Abmelden",
+    "PROFILE": "Profil",
+    "LANGUAGE": "Sprache"
+  },
+  "PASSWORD_CHANGE": {
+    "MESSAGE": "Bitte ändern Sie Ihr Passwort, bevor Sie fortfahren",
+    "TITLE": "Passwort ändern",
+    "CURRENT_PASSWORD": "Aktuelles Passwort",
+    "CURRENT_PASSWORD_REQUIRED": "Aktuelles Passwort ist erforderlich.",
+    "NEW_PASSWORD": "Neues Passwort",
+    "NEW_PASSWORD_REQUIRED": "Neues Passwort ist erforderlich.",
+    "NEW_PASSWORD_INVALID": "Muss länger als 8 Zeichen sein und enthalten: A-Z, a-z, 0-9, !#$%^&*",
+    "CONFIRM_PASSWORD": "Passwort bestätigen",
+    "CONFIRM_PASSWORD_REQUIRED": "Passwortbestätigung ist erforderlich.",
+    "PASSWORDS_DO_NOT_MATCH": "Passwörter stimmen nicht überein!",
+    "CHANGE_PASSWORD_BUTTON": "Passwort ändern"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Passwort vergessen",
+    "EMAIL": "E-Mail",
+    "EMAIL_REQUIRED": "E-Mail ist erforderlich",
+    "EMAIL_INVALID": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "EMAIL_NOT_EXIST": "E-Mail existiert nicht",
+    "LOGIN_BUTTON": "Anmelden",
+    "SUBMIT_BUTTON": "Absenden"
+  },
+  "EDIT_ORDER": {
+    "TITLE": "Bestellung Bearbeiten",
+    "FORM": {
+      "TITLE_LABEL": "Titel",
+      "SELLER_LABEL": "Verkäufer",
+      "TITLE_REQUIRED": "Titel ist erforderlich.",
+      "SELLER_REQUIRED": "Verkäufer ist erforderlich."
+    },
+    "ORDERED_REAGENTS": "Bestellte Reagenzien",
+    "TABLE_HEADERS": {
+      "NAME": "Name",
+      "CAS_NUMBER": "CAS-Nummer",
+      "MODIFICATION_DATE": "Änderungsdatum",
+      "DESIRED_QUANTITY": "Gewünschte Menge",
+      "QUANTITY_LEFT": "Verbleibende Menge",
+      "STRUCTURE": "Struktur",
+      "CREATOR_COMMENT": "Kommentar des Erstellers",
+      "ACTIONS": "Aktionen"
+    },
+    "NO_CHANGES": "Keine Änderungen zum Aktualisieren",
+    "REMOVE_LAST_REAGENT_CONFIRM": "Das Entfernen des letzten Reagenz wird die Bestellung stornieren. Möchten Sie fortfahren?",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Bestellung erfolgreich aktualisiert",
+    "REAGENT_REMOVED_SUCCESS": "Reagenz erfolgreich entfernt!",
+    "ORDER_DECLINED_SUCCESS": "Bestellung erfolgreich abgelehnt!",
+    "ERROR_TITLE": "Fehler",
+    "PROCEED_BUTTON": "Fortfahren",
+    "CANCEL_BUTTON": "Abbrechen",
+    "UPDATE_BUTTON": "Aktualisieren",
+    "CLOSE_BUTTON": "Schließen"
+  },
+  "EDIT_REQUESTED_REAGENT": {
+    "TITLE": "Angefordertes Reagenz bearbeiten",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "DESIRED_QUANTITY_REQUIRED": "Gewünschte Menge ist erforderlich",
+    "PACKAGE": "Verpackung",
+    "PACKAGE_REQUIRED": "Verpackung ist erforderlich",
+    "NONE": "Keine",
+    "UPDATE_BUTTON": "Aktualisieren",
+    "CLOSE_BUTTON": "Schließen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzanfrage wurde aktualisiert",
+    "ERROR_TITLE": "Fehler"
+  },
+  "ORDER_FORM": {
+    "HEADER": "Neue Bestellung erstellen",
+    "GENERAL": "Allgemein",
+    "TITLE_LABEL": "Titel",
+    "TITLE_REQUIRED": "Titel ist erforderlich.",
+    "SELLER_LABEL": "Verkäufer",
+    "SELLER_PLACEHOLDER": "Verkäufer auswählen",
+    "SELLER_REQUIRED": "Verkäufer ist erforderlich.",
+    "REQUESTED_REAGENTS": "Angeforderte Reagenzien",
+    "SEARCH_BY_NAME": "Nach Name suchen",
+    "SEARCH_PLACEHOLDER": "Reagenzienname eingeben",
+    "SELECT": "Auswählen",
+    "NAME": "Name",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "PACKAGE": "Verpackung",
+    "N_A": "N/V",
+    "CREATED": "Erstellt",
+    "COMMENT": "Kommentar",
+    "ACTIONS": "Aktionen",
+    "NO_PENDING_REQUESTS": "Keine ausstehenden Anfragen gefunden",
+    "SELECTED_REAGENTS": "Ausgewählte Reagenzien",
+    "SELECT_AT_LEAST_ONE": "Wählen Sie mindestens ein Reagenz aus",
+    "CANCEL": "Abbrechen",
+    "SUBMIT": "Einreichen",
+    "SUBMIT_ORDER": "Bestellung aufgeben",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Bestellung erfolgreich erstellt!",
+    "ERROR_TITLE": "Fehler",
+    "ERROR_MESSAGE": "Reagenzanfrage wird bereits verwendet, wählen Sie eine andere Reagenzanfrage",
+    "AMOUNT": "Menge"
+  },
+  "ORDER_PAGE": {
+    "ORDER_TITLE": "Bestellungstitel",
+    "SELLER": "Verkäufer",
+    "STATUS": "Status",
+    "CREATED": "Erstellt",
+    "LAST_UPDATED": "Zuletzt aktualisiert",
+    "UPDATED": "Aktualisiert",
+    "ORDERED_REAGENTS": "Bestellte Reagenzien",
+    "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
+    "COMPLETED": "Abgeschlossen",
+    "COMPLETE": "Abschließen",
+    "EDIT": "Bearbeiten",
+    "DELETE": "Löschen",
+    "ORDER_LIST_ALT": "Bestellliste",
+    "SUCCESS_TITLE": "Erfolg",
+    "REAGENT_REMOVED_SUCCESS": "Reagenz wurde erfolgreich entfernt!",
+    "ERROR_TITLE": "Fehler",
+    "TABLE": {
+      "NAME": "Name",
+      "CAS_NUMBER": "CAS-Nummer",
+      "MODIFICATION_DATE": "Änderungsdatum",
+      "DESIRED_QUANTITY": "Gewünschte Menge",
+      "PACKAGE": "Verpackung",
+      "STATUS": "Status",
+      "STRUCTURE": "Struktur",
+      "CREATOR_COMMENT": "Kommentar des Erstellers",
+      "ACTIONS": "Aktionen",
+      "NO_DATA": "______"
+    }
+  },
+  "STATUSES": {
+    "PENDING": "Ausstehend",
+    "ORDERED": "Bestellt",
+    "DECLINED": "Abgelehnt",
+    "FULFILLED": "Erfüllt",
+    "COMPLETED": "Abgeschlossen",
+    "SUBMITTED": "Eingereicht"
+  },
+  "ORDERS_LIST": {
+    "CREATE_NEW_ORDER": "Neue Bestellung erstellen",
+    "FILTER_BY_STATUS": "Nach Status filtern",
+    "ALL_ORDERS": "Alle Bestellungen",
+    "STATUS": {
+      "PENDING": "Ausstehend",
+      "SUBMITTED": "Eingereicht",
+      "DECLINED": "Abgelehnt",
+      "FULFILLED": "Erfüllt",
+      "COMPLETED": "Abgeschlossen"
+    },
+    "ACTIONS": {
+      "FULFILL": "Erfüllen",
+      "DECLINE": "Ablehnen"
+    },
+    "FILTER_BY_TITLE": "Nach Titel filtern",
+    "FILTER_BY_SELLER": "Nach Verkäufer filtern",
+    "TABLE_HEADERS": {
+      "ORDER_TITLE": "Bestellungstitel",
+      "CREATION_DATE": "Erstellungsdatum",
+      "MODIFICATION_DATE": "Änderungsdatum",
+      "SELLER_PRODUCER": "Verkäufer/Hersteller",
+      "STATUS": "Status",
+      "ACTIONS": "Aktionen"
+    },
+    "NO_DATA": "______",
+    "ARIA_LABELS": {
+      "VIEW_DETAILS": "Details anzeigen",
+      "EDIT": "Bearbeiten",
+      "SELECT_PAGE": "Seite auswählen"
+    }
+  },
+  "PROFILE": {
+    "ROLE": "Rolle",
+    "ROLE_NAME": {
+      "RESEARCHER": "Forscher",
+      "PROCUREMENTOFFICER": "Einkaufsbeauftragter",
+      "ADMIN": "Administrator"
+    },
+    "EMAIL": "E-Mail",
+    "CHANGE_PASSWORD": "Passwort ändern",
+    "CURRENT_PASSWORD": "Aktuelles Passwort",
+    "NEW_PASSWORD": "Neues Passwort",
+    "CONFIRM_PASSWORD": "Passwort bestätigen",
+    "CHANGE": "Ändern",
+    "CANCEL": "Abbrechen",
+    "ERRORS": {
+      "CURRENT_PASSWORD_REQUIRED": "Aktuelles Passwort ist erforderlich.",
+      "PASSWORD_INCORRECT": "Passwort ist nicht korrekt.",
+      "NEW_PASSWORD_REQUIRED": "Neues Passwort ist erforderlich.",
+      "PASSWORD_PATTERN": "Muss länger als 8 Buchstaben sein, enthalten: A-Z, a-z, 0-9, !#$%^&*",
+      "CONFIRM_PASSWORD_REQUIRED": "Passwortbestätigung ist erforderlich.",
+      "PASSWORDS_NOT_MATCH": "Passwörter stimmen nicht überein!"
+    }
+  },
+  "CREATE_REAGENT_REQUEST": {
+    "HEADER": "Neue Reagenzanforderung erstellen",
+    "GENERAL": "Allgemein",
+    "NAME_LABEL": "Name",
+    "NAME_REQUIRED": "Name ist erforderlich.",
+    "DESIRED_QUANTITY_LABEL": "Gewünschte Menge",
+    "DESIRED_QUANTITY_REQUIRED": "Gewünschte Menge ist erforderlich und muss mindestens 1 sein.",
+    "QUANTITY_UNIT_LABEL": "Mengeneinheit",
+    "QUANTITY_UNIT_REQUIRED": "Mengeneinheit ist erforderlich.",
+    "STRUCTURE": "Struktur",
+    "STRUCTURE_SMILES_LABEL": "Struktur SMILES",
+    "CAS_NUMBER_LABEL": "CAS-Nummer",
+    "ADDITIONAL_INFO": "Zusätzliche Informationen",
+    "USER_COMMENTS_LABEL": "Benutzerkommentare",
+    "ORDER_ID_LABEL": "Bestell-ID",
+    "PRODUCER_LABEL": "Hersteller",
+    "CATALOG_ID_LABEL": "Katalog-ID",
+    "CATALOG_LINK_LABEL": "Kataloglink",
+    "PRICE_PER_UNIT_LABEL": "Preis pro Einheit",
+    "EXPIRATION_DATE_LABEL": "Verfallsdatum",
+    "PACKAGE_LABEL": "Verpackung",
+    "NONE": "Keine",
+    "CANCEL": "Abbrechen",
+    "SUBMIT": "Einreichen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzanforderung erfolgreich erstellt!",
+    "ERROR_TITLE": "Fehler",
+    "ERROR_MESSAGE": "Fehler beim Erstellen der Reagenzanforderung. Bitte versuchen Sie es erneut."
+  },
+  "DECLINE_REAGENT_REQUEST": {
+    "HEADER": "Reagenzanforderung ablehnen",
+    "STATUS_LABEL": "Status",
+    "PROCUREMENT_COMMENT_LABEL": "Beschaffungskommentar",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzanforderung abgelehnt",
+    "ERROR_TITLE": "Fehler"
+  },
+  "REAGENT_REQUEST_DETAIL": {
+    "HEADER": "Details zur Reagenzanforderung",
+    "GENERAL_INFO": "Allgemeine Informationen",
+    "ID": "ID",
+    "NAME": "Name",
+    "STATUS": "Status",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "QUANTITY_UNIT": "Mengeneinheit",
+    "PACKAGE": "Verpackung",
+    "CAS_NUMBER": "CAS-Nummer",
+    "USER_COMMENTS": "Benutzerkommentare",
+    "PROCUREMENT_COMMENTS": "Beschaffungskommentare",
+    "CREATED_AT": "Erstellt am",
+    "UPDATED_AT": "Aktualisiert am",
+    "STRUCTURE": "Struktur",
+    "SMILES": "SMILES"
+  },
+  "REAGENTS_REQUEST_PAGE": {
+    "CREATE_REAGENT_REQUEST": "Reagenzanforderung erstellen",
+    "FILTER_BY_NAME": "Nach Name filtern",
+    "PLACEHOLDER_ENTER_NAME": "Name eingeben",
+    "FILTER_BY_STATUS": "Nach Status filtern",
+    "ALL_STATUSES": "Alle Status",
+    "STATUS": {
+      "PENDING": "Ausstehend",
+      "ORDERED": "Bestellt",
+      "DECLINED": "Abgelehnt",
+      "FULFILLED": "Erfüllt",
+      "COMPLETED": "Abgeschlossen",
+      "SUBMITTED": "Eingereicht"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "STRUCTURE": "Struktur",
+      "CAS_NUMBER": "CAS-Nummer",
+      "DESIRED_QUANTITY": "Gewünschte Menge",
+      "STATUS": "Status",
+      "CREATED_AT": "Erstellt am",
+      "UPDATED_AT": "Aktualisiert am",
+      "ACTIONS": "Aktionen",
+      "OPEN": "Öffnen"
+    }
+  },
+  "REAGENTS_LIST": {
+    "CREATE": "Erstellen",
+    "CREATE_REAGENT": "Reagenz erstellen",
+    "CREATE_SAMPLE": "Probe erstellen",
+    "UPLOAD": "Hochladen",
+    "MOVE_REAGENT": "Reagenz verschieben",
+    "HISTORY": "Geschichte",
+    "SEARCH_BY_NAME": "Nach Namen suchen",
+    "PLACEHOLDER_ENTER_NAME": "Geben Sie einen Namen ein",
+    "SEARCH_BY_STRUCTURE": "Nach Struktur suchen",
+    "PLACEHOLDER_ENTER_STRUCTURE": "Geben Sie eine Struktur ein",
+    "EXACT_MATCH": "Exakte Übereinstimmung",
+    "FILTER_BY_CATEGORY": "Nach Kategorie filtern",
+    "ALL_CATEGORIES": "Alle Kategorien",
+    "CATEGORY": {
+      "SAMPLE": "Probe",
+      "REAGENT": "Reagenz"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Kategorie",
+      "STRUCTURE": "Struktur",
+      "CAS": "CAS",
+      "QUANTITY": "Menge",
+      "QUANTITY_LEFT": "Verbleibende Menge",
+      "LOCATION": "Standort",
+      "ACTIONS": "Aktionen"
+    },
+    "NO_DATA_AVAILABLE": "Keine Reagenzdaten verfügbar",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Seite auswählen"
+    }
+  },
+
+  "ADD_REAGENT_SAMPLE": {
+    "SEARCH_BY_NAME": "Suche nach Name",
+    "PLACEHOLDER_ENTER_NAME": "Name eingeben",
+    "FILTER_BY_CATEGORY": "Nach Kategorie filtern",
+    "ALL_CATEGORIES": "Alle Kategorien",
+    "CATEGORY": {
+      "SAMPLE": "Probe",
+      "REAGENT": "Reagenz"
+    },
+    "SAVE": "Speichern",
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Kategorie",
+      "STRUCTURE": "Struktur",
+      "QUANTITY": "Menge",
+      "QUANTITY_LEFT": "Verbleibende Menge",
+      "SELECT": "Auswählen",
+      "SELECT_QUANTITY": "Menge auswählen",
+      "STORAGE_LOCATION": "Lagerort"
+    },
+    "ERRORS": {
+      "QUANTITY_LESS_THAN": "Menge sollte weniger als {{quantityLeft}} {{quantityUnit}} sein",
+      "QUANTITY_MORE_THAN_ZERO": "Menge sollte größer als 0 sein",
+      "QUANTITY_REQUIRED": "Menge ist erforderlich"
+    },
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Seite auswählen"
+    }
+  },
+  "CREATE_REAGENT": {
+    "HEADER": "Neue {{ itemType }}",
+    "SAMPLE": "Probe",
+    "REAGENT": "Reagenz",
+    "GENERAL": "Allgemein",
+    "NAME_LABEL": "Name",
+    "NAME_REQUIRED": "Name ist erforderlich.",
+    "DESCRIPTION_LABEL": "Beschreibung",
+    "EXPIRATION_DATE_LABEL": "Verfallsdatum",
+    "EXPIRATION_DATE_HINT": "TT/MM/JJJJ",
+    "STORAGE_LOCATION_LABEL": "Lagerort",
+    "STORAGE_LOCATION_PLACEHOLDER": "z.B.: Raum1 Schrank1-Regal1",
+    "STORAGE_LOCATION_REQUIRED": "Lagerort ist erforderlich.",
+    "STORAGE_LOCATION_INVALID": "Wählen Sie den richtigen Lagerort aus.",
+    "QUANTITY": "Menge",
+    "QUANTITY_UNIT_LABEL": "Mengeneinheit",
+    "QUANTITY_UNIT_REQUIRED": "Mengeneinheit ist erforderlich.",
+    "TOTAL_QUANTITY_LABEL": "Gesamtmenge",
+    "TOTAL_QUANTITY_REQUIRED": "Gesamtmenge ist erforderlich.",
+    "TOTAL_QUANTITY_INVALID": "Gesamtmenge muss eine gültige Zahl sein.",
+    "QUANTITY_LEFT_LABEL": "Verbleibende Menge",
+    "QUANTITY_LEFT_REQUIRED": "Verbleibende Menge ist erforderlich.",
+    "QUANTITY_LEFT_INVALID": "Verbleibende Menge muss eine gültige Zahl sein.",
+    "REAGENTS_LABEL": "Reagenzien",
+    "SELECTED_REAGENTS": "{{ count }} Reagenzien ausgewählt",
+    "REAGENTS_REQUIRED": "Reagenzien sind erforderlich",
+    "STRUCTURE": "Struktur",
+    "STRUCTURE_LABEL": "Struktur",
+    "CAS_NUMBER_LABEL": "CAS-Nummer",
+    "CAS_NUMBER_MINLENGTH": "CAS-Nummer muss mindestens 5 Zeichen lang sein.",
+    "CAS_NUMBER_MAXLENGTH": "CAS-Nummer darf nicht länger als 10 Zeichen sein.",
+    "ORDER_DETAILS": "Bestelldetails",
+    "PRODUCER_LABEL": "Hersteller",
+    "CATALOG_ID_LABEL": "Katalog-ID",
+    "CATALOG_LINK_LABEL": "Kataloglink",
+    "CATALOG_LINK_INVALID": "Kataloglink muss eine gültige URL sein.",
+    "PRICE_PER_UNIT_LABEL": "Preis pro Einheit",
+    "PRICE_PER_UNIT_INVALID": "Preis pro Einheit muss eine gültige Zahl sein.",
+    "CANCEL": "Abbrechen",
+    "SUBMIT": "Einreichen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "{{ item }} erfolgreich erstellt!",
+    "ERROR_TITLE": "Fehler"
+  },
+  "MOVE_REAGENT": {
+    "STORAGE_LOCATION_LABEL": "Lagerort",
+    "STORAGE_LOCATION_PLACEHOLDER": "z.B.: Raum1 Schrank1-Regal1",
+    "CANCEL": "Abbrechen",
+    "MOVE": "Verschieben",
+    "ERROR_TITLE": "Fehler",
+    "ERROR_MESSAGE": "Reagenzien konnten nicht in das Lager verschoben werden",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzien erfolgreich verschoben",
+    "WARNING_TITLE": "Warnung"
+  },
+  "REAGENT_PAGE": {
+    "DETAILS_HEADER": "Reagenzdetails",
+    "NAME": "Reagenzname",
+    "STRUCTURE": "Reagenzstruktur",
+    "PRODUCER": "Hersteller",
+    "DESIRED_QUANTITY": "Gewünschte Menge des Reagenz",
+    "PER": "pro",
+    "PACKAGE": "Verpackung",
+    "PRICE_PER_UNIT": "Preis pro Einheit",
+    "CAS_NUMBER": "CAS-Nummer des Reagenz",
+    "CATALOG_ID": "Katalog-ID des Reagenz",
+    "CATALOG_LINK": "Kataloglink des Reagenz",
+    "ALT_REAGENT": "Reagenz"
+  },
+  "BUTTONS": {
+    "CLOSE": "Schließen",
+    "CANCEL": "Abbrechen",
+    "EDIT": "Bearbeiten"
+  },
+  "STRUCTURE_DIALOG": {
+    "ENLARGED_IMAGE_ALT": "Vergrößertes Bild"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Passwort zurücksetzen",
+    "NEW_PASSWORD_LABEL": "Neues Passwort",
+    "CONFIRM_PASSWORD_LABEL": "Passwort bestätigen",
+    "ERRORS": {
+      "PASSWORD_REQUIRED": "Passwort ist erforderlich",
+      "PASSWORD_MIN_LENGTH": "Passwort muss mindestens {{ minLength }} Zeichen lang sein",
+      "CONFIRM_PASSWORD_REQUIRED": "Passwortbestätigung ist erforderlich",
+      "PASSWORD_NO_MATCH": "Passwörter stimmen nicht überein"
+    },
+    "LOGIN": "Anmelden",
+    "SUBMIT": "Einreichen"
+  },
+  "STORAGE_LOCATION": {
+    "TAB": {
+      "STORAGE_LOCATION": "Lagerort",
+      "ROOM": "Raum"
+    }
+  },
+  "ADD_EDIT_ROOM": {
+    "EDIT": "Bearbeiten",
+    "ADD_NEW": "Neu hinzufügen",
+    "ROOM": "Raum",
+    "ROOM_LABEL": "Raum",
+    "DESCRIPTION_LABEL": "Beschreibung",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_ADD": "Raum wurde erfolgreich hinzugefügt",
+    "SUCCESS_EDIT": "Raum wurde erfolgreich bearbeitet",
+    "ERROR_TITLE": "Fehler",
+    "ERRORS": {
+      "ROOM_REQUIRED": "Raum ist erforderlich"
+    }
+  },
+  "ADD_EDIT_STORAGE": {
+    "EDIT": "Bearbeiten",
+    "ADD_NEW": "Neu hinzufügen",
+    "STORAGE_LOCATION": "Lagerort",
+    "ROOM_LABEL": "Raum",
+    "NAME_LABEL": "Name",
+    "DESCRIPTION_LABEL": "Beschreibung",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_ADD": "Lagerort hinzugefügt",
+    "SUCCESS_EDIT": "Lagerort bearbeitet",
+    "ERROR_TITLE": "Fehler",
+    "ERRORS": {
+      "ROOM_REQUIRED": "Raum ist erforderlich",
+      "NAME_REQUIRED": "Name ist erforderlich",
+      "NAME_MAXLENGTH": "Name darf nicht länger als {{ maxLength }} Zeichen sein"
+    }
+  },
+  "ROOM_MANAGEMENT": {
+    "ADD_NEW_ROOM": "Neuen Raum hinzufügen",
+    "TABLE": {
+      "ROOM": "Raum",
+      "DESCRIPTION": "Beschreibung",
+      "STORAGES": "Lager",
+      "ACTIONS": "Aktionen"
+    },
+    "DELETE_CONFIRMATION": "Sind Sie sicher, dass Sie den Raum löschen möchten?",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Raum wurde erfolgreich gelöscht",
+    "WARNING_TITLE": "Warnung",
+    "ERROR_TITLE": "Fehler",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Seite auswählen"
+    }
+  },
+  "STORAGE_MANAGEMENT": {
+    "ADD_NEW_STORAGE": "Neuen Lagerort hinzufügen",
+    "FILTER_BY_ROOM": "Nach Raum filtern",
+    "FILTER_BY_NAME": "Nach Name filtern",
+    "ALL_ROOMS": "Alle Räume",
+    "TABLE": {
+      "ROOM": "Raum",
+      "NAME": "Name",
+      "DATE": "Datum",
+      "REAGENTS": "Reagenzien",
+      "ACTIONS": "Aktionen"
+    },
+    "DELETE_CONFIRMATION": "Sind Sie sicher, dass Sie den Lagerort löschen möchten?",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Lagerort wurde erfolgreich gelöscht",
+    "WARNING_TITLE": "Warnung",
+    "ERROR_TITLE": "Fehler",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Seite auswählen"
+    }
+  },
+  "STORAGE_LOCATION_DETAIL": {
+    "ALT_STORAGE": "Lager"
+  },
+  "USER_MANAGEMENT_FORM": {
+    "CREATE_NEW_USER": "Neuen Benutzer erstellen",
+    "DELETE_CONFIRMATION": "Aktion bestätigen -> Benutzer löschen:",
+    "DELETE_SUCCESS": "Benutzer erfolgreich gelöscht!",
+    "DELETE_FAILED": "Benutzer konnte nicht gelöscht werden",
+    "SUCCESS_TITLE": "Erfolg",
+    "CREATE_SUCCESS": "Benutzer wurde erfolgreich erstellt!",
+    "UPDATE_SUCCESS": "Benutzer erfolgreich aktualisiert!",
+    "FIRST_NAME_LABEL": "Vorname",
+    "LAST_NAME_LABEL": "Nachname",
+    "EMAIL_LABEL": "E-Mail",
+    "ROLE_LABEL": "Rolle",
+    "SUBMIT_BUTTON": "Absenden",
+    "DELETE_USER_BUTTON": "Benutzer löschen",
+    "ERRORS": {
+      "FIRST_NAME_REQUIRED": "Vorname ist erforderlich",
+      "LAST_NAME_REQUIRED": "Nachname ist erforderlich",
+      "EMAIL_REQUIRED": "E-Mail ist erforderlich",
+      "EMAIL_INVALID": "Ungültige E-Mail",
+      "ROLE_REQUIRED": "Rolle ist erforderlich"
+    }
+  },
+  "USERS_LIST": {
+    "CREATE_NEW_USER": "Neuen Benutzer erstellen",
+    "SEARCH_BY_NAME": "Nach Name suchen",
+    "ENTER_NAME": "Geben Sie einen Namen ein",
+    "FILTER_BY_ROLE": "Nach Rolle filtern",
+    "ALL_ROLES": "Alle Rollen",
+    "USER_DATA": "Benutzerdaten",
+    "DELETE_CONFIRMATION": "Aktion bestätigen -> Benutzer löschen:",
+    "DELETE_SUCCESS": "Benutzer erfolgreich gelöscht!",
+    "DELETE_USER_FAILED": "Benutzer konnte nicht gelöscht werden",
+    "ERROR_TITLE": "Fehler",
+    "ERROR_LOADING_USERS": "Fehler beim Laden der Benutzer:",
+    "ERROR_LOADING_USERS_MESSAGE": "Fehler beim Laden der Benutzer: {{ error }}",
+    "TABLE": {
+      "FIRST_NAME": "Vorname",
+      "LAST_NAME": "Nachname",
+      "EMAIL": "E-Mail",
+      "ROLE": "Rolle",
+      "ACTIONS": "Aktionen"
+    }
+  },
+  "LAYOUT": {
+    "MENU": {
+      "DASHBOARD": "Instrumententafel",
+      "STORAGE_LOCATIONS": "Lagerorte",
+      "REAGENTS": "Reagenzien",
+      "ORDERS_MANAGEMENT": "Bestellverwaltung",
+      "REAGENT_REQUEST": "Reagenzienanfrage",
+      "USERS_MANAGEMENT": "Benutzerverwaltung"
+    }
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE_LABEL": "Artikel pro Seite:",
+    "NEXT_PAGE_LABEL": "Nächste Seite",
+    "PREVIOUS_PAGE_LABEL": "Vorherige Seite",
+    "FIRST_PAGE_LABEL": "Erste Seite",
+    "LAST_PAGE_LABEL": "Letzte Seite",
+    "RANGE_PAGE_LABEL": "von"
+  },
+  "NO_DATA": {
+    "NO_REAGENTS": "Keine Reagenzien",
+    "NO_ORDERED_REAGENTS": "Keine bestellten Reagenzien",
+    "NO_ORDERS": "Keine Bestellungen",
+    "NO_DATA": "Keine Daten",
+    "NO_STORAGES": "Keine Lager",
+    "NO_ROOMS": "Keine Räume",
+    "NO_REAGENT_REQUEST": "Keine Reagenzienanfrage",
+    "NO_DATA_FOUND": "Keine Daten gefunden"
+  },
+  "ADD_STRUCTURE": {
+    "HEADER": "Strukturzeichnung",
+    "ADD_STRUCTURE_BUTTON": "Struktur hinzufügen"
+  },
+  "STORAGE_LOCATION_DIALOG": {
+    "ADD_REAGENT_TO_STORAGE_LOCATION": "Reagenz zum Lagerort hinzufügen",
+    "FILTER_BY_ROOM": "Nach Raum filtern",
+    "ALL_ROOMS": "Alle Räume",
+    "FILTER_BY_NAME": "Nach Name filtern",
+    "TABLE": {
+      "NAME": "Name",
+      "ROOM": "Raum",
+      "REAGENTS": "Reagenzien",
+      "ACTIONS": "Aktionen"
+    },
+    "NO_LOCATION_FOUND": "Kein Ort gefunden",
+    "NO_DATA_ALT": "Keine Daten"
+  },
+  "NOTIFICATIONS": {
+    "SUCCESS_TITLE": "Erfolg",
+    "REAGENT_CREATED_SUCCESS": "Reagenz wurde erfolgreich erstellt!",
+    "ERROR_TITLE": "Fehler",
+    "EDIT_SUCCESS": "{{ category }} erfolgreich bearbeitet!"
+  },
+  "EDIT_REAGENT": {
+    "HEADER": "Bearbeite {{ category }}",
+    "QUANTITY_LEFT": "Verbleibende Menge",
+    "STORAGE_LOCATION": "Lagerort",
+    "STORAGE_LOCATION_PLACEHOLDER": "z.B.: Raum1 Schrank1-Regal1",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Verbleibende Menge ist erforderlich.",
+      "QUANTITY_LEFT_INVALID": "Verbleibende Menge muss eine gültige Zahl sein.",
+      "STORAGE_LOCATION_REQUIRED": "Lagerort ist erforderlich.",
+      "STORAGE_LOCATION_INVALID": "Wählen Sie einen gültigen Lagerort."
+    }
+  },
+  "CATEGORIES": {
+    "REAGENT": "Reagenz",
+    "SAMPLE": "Probe"
+  },
+  "ADMIN_DASHBOARD": {
+    "NUMBER_OF_ROOMS": "Anzahl der Räume",
+    "NUMBER_OF_STORAGES": "Anzahl der Lagerorte",
+    "NUMBER_OF_USERS": "Anzahl der Benutzer"
+  },
+  "ROLES": {
+    "ADMIN": "Administrator",
+    "RESEARCHER": "Forscher",
+    "PROCUREMENTOFFICER": "Einkaufsbeauftragter"
+  },
+  "RESEARCHER_DASHBOARD": {
+    "REAGENT_VS_SAMPLE": "Reagenz vs Probe",
+    "EXPIRED_REAGENT_VS_SAMPLE": "Abgelaufen: Reagenz vs Probe",
+    "EMPTY_REAGENT_VS_SAMPLE": "Leer: Reagenz vs Probe",
+    "LESS_THAN_HALF": "Weniger als die Hälfte"
+  },
+  "REAGENT_LIST": {
+    "NAME": "Name",
+    "CATEGORY": "Kategorie",
+    "EXPIRED_DATE": "Ablaufdatum",
+    "QUANTITY_LEFT": "Verbleibende Menge"
+  },
+  "PO_DASHBOARD": {
+    "NEW_INCOMING_REQUEST": "Neue eingehende Reagenzanforderung",
+    "REAGENT": "Reagenz",
+    "DATE": "Datum",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "STATUS": "Status",
+    "ORDERS_BUTTON": "Bestellungen",
+    "ORDER_STATUS": "Bestellstatus"
+  },
+  "ERROR_MESSAGES": {
+    "FAILED_TO_CONNECT": "Verbindung zum Server fehlgeschlagen",
+    "CHECK_INTERNET_CONNECTION": "Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut",
+    "ERROR_WITH_CODE": "Fehler {{status}}",
+    "UNEXPECTED_ERROR": "Unerwarteter Fehler",
+    "UNEXPECTED_ERROR_OCCURRED": "Es ist ein unerwarteter Fehler aufgetreten",
+    "SERVER_ERROR_OCCURRED": "Autorisierungsfehler"
+  },
+  "SERVER_ERRORS": {
+    "INVALID_CREDENTIALS": "Ungültiger Benutzername oder Passwort.",
+    "USER_NOT_FOUND": "Benutzer nicht gefunden.",
+    "ACCESS_DENIED": "Zugriff verweigert.",
+    "RESOURCE_NOT_FOUND": "Die angeforderte Ressource wurde nicht gefunden.",
+    "INTERNAL_SERVER_ERROR": "Ein interner Serverfehler ist aufgetreten.",
+    "BAD_REQUEST": "Ungültige Anfrage.",
+    "VALIDATION_FAILED": "Die Überprüfung der bereitgestellten Daten ist fehlgeschlagen."
+  },
+  "REAGENT_DETAILED_PAGE": {
+    "DETAILS_TITLE": "{{ category }} Details",
+    "COPY_STRUCTURE": "Struktur kopieren",
+    "SMILES": "SMILES",
+    "NO_STRUCTURE": "Keine Struktur angegeben",
+    "INVALID_STRUCTURE_IMAGE": "Ungültiges Strukturbild",
+    "NAME": "Name",
+    "ID": "ID",
+    "CATEGORY": "Kategorie",
+    "QUANTITY": "Menge",
+    "DESCRIPTION": "Beschreibung",
+    "CAS": "CAS",
+    "PRODUCER": "Hersteller",
+    "CATALOG_ID": "Katalog-ID",
+    "PRICE": "Preis",
+    "PER": "pro",
+    "CATALOG_LINK": "Kataloglink",
+    "EDIT_QUANTITY": "Menge bearbeiten",
+    "DELETE_REAGENT": "Reagenz löschen",
+    "STRUCTURE_COPIED": "Struktur kopiert"
+  },
+  "MOLECULE_STRUCTURE": {
+    "ERROR": {
+      "RDKIT_FAILED_TO_LOAD": "RDKit konnte nicht geladen werden",
+      "NO_STRUCTURE_PROVIDED": "Keine Struktur bereitgestellt",
+      "INVALID_STRUCTURE": "Ungültige Struktur"
+    }
+  },
+  "EDIT_QUANTITY_REAGENT": {
+    "HEADER": "Bearbeite {{ category }} Menge",
+    "QUANTITY_LEFT": "Verbleibende Menge",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Verbleibende Menge ist erforderlich.",
+      "QUANTITY_LEFT_INVALID": "Verbleibende Menge muss eine gültige Zahl sein."
+    },
+    "CANCEL": "Abbrechen",
+    "EDIT": "Bearbeiten",
+    "SUCCESS_TITLE": "Erfolg",
+    "ERROR_TITLE": "Fehler",
+    "SUCCESS_MESSAGE_EDITED": "{{ category }} erfolgreich bearbeitet!",
+    "SUCCESS_MESSAGE_CONSUMED": "{{ category }} ist vollständig verbraucht"
+  },
+  "DELETE_REAGENT": {
+    "HEADER": "Reagenz löschen?",
+    "MESSAGE": "{{ name }} wird gelöscht",
+    "CANCEL": "Abbrechen",
+    "DELETE": "Löschen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "{{ name }} wurde erfolgreich entfernt!",
+    "ERROR_TITLE": "Fehler"
+  },
+  "REAGENT_REQUESTS_DIALOG": {
+    "SEARCH_BY_NAME": "Nach Name suchen",
+    "SEARCH_PLACEHOLDER": "Geben Sie den Reagenz",
+    "SELECT": "Auswählen",
+    "NAME": "Name",
+    "DESIRED_QUANTITY": "Gewünschte Menge",
+    "PACKAGE": "Verpackung",
+    "N_A": "N/A",
+    "CREATED": "Erstellt",
+    "COMMENT": "Kommentar",
+    "NO_PENDING_REQUESTS": "Keine ausstehenden Anfragen gefunden",
+    "ADD": "Hinzufügen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Reagenzienanforderung wurde erfolgreich hinzugefügt!",
+    "ERROR_TITLE": "Fehler"
+  },
+  "CONFIRM_DECLINE_DIALOG": {
+    "HEADER": "Entfernung bestätigen",
+    "MESSAGE": "Das Entfernen der letzten Reagenzienanfrage setzt die Bestellung auf 'Abgelehnt'. Möchten Sie fortfahren?",
+    "PROCEED_BUTTON": "Fortfahren",
+    "CANCEL_BUTTON": "Abbrechen",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Bestellung erfolgreich abgelehnt!"
+  },
+  "REAGENTS_HISTORY_TABLE": {
+    "CATEGORY": {
+      "SAMPLE": "Probe",
+      "REAGENT": "Reagenz"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Kategorie",
+      "ACTION": "Aktion",
+      "TIME_STAMP": "Zeitstempel",
+      "OLD_STORAGE_LOCATION": "Alter Lagerort",
+      "NEW_STORAGE_LOCATION": "Neuer Lagerort",
+      "OLD_QUANTITY": "Alte Menge",
+      "NEW_QUANTITY": "Neue Menge",
+      "USED_REAGENTS": "Verwendete Reagenzien"
+    },
+    "ACTION": {
+      "CREATE REAGENT": "Reagenz erstellen",
+      "UPDATE REAGENT": "Reagenz aktualisieren",
+      "DELETE REAGENT": "Reagenz löschen",
+      "CREATE SAMPLE": "Probe erstellen",
+      "UPDATE SAMPLE": "Probe aktualisieren",
+      "DELETE SAMPLE": "Probe löschen"
+    }
+  }
+}

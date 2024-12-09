@@ -1,4 +1,11 @@
-import { Component, computed, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ReagentsService } from '../../shared/services/reagents.service';
 import {
   Reagent,
@@ -30,6 +37,7 @@ import { MoveReagentComponent } from './components/move-reagent/move-reagent.com
 import { NoDataComponent } from '../../shared/components/no-data/no-data.component';
 import { EditReagentComponent } from './components/edit-reagent/edit-reagent.component';
 import { UploadReagentComponent } from './components/upload-reagent/upload-reagent.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagents-list',
@@ -43,7 +51,8 @@ import { UploadReagentComponent } from './components/upload-reagent/upload-reage
     TableLoaderSpinnerComponent,
     SpinnerDirective,
     NoDataComponent,
-    RouterLink
+    RouterLink,
+    TranslateModule
   ],
   providers: [ReagentsService, ReagentsQueryService],
   templateUrl: './reagents-list.component.html',
@@ -57,7 +66,8 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   private rbacService = inject(RbacService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-  private destroy$ = new Subject<void>()
+  private destroy$ = new Subject<void>();
+  private translate = inject(TranslateService);
   filterStructureValue = '';
   isFullStructure = false;
 
@@ -140,25 +150,27 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
   }
 
   onEditReagent(element: Reagent) {
-    this.dialog.open(EditReagentComponent, {data: element, width: '400px'})
+    this.dialog
+      .open(EditReagentComponent, { data: element, width: '400px' })
       .afterClosed()
       .pipe(first())
       .subscribe((isEdited) => {
         if (isEdited) {
-          this.reagentsQueryService.reloadReagentList()
+          this.reagentsQueryService.reloadReagentList();
         }
-      })
+      });
   }
 
   onUploadReagent() {
-    this.dialog.open(UploadReagentComponent, { width: '400px'})
+    this.dialog
+      .open(UploadReagentComponent, { width: '400px' })
       .afterClosed()
       .pipe(first())
       .subscribe((isUpload) => {
         if (isUpload) {
-          this.reagentsQueryService.reloadReagentList()
+          this.reagentsQueryService.reloadReagentList();
         }
-      })
+      });
   }
 
   onFilterName($event: Event) {
@@ -193,7 +205,10 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openStructureEditor(enterAnimationDuration: string, exitAnimationDuration: string) {
+  openStructureEditor(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
     const dialogRef = this.dialog.open(AddStructureComponent, {
       width: '650px',
       height: '600px',
@@ -202,10 +217,12 @@ export class ReagentsListComponent implements OnInit, OnDestroy {
       enterAnimationDuration,
       exitAnimationDuration,
       restoreFocus: false,
-      data: { smiles: this.filterStructureValue }
+      data: { smiles: this.filterStructureValue },
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
         if (result) {
           this.filterStructureValue = result;

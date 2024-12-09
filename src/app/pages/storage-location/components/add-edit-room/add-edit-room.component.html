@@ -1,16 +1,25 @@
-<p class="header">{{ editionData ? "Edit" : "Add New" }} Room</p>
+<p class="header">
+  {{
+    editionData
+      ? ("ADD_EDIT_ROOM.EDIT" | translate)
+      : ("ADD_EDIT_ROOM.ADD_NEW" | translate)
+  }}
+  {{ "ADD_EDIT_ROOM.ROOM" | translate }}
+</p>
 <form class="form" [formGroup]="roomForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
-    <mat-label>Room</mat-label>
+    <mat-label>{{ "ADD_EDIT_ROOM.ROOM_LABEL" | translate }}</mat-label>
     <input matInput formControlName="name" />
     @if (hasError('name', 'required')) {
-    <mat-error>Room is required</mat-error>
+    <mat-error>{{
+      "ADD_EDIT_ROOM.ERRORS.ROOM_REQUIRED" | translate
+    }}</mat-error>
     } @if (hasError('name', 'serverError')) {
     <mat-error>{{ getErrorMessage("name", "serverError") }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>
-    <mat-label>Description</mat-label>
+    <mat-label>{{ "ADD_EDIT_ROOM.DESCRIPTION_LABEL" | translate }}</mat-label>
     <textarea matInput formControlName="description"></textarea>
   </mat-form-field>
   <div class="actions">
@@ -21,7 +30,7 @@
       mat-dialog-close
       color="warn"
     >
-      Cancel
+      {{ "ADD_EDIT_ROOM.CANCEL" | translate }}
     </button>
     <button
       type="submit"
@@ -29,7 +38,11 @@
       class="save-btn"
       mat-flat-button
     >
-      {{ editionData ? "Edit" : "Save" }}
+      {{
+        editionData
+          ? ("ADD_EDIT_ROOM.EDIT" | translate)
+          : ("ADD_EDIT_ROOM.SAVE" | translate)
+      }}
     </button>
   </div>
 </form>

@@ -5,7 +5,9 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first, shareReplay } from 'rxjs/operators';
@@ -14,21 +16,22 @@ import { RDKitLoaderService } from '../../services/rdkit-loader.service';
 import { NgClass, NgIf, NgStyle } from '@angular/common';
 import { MolDrawOptions } from './mol-draw-options';
 import { CanvasRendererComponent } from './canvas-renderer/canvas-renderer.component';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface DrawDetails {
   width: number;
   height: number;
   bondLineWidth: number;
-  addStereoAnnotation: boolean
-};
-
+  addStereoAnnotation: boolean;
+}
 
 @Component({
   selector: 'app-molecule-structure',
   standalone: true,
   imports: [NgClass, NgStyle, NgIf, CanvasRendererComponent],
   templateUrl: './molecule-structure.component.html',
-  styleUrls: ['./molecule-structure.component.scss'],
+  styleUrl: './molecule-structure.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
   @Input() width = 100;
@@ -37,7 +40,7 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
   @Input() molDrawOptions?: MolDrawOptions;
   @Input() refreshDelay?: number;
 
-  drawDetails!: DrawDetails;
+  drawDetails?: DrawDetails;
   rdkit$!: Observable<RDKitModule>;
   error: string | null = null;
   loading = true;
@@ -46,17 +49,25 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
   @ViewChild('molCanvas', { read: ElementRef })
   canvasContainer!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private rdkitService: RDKitLoaderService) {
+  constructor(
+    private rdkitService: RDKitLoaderService,
+    private cdr: ChangeDetectorRef,
+    private translate: TranslateService
+  ) {
     this.rdkit$ = this.rdkitService.getRDKit().pipe(shareReplay(1));
     this.rdkit$.pipe(first()).subscribe({
       next: () => {
         this.loading = false;
         this.error = null;
+        this.cdr.markForCheck();
       },
       error: (error) => {
         this.loading = false;
         console.error(error);
-        this.error = 'RDKit failed to load';
+        this.error = this.translate.instant(
+          'MOLECULE_STRUCTURE.ERROR.RDKIT_FAILED_TO_LOAD'
+        );
+        this.cdr.markForCheck();
       },
     });
   }
@@ -89,14 +100,20 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
 
   renderStructure() {
     if (!this.structure) {
-      this.error = 'No structure provided';
+      this.error = this.translate.instant(
+        'MOLECULE_STRUCTURE.ERROR.NO_STRUCTURE_PROVIDED'
+      );
+      this.cdr.markForCheck();
       return;
     }
 
     this.rdkit$.pipe(first()).subscribe((rdkit) => {
       const mol = rdkit.get_mol(this.structure);
       if (!mol) {
-        this.error = 'Invalid structure';
+        this.error = this.translate.instant(
+          'MOLECULE_STRUCTURE.ERROR.INVALID_STRUCTURE'
+        );
+        this.cdr.markForCheck();
         return;
       }
 
@@ -109,6 +126,8 @@ export class MoleculeStructureComponent implements OnChanges, AfterViewInit {
       };
 
       mol?.delete();
+
+      this.cdr.markForCheck();
     });
   }
 }

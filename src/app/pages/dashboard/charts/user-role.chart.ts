@@ -6,7 +6,12 @@ const pieColors: Record<string, string> = {
   ProcurementOfficer: 'var(--neutral-color-light1)',
 };
 
-export const chartOptions = (series: number[], labels: string[]): Partial<ChartOptions> => ({
+export const chartOptions = (
+  series: number[],
+  labels: string[],
+  titleText: string,
+  roles: string[]
+): Partial<ChartOptions> => ({
   series,
   chart: {
     width: '100%',
@@ -14,9 +19,9 @@ export const chartOptions = (series: number[], labels: string[]): Partial<ChartO
     type: 'pie',
   },
   labels,
-  colors: labels.map((label) => pieColors[label]),
+  colors: roles.map((role) => pieColors[role]),
   title: {
-    text: 'Number of Users',
+    text: titleText,
     style: {
       color: 'var(--neutral-color-light1)',
       fontWeight: 500,

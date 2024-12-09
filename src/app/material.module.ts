@@ -28,11 +28,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -65,6 +65,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatProgressBar,
     ClipboardModule,
     MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   exports: [
     MatButtonModule,
@@ -96,6 +98,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatProgressBar,
     ClipboardModule,
     MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [
     {

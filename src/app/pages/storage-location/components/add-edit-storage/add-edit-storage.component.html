@@ -1,7 +1,14 @@
-<p class="header">{{ editionData ? "Edit" : "Add New" }} Storage Location</p>
+<p class="header">
+  {{
+    editionData
+      ? ("ADD_EDIT_STORAGE.EDIT" | translate)
+      : ("ADD_EDIT_STORAGE.ADD_NEW" | translate)
+  }}
+  {{ "ADD_EDIT_STORAGE.STORAGE_LOCATION" | translate }}
+</p>
 <form class="form" [formGroup]="storageForm" (submit)="onSave()">
   <mat-form-field hideRequiredMarker>
-    <mat-label>Room</mat-label>
+    <mat-label>{{ "ADD_EDIT_STORAGE.ROOM_LABEL" | translate }}</mat-label>
     <mat-select formControlName="roomName">
       @for (room of filteredRooms$ | async; track $index) {
       <mat-option [value]="room.name">
@@ -10,26 +17,37 @@
       }
     </mat-select>
     @if (hasError('roomName', 'required')) {
-    <mat-error>Room is required</mat-error>
-    }@if (hasError('roomName', 'roomError')) {
+    <mat-error>{{
+      "ADD_EDIT_STORAGE.ERRORS.ROOM_REQUIRED" | translate
+    }}</mat-error>
+    } @if (hasError('roomName', 'roomError')) {
     <mat-error>{{ getErrorMessage("roomName", "roomError") }}</mat-error>
-    }@if (hasError('roomName', 'roomNotFound')) {
+    } @if (hasError('roomName', 'roomNotFound')) {
     <mat-error>{{ getErrorMessage("roomName", "roomNotFound") }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>
-    <mat-label>Name</mat-label>
+    <mat-label>{{ "ADD_EDIT_STORAGE.NAME_LABEL" | translate }}</mat-label>
     <input matInput formControlName="name" />
     @if (hasError('name', 'required')) {
-    <mat-error>Name is required</mat-error>
-    }@if (hasError('name', 'maxlength')) {
-    <mat-error>Name length should be less than {{ MAX_LENGTH }}</mat-error>
-    }@if (hasError('name', 'uniqueName')) {
+    <mat-error>{{
+      "ADD_EDIT_STORAGE.ERRORS.NAME_REQUIRED" | translate
+    }}</mat-error>
+    } @if (hasError('name', 'maxlength')) {
+    <mat-error>
+      {{
+        "ADD_EDIT_STORAGE.ERRORS.NAME_MAXLENGTH"
+          | translate : { maxLength: MAX_LENGTH }
+      }}
+    </mat-error>
+    } @if (hasError('name', 'uniqueName')) {
     <mat-error>{{ getErrorMessage("name", "uniqueName") }}</mat-error>
     }
   </mat-form-field>
   <mat-form-field hideRequiredMarker>
-    <mat-label>Description</mat-label>
+    <mat-label>{{
+      "ADD_EDIT_STORAGE.DESCRIPTION_LABEL" | translate
+    }}</mat-label>
     <textarea matInput formControlName="description"></textarea>
   </mat-form-field>
   <div class="actions">
@@ -40,7 +58,7 @@
       mat-dialog-close
       color="warn"
     >
-      Cancel
+      {{ "ADD_EDIT_STORAGE.CANCEL" | translate }}
     </button>
     <button
       type="submit"
@@ -48,7 +66,11 @@
       class="save-btn"
       mat-flat-button
     >
-      {{ editionData ? "Edit" : "Save" }}
+      {{
+        editionData
+          ? ("ADD_EDIT_STORAGE.EDIT" | translate)
+          : ("ADD_EDIT_STORAGE.SAVE" | translate)
+      }}
     </button>
   </div>
 </form>

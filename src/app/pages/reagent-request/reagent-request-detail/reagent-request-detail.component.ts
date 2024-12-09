@@ -5,10 +5,10 @@ import { ReagentRequestList } from '../reagent-request-page/reagent-request-page
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 import { MoleculeStructureComponent } from '../../../shared/components/molecule-structure/molecule-structure.component';
-// import { SpinnerDirective } from '../../../shared/directives/spinner/spinner.directive';
 import { TableLoaderSpinnerComponent } from '../../../shared/components/table-loader-spinner/table-loader-spinner.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DISPLAY_EXTENSION } from '../../../shared/units/display.units';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reagent-request-detail',
@@ -17,17 +17,18 @@ import { DISPLAY_EXTENSION } from '../../../shared/units/display.units';
     CommonModule,
     MaterialModule,
     MoleculeStructureComponent,
-    // SpinnerDirective,
     TableLoaderSpinnerComponent,
-    MatTooltipModule, // Убедитесь, что MatTooltipModule импортирован
+    MatTooltipModule,
+    TranslateModule,
   ],
   templateUrl: './reagent-request-detail.component.html',
-  styleUrls: ['./reagent-request-detail.component.scss'],
+  styleUrl: './reagent-request-detail.component.scss',
 })
 export class ReagentRequestDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private reagentRequestService = inject(ReagentRequestService);
   private router = inject(Router);
+  private translate = inject(TranslateService);
 
   reagentRequest: ReagentRequestList | null = null;
   isLoading = true;

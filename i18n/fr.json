@@ -1,0 +1,785 @@
+{
+  "LOGIN": {
+    "TITLE": "Connexion",
+    "EMAIL": "E-mail",
+    "PASSWORD": "Mot de passe",
+    "FORGOT_PASSWORD": "Mot de passe oublié?",
+    "LOGIN_BUTTON": "Connexion",
+    "EMAIL_REQUIRED": "L'e-mail est requis",
+    "EMAIL_INVALID": "Veuillez entrer une adresse e-mail valide",
+    "PASSWORD_REQUIRED": "Le mot de passe est requis",
+    "PASSWORD_INVALID": "Veuillez entrer un mot de passe valide (au moins 8 caractères)",
+    "ERROR_INCORRECT": "Mot de passe ou e-mail incorrect"
+  },
+  "HEADER": {
+    "LOGOUT": "Déconnexion",
+    "PROFILE": "Profil",
+    "LANGUAGE": "Langue"
+  },
+  "PASSWORD_CHANGE": {
+    "MESSAGE": "Veuillez changer votre mot de passe avant de continuer",
+    "TITLE": "Changer le mot de passe",
+    "CURRENT_PASSWORD": "Mot de passe actuel",
+    "CURRENT_PASSWORD_REQUIRED": "Le mot de passe actuel est requis.",
+    "NEW_PASSWORD": "Nouveau mot de passe",
+    "NEW_PASSWORD_REQUIRED": "Le nouveau mot de passe est requis.",
+    "NEW_PASSWORD_INVALID": "Doit comporter plus de 8 lettres, contenir : A-Z, a-z, 0-9, !#$%^&*",
+    "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+    "CONFIRM_PASSWORD_REQUIRED": "La confirmation du mot de passe est requise.",
+    "PASSWORDS_DO_NOT_MATCH": "Les mots de passe ne correspondent pas !",
+    "CHANGE_PASSWORD_BUTTON": "Changer le mot de passe"
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE": "Mot de passe oublié",
+    "EMAIL": "E-mail",
+    "EMAIL_REQUIRED": "L'e-mail est requise",
+    "EMAIL_INVALID": "Entrez une adresse e-mail valide",
+    "EMAIL_NOT_EXIST": "L'e-mail n'existe pas",
+    "LOGIN_BUTTON": "Connexion",
+    "SUBMIT_BUTTON": "Envoyer"
+  },
+  "EDIT_ORDER": {
+    "TITLE": "Modifier la Commande",
+    "FORM": {
+      "TITLE_LABEL": "Titre",
+      "SELLER_LABEL": "Vendeur",
+      "TITLE_REQUIRED": "Le titre est requis.",
+      "SELLER_REQUIRED": "Le vendeur est requis."
+    },
+    "ORDERED_REAGENTS": "Réactifs Commandés",
+    "TABLE_HEADERS": {
+      "NAME": "Nom",
+      "CAS_NUMBER": "Numéro CAS",
+      "MODIFICATION_DATE": "Date de Modification",
+      "DESIRED_QUANTITY": "Quantité Désirée",
+      "QUANTITY_LEFT": "Quantité Restante",
+      "STRUCTURE": "Structure",
+      "CREATOR_COMMENT": "Commentaire du Créateur",
+      "ACTIONS": "Actions"
+    },
+    "NO_CHANGES": "Aucun changement à mettre à jour",
+    "REMOVE_LAST_REAGENT_CONFIRM": "Supprimer le dernier réactif annulera la commande. Voulez-vous continuer ?",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Commande mise à jour avec succès",
+    "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès !",
+    "ORDER_DECLINED_SUCCESS": "Commande refusée avec succès !",
+    "ERROR_TITLE": "Erreur",
+    "PROCEED_BUTTON": "Continuer",
+    "CANCEL_BUTTON": "Annuler",
+    "UPDATE_BUTTON": "Mettre à jour",
+    "CLOSE_BUTTON": "Fermer"
+  },
+  "EDIT_REQUESTED_REAGENT": {
+    "TITLE": "Modifier le réactif demandé",
+    "DESIRED_QUANTITY": "Quantité désirée",
+    "DESIRED_QUANTITY_REQUIRED": "La quantité désirée est requise",
+    "PACKAGE": "Emballage",
+    "PACKAGE_REQUIRED": "L'emballage est requis",
+    "NONE": "Aucun",
+    "UPDATE_BUTTON": "Mettre à jour",
+    "CLOSE_BUTTON": "Fermer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "La demande de réactif a été mise à jour",
+    "ERROR_TITLE": "Erreur"
+  },
+  "ORDER_FORM": {
+    "HEADER": "Créer une nouvelle commande",
+    "GENERAL": "Général",
+    "TITLE_LABEL": "Titre",
+    "TITLE_REQUIRED": "Le titre est requis.",
+    "SELLER_LABEL": "Vendeur",
+    "SELLER_PLACEHOLDER": "Sélectionner un vendeur",
+    "SELLER_REQUIRED": "Le vendeur est requis.",
+    "REQUESTED_REAGENTS": "Réactifs demandés",
+    "SEARCH_BY_NAME": "Rechercher par nom",
+    "SEARCH_PLACEHOLDER": "Entrer le nom du réactif",
+    "SELECT": "Sélectionner",
+    "NAME": "Nom",
+    "DESIRED_QUANTITY": "Quantité désirée",
+    "PACKAGE": "Emballage",
+    "CREATED": "Créé",
+    "COMMENT": "Commentaire",
+    "ACTIONS": "Actions",
+    "NO_PENDING_REQUESTS": "Aucune demande en attente trouvée",
+    "SELECTED_REAGENTS": "Réactifs sélectionnés",
+    "SELECT_AT_LEAST_ONE": "Sélectionnez au moins un réactif",
+    "CANCEL": "Annuler",
+    "SUBMIT": "Soumettre",
+    "SUBMIT_ORDER": "Soumettre une commande",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Commande créée avec succès!",
+    "ERROR_TITLE": "Erreur",
+    "ERROR_MESSAGE": "Demande de réactif déjà utilisée, sélectionnez une autre demande de réactif",
+    "AMOUNT": "Quantité",
+    "N_A": "N/A"
+  },
+  "ORDER_PAGE": {
+    "ORDER_TITLE": "Titre de la commande",
+    "SELLER": "Vendeur",
+    "STATUS": "Statut",
+    "CREATED": "Créé",
+    "LAST_UPDATED": "Dernière mise à jour",
+    "UPDATED": "Mis à jour",
+    "ORDERED_REAGENTS": "Réactifs commandés",
+    "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
+    "COMPLETED": "Terminé",
+    "COMPLETE": "Terminer",
+    "EDIT": "Modifier",
+    "DELETE": "Supprimer",
+    "ORDER_LIST_ALT": "Liste des commandes",
+    "SUCCESS_TITLE": "Succès",
+    "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès!",
+    "ERROR_TITLE": "Erreur",
+    "TABLE": {
+      "NAME": "Nom",
+      "CAS_NUMBER": "Numéro CAS",
+      "MODIFICATION_DATE": "Date de modification",
+      "DESIRED_QUANTITY": "Quantité désirée",
+      "PACKAGE": "Emballage",
+      "STATUS": "Statut",
+      "STRUCTURE": "Structure",
+      "CREATOR_COMMENT": "Commentaire du créateur",
+      "ACTIONS": "Actions",
+      "NO_DATA": "______"
+    }
+  },
+  "STATUSES": {
+    "PENDING": "En attente",
+    "ORDERED": "Commandé",
+    "FULFILLED": "Exécuté",
+    "DECLINED": "Refusé",
+    "COMPLETED": "Terminé",
+    "SUBMITTED": "Soumis"
+  },
+  "ORDERS_LIST": {
+    "CREATE_NEW_ORDER": "Créer une nouvelle commande",
+    "FILTER_BY_STATUS": "Filtrer par statut",
+    "ALL_ORDERS": "Toutes les commandes",
+    "STATUS": {
+      "PENDING": "En attente",
+      "SUBMITTED": "Soumis",
+      "DECLINED": "Refusé",
+      "FULFILLED": "Rempli",
+      "COMPLETED": "Terminé"
+    },
+    "ACTIONS": {
+      "FULFILL": "Réaliser",
+      "DECLINE": "Refuser"
+    },
+    "FILTER_BY_TITLE": "Filtrer par titre",
+    "FILTER_BY_SELLER": "Filtrer par vendeur",
+    "TABLE_HEADERS": {
+      "ORDER_TITLE": "Titre de la commande",
+      "CREATION_DATE": "Date de création",
+      "MODIFICATION_DATE": "Date de modification",
+      "SELLER_PRODUCER": "Vendeur/Producteur",
+      "STATUS": "Statut",
+      "ACTIONS": "Actions"
+    },
+    "NO_DATA": "______",
+    "ARIA_LABELS": {
+      "VIEW_DETAILS": "Voir les détails",
+      "EDIT": "Modifier",
+      "SELECT_PAGE": "Sélectionner la page"
+    }
+  },
+  "PROFILE": {
+    "ROLE": "Rôle",
+    "ROLE_NAME": {
+      "RESEARCHER": "Chercheur",
+      "PROCUREMENTOFFICER": "Agent d'achat",
+      "ADMIN": "Administrateur"
+    },
+    "EMAIL": "E-mail",
+    "CHANGE_PASSWORD": "Changer le mot de passe",
+    "CURRENT_PASSWORD": "Mot de passe actuel",
+    "NEW_PASSWORD": "Nouveau mot de passe",
+    "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+    "CHANGE": "Changer",
+    "CANCEL": "Annuler",
+    "ERRORS": {
+      "CURRENT_PASSWORD_REQUIRED": "Le mot de passe actuel est requis.",
+      "PASSWORD_INCORRECT": "Le mot de passe n'est pas correct.",
+      "NEW_PASSWORD_REQUIRED": "Le nouveau mot de passe est requis.",
+      "PASSWORD_PATTERN": "Doit contenir plus de 8 caractères, inclure: A-Z, a-z, 0-9, !#$%^&*",
+      "CONFIRM_PASSWORD_REQUIRED": "La confirmation du mot de passe est requise.",
+      "PASSWORDS_NOT_MATCH": "Les mots de passe ne correspondent pas !"
+    }
+  },
+  "CREATE_REAGENT_REQUEST": {
+    "HEADER": "Créer une nouvelle demande de réactif",
+    "GENERAL": "Général",
+    "NAME_LABEL": "Nom",
+    "NAME_REQUIRED": "Le nom est requis.",
+    "DESIRED_QUANTITY_LABEL": "Quantité désirée",
+    "DESIRED_QUANTITY_REQUIRED": "La quantité désirée est requise et doit être au moins 1.",
+    "QUANTITY_UNIT_LABEL": "Unité de quantité",
+    "QUANTITY_UNIT_REQUIRED": "L'unité de quantité est requise.",
+    "STRUCTURE": "Structure",
+    "STRUCTURE_SMILES_LABEL": "Structure SMILES",
+    "CAS_NUMBER_LABEL": "Numéro CAS",
+    "ADDITIONAL_INFO": "Informations supplémentaires",
+    "USER_COMMENTS_LABEL": "Commentaires de l'utilisateur",
+    "ORDER_ID_LABEL": "ID de commande",
+    "PRODUCER_LABEL": "Producteur",
+    "CATALOG_ID_LABEL": "ID du catalogue",
+    "CATALOG_LINK_LABEL": "Lien du catalogue",
+    "PRICE_PER_UNIT_LABEL": "Prix par unité",
+    "EXPIRATION_DATE_LABEL": "Date d'expiration",
+    "PACKAGE_LABEL": "Emballage",
+    "NONE": "Aucun",
+    "CANCEL": "Annuler",
+    "SUBMIT": "Soumettre",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Demande de réactif créée avec succès!",
+    "ERROR_TITLE": "Erreur",
+    "ERROR_MESSAGE": "Échec de la création de la demande de réactif. Veuillez réessayer."
+  },
+  "DECLINE_REAGENT_REQUEST": {
+    "HEADER": "Refuser la demande de réactif",
+    "STATUS_LABEL": "Statut",
+    "PROCUREMENT_COMMENT_LABEL": "Commentaire d'approvisionnement",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Demande de réactif refusée",
+    "ERROR_TITLE": "Erreur"
+  },
+  "REAGENT_REQUEST_DETAIL": {
+    "HEADER": "Détails de la demande de réactif",
+    "GENERAL_INFO": "Informations générales",
+    "ID": "ID",
+    "NAME": "Nom",
+    "STATUS": "Statut",
+    "DESIRED_QUANTITY": "Quantité désirée",
+    "QUANTITY_UNIT": "Unité de quantité",
+    "PACKAGE": "Emballage",
+    "CAS_NUMBER": "Numéro CAS",
+    "USER_COMMENTS": "Commentaires de l'utilisateur",
+    "PROCUREMENT_COMMENTS": "Commentaires d'approvisionnement",
+    "CREATED_AT": "Créé le",
+    "UPDATED_AT": "Mis à jour le",
+    "STRUCTURE": "Structure",
+    "SMILES": "SMILES"
+  },
+  "REAGENTS_REQUEST_PAGE": {
+    "CREATE_REAGENT_REQUEST": "Créer une demande de réactif",
+    "FILTER_BY_NAME": "Filtrer par nom",
+    "PLACEHOLDER_ENTER_NAME": "Entrez le nom",
+    "FILTER_BY_STATUS": "Filtrer par statut",
+    "ALL_STATUSES": "Tous les statuts",
+    "STATUS": {
+      "PENDING": "En attente",
+      "ORDERED": "Commandé",
+      "FULFILLED": "Exécuté",
+      "DECLINED": "Refusé",
+      "COMPLETED": "Terminé",
+      "SUBMITTED": "Soumis"
+    },
+    "TABLE": {
+      "NAME": "Nom",
+      "STRUCTURE": "Structure",
+      "CAS_NUMBER": "Numéro CAS",
+      "DESIRED_QUANTITY": "Quantité désirée",
+      "STATUS": "Statut",
+      "CREATED_AT": "Créé le",
+      "UPDATED_AT": "Mis à jour le",
+      "ACTIONS": "Actions",
+      "OPEN": "Ouvrir"
+    }
+  },
+  "REAGENTS_LIST": {
+    "CREATE": "Créer",
+    "CREATE_REAGENT": "Créer un réactif",
+    "CREATE_SAMPLE": "Créer un échantillon",
+    "UPLOAD": "Télécharger",
+    "MOVE_REAGENT": "Déplacer le réactif",
+    "HISTORY": "Histoire",
+    "SEARCH_BY_NAME": "Rechercher par nom",
+    "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
+    "SEARCH_BY_STRUCTURE": "Rechercher par structure",
+    "PLACEHOLDER_ENTER_STRUCTURE": "Entrez une structure",
+    "EXACT_MATCH": "Correspondance exacte",
+    "FILTER_BY_CATEGORY": "Filtrer par catégorie",
+    "ALL_CATEGORIES": "Toutes les catégories",
+    "CATEGORY": {
+      "SAMPLE": "Échantillon",
+      "REAGENT": "Réactif"
+    },
+    "TABLE": {
+      "NAME": "Nom",
+      "CATEGORY": "Catégorie",
+      "STRUCTURE": "Structure",
+      "CAS": "CAS",
+      "QUANTITY": "Quantité",
+      "QUANTITY_LEFT": "Quantité restante",
+      "LOCATION": "Emplacement",
+      "ACTIONS": "Actions"
+    },
+    "NO_DATA_AVAILABLE": "Aucune donnée de réactifs disponible",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Sélectionner une page"
+    }
+  },
+
+  "ADD_REAGENT_SAMPLE": {
+    "SEARCH_BY_NAME": "Recherche par nom",
+    "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
+    "FILTER_BY_CATEGORY": "Filtrer par catégorie",
+    "ALL_CATEGORIES": "Toutes les catégories",
+    "CATEGORY": {
+      "SAMPLE": "Échantillon",
+      "REAGENT": "Réactif"
+    },
+    "SAVE": "Enregistrer",
+    "TABLE": {
+      "NAME": "Nom",
+      "CATEGORY": "Catégorie",
+      "STRUCTURE": "Structure",
+      "QUANTITY": "Quantité",
+      "QUANTITY_LEFT": "Quantité restante",
+      "SELECT": "Sélectionner",
+      "SELECT_QUANTITY": "Sélectionner la quantité",
+      "STORAGE_LOCATION": "Emplacement de stockage"
+    },
+    "ERRORS": {
+      "QUANTITY_LESS_THAN": "La quantité doit être inférieure à {{quantityLeft}} {{quantityUnit}}",
+      "QUANTITY_MORE_THAN_ZERO": "La quantité doit être supérieure à 0",
+      "QUANTITY_REQUIRED": "La quantité est requise"
+    },
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Sélectionner la page"
+    }
+  },
+  "CREATE_REAGENT": {
+    "HEADER": "Créer un nouveau {{ itemType }}",
+    "SAMPLE": "Échantillon",
+    "REAGENT": "Réactif",
+    "GENERAL": "Général",
+    "NAME_LABEL": "Nom",
+    "NAME_REQUIRED": "Le nom est requis.",
+    "DESCRIPTION_LABEL": "Description",
+    "EXPIRATION_DATE_LABEL": "Date d'expiration",
+    "EXPIRATION_DATE_HINT": "JJ/MM/AAAA",
+    "STORAGE_LOCATION_LABEL": "Emplacement de stockage",
+    "STORAGE_LOCATION_PLACEHOLDER": "par ex : Salle1 Armoire1-Étagère1",
+    "STORAGE_LOCATION_REQUIRED": "L'emplacement de stockage est requis.",
+    "STORAGE_LOCATION_INVALID": "Sélectionnez le bon emplacement de stockage.",
+    "QUANTITY": "Quantité",
+    "QUANTITY_UNIT_LABEL": "Unité de quantité",
+    "QUANTITY_UNIT_REQUIRED": "L'unité de quantité est requise.",
+    "TOTAL_QUANTITY_LABEL": "Quantité totale",
+    "TOTAL_QUANTITY_REQUIRED": "La quantité totale est requise.",
+    "TOTAL_QUANTITY_INVALID": "La quantité totale doit être un nombre valide.",
+    "QUANTITY_LEFT_LABEL": "Quantité restante",
+    "QUANTITY_LEFT_REQUIRED": "La quantité restante est requise.",
+    "QUANTITY_LEFT_INVALID": "La quantité restante doit être un nombre valide.",
+    "REAGENTS_LABEL": "Réactifs",
+    "SELECTED_REAGENTS": "{{ count }} réactifs sélectionnés",
+    "REAGENTS_REQUIRED": "Les réactifs sont requis",
+    "STRUCTURE": "Structure",
+    "STRUCTURE_LABEL": "Structure",
+    "CAS_NUMBER_LABEL": "Numéro CAS",
+    "CAS_NUMBER_MINLENGTH": "Le numéro CAS doit comporter au moins 5 caractères.",
+    "CAS_NUMBER_MAXLENGTH": "Le numéro CAS ne peut pas dépasser 10 caractères.",
+    "ORDER_DETAILS": "Détails de la commande",
+    "PRODUCER_LABEL": "Producteur",
+    "CATALOG_ID_LABEL": "ID du catalogue",
+    "CATALOG_LINK_LABEL": "Lien du catalogue",
+    "CATALOG_LINK_INVALID": "Le lien du catalogue doit être une URL valide.",
+    "PRICE_PER_UNIT_LABEL": "Prix par unité",
+    "PRICE_PER_UNIT_INVALID": "Le prix par unité doit être un nombre valide.",
+    "CANCEL": "Annuler",
+    "SUBMIT": "Soumettre",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "{{ item }} créé avec succès!",
+    "ERROR_TITLE": "Erreur"
+  },
+  "MOVE_REAGENT": {
+    "STORAGE_LOCATION_LABEL": "Emplacement de stockage",
+    "STORAGE_LOCATION_PLACEHOLDER": "par ex : Salle1 Armoire1-Étagère1",
+    "CANCEL": "Annuler",
+    "MOVE": "Déplacer",
+    "ERROR_TITLE": "Erreur",
+    "ERROR_MESSAGE": "Les réactifs n'ont pas pu être déplacés vers le stockage",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Réactifs déplacés avec succès",
+    "WARNING_TITLE": "Avertissement"
+  },
+  "REAGENT_PAGE": {
+    "DETAILS_HEADER": "Détails du réactif",
+    "NAME": "Nom du réactif",
+    "STRUCTURE": "Structure du réactif",
+    "PRODUCER": "Producteur",
+    "DESIRED_QUANTITY": "Quantité désirée du réactif",
+    "PER": "par",
+    "PACKAGE": "paquet",
+    "PRICE_PER_UNIT": "Prix par unité",
+    "CAS_NUMBER": "CAS du réactif",
+    "CATALOG_ID": "ID du catalogue du réactif",
+    "CATALOG_LINK": "Lien du catalogue du réactif",
+    "ALT_REAGENT": "réactif"
+  },
+  "BUTTONS": {
+    "CLOSE": "Fermer",
+    "CANCEL": "Annuler",
+    "EDIT": "Modifier"
+  },
+  "STRUCTURE_DIALOG": {
+    "ENLARGED_IMAGE_ALT": "Image agrandie"
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Réinitialiser le mot de passe",
+    "NEW_PASSWORD_LABEL": "Nouveau mot de passe",
+    "CONFIRM_PASSWORD_LABEL": "Confirmer le mot de passe",
+    "ERRORS": {
+      "PASSWORD_REQUIRED": "Le mot de passe est requis",
+      "PASSWORD_MIN_LENGTH": "Le mot de passe doit contenir au moins {{ minLength }} caractères",
+      "CONFIRM_PASSWORD_REQUIRED": "La confirmation du mot de passe est requise",
+      "PASSWORD_NO_MATCH": "Les mots de passe ne correspondent pas"
+    },
+    "LOGIN": "Connexion",
+    "SUBMIT": "Soumettre"
+  },
+  "STORAGE_LOCATION": {
+    "TAB": {
+      "STORAGE_LOCATION": "Emplacement de stockage",
+      "ROOM": "Salle"
+    }
+  },
+  "ADD_EDIT_ROOM": {
+    "EDIT": "Modifier",
+    "ADD_NEW": "Ajouter nouveau",
+    "ROOM": "Salle",
+    "ROOM_LABEL": "Salle",
+    "DESCRIPTION_LABEL": "Description",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_ADD": "Salle ajoutée avec succès",
+    "SUCCESS_EDIT": "Salle modifiée avec succès",
+    "ERROR_TITLE": "Erreur",
+    "ERRORS": {
+      "ROOM_REQUIRED": "La salle est requise"
+    }
+  },
+  "ADD_EDIT_STORAGE": {
+    "EDIT": "Modifier",
+    "ADD_NEW": "Ajouter nouveau",
+    "STORAGE_LOCATION": "Emplacement de stockage",
+    "ROOM_LABEL": "Salle",
+    "NAME_LABEL": "Nom",
+    "DESCRIPTION_LABEL": "Description",
+    "CANCEL": "Annuler",
+    "SAVE": "Enregistrer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_ADD": "Emplacement de stockage ajouté",
+    "SUCCESS_EDIT": "Emplacement de stockage modifié",
+    "ERROR_TITLE": "Erreur",
+    "ERRORS": {
+      "ROOM_REQUIRED": "La salle est requise",
+      "NAME_REQUIRED": "Le nom est requis",
+      "NAME_MAXLENGTH": "Le nom doit contenir moins de {{ maxLength }} caractères"
+    }
+  },
+  "ROOM_MANAGEMENT": {
+    "ADD_NEW_ROOM": "Ajouter une nouvelle salle",
+    "TABLE": {
+      "ROOM": "Salle",
+      "DESCRIPTION": "Description",
+      "STORAGES": "Stockages",
+      "ACTIONS": "Actions"
+    },
+    "DELETE_CONFIRMATION": "Êtes-vous sûr de vouloir supprimer la salle?",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Salle supprimée avec succès",
+    "WARNING_TITLE": "Avertissement",
+    "ERROR_TITLE": "Erreur",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Sélectionner la page"
+    }
+  },
+  "STORAGE_MANAGEMENT": {
+    "ADD_NEW_STORAGE": "Ajouter un nouvel emplacement de stockage",
+    "FILTER_BY_ROOM": "Filtrer par salle",
+    "FILTER_BY_NAME": "Filtrer par nom",
+    "ALL_ROOMS": "Toutes les salles",
+    "TABLE": {
+      "ROOM": "Salle",
+      "NAME": "Nom",
+      "DATE": "Date",
+      "REAGENTS": "Réactifs",
+      "ACTIONS": "Actions"
+    },
+    "DELETE_CONFIRMATION": "Êtes-vous sûr de vouloir supprimer l'emplacement de stockage?",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Emplacement de stockage supprimé avec succès",
+    "WARNING_TITLE": "Avertissement",
+    "ERROR_TITLE": "Erreur",
+    "ARIA_LABEL": {
+      "SELECT_PAGE": "Sélectionner la page"
+    }
+  },
+  "STORAGE_LOCATION_DETAIL": {
+    "ALT_STORAGE": "stockage"
+  },
+  "USER_MANAGEMENT_FORM": {
+    "CREATE_NEW_USER": "Créer un nouvel utilisateur",
+    "DELETE_CONFIRMATION": "Confirmer l'action -> Supprimer l'utilisateur :",
+    "DELETE_SUCCESS": "Utilisateur supprimé avec succès !",
+    "DELETE_FAILED": "Échec de la suppression de l'utilisateur",
+    "SUCCESS_TITLE": "Succès",
+    "CREATE_SUCCESS": "L'utilisateur a été créé avec succès !",
+    "UPDATE_SUCCESS": "Utilisateur mis à jour avec succès !",
+    "FIRST_NAME_LABEL": "Prénom",
+    "LAST_NAME_LABEL": "Nom",
+    "EMAIL_LABEL": "Email",
+    "ROLE_LABEL": "Rôle",
+    "SUBMIT_BUTTON": "Soumettre",
+    "DELETE_USER_BUTTON": "Supprimer l'utilisateur",
+    "ERRORS": {
+      "FIRST_NAME_REQUIRED": "Le prénom est requis",
+      "LAST_NAME_REQUIRED": "Le nom est requis",
+      "EMAIL_REQUIRED": "L'email est requis",
+      "EMAIL_INVALID": "Email invalide",
+      "ROLE_REQUIRED": "Le rôle est requis"
+    }
+  },
+  "USERS_LIST": {
+    "CREATE_NEW_USER": "Créer un nouvel utilisateur",
+    "SEARCH_BY_NAME": "Rechercher par nom",
+    "ENTER_NAME": "Entrez un nom",
+    "FILTER_BY_ROLE": "Filtrer par rôle",
+    "ALL_ROLES": "Tous les rôles",
+    "USER_DATA": "Données de l'utilisateur",
+    "DELETE_CONFIRMATION": "Confirmer l'action -> Supprimer l'utilisateur :",
+    "DELETE_SUCCESS": "Utilisateur supprimé avec succès !",
+    "DELETE_USER_FAILED": "Échec de la suppression de l'utilisateur",
+    "ERROR_TITLE": "Erreur",
+    "ERROR_LOADING_USERS": "Erreur lors du chargement des utilisateurs :",
+    "ERROR_LOADING_USERS_MESSAGE": "Échec du chargement des utilisateurs : {{ error }}",
+    "TABLE": {
+      "FIRST_NAME": "Prénom",
+      "LAST_NAME": "Nom",
+      "EMAIL": "Email",
+      "ROLE": "Rôle",
+      "ACTIONS": "Actions"
+    }
+  },
+  "LAYOUT": {
+    "MENU": {
+      "DASHBOARD": "Tableau de bord",
+      "STORAGE_LOCATIONS": "Stockage",
+      "REAGENTS": "Réactifs",
+      "ORDERS_MANAGEMENT": "Gestion des commandes",
+      "REAGENT_REQUEST": "Demande de réactif",
+      "USERS_MANAGEMENT": "Gestion des utilisateurs"
+    }
+  },
+  "PAGINATOR": {
+    "ITEMS_PER_PAGE_LABEL": "Articles par page :",
+    "NEXT_PAGE_LABEL": "Page suivante",
+    "PREVIOUS_PAGE_LABEL": "Page précédente",
+    "FIRST_PAGE_LABEL": "Première page",
+    "LAST_PAGE_LABEL": "Dernière page",
+    "RANGE_PAGE_LABEL": "sur"
+  },
+  "NO_DATA": {
+    "NO_REAGENTS": "Aucun réactif",
+    "NO_ORDERED_REAGENTS": "Aucun réactif commandé",
+    "NO_ORDERS": "Aucune commande",
+    "NO_DATA": "Aucune donnée",
+    "NO_STORAGES": "Aucun stockage",
+    "NO_ROOMS": "Aucune salle",
+    "NO_REAGENT_REQUEST": "Aucune demande de réactif",
+    "NO_DATA_FOUND": "Aucune donnée trouvée"
+  },
+  "ADD_STRUCTURE": {
+    "HEADER": "Dessiner la structure",
+    "ADD_STRUCTURE_BUTTON": "Ajouter la structure"
+  },
+  "STORAGE_LOCATION_DIALOG": {
+    "ADD_REAGENT_TO_STORAGE_LOCATION": "Ajouter le réactif à l'emplacement de stockage",
+    "FILTER_BY_ROOM": "Filtrer par salle",
+    "ALL_ROOMS": "Toutes les salles",
+    "FILTER_BY_NAME": "Filtrer par nom",
+    "TABLE": {
+      "NAME": "Nom",
+      "ROOM": "Salle",
+      "REAGENTS": "Réactifs",
+      "ACTIONS": "Actions"
+    },
+    "NO_LOCATION_FOUND": "Aucun emplacement trouvé",
+    "NO_DATA_ALT": "Pas de données"
+  },
+  "EDIT_REAGENT": {
+    "HEADER": "Modifier {{ category }}",
+    "QUANTITY_LEFT": "Quantité restante",
+    "STORAGE_LOCATION": "Emplacement de stockage",
+    "STORAGE_LOCATION_PLACEHOLDER": "ex : Salle1 Armoire1-Étagère1",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Quantité restante est requise.",
+      "QUANTITY_LEFT_INVALID": "Quantité restante doit être un nombre valide.",
+      "STORAGE_LOCATION_REQUIRED": "Emplacement de stockage est requis.",
+      "STORAGE_LOCATION_INVALID": "Sélectionnez un emplacement de stockage valide."
+    }
+  },
+  "NOTIFICATIONS": {
+    "SUCCESS_TITLE": "Succès",
+    "ERROR_TITLE": "Erreur",
+    "EDIT_SUCCESS": "{{ category }} modifié avec succès !",
+    "REAGENT_CREATED_SUCCESS": "Le réactif a été créé avec succès !"
+  },
+  "ADMIN_DASHBOARD": {
+    "NUMBER_OF_ROOMS": "Nombre de salles",
+    "NUMBER_OF_STORAGES": "Nombre de stockages",
+    "NUMBER_OF_USERS": "Nombre d'utilisateurs"
+  },
+  "ROLES": {
+    "ADMIN": "Administrateur",
+    "RESEARCHER": "Chercheur",
+    "PROCUREMENTOFFICER": "Agent d'approvisionnement"
+  },
+  "RESEARCHER_DASHBOARD": {
+    "REAGENT_VS_SAMPLE": "Réactif vs Échantillon",
+    "EXPIRED_REAGENT_VS_SAMPLE": "Expiré : Réactif vs Échantillon",
+    "EMPTY_REAGENT_VS_SAMPLE": "Vide : Réactif vs Échantillon",
+    "LESS_THAN_HALF": "Moins de la moitié"
+  },
+  "REAGENT_LIST": {
+    "NAME": "Nom",
+    "CATEGORY": "Catégorie",
+    "EXPIRED_DATE": "Date d'expiration",
+    "QUANTITY_LEFT": "Quantité restante"
+  },
+  "PO_DASHBOARD": {
+    "NEW_INCOMING_REQUEST": "Nouvelle demande de réactif entrante",
+    "REAGENT": "Réactif",
+    "DATE": "Date",
+    "DESIRED_QUANTITY": "Quantité désirée",
+    "STATUS": "Statut",
+    "ORDERS_BUTTON": "Commandes",
+    "ORDER_STATUS": "Statut de la commande"
+  },
+  "ERROR_MESSAGES": {
+    "FAILED_TO_CONNECT": "Échec de la connexion au serveur",
+    "CHECK_INTERNET_CONNECTION": "Vérifiez votre connexion Internet et réessayez",
+    "ERROR_WITH_CODE": "Erreur {{status}}",
+    "UNEXPECTED_ERROR": "Erreur inattendue",
+    "UNEXPECTED_ERROR_OCCURRED": "Une erreur inattendue s'est produite",
+    "SERVER_ERROR_OCCURRED": "Erreur d'autorisation"
+  },
+  "SERVER_ERRORS": {
+    "INVALID_CREDENTIALS": "Nom d'utilisateur ou mot de passe invalide.",
+    "USER_NOT_FOUND": "Utilisateur non trouvé.",
+    "ACCESS_DENIED": "Accès refusé.",
+    "RESOURCE_NOT_FOUND": "La ressource demandée est introuvable.",
+    "INTERNAL_SERVER_ERROR": "Une erreur interne du serveur s'est produite.",
+    "BAD_REQUEST": "Mauvaise requête.",
+    "VALIDATION_FAILED": "La validation des données fournies a échoué."
+  },
+  "REAGENT_DETAILED_PAGE": {
+    "DETAILS_TITLE": "Détails de {{ category }}",
+    "COPY_STRUCTURE": "Copier la structure",
+    "SMILES": "SMILES",
+    "NO_STRUCTURE": "Aucune structure fournie",
+    "INVALID_STRUCTURE_IMAGE": "Image de structure invalide",
+    "NAME": "Nom",
+    "ID": "ID",
+    "CATEGORY": "Catégorie",
+    "QUANTITY": "Quantité",
+    "DESCRIPTION": "Description",
+    "CAS": "CAS",
+    "PRODUCER": "Producteur",
+    "CATALOG_ID": "ID du catalogue",
+    "PRICE": "Prix",
+    "PER": "par",
+    "CATALOG_LINK": "Lien du catalogue",
+    "EDIT_QUANTITY": "Modifier la quantité",
+    "DELETE_REAGENT": "Supprimer le réactif",
+    "STRUCTURE_COPIED": "Structure copiée"
+  },
+  "CATEGORIES": {
+    "REAGENT": "Réactif",
+    "SAMPLE": "Échantillon"
+  },
+  "MOLECULE_STRUCTURE": {
+    "ERROR": {
+      "RDKIT_FAILED_TO_LOAD": "Échec du chargement de RDKit",
+      "NO_STRUCTURE_PROVIDED": "Aucune structure fournie",
+      "INVALID_STRUCTURE": "Structure invalide"
+    }
+  },
+  "EDIT_QUANTITY_REAGENT": {
+    "HEADER": "Modifier la quantité de {{ category }}",
+    "QUANTITY_LEFT": "Quantité restante",
+    "ERRORS": {
+      "QUANTITY_LEFT_REQUIRED": "Quantité restante est requise.",
+      "QUANTITY_LEFT_INVALID": "Quantité restante doit être un nombre valide."
+    },
+    "CANCEL": "Annuler",
+    "EDIT": "Modifier",
+    "SUCCESS_TITLE": "Succès",
+    "ERROR_TITLE": "Erreur",
+    "SUCCESS_MESSAGE_EDITED": "{{ category }} modifié avec succès!",
+    "SUCCESS_MESSAGE_CONSUMED": "{{ category }} est complètement consommé"
+  },
+  "DELETE_REAGENT": {
+    "HEADER": "Supprimer le réactif?",
+    "MESSAGE": "{{ name }} sera supprimé",
+    "CANCEL": "Annuler",
+    "DELETE": "Supprimer",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "{{ name }} a été supprimé avec succès!",
+    "ERROR_TITLE": "Erreur"
+  },
+  "REAGENT_REQUESTS_DIALOG": {
+    "SEARCH_BY_NAME": "Rechercher par nom",
+    "SEARCH_PLACEHOLDER": "Entrez le nom du réactif",
+    "SELECT": "Sélectionner",
+    "NAME": "Nom",
+    "DESIRED_QUANTITY": "Quantité souhaitée",
+    "PACKAGE": "Emballage",
+    "N_A": "N/A",
+    "CREATED": "Créé",
+    "COMMENT": "Commentaire",
+    "NO_PENDING_REQUESTS": "Aucune demande en attente trouvée",
+    "ADD": "Ajouter",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "La demande de réactif a été ajoutée avec succès!",
+    "ERROR_TITLE": "Erreur"
+  },
+  "CONFIRM_DECLINE_DIALOG": {
+    "HEADER": "Confirmer la suppression",
+    "MESSAGE": "La suppression de la dernière demande de réactif définira la commande comme refusée. Voulez-vous continuer ?",
+    "PROCEED_BUTTON": "Continuer",
+    "CANCEL_BUTTON": "Annuler",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Commande refusée avec succès !"
+  },
+  "REAGENTS_HISTORY_TABLE": {
+    "CATEGORY": {
+      "SAMPLE": "Échantillon",
+      "REAGENT": "Réactif"
+    },
+    "TABLE": {
+      "NAME": "Nom",
+      "CATEGORY": "Catégorie",
+      "ACTION": "Action",
+      "TIME_STAMP": "Horodatage",
+      "OLD_STORAGE_LOCATION": "Ancien lieu de stockage",
+      "NEW_STORAGE_LOCATION": "Nouveau lieu de stockage",
+      "OLD_QUANTITY": "Ancienne quantité",
+      "NEW_QUANTITY": "Nouvelle quantité",
+      "USED_REAGENTS": "Réactifs utilisés"
+    },
+    "ACTION": {
+      "CREATE REAGENT": "Créer un réactif",
+      "UPDATE REAGENT": "Mettre à jour un réactif",
+      "DELETE REAGENT": "Supprimer un réactif",
+      "CREATE SAMPLE": "Créer un échantillon",
+      "UPDATE SAMPLE": "Mettre à jour un échantillon",
+      "DELETE SAMPLE": "Supprimer un échantillon"
+    }
+  }
+}
