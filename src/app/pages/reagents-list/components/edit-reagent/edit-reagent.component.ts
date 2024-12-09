@@ -93,7 +93,7 @@ export class EditReagentComponent {
         .editReagent(this.editionData.id!, editedValue)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: () => {
+          next: (updatedData) => {
             const categoryTranslated = this.translate.instant(
               'CATEGORIES.' + this.editionData.category.toUpperCase()
             );
@@ -104,7 +104,7 @@ export class EditReagentComponent {
               }),
               duration: 3000,
             });
-            this.dialogRef.close(true);
+            this.dialogRef.close(updatedData);
           },
           error: (error: HttpErrorResponse) => {
             this.notificationsService.error({

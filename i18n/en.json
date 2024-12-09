@@ -699,6 +699,7 @@
     "PRICE": "Price",
     "PER": "per",
     "CATALOG_LINK": "Catalog link",
+    "LOCATION": "Location",
     "EDIT_QUANTITY": "Edit quantity",
     "REAGENT_HISTORY":"Reagent History",
     "DELETE_REAGENT": "Delete reagent",

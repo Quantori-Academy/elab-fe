@@ -90,6 +90,10 @@
         <a [href]="reagent.catalogLink">{{ reagent.catalogLink }}</a>
         } @else { - }
       </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.LOCATION" | translate }}:</span>
+            {{ reagent.storage.room.name }} {{ reagent.storage.name }}
+      </p>
     </div>
   </mat-card-content>
   <div class="actions">

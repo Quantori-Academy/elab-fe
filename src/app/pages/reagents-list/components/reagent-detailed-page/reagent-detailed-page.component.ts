@@ -15,6 +15,8 @@ import { DeleteReagentComponent } from '../../../../shared/components/delete-rea
 import { RbacService } from '../../../../auth/services/authentication/rbac.service';
 import { ReagentHistoryDialogComponent } from '../reagent-history-dialog/reagent-history-dialog.component';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+// import { EditReagentComponent } from '../edit-reagent/edit-reagent.component';
+import { ReagentsQueryService } from '../../services/reagents-query.service';
 
 @Component({
   selector: 'app-reagent-detailed-page',
@@ -35,6 +37,7 @@ export class ReagentDetailedPageComponent implements OnInit {
   private reagentSubject = new BehaviorSubject<Reagent | null>(null);
   reagent$: Observable<Reagent | null> = this.reagentSubject.asObservable();
   private reagentsService = inject(ReagentsService);
+  private reagentsQueryService = inject(ReagentsQueryService);
   private rbacService = inject(RbacService);
   public isProcurementOfficer = this.rbacService.isProcurementOfficer();
   private _snackBar = inject(MatSnackBar);
