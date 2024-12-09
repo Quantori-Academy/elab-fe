@@ -92,6 +92,7 @@ export class ReagentDetailedPageComponent implements OnInit {
   onHistory(reagent: Reagent) {
     this.dialog.open(ReagentHistoryDialogComponent, {
       data: reagent,
+      minWidth:'75vw'
     });
   }
   onDeleteReagent(reagent: Reagent) {
