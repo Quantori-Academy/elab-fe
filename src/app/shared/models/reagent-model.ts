@@ -52,6 +52,7 @@ export interface ReagentListResponse {
 }
 
 export interface SampleRequest extends OrderEntity {
+  id?: number;
   structure: string;
   quantityLeft: number;
   expirationDate: string;
@@ -114,6 +115,53 @@ export interface MoveReagentData {
   sourceStorageId: number;
   destinationStorageId: number;
   reagents: { id: number }[];
+}
+
+export interface ReagentHistory {
+  id: number;
+  userId: number;
+  action: string;
+  entity: string;
+  oldData: null | Partial<Reagent> | Partial<SampleRequest>;
+  newData: ReagentHistoryNewData;
+  timestamp: string;
+}
+
+export interface ReagentHistoryNewData {
+  id: number;
+  name: string;
+  category: string;
+  description?: string;
+  storageId: number;
+  quantityLeft: number | null;
+  quantityUnit: string;
+  totalQuantity: number | null;
+  expirationDate?: string;
+  package?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  usedReagentSample?: UsedReagentSample[];
+}
+
+export interface UsedReagentSample {
+  id: number;
+  name: string;
+  category: string;
+  producer?: string | null;
+  casNumber?: string | null;
+  catalogId?: string | null;
+  catalogLink?: string | null;
+  pricePerUnit?: number | null;
+  quantityLeft: number | null;
+  quantityUnit: string;
+  totalQuantity: number | null;
+  expirationDate?: string | null;
+  structure?: string | null;
+  description?: string | null;
+  package?: string | null;
+  storageId: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export enum ReagentListColumn {

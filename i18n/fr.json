@@ -38,37 +38,37 @@
     "LOGIN_BUTTON": "Connexion",
     "SUBMIT_BUTTON": "Envoyer"
   },
-"EDIT_ORDER": {
-  "TITLE": "Modifier la Commande",
-  "FORM": {
-    "TITLE_LABEL": "Titre",
-    "SELLER_LABEL": "Vendeur",
-    "TITLE_REQUIRED": "Le titre est requis.",
-    "SELLER_REQUIRED": "Le vendeur est requis."
+  "EDIT_ORDER": {
+    "TITLE": "Modifier la Commande",
+    "FORM": {
+      "TITLE_LABEL": "Titre",
+      "SELLER_LABEL": "Vendeur",
+      "TITLE_REQUIRED": "Le titre est requis.",
+      "SELLER_REQUIRED": "Le vendeur est requis."
+    },
+    "ORDERED_REAGENTS": "Réactifs Commandés",
+    "TABLE_HEADERS": {
+      "NAME": "Nom",
+      "CAS_NUMBER": "Numéro CAS",
+      "MODIFICATION_DATE": "Date de Modification",
+      "DESIRED_QUANTITY": "Quantité Désirée",
+      "QUANTITY_LEFT": "Quantité Restante",
+      "STRUCTURE": "Structure",
+      "CREATOR_COMMENT": "Commentaire du Créateur",
+      "ACTIONS": "Actions"
+    },
+    "NO_CHANGES": "Aucun changement à mettre à jour",
+    "REMOVE_LAST_REAGENT_CONFIRM": "Supprimer le dernier réactif annulera la commande. Voulez-vous continuer ?",
+    "SUCCESS_TITLE": "Succès",
+    "SUCCESS_MESSAGE": "Commande mise à jour avec succès",
+    "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès !",
+    "ORDER_DECLINED_SUCCESS": "Commande refusée avec succès !",
+    "ERROR_TITLE": "Erreur",
+    "PROCEED_BUTTON": "Continuer",
+    "CANCEL_BUTTON": "Annuler",
+    "UPDATE_BUTTON": "Mettre à jour",
+    "CLOSE_BUTTON": "Fermer"
   },
-  "ORDERED_REAGENTS": "Réactifs Commandés",
-  "TABLE_HEADERS": {
-    "NAME": "Nom",
-    "CAS_NUMBER": "Numéro CAS",
-    "MODIFICATION_DATE": "Date de Modification",
-    "DESIRED_QUANTITY": "Quantité Désirée",
-    "QUANTITY_LEFT": "Quantité Restante",
-    "STRUCTURE": "Structure",
-    "CREATOR_COMMENT": "Commentaire du Créateur",
-    "ACTIONS": "Actions"
-  },
-  "NO_CHANGES": "Aucun changement à mettre à jour",
-  "REMOVE_LAST_REAGENT_CONFIRM": "Supprimer le dernier réactif annulera la commande. Voulez-vous continuer ?",
-  "SUCCESS_TITLE": "Succès",
-  "SUCCESS_MESSAGE": "Commande mise à jour avec succès",
-  "REAGENT_REMOVED_SUCCESS": "Réactif supprimé avec succès !",
-  "ORDER_DECLINED_SUCCESS": "Commande refusée avec succès !",
-  "ERROR_TITLE": "Erreur",
-  "PROCEED_BUTTON": "Continuer",
-  "CANCEL_BUTTON": "Annuler",
-  "UPDATE_BUTTON": "Mettre à jour",
-  "CLOSE_BUTTON": "Fermer"
-},
   "EDIT_REQUESTED_REAGENT": {
     "TITLE": "Modifier le réactif demandé",
     "DESIRED_QUANTITY": "Quantité désirée",
@@ -294,6 +294,7 @@
     "CREATE_SAMPLE": "Créer un échantillon",
     "UPLOAD": "Télécharger",
     "MOVE_REAGENT": "Déplacer le réactif",
+    "HISTORY": "Histoire",
     "SEARCH_BY_NAME": "Rechercher par nom",
     "PLACEHOLDER_ENTER_NAME": "Entrez un nom",
     "SEARCH_BY_STRUCTURE": "Rechercher par structure",
@@ -695,6 +696,7 @@
     "PER": "par",
     "CATALOG_LINK": "Lien du catalogue",
     "EDIT_QUANTITY": "Modifier la quantité",
+    "REAGENT_HISTORY": "Historique des réactifs",
     "DELETE_REAGENT": "Supprimer le réactif",
     "STRUCTURE_COPIED": "Structure copiée"
   },
@@ -755,5 +757,31 @@
     "CANCEL_BUTTON": "Annuler",
     "SUCCESS_TITLE": "Succès",
     "SUCCESS_MESSAGE": "Commande refusée avec succès !"
+  },
+  "REAGENTS_HISTORY_TABLE": {
+    "NO_DATA_AVAILABLE": "Le journal d'historique est vide",
+    "CATEGORY": {
+      "SAMPLE": "Échantillon",
+      "REAGENT": "Réactif"
+    },
+    "TABLE": {
+      "NAME": "Nom",
+      "CATEGORY": "Catégorie",
+      "ACTION": "Action",
+      "TIME_STAMP": "Horodatage",
+      "OLD_STORAGE_LOCATION": "Ancien lieu de stockage",
+      "NEW_STORAGE_LOCATION": "Nouveau lieu de stockage",
+      "OLD_QUANTITY": "Ancienne quantité",
+      "NEW_QUANTITY": "Nouvelle quantité",
+      "USED_REAGENTS": "Réactifs utilisés"
+    },
+    "ACTION": {
+      "CREATE REAGENT": "Créer un réactif",
+      "UPDATE REAGENT": "Mettre à jour un réactif",
+      "DELETE REAGENT": "Supprimer un réactif",
+      "CREATE SAMPLE": "Créer un échantillon",
+      "UPDATE SAMPLE": "Mettre à jour un échantillon",
+      "DELETE SAMPLE": "Supprimer un échantillon"
+    }
   }
 }

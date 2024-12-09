@@ -38,37 +38,37 @@
     "LOGIN_BUTTON": "Anmelden",
     "SUBMIT_BUTTON": "Absenden"
   },
-"EDIT_ORDER": {
-  "TITLE": "Bestellung Bearbeiten",
-  "FORM": {
-    "TITLE_LABEL": "Titel",
-    "SELLER_LABEL": "Verkäufer",
-    "TITLE_REQUIRED": "Titel ist erforderlich.",
-    "SELLER_REQUIRED": "Verkäufer ist erforderlich."
+  "EDIT_ORDER": {
+    "TITLE": "Bestellung Bearbeiten",
+    "FORM": {
+      "TITLE_LABEL": "Titel",
+      "SELLER_LABEL": "Verkäufer",
+      "TITLE_REQUIRED": "Titel ist erforderlich.",
+      "SELLER_REQUIRED": "Verkäufer ist erforderlich."
+    },
+    "ORDERED_REAGENTS": "Bestellte Reagenzien",
+    "TABLE_HEADERS": {
+      "NAME": "Name",
+      "CAS_NUMBER": "CAS-Nummer",
+      "MODIFICATION_DATE": "Änderungsdatum",
+      "DESIRED_QUANTITY": "Gewünschte Menge",
+      "QUANTITY_LEFT": "Verbleibende Menge",
+      "STRUCTURE": "Struktur",
+      "CREATOR_COMMENT": "Kommentar des Erstellers",
+      "ACTIONS": "Aktionen"
+    },
+    "NO_CHANGES": "Keine Änderungen zum Aktualisieren",
+    "REMOVE_LAST_REAGENT_CONFIRM": "Das Entfernen des letzten Reagenz wird die Bestellung stornieren. Möchten Sie fortfahren?",
+    "SUCCESS_TITLE": "Erfolg",
+    "SUCCESS_MESSAGE": "Bestellung erfolgreich aktualisiert",
+    "REAGENT_REMOVED_SUCCESS": "Reagenz erfolgreich entfernt!",
+    "ORDER_DECLINED_SUCCESS": "Bestellung erfolgreich abgelehnt!",
+    "ERROR_TITLE": "Fehler",
+    "PROCEED_BUTTON": "Fortfahren",
+    "CANCEL_BUTTON": "Abbrechen",
+    "UPDATE_BUTTON": "Aktualisieren",
+    "CLOSE_BUTTON": "Schließen"
   },
-  "ORDERED_REAGENTS": "Bestellte Reagenzien",
-  "TABLE_HEADERS": {
-    "NAME": "Name",
-    "CAS_NUMBER": "CAS-Nummer",
-    "MODIFICATION_DATE": "Änderungsdatum",
-    "DESIRED_QUANTITY": "Gewünschte Menge",
-    "QUANTITY_LEFT": "Verbleibende Menge",
-    "STRUCTURE": "Struktur",
-    "CREATOR_COMMENT": "Kommentar des Erstellers",
-    "ACTIONS": "Aktionen"
-  },
-  "NO_CHANGES": "Keine Änderungen zum Aktualisieren",
-  "REMOVE_LAST_REAGENT_CONFIRM": "Das Entfernen des letzten Reagenz wird die Bestellung stornieren. Möchten Sie fortfahren?",
-  "SUCCESS_TITLE": "Erfolg",
-  "SUCCESS_MESSAGE": "Bestellung erfolgreich aktualisiert",
-  "REAGENT_REMOVED_SUCCESS": "Reagenz erfolgreich entfernt!",
-  "ORDER_DECLINED_SUCCESS": "Bestellung erfolgreich abgelehnt!",
-  "ERROR_TITLE": "Fehler",
-  "PROCEED_BUTTON": "Fortfahren",
-  "CANCEL_BUTTON": "Abbrechen",
-  "UPDATE_BUTTON": "Aktualisieren",
-  "CLOSE_BUTTON": "Schließen"
-},
   "EDIT_REQUESTED_REAGENT": {
     "TITLE": "Angefordertes Reagenz bearbeiten",
     "DESIRED_QUANTITY": "Gewünschte Menge",
@@ -294,6 +294,7 @@
     "CREATE_SAMPLE": "Probe erstellen",
     "UPLOAD": "Hochladen",
     "MOVE_REAGENT": "Reagenz verschieben",
+    "HISTORY": "Geschichte",
     "SEARCH_BY_NAME": "Nach Namen suchen",
     "PLACEHOLDER_ENTER_NAME": "Geben Sie einen Namen ein",
     "SEARCH_BY_STRUCTURE": "Nach Struktur suchen",
@@ -699,6 +700,7 @@
     "PER": "pro",
     "CATALOG_LINK": "Kataloglink",
     "EDIT_QUANTITY": "Menge bearbeiten",
+    "REAGENT_HISTORY": "Reagenzienverlauf",
     "DELETE_REAGENT": "Reagenz löschen",
     "STRUCTURE_COPIED": "Struktur kopiert"
   },
@@ -755,5 +757,31 @@
     "CANCEL_BUTTON": "Abbrechen",
     "SUCCESS_TITLE": "Erfolg",
     "SUCCESS_MESSAGE": "Bestellung erfolgreich abgelehnt!"
+  },
+  "REAGENTS_HISTORY_TABLE": {
+    "NO_DATA_AVAILABLE": "Protokollverlauf ist leer",
+    "CATEGORY": {
+      "SAMPLE": "Probe",
+      "REAGENT": "Reagenz"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "CATEGORY": "Kategorie",
+      "ACTION": "Aktion",
+      "TIME_STAMP": "Zeitstempel",
+      "OLD_STORAGE_LOCATION": "Alter Lagerort",
+      "NEW_STORAGE_LOCATION": "Neuer Lagerort",
+      "OLD_QUANTITY": "Alte Menge",
+      "NEW_QUANTITY": "Neue Menge",
+      "USED_REAGENTS": "Verwendete Reagenzien"
+    },
+    "ACTION": {
+      "CREATE REAGENT": "Reagenz erstellen",
+      "UPDATE REAGENT": "Reagenz aktualisieren",
+      "DELETE REAGENT": "Reagenz löschen",
+      "CREATE SAMPLE": "Probe erstellen",
+      "UPDATE SAMPLE": "Probe aktualisieren",
+      "DELETE SAMPLE": "Probe löschen"
+    }
   }
 }
