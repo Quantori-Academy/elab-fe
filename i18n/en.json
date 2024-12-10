@@ -782,7 +782,8 @@
       "DELETE REAGENT": "Delete Reagent",
       "CREATE SAMPLE": "Create Sample",
       "UPDATE SAMPLE": "Update Sample",
-      "DELETE SAMPLE": "Delete Sample"
+      "DELETE SAMPLE": "Delete Sample",
+      "CREATE REAGENT FROM REQUEST": "Create Reagent From Request"
     }
   }
 }

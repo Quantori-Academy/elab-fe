@@ -782,7 +782,8 @@
       "DELETE REAGENT": "Supprimer un réactif",
       "CREATE SAMPLE": "Créer un échantillon",
       "UPDATE SAMPLE": "Mettre à jour un échantillon",
-      "DELETE SAMPLE": "Supprimer un échantillon"
+      "DELETE SAMPLE": "Supprimer un échantillon",
+      "CREATE REAGENT FROM REQUEST": "Créer un réactif à partir de la demande"
     }
   }
 }
