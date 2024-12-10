@@ -1,5 +1,11 @@
 # ElabFe
 
+## Description 
+
+*ELAB LIMS is a laboratory information management system (LIMS) designed to streamline laboratory project management.*
+ 
+Built with Angular, it ensures high performance and scalability, providing an intuitive and responsive user experience. Researchers can efficiently track the entire lifecycle of samples, from reception to storage and reuse, ensuring comprehensive metadata capture.
+
 ## Technology Stack
   ### Core Technologies
    - **Framework:** Angular 18
