@@ -782,7 +782,8 @@
       "DELETE REAGENT": "Reagenz löschen",
       "CREATE SAMPLE": "Probe erstellen",
       "UPDATE SAMPLE": "Probe aktualisieren",
-      "DELETE SAMPLE": "Probe löschen"
+      "DELETE SAMPLE": "Probe löschen",
+      "CREATE REAGENT FROM REQUEST": "Reagenz aus Anfrage erstellen"
     }
   }
 }

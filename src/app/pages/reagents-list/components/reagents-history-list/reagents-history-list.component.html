@@ -22,7 +22,7 @@
         <td mat-cell *matCellDef="let element">
           {{
             "REAGENTS_HISTORY_TABLE.CATEGORY." +
-              (element.newData?.category || element.oldData?.category
+              (element.newData?.category || element.oldData?.category || "REAGENT"
                 | uppercase) | translate
           }}
         </td>
