@@ -115,6 +115,7 @@
     "AMOUNT": "Amount"
   },
   "ORDER_PAGE": {
+    "ORDER": "Order",
     "ORDER_TITLE": "Order Title",
     "SELLER": "Seller",
     "STATUS": "Status",

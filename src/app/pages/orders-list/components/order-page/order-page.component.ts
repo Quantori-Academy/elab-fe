@@ -125,11 +125,9 @@ export class OrderPageComponent implements OnInit, OnDestroy {
           this.notificationPopupService.success({
             title: this.translate.instant('ORDER_PAGE.SUCCESS_TITLE'),
             message:
-              this.translate.instant('ORDER_PAGE.ORDER_TITLE') +
-              ' ' +
-              this.translate.instant('STATUSES.' + status) +
-              ' ' +
-              this.translate.instant('ORDERS_LIST.ACTIONS') +
+            this.translate.instant('ORDER_PAGE.ORDER') +
+            ' ' +
+            this.translate.instant(`STATUSES.${status.toUpperCase()}`) +
               '!',
             duration: 3000,
           });
@@ -221,32 +219,13 @@ export class OrderPageComponent implements OnInit, OnDestroy {
       .subscribe((newReagentRequest: ReagentRequestList) => {
         if (newReagentRequest) {
           const currentOrder = this.orderSubject.getValue();
-          const updatedReagents = [
-            ...currentOrder!.reagents,
-            newReagentRequest,
-          ];
           const updatedOrder: UpdateOrder = {
-            includeReagents: updatedReagents,
+            includeReagents: [...currentOrder!.reagents, newReagentRequest],
           };
 
           this.orderService
             .updateOrder(currentOrder!.id, updatedOrder)
-            .subscribe({
-              next: (updatedOrder) => {
-                // this.notificationPopupService.success({
-                //   title: 'Success',
-                //   message: 'Reagent has been successfully added!',
-                //   duration: 3000,
-                // });
-                this.orderSubject.next(updatedOrder);
-              },
-              error: (error: HttpErrorResponse) => {
-                this.notificationPopupService.error({
-                  title: 'Error',
-                  message: error.error.message,
-                });
-              },
-            });
+            .subscribe((updatedOrder) => this.orderSubject.next(updatedOrder));
         }
       });
   }

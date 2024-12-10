@@ -115,6 +115,7 @@
     "N_A": "N/A"
   },
   "ORDER_PAGE": {
+    "ORDER": "Commande",
     "ORDER_TITLE": "Titre de la commande",
     "SELLER": "Vendeur",
     "STATUS": "Statut",
