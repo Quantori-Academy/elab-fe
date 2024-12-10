@@ -58,7 +58,28 @@ Built with Angular, it ensures high performance and scalability, providing an in
 
   ### Reagent Request
   <!--  -->
+
   ### Order
+
+  #### **Permissions**
+
+  The following actions are available, restricted to **Procurement Officer**:
+
+  - **Create Order:** Create order with researchers' Requested reagents.
+  - **Edit Pending Order:** Edit: the title and seller of pending order.
+  - **Edit Requested Reagent in Pnednig Order:** Edit: the desired quantity, packages, package amounts of requested reagents.
+  - **Add Reagent Requests** Add more requested reagents to the pending orders.
+  - **Remove Requested Reagents:** Remove requested reagents from pending order.
+  - **Fulfill Order:** Assigne storage location to requested reagnets in Fulfilled orders.
+
+  #### **Filtering Options**
+
+  Procurement Officer can filter the orders table by:
+
+  - **Title:** Search for specific order by title.
+  - **Seller:** Search for specific order by Seller.
+  - **Status:** Find order based on their stratus: Pending, Submitted, Fulfilled or Declined.
+  - **Category:** Filter entries by "Sample" or "Reagent" categories.
 
 
 ## Useful links (DEV stand, API url)...
