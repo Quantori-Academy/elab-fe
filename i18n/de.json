@@ -702,7 +702,8 @@
     "PRICE": "Preis",
     "PER": "pro",
     "CATALOG_LINK": "Kataloglink",
-    "EDIT_QUANTITY": "Menge bearbeiten",
+    "LOCATION": "Standort",
+    "EDIT": "Bearbeiten",
     "REAGENT_HISTORY": "Reagenzienverlauf",
     "DELETE_REAGENT": "Reagenz löschen",
     "STRUCTURE_COPIED": "Struktur kopiert"
@@ -784,7 +785,8 @@
       "DELETE REAGENT": "Reagenz löschen",
       "CREATE SAMPLE": "Probe erstellen",
       "UPDATE SAMPLE": "Probe aktualisieren",
-      "DELETE SAMPLE": "Probe löschen"
+      "DELETE SAMPLE": "Probe löschen",
+      "CREATE REAGENT FROM REQUEST": "Reagenz aus Anfrage erstellen"
     }
   }
 }

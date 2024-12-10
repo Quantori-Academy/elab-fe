@@ -702,7 +702,8 @@
     "PRICE": "Price",
     "PER": "per",
     "CATALOG_LINK": "Catalog link",
-    "EDIT_QUANTITY": "Edit quantity",
+    "LOCATION": "Location",
+    "EDIT": "Edit",
     "REAGENT_HISTORY":"Reagent History",
     "DELETE_REAGENT": "Delete reagent",
     "STRUCTURE_COPIED": "Structure copied"
@@ -784,7 +785,8 @@
       "DELETE REAGENT": "Delete Reagent",
       "CREATE SAMPLE": "Create Sample",
       "UPDATE SAMPLE": "Update Sample",
-      "DELETE SAMPLE": "Delete Sample"
+      "DELETE SAMPLE": "Delete Sample",
+      "CREATE REAGENT FROM REQUEST": "Create Reagent From Request"
     }
   }
 }

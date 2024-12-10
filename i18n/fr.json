@@ -698,7 +698,8 @@
     "PRICE": "Prix",
     "PER": "par",
     "CATALOG_LINK": "Lien du catalogue",
-    "EDIT_QUANTITY": "Modifier la quantité",
+    "LOCATION": "Emplacement",
+    "EDIT": "Modifier",
     "REAGENT_HISTORY": "Historique des réactifs",
     "DELETE_REAGENT": "Supprimer le réactif",
     "STRUCTURE_COPIED": "Structure copiée"
@@ -784,7 +785,8 @@
       "DELETE REAGENT": "Supprimer un réactif",
       "CREATE SAMPLE": "Créer un échantillon",
       "UPDATE SAMPLE": "Mettre à jour un échantillon",
-      "DELETE SAMPLE": "Supprimer un échantillon"
+      "DELETE SAMPLE": "Supprimer un échantillon",
+      "CREATE REAGENT FROM REQUEST": "Créer un réactif à partir de la demande"
     }
   }
 }
