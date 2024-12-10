@@ -33,9 +33,23 @@
   - **Edit:** Update existing storage location or room information.
   - **Delete:** Remove storage locations or rooms from the system.
 
-
   ### Reagents
-  <!--  -->
+  The **Reagents** is designed for managing and organizing reagents efficiently. It includes the following functionalities:
+  
+  #### **Permissions**
+  The following actions are available, restricted to **researchers**:
+  - **Create Sample/Reagent:** Add new entries to the reagents with relevant details.
+  - **Edit Sample/Reagent:** Edit the quantity left of reagents and its storage location.
+  - **Move Sample/Reagent:** Transfer reagents between different storage locations.
+  - **Upload Sample/Reagent Table:** Bulk upload reagent information from a csv file.
+
+  #### **Filtering Options**
+  Users can filter the reagents table by:
+  - **Name:** Search for specific reagents or samples by name.
+  - **Chemical Structure:** Find reagents based on their chemical structure.
+  - **Category:** Filter entries by "Sample" or "Reagent" categories.
+
+
   ### Reagent Request
   <!--  -->
   ### Order
