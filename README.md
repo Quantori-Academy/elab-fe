@@ -32,9 +32,9 @@ The product is available in the following languages:
 
 ### Additional Tools
 
-- **Internationalization:** [i18next]('https://www.i18next.com')
-- **Chemical Structure Editing:** [Ketcher 2.24.0]('https://lifescience.opensource.epam.com/ketcher/index.html#overview')
-- **Chemical Informatics:** [RDKit]('https://www.rdkitjs.com/#introduction')
+- **Internationalization:** [i18next](https://www.i18next.com)
+- **Chemical Structure Editing:** [Ketcher 2.24.0](https://lifescience.opensource.epam.com/ketcher/index.html#overview)
+- **Chemical Informatics:** [RDKit](https://www.rdkitjs.com/#introduction)
 
 ## Core Features
 
