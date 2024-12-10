@@ -85,7 +85,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.reagentRequestService.getReagentRequests(
         'Pending',
         undefined,
-        'desc',
+        params.sort?.active === 'createdAt' && params.sort.direction
+          ? params.sort.direction
+          : 'desc',
         'desc',
         undefined,
         undefined,
@@ -131,6 +133,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   onFilterName(event: Event) {
     const value = (event.target as HTMLInputElement).value.trim();
     this.updateParams({ filter: value || undefined });
+  }
+  onSort(sort: Sort): void {
+    this.updateParams({ sort });
   }
 
   openReagentDialog(id: string): void {
