@@ -56,7 +56,39 @@
 
 
 ## Useful links (DEV stand, API url)...
+ - Backend Swagger: http://vm5.quantori.academy:3001/api/v1/swagger#/
+
 
 ## Architecture (modules, structure)
-
+```
+.
+|-- app 
+|----- auth
+|-------- guards
+|-------- roles
+|-------- services
+|----- pages
+|-------- dashboard
+|-------- storage-location
+|-------- reagents
+|-------- reagent-request
+|-------- order
+|-------- ...
+|----- shared
+|-------- components
+|-------- models
+|-------- services
+|-------- ...
+```
 ## Instructions
+### Development server
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+### Build
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+### Production Link
+http://vm5.quantori.academy:8080/
+
+
+
