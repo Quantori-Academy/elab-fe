@@ -79,8 +79,6 @@ Built with Angular, it ensures high performance and scalability, providing an in
   - **Title:** Search for specific order by title.
   - **Seller:** Search for specific order by Seller.
   - **Status:** Find order based on their stratus: Pending, Submitted, Fulfilled or Declined.
-  - **Category:** Filter entries by "Sample" or "Reagent" categories.
-
 
 ## Useful links (DEV stand, API url)...
  - Backend Swagger: http://vm5.quantori.academy:3001/api/v1/swagger#/
