@@ -90,6 +90,10 @@
         <a [href]="reagent.catalogLink">{{ reagent.catalogLink }}</a>
         } @else { - }
       </p>
+      <p>
+        <span>{{ "REAGENT_DETAILED_PAGE.LOCATION" | translate }}:</span>
+            {{ reagent.storage.room.name }} {{ reagent.storage.name }}
+      </p>
     </div>
   </mat-card-content>
   <div class="actions">
@@ -99,7 +103,7 @@
       class="actions_edit"
       (click)="onEditReagent(reagent)"
     >
-      {{ "REAGENT_DETAILED_PAGE.EDIT_QUANTITY" | translate }}
+      {{ "REAGENT_DETAILED_PAGE.EDIT" | translate }}
       <mat-icon>edit</mat-icon>
     </button>
     <button mat-fab extended class="actions_edit" (click)="onHistory(reagent)">
