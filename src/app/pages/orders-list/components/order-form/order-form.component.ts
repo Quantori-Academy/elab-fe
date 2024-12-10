@@ -90,8 +90,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         undefined,
         params.sort?.active === 'createdAt' && params.sort.direction
           ? params.sort.direction
-          : undefined,
-        undefined,
+          : 'desc',
+        'desc',
         undefined,
         undefined,
         params.filter
@@ -153,7 +153,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     const value = (event.target as HTMLInputElement).value.trim();
     this.updateParams({ filter: value || undefined });
   }
-
   onSort(sort: Sort): void {
     this.updateParams({ sort });
   }
