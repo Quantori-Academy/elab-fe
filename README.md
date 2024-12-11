@@ -39,10 +39,21 @@ The product is available in the following languages:
 ## Core Features
 
 ### Authentication
+  The **Authentication** module handles user access and security within the application. It includes the following functionalities:
 
-   <!-- TODO: -->
+  - Only administrators have the ability to create new users.
+  - **Change Password:**  
+    Users can change their password at any time from their account settings for enhanced security.  
+  - **Forgot Password:**  
+    If a user forgets their password, they can reset it via email. This process uses **SMTP** to send a secure password reset link.
+
+This module ensures secure access control and robust password management, tailored to the application's user roles.
 
 ### User Management
+**User Roles**
+- Admin
+- Procurement Officer
+- Researcher
 
 #### **Permissions**
 
@@ -61,7 +72,7 @@ Admin can filter the users table by:
 
 ### Storage Location
 
-The **Storage Location Navigation** module is designed to manage and organize storage locations. It consists of two tabs:
+The **Storage Location** module is designed to manage and organize storage locations. It consists of two tabs:
 
 - **Storage Locations Tab:**  
   Displays a list of all storage locations. Users can view details of each location, such as its name, description, and associated metadata.
@@ -143,11 +154,11 @@ Procurement Officer can filter the orders table by:
 - **Seller:** Search for specific order by Seller.
 - **Status:** Find order based on their stratus: Pending, Submitted, Fulfilled or Declined.
 
-## Useful links (DEV stand, API url)...
+## Useful links
 
 - Backend Swagger: http://vm5.quantori.academy:3001/api/v1/swagger#/
 
-## Architecture (modules, structure)
+## Architecture
 
 ```
 .
@@ -182,4 +193,4 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ### Production Link
 
-http://vm5.quantori.academy:8080/
+https://vm5.quantori.academy/
