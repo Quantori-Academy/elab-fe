@@ -100,7 +100,27 @@ Users can filter the reagents table by:
 
 ### Reagent Request
 
-  <!--  -->
+The **Reagent Request** is designed for efficient management and tracking of reagent requests. It includes the following functionalities:
+
+#### **Permissions**
+
+The following actions are available, restricted to **Researchers**:
+
+- **Create Reagent Request:** Add new reagent requests with desired quantities and details.
+- **View Reagent Request Details:** Access detailed information about each reagent request, including general information and structure.
+
+The following actions are available, restricted to **Procurement Officers (PO)**:
+
+- **Decline Reagent Request:** Reject reagent requests that cannot be fulfilled or are not valid.
+- **View Reagent Request Details:** Access detailed information about each reagent request, including general information and structure.
+
+#### **Filtering Options**
+
+Procurement Officers and Researchers can filter the reagent requests table by:
+
+- **Name:** Search for specific reagent requests by name.
+- **Status:** Filter entries based on their status (e.g., Declined, Ordered, Fulfilled, Completed).
+- **Date:** Narrow down requests created or updated within specific date ranges.
 
 ### Order
 
