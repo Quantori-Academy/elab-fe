@@ -44,7 +44,20 @@ The product is available in the following languages:
 
 ### User Management
 
-  <!--  -->
+#### **Permissions**
+
+The following actions are available, restricted to **Admin**:
+
+- **Create Users:** Create new: Admin, Procurement Officer and Researcher users.
+- **Edit User:** Change roles of existing users.
+- **Delete Users:** Delete existing users.
+
+#### **Users Table's Filtering Options**
+
+Admin can filter the users table by:
+
+- **Name:** Search for user or samples by name.
+- **Role:** Find users based on their role.
 
 ### Storage Location
 
