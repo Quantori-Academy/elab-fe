@@ -141,7 +141,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((reagentRequest: ReagentRequestList) => {
       if (reagentRequest) {
-        this.selectedReagents.set(reagentRequest.id, { id: reagentRequest.id, packageAmount: 1});
+        this.selectedReagents.set(reagentRequest.id, {
+          id: reagentRequest.id,
+          packageAmount: 1,
+        });
         this.selectedReagentReq.push(reagentRequest);
         this.updateOrdersFormControl();
         this.cdr.markForCheck();
@@ -226,6 +229,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   redirectToReagentList() {
     return this.router.navigate(['orders']);
+  }
+
+  removeReagent(reagent: ReagentRequestList) {
+    this.selectedReagents.delete(reagent.id);
+    this.selectedReagentReq = this.selectedReagentReq.filter(
+      (selectedReagent) => selectedReagent.id !== reagent.id
+    );
+    this.updateOrdersFormControl();
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {
