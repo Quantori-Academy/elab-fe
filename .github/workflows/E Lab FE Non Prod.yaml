@@ -54,16 +54,7 @@ jobs:
           with:
             config_file: ./elab-fe/.github/workflows/client.ovpn
 
-        - name: Copy code to VM
-          env:
-            SSH_KEY: ${{secrets.SSH_KEY}}
-            SSH_USER: ${{secrets.SSH_USER}}
-            VM_IP: ${{vars.VM_IP}}
-          run: |
-            echo "${SSH_KEY}" >> /tmp/ssh_key
-            chmod 400 /tmp/ssh_key
-            scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./elab-fe ${SSH_USER}@$VM_IP:~
-        - name: Run latest version
+        - name: Stop service
           uses: appleboy/ssh-action@v1.0.3
           with:
             host: ${{ vars.VM_IP }}
@@ -73,5 +64,27 @@ jobs:
             script: |
               cd ~/elab-fe
               sudo docker compose stop
+              cd ..
+              rm -r ~/elab-fe
+
+        - name: Copy code to VM
+          env:
+            SSH_KEY: ${{secrets.SSH_KEY}}
+            SSH_USER: ${{secrets.SSH_USER}}
+            VM_IP: ${{vars.VM_IP}}
+          run: |
+            echo "${SSH_KEY}" >> /tmp/ssh_key
+            chmod 400 /tmp/ssh_key
+            scp -o KexAlgorithms=ecdh-sha2-nistp521 -o 'StrictHostKeyChecking no' -i /tmp/ssh_key -r ./elab-fe ${SSH_USER}@$VM_IP:~
+
+        - name: Run latest version
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ vars.VM_IP }}
+            username: ${{ secrets.SSH_USER }}
+            cipher: ecdh-sha2-nistp521
+            key: ${{secrets.SSH_KEY}}
+            script: |
+              cd ~/elab-fe
               sudo docker compose -f docker-compose.non-prod.yml up -d --build
               rm -rf ./.git
