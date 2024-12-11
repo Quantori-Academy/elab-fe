@@ -60,6 +60,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ReagentsListComponent implements OnInit, OnDestroy {
   @Input() storageLocationId?: number;
+  @Input() showButton = true;
   private dialog = inject(MatDialog);
   private reagentsService = inject(ReagentsService);
   private reagentsQueryService = inject(ReagentsQueryService);

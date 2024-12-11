@@ -38,6 +38,9 @@
     </mat-card-header>
     <mat-card-content>
       <div class="filter-container">
+        <button mat-icon-button type="button" (click)=" openAddReagentDialog()"  [matTooltip]=' "ORDER_FORM.ADD_REAGENT_REQUEST" | translate ' matTooltipPosition="right">
+          <mat-icon>playlist_add</mat-icon>
+        </button>
         <mat-form-field appearance="fill">
           <mat-label>{{ "ORDER_FORM.SEARCH_BY_NAME" | translate }}</mat-label>
           <input
@@ -207,6 +210,9 @@
             [width]="50"
             [height]="50"
           ></app-molecule-structure>
+          <button mat-icon-button (click)="removeReagent(item)">
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
         </mat-card-content>
       </mat-card>
       }

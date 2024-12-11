@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Create New Order",
+    "ADD_REAGENT_REQUEST": "Add reagent request",
     "GENERAL": "General",
     "TITLE_LABEL": "Title",
     "TITLE_REQUIRED": "Title is required.",
@@ -114,6 +115,7 @@
     "AMOUNT": "Amount"
   },
   "ORDER_PAGE": {
+    "ORDER": "Order",
     "ORDER_TITLE": "Order Title",
     "SELLER": "Seller",
     "STATUS": "Status",
@@ -122,6 +124,8 @@
     "UPDATED": "Updated",
     "ORDERED_REAGENTS": "Ordered Reagents",
     "ADD_REAGENT_REQUEST": "Add reagent request",
+    "CREATE_NEW_REQUEST": "Create a new request",
+    "ADD_FROM_EXISTING_REQUESTS": "Add from existing requests",
     "COMPLETED": "Completed",
     "COMPLETE": "Complete",
     "EDIT": "Edit",

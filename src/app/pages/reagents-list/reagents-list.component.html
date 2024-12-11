@@ -31,11 +31,13 @@
     </button>
   </div>
   }
+  @if (showButton){
   <div class="create-btns">
     <a mat-button routerLink="history">{{
       "REAGENTS_LIST.HISTORY" | translate
     }}</a>
   </div>
+  }
   <div class="filter-container">
     <mat-form-field appearance="fill" subscriptSizing="dynamic">
       <mat-label>{{ "REAGENTS_LIST.SEARCH_BY_NAME" | translate }}</mat-label>

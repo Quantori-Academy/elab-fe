@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Neue Bestellung erstellen",
+    "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
     "GENERAL": "Allgemein",
     "TITLE_LABEL": "Titel",
     "TITLE_REQUIRED": "Titel ist erforderlich.",
@@ -114,6 +115,7 @@
     "AMOUNT": "Menge"
   },
   "ORDER_PAGE": {
+    "ORDER": "Bestellung",
     "ORDER_TITLE": "Bestellungstitel",
     "SELLER": "Verkäufer",
     "STATUS": "Status",
@@ -122,6 +124,8 @@
     "UPDATED": "Aktualisiert",
     "ORDERED_REAGENTS": "Bestellte Reagenzien",
     "ADD_REAGENT_REQUEST": "Reagenzanforderung hinzufügen",
+    "CREATE_NEW_REQUEST": "Erstellen Sie eine neue Anfrage",
+    "ADD_FROM_EXISTING_REQUESTS": "Hinzufügen aus bestehenden Anträgen",
     "COMPLETED": "Abgeschlossen",
     "COMPLETE": "Abschließen",
     "EDIT": "Bearbeiten",

@@ -69,9 +69,22 @@
 <div class="add-reagent">
   <h3>{{ "ORDER_PAGE.ORDERED_REAGENTS" | translate }}</h3>
   @if (order.status === 'Pending') {
-  <button class="add-btn" mat-flat-button (click)="onAdd(order.id)">
-    {{ "ORDER_PAGE.ADD_REAGENT_REQUEST" | translate }}
-  </button>
+    <div class="add-reagents-container">
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="actionMenu">
+        <mat-icon>add_circle</mat-icon>
+        {{ "ORDER_PAGE.ADD_REAGENT_REQUEST" | translate }}
+      </button>
+      <mat-menu #actionMenu="matMenu">
+        <button mat-menu-item class="add-btn" (click)="openAddReagentForm()">
+          <mat-icon color="primary">note_add</mat-icon>
+          <span>{{ "ORDER_PAGE.CREATE_NEW_REQUEST" | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="onAdd(order.id)">
+          <mat-icon color="primary">library_books</mat-icon>
+          <span>{{ "ORDER_PAGE.ADD_FROM_EXISTING_REQUESTS" | translate }}</span>
+        </button>
+      </mat-menu>
+    </div>
   }
 </div>
 <div class="table-container mat-elevation-z8">

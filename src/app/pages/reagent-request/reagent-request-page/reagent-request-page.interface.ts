@@ -38,6 +38,7 @@ export interface ReagentRequestCreate {
   catalogLink?: string | null;
   pricePerUnit?: number | null;
   expirationDate?: Date | null;
+  hide: boolean;
 }
 
 export interface ReagentRequestResponse {

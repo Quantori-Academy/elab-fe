@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding: 0;
+  padding-top: 1rem;
 }
 
 .header {
@@ -23,7 +23,6 @@ form {
   gap: 0.5rem;
   align-items: baseline;
   position: relative;
-  margin-bottom: 5rem;
 }
 
 form > mat-card {
@@ -41,7 +40,7 @@ mat-accordion {
 
 mat-form-field {
   width: calc((100% - 28px) / 2);
-  min-width: 280px;
+  min-width: 230px;
   height: 50px;
 }
 
@@ -83,7 +82,7 @@ mat-card-content,
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
 }
 
 .full-width {

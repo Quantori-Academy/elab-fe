@@ -84,6 +84,7 @@
   },
   "ORDER_FORM": {
     "HEADER": "Créer une nouvelle commande",
+    "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
     "GENERAL": "Général",
     "TITLE_LABEL": "Titre",
     "TITLE_REQUIRED": "Le titre est requis.",
@@ -114,6 +115,7 @@
     "N_A": "N/A"
   },
   "ORDER_PAGE": {
+    "ORDER": "Commande",
     "ORDER_TITLE": "Titre de la commande",
     "SELLER": "Vendeur",
     "STATUS": "Statut",
@@ -122,6 +124,8 @@
     "UPDATED": "Mis à jour",
     "ORDERED_REAGENTS": "Réactifs commandés",
     "ADD_REAGENT_REQUEST": "Ajouter une demande de réactif",
+    "CREATE_NEW_REQUEST": "Créer une nouvelle demande",
+    "ADD_FROM_EXISTING_REQUESTS": "Ajouter à partir de demandes existantes",
     "COMPLETED": "Terminé",
     "COMPLETE": "Terminer",
     "EDIT": "Modifier",
