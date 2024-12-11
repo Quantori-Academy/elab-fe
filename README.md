@@ -56,7 +56,7 @@ The following actions are available, restricted to **Admin**:
 
 Admin can filter the users table by:
 
-- **Name:** Search for user or samples by name.
+- **Name:** Search for user by name.
 - **Role:** Find users based on their role.
 
 ### Storage Location
